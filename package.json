@@ -61,9 +61,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/your-repo.git"
+    "url": "git+https://github.com/orgs/JBLinx-Studio/repositories"
   },
-  "author": "Your Name",
+  "author": "JulianArtisan408",
   "license": "MIT",
-  "description": "Your project description"
+  "description": "Web-App"
 }
