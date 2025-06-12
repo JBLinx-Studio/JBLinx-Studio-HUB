@@ -8,16 +8,6 @@
 # - Deploys to Vercel using Vercel CLI if build type is 'vercel'.
 # - Notifies deployment status (success or failure).
 
-# Automated Deployment Workflow
-# - Triggered on push to main branch and manual dispatch.
-# - Sets up Node.js environment, caching npm dependencies for speed.
-# - Builds project based on selected platform (GitHub Pages or Vercel).
-# - Prepares for deployment (e.g., setting up GitHub Pages configuration).
-# - Determines deployment branch dynamically (main or gh-pages).
-# - Deploys to GitHub Pages using peaceiris/actions-gh-pages if build type is 'pages'.
-# - Deploys to Vercel using Vercel CLI if build type is 'vercel'.
-# - Notifies deployment status (success or failure).
-
 name: Automated Deployment
 
 # Trigger the workflow on push events to the main branch and manual triggers.
