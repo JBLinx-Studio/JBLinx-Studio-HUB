@@ -1,27 +1,45 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+import React, { Suspense, lazy } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ThemeProvider } from '@/contexts/ThemeContext'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+// Lazy load pages for better performance
+const Index = lazy(() => import('@/pages/Index'))
+const Projects = lazy(() => import('@/pages/Projects'))
+const Services = lazy(() => import('@/pages/Services'))
+const Blog = lazy(() => import('@/pages/Blog'))
+const About = lazy(() => import('@/pages/About'))
+const Contact = lazy(() => import('@/pages/Contact'))
 
-export default App;
+function App() {
+  return (
+    <ThemeProvider>
+      <ErrorBoundary>
+        <Router>
+          <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+            <Navigation />
+            <main className="flex-grow">
+              <Suspense fallback={<LoadingSpinner />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </ErrorBoundary>
+    </ThemeProvider>
+  )
+}
+
+export default App
