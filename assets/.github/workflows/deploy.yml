@@ -1,0 +1,100 @@
+name: Full-Stack Deployment Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "deployments"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14.x"
+
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run build
+        env:
+          VITE_CACHE_BUSTER: "${{ github.sha }}_${{ github.run_number }}_$(date +%s)"
+
+      - name: Prepare Deployment
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - name: Run Tests
+        run: npm test --if-present
+
+      - name: Performance Optimization
+        run: |
+          # Optimize bundle size
+          npm run optimize-bundle
+
+          # Compress assets
+          npm run compress-assets
+
+      - name: Security Checks
+        run: |
+          # Scan dependencies for vulnerabilities
+          npm audit
+
+          # Check for security vulnerabilities in code
+          npm audit --production
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+          clean: true
+          clean-exclude: |
+            .nojekyll
+          force: true
+          commit-message: "Deploy website to GitHub Pages [skip ci]"
+
+      - name: Notify Deployment Status
+        if: success()
+        run: echo "Deployment successful!"
+
+      - name: Notify on Failure
+        if: failure()
+        run: echo "Deployment failed!"
+
+      - name: Cleanup
+        run: npm cache clean --force
+
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-artifacts
+          path: dist
+
