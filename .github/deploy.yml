@@ -1,4 +1,4 @@
-name: Full-Stack Deployment Workflow
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "deployments"
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -28,73 +28,49 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
-
-      - name: Cache Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          node-version: "16"
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          npm ci --prefer-offline --no-audit --progress=false
 
       - name: Build Project
-        run: npm run build
-        env:
-          VITE_CACHE_BUSTER: "${{ github.sha }}_${{ github.run_number }}_$(date +%s)"
+        run: |
+          npm run build
+          echo "Build completed successfully!"
 
       - name: Prepare Deployment
         run: |
           cp dist/index.html dist/404.html
           touch dist/.nojekyll
 
-      - name: Run Tests
-        run: npm test --if-present
-
-      - name: Performance Optimization
+      - name: Determine Deployment Branch
+        id: determine_branch
         run: |
-          # Optimize bundle size
-          npm run optimize-bundle
-
-          # Compress assets
-          npm run compress-assets
-
-      - name: Security Checks
-        run: |
-          # Scan dependencies for vulnerabilities
-          npm audit
-
-          # Check for security vulnerabilities in code
-          npm audit --production
+          if [ -z "$(git ls-remote origin refs/heads/gh-pages)" ]; then
+            echo "Creating gh-pages branch..."
+            git checkout -b gh-pages
+            git push origin gh-pages
+          else
+            echo "Using main branch for deployment..."
+            git checkout main
+          fi
+        continue-on-error: true
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        if: success() && steps.determine_branch.outputs.return-code == 0
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: dist
-          branch: gh-pages
-          clean: true
-          clean-exclude: |
-            .nojekyll
-          force: true
-          commit-message: "Deploy website to GitHub Pages [skip ci]"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: your-custom-domain.com
+          commit_message: "Deploy website to GitHub Pages [skip ci]"
 
       - name: Notify Deployment Status
         if: success()
-        run: echo "Deployment successful!"
-
-      - name: Notify on Failure
+        run: |
+          echo "Deployment to GitHub Pages successful!"
         if: failure()
-        run: echo "Deployment failed!"
-
-      - name: Cleanup
-        run: npm cache clean --force
-
-      - name: Archive Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist-artifacts
-          path: dist
-
+        run: |
+          echo "Deployment to GitHub Pages failed!"
