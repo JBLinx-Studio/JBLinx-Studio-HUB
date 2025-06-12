@@ -11,8 +11,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.14",
-    "@radix-ui/react-tabs": "^1.1.12",
     "@stripe/react-stripe-js": "^3.6.0",
     "@stripe/stripe-js": "^7.0.0",
     "@types/react-router-dom": "^5.3.3",
@@ -21,8 +19,6 @@
     "clsx": "^2.1.1",
     "stripe": "^18.0.0",
     "tailwind-merge": "^3.3.0",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.8.3",
-    "vite": "^4.5.14"
+    "tailwindcss-animate": "^1.0.7"
   }
 }

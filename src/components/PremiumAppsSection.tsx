@@ -1,8 +1,8 @@
+
 import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import StoreDialog from '@/components/StoreDialog'
 import { ExternalLink, Code, Activity, Bot, CheckSquare, Sparkles, Database, Palette, Brain } from 'lucide-react'
 
 const premiumApps = [
@@ -97,38 +97,56 @@ export default function PremiumAppsSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {premiumApps.map((app, index) => (
-            <StoreDialog key={index} app={app}>
-              <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 cursor-pointer">
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-2">
-                    <app.icon className="h-10 w-10 text-primary" />
-                    <Badge className={`${getStatusColor(app.status)} text-white`}>
-                      {app.status}
-                    </Badge>
+            <Card key={index} className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20">
+              <CardHeader>
+                <div className="flex items-start justify-between mb-2">
+                  <app.icon className="h-10 w-10 text-primary" />
+                  <Badge className={`${getStatusColor(app.status)} text-white`}>
+                    {app.status}
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl">{app.name}</CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
+                  {app.category}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {app.description}
+                </p>
+                
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-sm">Key Features:</h4>
+                  <ul className="space-y-1">
+                    {app.features.map((feature, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-center">
+                        <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-4 border-t">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xl font-bold text-primary">{app.pricing}</span>
+                    <span className="text-sm text-muted-foreground">per month</span>
                   </div>
-                  <CardTitle className="text-xl">{app.name}</CardTitle>
-                  <CardDescription className="text-sm text-muted-foreground">
-                    {app.category}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                    {app.description}
-                  </p>
                   
-                  <div className="pt-4 border-t">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-bold text-primary">{app.pricing}</span>
-                      <span className="text-sm text-muted-foreground">per month</span>
-                    </div>
-                    
-                    <Button className="w-full" size="sm">
-                      View Details
+                  <div className="space-y-2">
+                    <Button className="w-full" asChild>
+                      <a href={app.url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Launch App
+                      </a>
+                    </Button>
+                    <Button variant="outline" className="w-full">
+                      Learn More
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
-            </StoreDialog>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
