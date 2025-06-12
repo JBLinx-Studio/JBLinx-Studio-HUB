@@ -288,6 +288,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  <p><strong>Created by JBLinx Studio</strong></p>
+  <p><strong>Built with ❤️ by JBLinx Studio</strong></p>
   <p>Pushing the boundaries of technology, one project at a time.</p>
 </div>
