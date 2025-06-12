@@ -4,41 +4,32 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    // Development server with Vite
     "dev": "vite",
-    // Production build with Vite
     "build": "vite build",
-    // Development build for debugging
     "build:dev": "vite build --mode development",
-    // Linting using ESLint
     "lint": "eslint .",
-    // Automated testing with Jest
     "test": "jest",
-    // Install Husky Git hooks
     "prepare": "husky install",
-    // Trigger build after dependencies installation
     "postinstall": "npm run build",
-    // Run lint and build after tests
-    "posttest": "npm run lint && npm run build"
+    "posttest": "npm run lint && npm run build",
+    "install:deps": "npm install",
+    "update:deps": "npm update",
+    "format": "prettier --write .",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    // Production dependencies
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.0",
-    "@radix-ui/react-alert-dialog": "^1.1.1",
-    // Add more production dependencies as needed
+    "@radix-ui/react-alert-dialog": "^1.1.1"
   },
   "devDependencies": {
-    // Development dependencies
-    "@eslint/js": "^9.9.0",
+    "@eslint/eslint": "^9.9.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    // Additional development dependencies
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "husky": "^7.0.0",
@@ -48,41 +39,31 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
-    // Add more dev dependencies here
   },
   "husky": {
-    // Configure pre-commit hook with lint-staged
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    // Automatically format and lint staged files
     "*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write",
-      "eslint --fix"
+      "eslint --fix",
+      "tsc --noEmit"
     ]
   },
-  "scripts": {
-    // Development server with Vite
-    "dev": "vite",
-    // Production build with Vite
-    "build": "vite build",
-    // Development build for debugging
-    "build:dev": "vite build --mode development",
-    // Linting using ESLint
-    "lint": "eslint .",
-    // Automated testing with Jest
-    "test": "jest",
-    // Install Husky Git hooks
-    "prepare": "husky install",
-    // Trigger build after dependencies installation
-    "postinstall": "npm run build",
-    // Run lint and build after tests
-    "posttest": "npm run lint && npm run build",
-    // Automatically install missing dependencies
-    "install:deps": "npm install",
-    // Automatically update dependencies and lock file
-    "update:deps": "npm update"
-  }
+  "browserslist": [
+    "last 2 versions",
+    "> 1%"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/your-repo.git"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "description": "Your project description"
 }
