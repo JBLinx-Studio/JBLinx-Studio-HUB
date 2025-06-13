@@ -280,10 +280,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support & Contact
 
-- **Website**: [https://jblinx.studio](https://jblinx.studio)
-- **Email**: hello@jblinx.studio
-- **LinkedIn**: [JBLinx Studio](https://linkedin.com/company/jblinx-studio)
-- **GitHub**: [github.com/jblinx-studio](https://github.com/jblinx-studio)
+- **Website**: [https://JBLinx-Studio.github.io/JBLinx-Studio-HUB/]
+- **Email**: ContactJBLinx.Studio@Gamil.com
+- **LinkedIn**: [JBLinx Studio](https://linkedin.com/company/JBLinx-Studio)
+- **GitHub**: [https://github.com/JBLinx-Studio]
 
 ---
 
