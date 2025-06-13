@@ -1,69 +1,80 @@
 {
-  "name": "your-project-name",
+  "name": "jblinx-studio-hub",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite --port 8080",
+    "build": "tsc && vite build",
     "build:dev": "vite build --mode development",
-    "lint": "eslint .",
-    "test": "jest",
-    "prepare": "husky install",
-    "postinstall": "npm run build",
-    "posttest": "npm run lint && npm run build",
-    "install:deps": "npm install",
-    "update:deps": "npm update",
-    "format": "prettier --write .",
-    "check-types": "tsc --noEmit"
+    "build:prod": "vite build --mode production",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "clean": "rimraf dist node_modules/.vite",
+    "reinstall": "npm run clean && npm install",
+    "update:deps": "npx npm-check-updates -u && npm install",
+    "deploy:pages": "npm run build && gh-pages -d dist",
+    "deploy:vercel": "vercel --prod",
+    "prepare": "husky install || true",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
-    "@radix-ui/react-accordion": "^1.2.0",
-    "@radix-ui/react-alert-dialog": "^1.1.1"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0"
   },
   "devDependencies": {
-    "@eslint/eslint": "^9.9.0",
-    "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
+    "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
-    "husky": "^7.0.0",
-    "jest": "^27.5.1",
-    "lint-staged": "^12.0.0",
-    "prettier": "^2.5.1",
+    "gh-pages": "^6.1.1",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "postcss": "^8.4.41",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "vite": "^5.4.1",
+    "vitest": "^2.0.5"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write",
+    "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
-      "tsc --noEmit"
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
     ]
   },
   "browserslist": [
+    "> 0.5%",
     "last 2 versions",
-    "> 1%"
+    "not dead"
   ],
   "engines": {
-    "node": ">=14"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/orgs/JBLinx-Studio/repositories"
+    "url": "https://github.com/JBLinx-Studio/JBLinx-Studio-HUB"
   },
-  "author": "JulianArtisan408",
+  "author": "JulianArtisan408 <ContactJBLinxStudio@Gmail.com>",
   "license": "MIT",
-  "description": "Web-App"
+  "description": "Professional HUB Website"
 }
