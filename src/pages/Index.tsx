@@ -1,17 +1,21 @@
 
 import React from 'react'
 import HeroSection from '@/components/HeroSection'
-import ServicesSection from '@/components/ServicesSection'
-import ProjectsSection from '@/components/ProjectsSection'
+import PortfolioShowcase from '@/components/PortfolioShowcase'
+import ProjectStats from '@/components/ProjectStats'
+import TechStack from '@/components/TechStack'
 import PremiumAppsSection from '@/components/PremiumAppsSection'
+import ServicesSection from '@/components/ServicesSection'
 
 export default function Index() {
   return (
     <div className="min-h-screen">
       <HeroSection />
+      <ProjectStats />
+      <PortfolioShowcase />
       <PremiumAppsSection />
+      <TechStack />
       <ServicesSection />
-      <ProjectsSection />
     </div>
   )
 }
