@@ -1,81 +1,28 @@
 {
-  "name": "jblinx-studio-hub",
-  "private": true,
+  "name": "workspace",
   "version": "1.0.0",
-  "type": "module",
+  "main": "main.js",
   "scripts": {
-    "dev": "vite --port 8080",
-    "build": "tsc && vite build",
-    "build:dev": "vite build --mode development",
-    "build:prod": "vite build --mode production",
-    "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --ext ts,tsx --fix",
-    "type-check": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage",
-    "clean": "rimraf dist node_modules/.vite",
-    "reinstall": "npm run clean && npm install",
-    "update:deps": "npx npm-check-updates -u && npm install",
-    "deploy:pages": "npm run build && gh-pages -d dist",
-    "deploy:vercel": "vercel --prod",
-    "prepare": "husky install || true",
-    "pre-commit": "lint-staged"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "vite build --mode development"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
-    "lovable-tagger": "^1.1.8",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.0"
-  },
-  "devDependencies": {
-    "@types/node": "^22.5.5",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.1",
-    "@typescript-eslint/parser": "^8.0.1",
-    "@vitejs/plugin-react": "^4.3.1",
-    "autoprefixer": "^10.4.20",
-    "eslint": "^9.9.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "gh-pages": "^6.1.1",
-    "husky": "^9.1.5",
-    "lint-staged": "^15.2.10",
-    "postcss": "^8.4.41",
-    "prettier": "^3.3.3",
-    "rimraf": "^6.0.1",
-    "tailwindcss": "^3.4.10",
-    "typescript": "^5.5.3",
-    "vite": "^5.4.1",
-    "vitest": "^2.0.5"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
-  },
-  "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead"
-  ],
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JBLinx-Studio/JBLinx-Studio-HUB"
-  },
-  "author": "JulianArtisan408 <ContactJBLinxStudio@Gmail.com>",
-  "license": "MIT",
-  "description": "Professional HUB Website"
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-tabs": "^1.1.12",
+    "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "^7.0.0",
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.5.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "stripe": "^18.0.0",
+    "tailwind-merge": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.8.3",
+    "vite": "^4.5.14"
+  }
 }

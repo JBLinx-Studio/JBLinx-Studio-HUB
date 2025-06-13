@@ -1,24 +1,22 @@
+
 MIT License
 
 Copyright (c) 2024 JBLinx Studio
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use the Software solely for personal or internal business purposes. Any use of the Software for purposes other than personal or internal business use, including but not limited to copying, modification, distribution, sublicensing, or sale, is strictly prohibited without prior written permission from JBLinx Studio.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Conditions of Use:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-License Grant: This license grants the right to use the Software solely for personal or internal business purposes. All copies or substantial portions of the Software must include the above copyright notice and this permission notice.
-
-Disclaimer of Warranty:
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL JBLinx Studio, ITS CONTRIBUTORS, OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Additional Terms:
-
-Limitation of Liability: In no event shall JBLinx Studio, its contributors, or copyright holders be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) arising in any way out of the use of the Software, even if advised of the possibility of such damage.
-
-Legal Compliance: Users of the Software are solely responsible for ensuring compliance with all applicable laws, regulations, and legal requirements in their use of the Software.
-
-Termination:
-
-Termination of License: This license automatically terminates if you fail to comply with its terms and conditions. Upon termination, you must destroy all copies of the Software in your possession or control.
-
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
