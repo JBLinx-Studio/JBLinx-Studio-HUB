@@ -25,6 +25,11 @@ function App() {
       <ErrorBoundary>
         <Router>
           <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+            {/* VERY VISIBLE CHANGE - Debug banner */}
+            <div className="bg-red-500 text-white text-center py-2 font-bold text-lg">
+              🔥 JBLINX STUDIO - WEBSITE SUCCESSFULLY UPDATED! 🔥
+            </div>
+            
             <Navigation />
             <main className="flex-grow">
               <Suspense fallback={<LoadingSpinner />}>
