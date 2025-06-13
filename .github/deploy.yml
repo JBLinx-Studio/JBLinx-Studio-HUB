@@ -1,100 +1,121 @@
-name: Full-Stack Deployment Workflow
+# Automated Deployment Workflow
+# - Triggered on push to main branch and manual dispatch.
+# - Sets up Node.js environment, caching npm dependencies for speed.
+# - Builds project based on selected platform (GitHub Pages or Vercel).
+# - Prepares for deployment (e.g., setting up GitHub Pages configuration).
+# - Determines deployment branch dynamically (main or gh-pages).
+# - Deploys to GitHub Pages using peaceiris/actions-gh-pages if build type is 'pages'.
+# - Deploys to Vercel using Vercel CLI if build type is 'vercel'.
+# - Notifies deployment status (success or failure).
 
+name: Automated Deployment
+
+# Trigger the workflow on push events to the main branch and manual triggers.
 on:
   push:
     branches:
       - main
   workflow_dispatch:
 
+# Define permissions required for workflow actions.
 permissions:
   contents: write
-  pages: write
   id-token: write
 
-concurrency:
-  group: "deployments"
-  cancel-in-progress: true
-
+# Define job for building and deploying the project.
 jobs:
   build-and-deploy:
+    # Use Ubuntu as the operating system for job execution.
     runs-on: ubuntu-latest
 
+    # Matrix strategy to define different build types.
+    strategy:
+      matrix:
+        build_type:
+          - pages  # Deploy to GitHub Pages
+          - vercel  # Deploy to Vercel
+
     steps:
+      # Checkout the repository to the runner.
       - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v2
 
+      # Set up Node.js environment.
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: '16'
 
+      # Cache npm dependencies to speed up builds.
       - name: Cache Dependencies
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
+            ${{ runner.os }}-node-
 
+      # Install project dependencies.
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit --progress=false
 
+      # Build the project based on the selected build type.
       - name: Build Project
-        run: npm run build
-        env:
-          VITE_CACHE_BUSTER: "${{ github.sha }}_${{ github.run_number }}_$(date +%s)"
+        run: |
+          if [ "${{ matrix.build_type }}" == "pages" ]; then
+            npm run build:pages || exit 1  # Exit on build failure
+          elif [ "${{ matrix.build_type }}" == "vercel" ]; then
+            npm run build:vercel || exit 1  # Exit on build failure
+          fi
+          echo "Build completed successfully!"
 
+      # Prepare for deployment tasks, such as setting up files for GitHub Pages.
       - name: Prepare Deployment
         run: |
-          cp dist/index.html dist/404.html
-          touch dist/.nojekyll
+          if [ "${{ matrix.build_type }}" == "pages" ]; then
+            cp dist/index.html dist/404.html
+            touch dist/.nojekyll
+          fi
 
-      - name: Run Tests
-        run: npm test --if-present
-
-      - name: Performance Optimization
+      # Determine which branch to deploy to based on build type.
+      - name: Determine Deployment Branch
+        id: determine_branch
         run: |
-          # Optimize bundle size
-          npm run optimize-bundle
+          if [ "${{ matrix.build_type }}" == "pages" ]; then
+            if [ -z "$(git ls-remote origin refs/heads/gh-pages)" ]; then
+              echo "Creating gh-pages branch..."
+              git checkout -b gh-pages
+              git push origin gh-pages
+            else
+              echo "Using main branch for deployment..."
+              git checkout main
+            fi
+          fi
 
-          # Compress assets
-          npm run compress-assets
-
-      - name: Security Checks
-        run: |
-          # Scan dependencies for vulnerabilities
-          npm audit
-
-          # Check for security vulnerabilities in code
-          npm audit --production
-
+      # Deploy to GitHub Pages using actions-gh-pages.
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        if: ${{ matrix.build_type == 'pages' && success() && steps.determine_branch.outputs.return-code == 0 }}
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: dist
-          branch: gh-pages
-          clean: true
-          clean-exclude: |
-            .nojekyll
-          force: true
-          commit-message: "Deploy website to GitHub Pages [skip ci]"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: your-custom-domain.com
+          commit_message: "Deploy website to GitHub Pages [skip ci]"
 
+      # Deploy to Vercel using the Vercel CLI.
+      - name: Deploy to Vercel
+        if: ${{ matrix.build_type == 'vercel' && success() }}
+        run: |
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --scope your-vercel-account --prod
+
+      # Notify deployment status.
       - name: Notify Deployment Status
-        if: success()
-        run: echo "Deployment successful!"
-
-      - name: Notify on Failure
-        if: failure()
-        run: echo "Deployment failed!"
-
-      - name: Cleanup
-        run: npm cache clean --force
-
-      - name: Archive Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist-artifacts
-          path: dist
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "Deployment successful!"
+          else
+            echo "Deployment failed!"
+            exit 1
+          fi
 

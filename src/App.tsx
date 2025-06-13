@@ -13,6 +13,9 @@ const Projects = lazy(() => import('@/pages/Projects'))
 const Services = lazy(() => import('@/pages/Services'))
 const Store = lazy(() => import('@/pages/Store'))
 const Blog = lazy(() => import('@/pages/Blog'))
+const DevLogs = lazy(() => import('@/pages/DevLogs'))
+const Books = lazy(() => import('@/pages/Books'))
+const Tutorials = lazy(() => import('@/pages/Tutorials'))
 const About = lazy(() => import('@/pages/About'))
 const Contact = lazy(() => import('@/pages/Contact'))
 
@@ -22,6 +25,11 @@ function App() {
       <ErrorBoundary>
         <Router>
           <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+            {/* VERY VISIBLE CHANGE - Debug banner */}
+            <div className="bg-red-500 text-white text-center py-2 font-bold text-lg">
+              🔥 JBLINX STUDIO - WEBSITE SUCCESSFULLY UPDATED! 🔥
+            </div>
+            
             <Navigation />
             <main className="flex-grow">
               <Suspense fallback={<LoadingSpinner />}>
@@ -31,6 +39,9 @@ function App() {
                   <Route path="/services" element={<Services />} />
                   <Route path="/store" element={<Store />} />
                   <Route path="/blog" element={<Blog />} />
+                  <Route path="/dev-logs" element={<DevLogs />} />
+                  <Route path="/books" element={<Books />} />
+                  <Route path="/tutorials" element={<Tutorials />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />
                 </Routes>
