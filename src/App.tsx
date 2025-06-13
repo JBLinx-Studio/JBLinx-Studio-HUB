@@ -13,6 +13,9 @@ const Projects = lazy(() => import('@/pages/Projects'))
 const Services = lazy(() => import('@/pages/Services'))
 const Store = lazy(() => import('@/pages/Store'))
 const Blog = lazy(() => import('@/pages/Blog'))
+const DevLogs = lazy(() => import('@/pages/DevLogs'))
+const Books = lazy(() => import('@/pages/Books'))
+const Tutorials = lazy(() => import('@/pages/Tutorials'))
 const About = lazy(() => import('@/pages/About'))
 const Contact = lazy(() => import('@/pages/Contact'))
 
@@ -31,6 +34,9 @@ function App() {
                   <Route path="/services" element={<Services />} />
                   <Route path="/store" element={<Store />} />
                   <Route path="/blog" element={<Blog />} />
+                  <Route path="/dev-logs" element={<DevLogs />} />
+                  <Route path="/books" element={<Books />} />
+                  <Route path="/tutorials" element={<Tutorials />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />
                 </Routes>
