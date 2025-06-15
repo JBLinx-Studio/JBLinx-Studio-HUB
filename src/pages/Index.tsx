@@ -1,3 +1,4 @@
+
 import React from 'react'
 import HeroSection from '@/components/HeroSection'
 import PortfolioShowcase from '@/components/PortfolioShowcase'
@@ -8,7 +9,7 @@ import ServicesSection from '@/components/ServicesSection'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Zap, Rocket, Star, Code } from 'lucide-react'
+import { Zap, Rocket, Star, Code, ArrowRight } from 'lucide-react'
 import AnnouncementBanner from "@/components/index/AnnouncementBanner";
 import FeaturedAnnounceSection from "@/components/index/FeaturedAnnounceSection";
 import HeroGrid from "@/components/index/HeroGrid";
