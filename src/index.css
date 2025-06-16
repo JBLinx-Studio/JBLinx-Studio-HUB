@@ -4,40 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
-
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
     --radius: 0.5rem;
-
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -51,28 +39,20 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -95,6 +75,7 @@
   body {
     @apply bg-background text-foreground font-sans;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
   }
 
   html {
@@ -102,25 +83,141 @@
   }
 }
 
-/* Custom scrollbar styles */
+/* Modern scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
-  border-radius: 4px;
+  background: linear-gradient(to bottom, #3b82f6, #6366f1);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #2563eb, #7c3aed);
+  background: linear-gradient(to bottom, #2563eb, #4f46e5);
 }
 
-/* Smooth animations for elements entering viewport */
+/* Modern animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation classes */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out;
+}
+
+/* Modern card styles */
+.card-modern {
+  @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
+}
+
+.card-modern:hover {
+  transform: translateY(-4px);
+}
+
+/* Gradient backgrounds */
+.gradient-blue {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-modern {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Button styles */
+.btn-primary-modern {
+  @apply bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl;
+}
+
+.btn-secondary-modern {
+  @apply border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full font-semibold hover:border-blue-600 hover:text-blue-600 transition-all duration-300;
+}
+
+/* Typography */
+.heading-xl {
+  @apply text-5xl lg:text-7xl font-bold text-gray-900 leading-tight;
+}
+
+.heading-lg {
+  @apply text-4xl lg:text-5xl font-bold text-gray-900 leading-tight;
+}
+
+.heading-md {
+  @apply text-3xl lg:text-4xl font-bold text-gray-900;
+}
+
+.text-lead-modern {
+  @apply text-xl text-gray-600 leading-relaxed;
+}
+
+/* Section spacing */
+.section-padding-modern {
+  @apply py-24;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Intersection observer animations */
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
@@ -132,82 +229,13 @@
   transform: translateY(0);
 }
 
-/* Enhanced animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* Modern shadows */
+.shadow-modern {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
-}
-
-.float-animation {
-  animation: float 3s ease-in-out infinite;
-}
-
-.glow-animation {
-  animation: glow 2s ease-in-out infinite;
-}
-
-/* Professional gradient backgrounds */
-.gradient-bg-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.gradient-bg-secondary {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.gradient-bg-tech {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-}
-
-/* Card hover effects */
-.card-hover {
-  transition: all 0.3s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* Button styles matching Techida template */
-.btn-primary {
-  @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-xl transition-all duration-300;
-}
-
-.btn-secondary {
-  @apply border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300;
-}
-
-/* Professional spacing and layout */
-.section-padding {
-  @apply py-20;
-}
-
-.container-custom {
-  @apply container mx-auto px-4;
-}
-
-/* Typography enhancements */
-.heading-primary {
-  @apply text-4xl lg:text-5xl font-bold text-gray-900 leading-tight;
-}
-
-.heading-secondary {
-  @apply text-3xl lg:text-4xl font-bold text-gray-900;
-}
-
-.text-lead {
-  @apply text-xl text-gray-600 leading-relaxed;
-}
-
-/* Loading states */
-.skeleton {
-  @apply bg-gray-200 animate-pulse rounded;
+.shadow-modern-lg {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive utilities */
@@ -215,17 +243,12 @@
   .mobile-hidden {
     display: none;
   }
-}
-
-/* Professional shadows */
-.shadow-soft {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.shadow-medium {
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-}
-
-.shadow-strong {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  
+  .heading-xl {
+    @apply text-4xl;
+  }
+  
+  .heading-lg {
+    @apply text-3xl;
+  }
 }
