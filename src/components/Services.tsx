@@ -1,162 +1,87 @@
 
 import React from 'react';
-import { 
-  Gamepad2, 
-  Smartphone, 
-  Globe, 
-  Code, 
-  Database,
-  Shield,
-  Cloud,
-  Palette,
-  ArrowRight,
-  CheckCircle
-} from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
-      icon: Gamepad2,
-      title: "Game Development",
-      description: "Create engaging and immersive gaming experiences with cutting-edge technology and innovative gameplay mechanics.",
-      features: ["Unity Development", "Mobile Games", "Web Games", "AR/VR Solutions"],
-      color: "from-purple-500 to-purple-600"
+      title: "Application Design",
+      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      icon: (
+        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+        </svg>
+      )
     },
     {
-      icon: Smartphone,
-      title: "Mobile App Development",
-      description: "Native and cross-platform mobile applications that deliver exceptional user experiences and drive business growth.",
-      features: ["iOS Development", "Android Development", "React Native", "Flutter"],
-      color: "from-blue-500 to-blue-600"
+      title: "Web Hosting",
+      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      icon: (
+        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+      )
     },
     {
-      icon: Globe,
-      title: "Web Development",
-      description: "Modern, responsive web applications built with latest technologies, optimized for performance and user experience.",
-      features: ["React/Next.js", "Vue.js", "Progressive Web Apps", "E-commerce Solutions"],
-      color: "from-green-500 to-green-600"
+      title: "Social Media",
+      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      icon: (
+        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+        </svg>
+      )
     },
     {
-      icon: Code,
-      title: "Custom Software",
-      description: "Tailored software solutions designed to meet your specific business requirements and operational efficiency.",
-      features: ["Enterprise Solutions", "API Development", "System Integration", "Process Automation"],
-      color: "from-orange-500 to-orange-600"
+      title: "SEO Optimization",
+      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      icon: (
+        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+      )
     },
     {
-      icon: Database,
-      title: "Database Solutions",
-      description: "Robust database design, optimization, and management for scalable and secure data handling across platforms.",
-      features: ["Database Design", "Performance Optimization", "Data Migration", "Cloud Databases"],
-      color: "from-indigo-500 to-indigo-600"
+      title: "Cloud Server",
+      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      icon: (
+        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+        </svg>
+      )
     },
     {
-      icon: Shield,
-      title: "Cybersecurity",
-      description: "Comprehensive security solutions to protect your digital assets and ensure compliance with industry standards.",
-      features: ["Security Audits", "Penetration Testing", "Compliance Management", "Risk Assessment"],
-      color: "from-red-500 to-red-600"
-    },
-    {
-      icon: Cloud,
-      title: "Cloud Services",
-      description: "Cloud migration, deployment, and management services to optimize infrastructure and reduce operational costs.",
-      features: ["AWS/Azure/GCP", "Cloud Migration", "DevOps", "Infrastructure as Code"],
-      color: "from-cyan-500 to-cyan-600"
-    },
-    {
-      icon: Palette,
-      title: "UI/UX Design",
-      description: "User-centered design solutions that create intuitive and visually appealing digital experiences for your audience.",
-      features: ["User Research", "Wireframing", "Prototyping", "Visual Design"],
-      color: "from-pink-500 to-pink-600"
+      title: "Data Security",
+      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      icon: (
+        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      )
     }
   ];
 
   return (
-    <section id="services" className="py-20 bg-gray-50">
+    <section id="services" className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-blue-100 text-blue-600 rounded-full px-4 py-2 mb-4">
-            <CheckCircle size={16} className="mr-2" />
-            <span className="text-sm font-semibold uppercase tracking-wider">Our Services</span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Professional IT Solutions
-            <span className="block text-blue-600">For Your Business</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We deliver comprehensive technology solutions that drive innovation, enhance productivity, 
-            and accelerate your business growth in the digital marketplace.
-          </p>
-        </div>
-
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {services.map((service, index) => (
             <div 
               key={index}
-              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 relative overflow-hidden"
+              className="text-center p-8 group hover:shadow-lg transition-shadow duration-300"
             >
-              {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-              
-              <div className="relative z-10">
-                {/* Icon */}
-                <div className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <service.icon className="text-white" size={32} />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed text-sm">
-                  {service.description}
-                </p>
-
-                {/* Features */}
-                <ul className="space-y-2 mb-6">
-                  {service.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center text-sm text-gray-600">
-                      <div className={`w-1.5 h-1.5 bg-gradient-to-r ${service.color} rounded-full mr-3 flex-shrink-0`}></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Learn More Button */}
-                <button className="flex items-center text-blue-600 font-semibold group-hover:text-blue-700 transition-colors text-sm">
-                  Learn More
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
-                </button>
+              {/* Icon */}
+              <div className="flex justify-center mb-6">
+                {service.icon}
               </div>
+
+              {/* Content */}
+              <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                {service.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {service.description}
+              </p>
             </div>
           ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-black/10"></div>
-            <div className="relative z-10">
-              <h3 className="text-3xl lg:text-4xl font-bold mb-4">
-                Ready to Transform Your Business?
-              </h3>
-              <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-                Let's discuss your project requirements and create a customized solution that drives real results for your business.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
-                  Get Free Consultation
-                </button>
-                <button className="border-2 border-white/30 text-white px-8 py-4 rounded-lg hover:bg-white/10 transition-colors backdrop-blur-sm">
-                  View Our Portfolio
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
