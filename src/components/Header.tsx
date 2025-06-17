@@ -45,8 +45,12 @@ const Header = () => {
                 className="h-12 w-auto"
                 onError={(e) => {
                   // Fallback to text logo if image fails
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling.style.display = 'block';
+                  const imgElement = e.currentTarget as HTMLImageElement;
+                  const textElement = imgElement.nextElementSibling as HTMLElement;
+                  imgElement.style.display = 'none';
+                  if (textElement) {
+                    textElement.style.display = 'block';
+                  }
                 }}
               />
               <div className="text-2xl font-bold" style={{display: 'none'}}>
