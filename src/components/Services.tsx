@@ -1,75 +1,95 @@
 
 import React from 'react';
+import { Gamepad2, Monitor, Smartphone, Book, PenTool, Database, Shield, Cloud } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
-      title: "Application Design",
-      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-        </svg>
-      )
+      title: "Game Development",
+      description: "Create immersive gaming experiences across multiple platforms with cutting-edge technology and innovative gameplay.",
+      icon: <Gamepad2 className="w-8 h-8 text-white" />,
+      color: "from-purple-500 to-indigo-600",
+      features: ["Unity & Unreal Engine", "Mobile & PC Games", "VR/AR Experiences"]
     },
     {
-      title: "Web Hosting",
-      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
-      )
+      title: "Web Applications",
+      description: "Build responsive, scalable web applications that deliver exceptional user experiences and drive business growth.",
+      icon: <Monitor className="w-8 h-8 text-white" />,
+      color: "from-blue-500 to-cyan-600",
+      features: ["React & Next.js", "Full-Stack Solutions", "E-commerce Platforms"]
     },
     {
-      title: "Social Media",
-      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-        </svg>
-      )
+      title: "Mobile Development",
+      description: "Develop native and cross-platform mobile applications that engage users and enhance your digital presence.",
+      icon: <Smartphone className="w-8 h-8 text-white" />,
+      color: "from-green-500 to-emerald-600",
+      features: ["iOS & Android", "Flutter & React Native", "App Store Optimization"]
     },
     {
-      title: "SEO Optimization",
-      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-        </svg>
-      )
+      title: "Digital Publishing",
+      description: "Comprehensive publishing services for books, e-books, and digital content with professional editing and design.",
+      icon: <Book className="w-8 h-8 text-white" />,
+      color: "from-orange-500 to-red-600",
+      features: ["Book Writing & Editing", "E-book Creation", "Content Strategy"]
     },
     {
-      title: "Cloud Server",
-      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
-        </svg>
-      )
+      title: "Content Creation",
+      description: "Engaging blogs, articles, and dev logs that showcase expertise and connect with your target audience.",
+      icon: <PenTool className="w-8 h-8 text-white" />,
+      color: "from-pink-500 to-rose-600",
+      features: ["Technical Writing", "Blog Management", "SEO Optimization"]
     },
     {
-      title: "Data Security",
-      description: "Ronsectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-        </svg>
-      )
+      title: "Database Solutions",
+      description: "Design and implement robust database architectures that ensure data integrity and optimal performance.",
+      icon: <Database className="w-8 h-8 text-white" />,
+      color: "from-indigo-500 to-purple-600",
+      features: ["SQL & NoSQL", "Data Migration", "Performance Tuning"]
+    },
+    {
+      title: "Cybersecurity",
+      description: "Protect your digital assets with comprehensive security audits, penetration testing, and security consulting.",
+      icon: <Shield className="w-8 h-8 text-white" />,
+      color: "from-red-500 to-pink-600",
+      features: ["Security Audits", "Penetration Testing", "Compliance Solutions"]
+    },
+    {
+      title: "Cloud Services",
+      description: "Leverage cloud technologies for scalable, reliable, and cost-effective infrastructure solutions.",
+      icon: <Cloud className="w-8 h-8 text-white" />,
+      color: "from-cyan-500 to-blue-600",
+      features: ["AWS & Azure", "DevOps Solutions", "Cloud Migration"]
     }
   ];
 
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="section bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16 animate-on-scroll">
+          <div className="inline-flex items-center bg-blue-100 text-blue-600 rounded-full px-4 py-2 mb-4">
+            <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
+            <span className="text-sm font-semibold uppercase tracking-wider">Our Services</span>
+          </div>
+          <h2 className="section-title">
+            Comprehensive Digital Solutions
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            From innovative games to enterprise applications, we deliver end-to-end digital solutions 
+            that drive success and exceed expectations.
+          </p>
+        </div>
+
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {services.map((service, index) => (
             <div 
               key={index}
-              className="text-center p-8 group hover:shadow-lg transition-shadow duration-300"
+              className="service-card group animate-on-scroll"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Icon */}
-              <div className="flex justify-center mb-6">
+              <div className={`icon bg-gradient-to-r ${service.color} mb-6`}>
                 {service.icon}
               </div>
 
@@ -77,11 +97,59 @@ const Services = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
                 {service.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              
+              <p className="text-gray-600 mb-6 leading-relaxed">
                 {service.description}
               </p>
+
+              {/* Features */}
+              <ul className="space-y-2">
+                {service.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-center text-sm text-gray-500">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Learn More Link */}
+              <div className="mt-6 pt-4 border-t border-gray-100">
+                <a 
+                  href={`/${service.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="text-blue-600 hover:text-blue-700 font-semibold text-sm inline-flex items-center group"
+                >
+                  Learn More
+                  <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              </div>
             </div>
           ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center animate-on-scroll">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white">
+            <h3 className="text-3xl font-bold mb-4">Ready to Start Your Project?</h3>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              Let's discuss how we can bring your vision to life with our comprehensive digital solutions.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="#contact" 
+                className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg inline-flex items-center justify-center"
+              >
+                Get Free Consultation
+              </a>
+              <a 
+                href="#portfolio" 
+                className="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white/10 transition-colors inline-flex items-center justify-center"
+              >
+                View Our Work
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
