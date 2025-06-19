@@ -20,8 +20,8 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-200 shadow-sm">
-      <div className="theme-container">
-        <div className="theme-flex-between h-20">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <div className="flex items-center">
@@ -54,7 +54,7 @@ const Header = () => {
               
               {isServicesDropdownOpen && (
                 <div 
-                  className="absolute top-full left-0 mt-2 w-72 theme-card py-4 z-50"
+                  className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-200 py-4 z-50"
                   onMouseLeave={() => setIsServicesDropdownOpen(false)}
                 >
                   {services.map((service, index) => (
@@ -86,7 +86,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center">
             <a 
               href="#contact" 
-              className="theme-button-primary"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
             >
               Get Started
             </a>
@@ -137,7 +137,7 @@ const Header = () => {
             
             <a 
               href="#contact" 
-              className="theme-button-primary text-center mt-4"
+              className="block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold text-center mt-4"
             >
               Get Started
             </a>
