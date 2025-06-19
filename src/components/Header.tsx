@@ -119,6 +119,14 @@ const Header = () => {
                 <span>Portfolio</span>
                 <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
               </a>
+              <a href="#shop" className="nav-link relative group">
+                <span>Shop</span>
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+              </a>
+              <a href="#blog" className="nav-link relative group">
+                <span>Blog</span>
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+              </a>
               <a href="#about" className="nav-link relative group">
                 <span>About</span>
                 <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
@@ -174,6 +182,12 @@ const Header = () => {
                 
                 <a href="#portfolio" className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium">
                   Portfolio
+                </a>
+                <a href="#shop" className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium">
+                  Shop
+                </a>
+                <a href="#blog" className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium">
+                  Blog
                 </a>
                 <a href="#about" className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium">
                   About
