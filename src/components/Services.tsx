@@ -48,8 +48,8 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section id="services" className="theme-section bg-gray-50">
+      <div className="theme-container">
         {/* Enhanced Header */}
         <div className="text-center mb-20">
           <div className="inline-flex items-center bg-blue-100 text-blue-600 rounded-full px-6 py-3 mb-8 shadow-sm">
@@ -57,28 +57,28 @@ const Services = () => {
             <span className="text-sm font-bold uppercase tracking-wider">Our Services</span>
           </div>
           
-          <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+          <h2 className="theme-heading-secondary mb-8">
             Comprehensive
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600">
+            <span className="block theme-text-gradient">
               Tech Solutions
             </span>
           </h2>
           
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="theme-body-text max-w-3xl mx-auto">
             From innovative games to enterprise applications, we deliver end-to-end digital solutions 
             that drive success and transform your business vision into reality.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
+        <div className="theme-grid-auto mb-20">
           {services.map((service, index) => (
             <div 
               key={index}
-              className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-200"
+              className="theme-card group transition-all duration-500 transform hover:-translate-y-2"
             >
               {/* Header Image */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-64 overflow-hidden rounded-t-3xl">
                 <img 
                   src={service.bgImage} 
                   alt={service.title}
@@ -89,11 +89,11 @@ const Services = () => {
                 {/* Overlay Content */}
                 <div className="absolute inset-0 flex flex-col justify-between p-8">
                   <div className="flex justify-between items-start">
-                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/30">
+                    <div className="w-16 h-16 theme-glassmorphism rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       {service.icon}
                     </div>
                     
-                    <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/30">
+                    <div className="theme-glassmorphism rounded-xl px-4 py-2">
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-yellow-300 fill-current" />
                         <span className="text-white font-semibold text-sm">{service.stats.rating}</span>
@@ -115,7 +115,7 @@ const Services = () => {
 
               {/* Content */}
               <div className="p-8">
-                <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+                <p className="theme-body-text mb-6">
                   {service.description}
                 </p>
 
@@ -132,12 +132,10 @@ const Services = () => {
                 {/* CTA */}
                 <Link 
                   to={service.link}
-                  className="inline-flex items-center justify-center w-full bg-gradient-to-r from-gray-50 to-gray-100 hover:from-blue-50 hover:to-purple-50 rounded-2xl p-4 group/cta transition-all duration-300 border border-gray-200 hover:border-blue-200 hover:shadow-md"
+                  className="theme-button-secondary w-full justify-center group/cta"
                 >
-                  <span className="font-semibold text-gray-700 group-hover/cta:text-blue-600 transition-colors">
-                    Learn More
-                  </span>
-                  <ArrowRight className="ml-2 w-5 h-5 text-gray-400 group-hover/cta:text-blue-600 group-hover/cta:translate-x-1 transition-all" />
+                  <span>Learn More</span>
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover/cta:translate-x-1 transition-all" />
                 </Link>
               </div>
             </div>
@@ -145,7 +143,7 @@ const Services = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="bg-white rounded-3xl p-12 shadow-lg border border-gray-200 mb-20">
+        <div className="theme-card p-12 shadow-lg mb-20">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {[
               { number: "100+", label: "Projects Completed", icon: TrendingUp },
@@ -164,7 +162,6 @@ const Services = () => {
 
         {/* CTA Section */}
         <div className="text-center bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-3xl p-16 text-white relative overflow-hidden">
-          {/* Background pattern */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute inset-0" style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.2'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -177,7 +174,7 @@ const Services = () => {
               <span className="block text-yellow-300">Digital Presence?</span>
             </h3>
             
-            <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
               Let's discuss how we can bring your vision to life with our comprehensive 
               digital solutions and expert development team.
             </p>

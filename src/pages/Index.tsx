@@ -1,58 +1,22 @@
 
-import React, { useEffect } from 'react';
-import Header from '../components/Header';
-import Hero from '../components/Hero';
-import Services from '../components/Services';
-import About from '../components/About';
-import Portfolio from '../components/Portfolio';
-import Contact from '../components/Contact';
-import Footer from '../components/Footer';
+import React from 'react';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import Services from '@/components/Services';
+import Portfolio from '@/components/Portfolio';
+import About from '@/components/About';
+import Contact from '@/components/Contact';
+import Footer from '@/components/Footer';
 
 const Index = () => {
-  useEffect(() => {
-    // Initialize animations on scroll
-    const animateOnScroll = () => {
-      const elements = document.querySelectorAll('.animate-on-scroll');
-      elements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < window.innerHeight - elementVisible) {
-          element.classList.add('animate');
-        }
-      });
-    };
-
-    // Header scroll effect
-    const handleScroll = () => {
-      const header = document.querySelector('.header');
-      if (window.scrollY > 100) {
-        header?.classList.add('scrolled');
-      } else {
-        header?.classList.remove('scrolled');
-      }
-      
-      animateOnScroll();
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    animateOnScroll(); // Initial check
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <div className="min-h-screen">
       <Header />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Portfolio />
-        <Contact />
-      </main>
+      <Hero />
+      <Services />
+      <Portfolio />
+      <About />
+      <Contact />
       <Footer />
     </div>
   );
