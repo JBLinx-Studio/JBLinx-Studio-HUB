@@ -1,14 +1,32 @@
 
-export const navigationItems = [
+interface DropdownItem {
+  name: string;
+  href: string;
+  description: string;
+}
+
+interface DropdownCategory {
+  title: string;
+  items: DropdownItem[];
+}
+
+interface NavigationItem {
+  name: string;
+  href: string;
+  type: 'link' | 'dropdown';
+  categories?: DropdownCategory[];
+}
+
+export const navigationItems: NavigationItem[] = [
   {
     name: 'Home',
     href: '#home',
-    type: 'link'
+    type: 'link' as const
   },
   {
     name: 'Services',
     href: '#services',
-    type: 'dropdown',
+    type: 'dropdown' as const,
     categories: [
       {
         title: 'Development',
@@ -42,7 +60,7 @@ export const navigationItems = [
   {
     name: 'Products',
     href: '#shop',
-    type: 'dropdown',
+    type: 'dropdown' as const,
     categories: [
       {
         title: 'Digital Products',
@@ -67,7 +85,7 @@ export const navigationItems = [
   {
     name: 'Resources',
     href: '#blog',
-    type: 'dropdown',
+    type: 'dropdown' as const,
     categories: [
       {
         title: 'Content',
@@ -92,16 +110,16 @@ export const navigationItems = [
   {
     name: 'Portfolio',
     href: '#portfolio',
-    type: 'link'
+    type: 'link' as const
   },
   {
     name: 'About',
     href: '#about',
-    type: 'link'
+    type: 'link' as const
   },
   {
     name: 'Contact',
     href: '#contact',
-    type: 'link'
+    type: 'link' as const
   }
 ];
