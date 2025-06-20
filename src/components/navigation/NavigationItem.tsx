@@ -3,11 +3,22 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import MegaDropdown from './MegaDropdown';
 
+interface DropdownItem {
+  name: string;
+  href: string;
+  description: string;
+}
+
+interface DropdownCategory {
+  title: string;
+  items: DropdownItem[];
+}
+
 interface NavigationItemProps {
   name: string;
   href: string;
   type: 'link' | 'dropdown';
-  categories?: any[];
+  categories?: DropdownCategory[];
 }
 
 const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categories }) => {
