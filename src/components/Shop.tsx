@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ShoppingCart, Star, Heart, Eye, Download, Book, Gamepad2, Code, Database } from 'lucide-react';
+import { ShoppingCart, Star, Heart, Eye, Download, Book, Gamepad2, Code, Database, Monitor, Smartphone } from 'lucide-react';
 
 const Shop = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -8,100 +8,147 @@ const Shop = () => {
   const products = [
     {
       id: 1,
-      title: "Advanced React Development Guide",
+      title: "Unity Game Development Mastery",
       type: "E-Book",
       price: 49.99,
       originalPrice: 69.99,
       rating: 4.9,
       reviews: 234,
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop",
       category: "Books",
       icon: Book,
-      description: "Complete guide to mastering React with advanced patterns and best practices.",
+      description: "Complete guide to Unity game development with real-world projects and advanced techniques.",
       bestseller: true,
       downloadCount: "5.2k"
     },
     {
       id: 2,
-      title: "Indie Game Development Toolkit",
-      type: "Software Package",
-      price: 199.99,
-      originalPrice: 299.99,
+      title: "FastAPI Backend Template",
+      type: "Code Template",
+      price: 79.99,
+      originalPrice: 119.99,
       rating: 4.8,
       reviews: 156,
-      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=400&h=300&fit=crop",
-      category: "Games",
-      icon: Gamepad2,
-      description: "Complete toolkit for indie game developers with assets, scripts, and tutorials.",
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
+      category: "Templates",
+      icon: Database,
+      description: "Production-ready FastAPI template with MySQL, authentication, and comprehensive documentation.",
       featured: true,
-      downloadCount: "2.8k"
+      downloadCount: "2.8k",
+      github: "https://github.com/JBLinx-Studio/FastAPI-MySQL-Template"
     },
     {
       id: 3,
-      title: "Database Design Mastery Course",
+      title: "React Web Development Course",
       type: "Video Course",
       price: 89.99,
       originalPrice: 129.99,
       rating: 4.7,
       reviews: 89,
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop",
       category: "Courses",
-      icon: Database,
-      description: "Learn advanced database design principles and optimization techniques.",
+      icon: Monitor,
+      description: "Master modern React development with TypeScript, Tailwind CSS, and best practices.",
       downloadCount: "1.9k"
     },
     {
       id: 4,
-      title: "Web Development Starter Kit",
-      type: "Template Bundle",
-      price: 79.99,
-      originalPrice: 119.99,
-      rating: 4.6,
+      title: "Horror Game Development Guide",
+      type: "Dev Log Series",
+      price: 39.99,
+      originalPrice: 59.99,
+      rating: 4.9,
       reviews: 312,
-      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop",
-      category: "Templates",
-      icon: Code,
-      description: "Professional website templates and components for modern web development.",
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop",
+      category: "Game Logs",
+      icon: Gamepad2,
+      description: "Behind-the-scenes development process of our horror game with Unity techniques and secrets.",
       downloadCount: "4.1k"
     },
     {
       id: 5,
-      title: "Mobile App UI Kit",
-      type: "Design Assets",
-      price: 39.99,
-      originalPrice: 59.99,
+      title: "Flutter Mobile App Template",
+      type: "Mobile Template",
+      price: 59.99,
+      originalPrice: 89.99,
       rating: 4.8,
       reviews: 198,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
-      category: "Design",
-      icon: Code,
-      description: "Beautiful mobile app UI components and design systems.",
-      downloadCount: "3.5k"
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
+      category: "Templates",
+      icon: Smartphone,
+      description: "Complete Flutter template with Firebase integration and modern UI components.",
+      downloadCount: "3.5k",
+      github: "https://github.com/JBLinx-Studio/Flutter-Firebase-Template"
     },
     {
       id: 6,
-      title: "DevOps Automation Scripts",
-      type: "Script Collection",
-      price: 59.99,
-      originalPrice: 89.99,
+      title: "Survival Game Dev Insights",
+      type: "Dev Log Series",
+      price: 29.99,
+      originalPrice: 49.99,
       rating: 4.9,
       reviews: 145,
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
-      category: "Tools",
-      icon: Code,
-      description: "Ready-to-use automation scripts for CI/CD and deployment workflows.",
+      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop",
+      category: "Game Logs",
+      icon: Gamepad2,
+      description: "Weekly development updates and insights from our open-world survival game project.",
       downloadCount: "2.3k"
+    },
+    {
+      id: 7,
+      title: "AI Tic-Tac-Toe Source Code",
+      type: "Source Code",
+      price: 19.99,
+      originalPrice: 29.99,
+      rating: 4.6,
+      reviews: 87,
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=300&fit=crop",
+      category: "Source Code",
+      icon: Code,
+      description: "Complete source code for AI-powered Tic-Tac-Toe game with minimax algorithm implementation.",
+      downloadCount: "1.8k",
+      github: "https://github.com/JBLinx-Studio/AI-Tic-Tac-Toe"
+    },
+    {
+      id: 8,
+      title: "Next.js E-commerce Template",
+      type: "Web Template",
+      price: 99.99,
+      originalPrice: 149.99,
+      rating: 4.8,
+      reviews: 267,
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
+      category: "Templates",
+      icon: Monitor,
+      description: "Full-featured e-commerce platform with payment integration and admin dashboard.",
+      featured: true,
+      downloadCount: "4.7k",
+      github: "https://github.com/JBLinx-Studio/NextJS-Ecommerce"
+    },
+    {
+      id: 9,
+      title: "Space Game Development Series",
+      type: "Dev Log Series",
+      price: 44.99,
+      originalPrice: 64.99,
+      rating: 4.7,
+      reviews: 123,
+      image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=400&h=300&fit=crop",
+      category: "Game Logs",
+      icon: Gamepad2,
+      description: "Comprehensive development journey of our space exploration open-world game.",
+      downloadCount: "2.1k"
     }
   ];
 
-  const categories = ['All', 'Books', 'Games', 'Courses', 'Templates', 'Design', 'Tools'];
+  const categories = ['All', 'Books', 'Templates', 'Courses', 'Game Logs', 'Source Code'];
 
   const filteredProducts = activeCategory === 'All' 
     ? products 
     : products.filter(product => product.category === activeCategory);
 
   return (
-    <section id="shop" className="py-20 bg-gradient-to-br from-white via-blue-50 to-purple-50 relative overflow-hidden">
+    <section id="shop" className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-10 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl animate-float"></div>
@@ -113,16 +160,17 @@ const Shop = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center bg-white shadow-lg rounded-full px-6 py-3 mb-8 border border-gray-100">
             <ShoppingCart className="w-5 h-5 text-blue-600 mr-3" />
-            <span className="text-sm font-semibold text-gray-700">Digital Products & Resources</span>
+            <span className="text-sm font-semibold text-gray-700">JBLinx Studio Products</span>
           </div>
           
           <h2 className="text-5xl lg:text-6xl font-bold mb-8 text-gray-900">
-            Premium Tech
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600"> Products</span>
+            Premium Digital
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600">Products & Resources</span>
           </h2>
           
           <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            Discover our curated collection of professional development resources, tools, and assets designed to accelerate your projects and enhance your skills.
+            Discover our curated collection of professional development resources, game development insights, 
+            templates, and educational content designed to accelerate your projects.
           </p>
         </div>
 
@@ -205,6 +253,21 @@ const Shop = () => {
                   {product.description}
                 </p>
 
+                {/* GitHub link if available */}
+                {product.github && (
+                  <div className="mb-4">
+                    <a 
+                      href={product.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <Code className="w-4 h-4 mr-1" />
+                      View on GitHub
+                    </a>
+                  </div>
+                )}
+
                 {/* Rating */}
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="flex items-center">
@@ -227,7 +290,7 @@ const Shop = () => {
                   
                   <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center space-x-2">
                     <ShoppingCart className="w-4 h-4" />
-                    <span>Add to Cart</span>
+                    <span>Buy Now</span>
                   </button>
                 </div>
               </div>
@@ -235,12 +298,46 @@ const Shop = () => {
           ))}
         </div>
 
-        {/* Load More */}
-        <div className="text-center mt-12">
-          <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-4 rounded-2xl font-semibold text-lg hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:-translate-y-1 flex items-center space-x-3 mx-auto">
-            <span>View All Products</span>
-            <ShoppingCart className="w-5 h-5" />
-          </button>
+        {/* Featured Section */}
+        <div className="mt-20 bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 rounded-3xl p-12 text-white relative overflow-hidden">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Cpath d='M40 40c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm20-20c11.046 0 20-8.954 20-20s-8.954-20-20-20-20 8.954-20 20 8.954 20 20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}></div>
+          </div>
+
+          <div className="relative z-10 text-center">
+            <h3 className="text-4xl font-bold mb-4">Get Access to Exclusive Content</h3>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              Join our community and get early access to new products, development insights, and exclusive discounts.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-white text-blue-600 px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100 transition-colors shadow-2xl">
+                Join Community
+              </button>
+              <button className="border-2 border-white text-white px-8 py-4 rounded-2xl hover:bg-white/10 transition-colors">
+                Browse All Products
+              </button>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 pt-8 border-t border-white/20">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">25k+</div>
+                <div className="text-sm text-blue-100 uppercase tracking-wider">Downloads</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">4.8</div>
+                <div className="text-sm text-blue-100 uppercase tracking-wider">Average Rating</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">500+</div>
+                <div className="text-sm text-blue-100 uppercase tracking-wider">Happy Customers</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
