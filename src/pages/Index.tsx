@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   useEffect(() => {
-    // Initialize animations on scroll
+    // Enhanced animations on scroll
     const animateOnScroll = () => {
       const elements = document.querySelectorAll('.animate-on-scroll');
       elements.forEach((element) => {
@@ -27,7 +27,7 @@ const Index = () => {
       });
     };
 
-    // Header scroll effect
+    // Enhanced header scroll effect
     const handleScroll = () => {
       const header = document.querySelector('.header');
       if (window.scrollY > 100) {
@@ -39,18 +39,36 @@ const Index = () => {
       animateOnScroll();
     };
 
+    // Smooth scrolling for anchor links
+    const handleAnchorClick = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.hash) {
+        e.preventDefault();
+        const element = document.querySelector(target.hash);
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+    };
+
+    // Add event listeners
     window.addEventListener('scroll', handleScroll);
+    document.addEventListener('click', handleAnchorClick);
     animateOnScroll(); // Initial check
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleAnchorClick);
     };
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Header />
-      <main>
+      <main className="relative">
         <Hero />
         <About />
         <Services />
