@@ -14,12 +14,12 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   useEffect(() => {
-    // Enhanced animations on scroll
+    // Enhanced scroll animations
     const animateOnScroll = () => {
       const elements = document.querySelectorAll('.animate-on-scroll');
       elements.forEach((element) => {
         const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
+        const elementVisible = 100;
         
         if (elementTop < window.innerHeight - elementVisible) {
           element.classList.add('animate');
@@ -27,10 +27,12 @@ const Index = () => {
       });
     };
 
-    // Enhanced header scroll effect
+    // Enhanced header scroll effect with backdrop blur
     const handleScroll = () => {
       const header = document.querySelector('.header');
-      if (window.scrollY > 100) {
+      const scrolled = window.scrollY > 50;
+      
+      if (scrolled) {
         header?.classList.add('scrolled');
       } else {
         header?.classList.remove('scrolled');
@@ -54,21 +56,39 @@ const Index = () => {
       }
     };
 
+    // Parallax effect for hero section
+    const handleParallax = () => {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.parallax');
+      
+      parallaxElements.forEach((element) => {
+        const speed = 0.5;
+        const yPos = -(scrolled * speed);
+        (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
+      });
+    };
+
     // Add event listeners
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', () => {
+      handleScroll();
+      handleParallax();
+    });
     document.addEventListener('click', handleAnchorClick);
-    animateOnScroll(); // Initial check
+    
+    // Initial checks
+    animateOnScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleParallax);
       document.removeEventListener('click', handleAnchorClick);
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-light">
       <Header />
-      <main className="relative">
+      <main className="relative overflow-hidden">
         <Hero />
         <About />
         <Services />

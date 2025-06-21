@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Github, ExternalLink, Gamepad2, Code, Database, Smartphone, Monitor } from 'lucide-react';
+import { Github, ExternalLink, Gamepad2, Code, Database, Smartphone, Monitor, Star } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -90,26 +90,43 @@ const Portfolio = () => {
   };
 
   return (
-    <section id="portfolio" className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        {/* Compact Header */}
-        <div className="text-center mb-10">
-          <h2 className="text-4xl font-bold text-gray-900 mb-3">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Projects</span>
+    <section id="portfolio" className="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative">
+      {/* Background Elements */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-purple-500 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-6 relative">
+        {/* Enhanced Header */}
+        <div className="text-center mb-16 max-w-4xl mx-auto">
+          <div className="inline-flex items-center bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-100 rounded-full px-6 py-3 mb-6 shadow-lg">
+            <Star className="w-5 h-5 mr-2 text-purple-600 animate-pulse" />
+            <span className="text-sm font-bold text-purple-700 tracking-wide">Our Digital Portfolio</span>
+          </div>
+          
+          <h2 className="text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight">
+            Featured
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 italic font-light">
+              Creations
+            </span>
           </h2>
-          <p className="text-lg text-gray-600">Games, templates, and applications we've built.</p>
+          
+          <p className="text-xl text-gray-600 leading-relaxed font-light">
+            A showcase of games, templates, and applications born from passion and precision.
+          </p>
         </div>
 
-        {/* Compact Filters */}
-        <div className="flex justify-center gap-2 mb-8">
+        {/* Enhanced Filters */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {filters.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+              className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
                 activeFilter === filter
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg transform scale-105' 
+                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md'
               }`}
             >
               {filter}
@@ -117,53 +134,60 @@ const Portfolio = () => {
           ))}
         </div>
 
-        {/* Compact Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => {
+        {/* Enhanced Projects Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {filteredProjects.map((project, index) => {
             const IconComponent = project.icon;
             return (
-              <div key={project.id} className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group">
-                <div className="relative">
+              <div key={project.id} className="group bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                <div className="relative overflow-hidden">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-2 left-2">
-                    <span className={`${getStatusColor(project.status)} text-white px-2 py-1 rounded text-xs font-medium`}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                  
+                  <div className="absolute top-4 left-4">
+                    <span className={`${getStatusColor(project.status)} text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg`}>
                       {project.status}
                     </span>
                   </div>
-                  <div className="absolute top-2 right-2 flex space-x-1">
+                  
+                  <div className="absolute top-4 right-4 flex space-x-2">
                     <a 
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-7 h-7 bg-black/70 rounded-full flex items-center justify-center text-white hover:bg-black/90"
+                      className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 hover:scale-110"
                     >
-                      <Github className="w-3 h-3" />
+                      <Github className="w-4 h-4" />
                     </a>
                     <a 
                       href={project.github}
-                      className="w-7 h-7 bg-black/70 rounded-full flex items-center justify-center text-white hover:bg-black/90"
+                      className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 hover:scale-110"
                     >
-                      <ExternalLink className="w-3 h-3" />
+                      <ExternalLink className="w-4 h-4" />
                     </a>
                   </div>
                 </div>
 
-                <div className="p-4">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <IconComponent className="w-4 h-4 text-blue-600" />
-                    <span className="text-xs font-medium text-gray-600">{project.category}</span>
+                <div className="p-6">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                      <IconComponent className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-purple-600 uppercase tracking-wide">{project.category}</span>
+                      <h3 className="text-xl font-bold text-gray-900">{project.title}</h3>
+                    </div>
                   </div>
-
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3">{project.description}</p>
                   
-                  <div className="flex flex-wrap gap-1">
-                    {project.tech.map((tech, index) => (
-                      <span key={index} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                  <p className="text-gray-600 mb-4 leading-relaxed">{project.description}</p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, techIndex) => (
+                      <span key={techIndex} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium">
                         {tech}
                       </span>
                     ))}
@@ -174,17 +198,24 @@ const Portfolio = () => {
           })}
         </div>
 
-        {/* Compact GitHub CTA */}
-        <div className="text-center mt-10">
-          <a 
-            href="https://github.com/orgs/JBLinx-Studio/repositories"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
-          >
-            <Github className="w-4 h-4 mr-2" />
-            View All Repositories
-          </a>
+        {/* Enhanced GitHub CTA */}
+        <div className="text-center">
+          <div className="inline-block bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 shadow-2xl">
+            <h3 className="text-2xl font-bold text-white mb-4">Explore More on GitHub</h3>
+            <p className="text-gray-300 mb-6 max-w-lg">
+              Dive deeper into our open-source projects and contribute to our growing community.
+            </p>
+            <a 
+              href="https://github.com/orgs/JBLinx-Studio/repositories"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-white text-gray-900 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <Github className="w-5 h-5 mr-3" />
+              View All Repositories
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
