@@ -53,6 +53,7 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
+              <Link to="/" className="nav-link">Home</Link>
               {navigationItems.map((item, index) => (
                 <NavigationItem
                   key={index}
@@ -62,6 +63,7 @@ const Header = () => {
                   categories={item.categories}
                 />
               ))}
+              <Link to="/blog" className="nav-link">Blog</Link>
             </nav>
 
             {/* CTA Button */}
@@ -85,6 +87,14 @@ const Header = () => {
           {isMenuOpen && (
             <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-2xl border-t border-gray-100 z-50 animate-in slide-in-from-top-4 duration-300">
               <div className="px-4 py-6 space-y-4 max-h-96 overflow-y-auto">
+                <Link 
+                  to="/" 
+                  className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Home
+                </Link>
+                
                 {navigationItems.map((item, index) => (
                   <div key={index}>
                     {item.type === 'link' ? (
@@ -120,6 +130,14 @@ const Header = () => {
                     )}
                   </div>
                 ))}
+                
+                <Link 
+                  to="/blog" 
+                  className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Blog
+                </Link>
                 
                 {/* Mobile CTA */}
                 <div className="pt-4">
