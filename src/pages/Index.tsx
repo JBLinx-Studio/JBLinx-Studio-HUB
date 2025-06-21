@@ -4,17 +4,19 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
 import About from '../components/About';
+import Blog from '../components/Blog';
 import Portfolio from '../components/Portfolio';
 import Stats from '../components/Stats';
 import Shop from '../components/Shop';
-import Blog from '../components/Blog';
 import Newsletter from '../components/Newsletter';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
 const Index = () => {
   useEffect(() => {
-    // Enhanced scroll animations
+    // Optimized scroll animations with throttling
+    let ticking = false;
+    
     const animateOnScroll = () => {
       const elements = document.querySelectorAll('.animate-on-scroll');
       elements.forEach((element) => {
@@ -27,18 +29,24 @@ const Index = () => {
       });
     };
 
-    // Enhanced header scroll effect with backdrop blur
+    // Optimized header scroll effect
     const handleScroll = () => {
-      const header = document.querySelector('.header');
-      const scrolled = window.scrollY > 50;
-      
-      if (scrolled) {
-        header?.classList.add('scrolled');
-      } else {
-        header?.classList.remove('scrolled');
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const header = document.querySelector('.header');
+          const scrolled = window.scrollY > 50;
+          
+          if (scrolled) {
+            header?.classList.add('scrolled');
+          } else {
+            header?.classList.remove('scrolled');
+          }
+          
+          animateOnScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
-      
-      animateOnScroll();
     };
 
     // Smooth scrolling for anchor links
@@ -56,23 +64,31 @@ const Index = () => {
       }
     };
 
-    // Parallax effect for hero section
+    // Throttled parallax effect
+    let parallaxTicking = false;
     const handleParallax = () => {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('.parallax');
-      
-      parallaxElements.forEach((element) => {
-        const speed = 0.5;
-        const yPos = -(scrolled * speed);
-        (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
-      });
+      if (!parallaxTicking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.pageYOffset;
+          const parallaxElements = document.querySelectorAll('.parallax');
+          
+          parallaxElements.forEach((element) => {
+            const speed = 0.3; // Reduced speed for better performance
+            const yPos = -(scrolled * speed);
+            (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
+          });
+          parallaxTicking = false;
+        });
+        parallaxTicking = true;
+      }
     };
 
-    // Add event listeners
+    // Add event listeners with passive option for better performance
     window.addEventListener('scroll', () => {
       handleScroll();
       handleParallax();
-    });
+    }, { passive: true });
+    
     document.addEventListener('click', handleAnchorClick);
     
     // Initial checks
@@ -91,11 +107,11 @@ const Index = () => {
       <main className="relative overflow-hidden">
         <Hero />
         <About />
+        <Blog />
         <Services />
         <Stats />
         <Portfolio />
         <Shop />
-        <Blog />
         <Newsletter />
         <Contact />
       </main>
