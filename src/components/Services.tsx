@@ -1,10 +1,9 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Gamepad2, Code, Database, Smartphone, Sparkles, Zap, Hexagon, Star, Crown } from 'lucide-react';
+import { ArrowRight, Gamepad2, Code, Database, Smartphone, Sparkles, Zap, Star, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Services = () => {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeService, setActiveService] = useState(0);
 
   const services = [
@@ -62,7 +61,7 @@ const Services = () => {
           {[...Array(12)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-32 h-32 border border-gold-400/20 rotate-45"
+              className="absolute w-32 h-32 border border-yellow-400/20 rotate-45"
               style={{
                 left: `${(i * 25) % 100}%`,
                 top: `${(i * 15) % 100}%`,
@@ -126,7 +125,7 @@ const Services = () => {
                     <div className="flex items-start justify-between mb-8">
                       <div className="relative">
                         <div className={`w-24 h-24 bg-gradient-to-br ${services[activeService].color} rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500 shadow-2xl`}>
-                          <services[activeService].icon className="w-12 h-12 text-white" />
+                          {React.createElement(services[activeService].icon, { className: "w-12 h-12 text-white" })}
                         </div>
                         <div className="absolute -top-2 -right-2">
                           <Star className="w-8 h-8 text-yellow-400 animate-pulse" />
@@ -180,7 +179,7 @@ const Services = () => {
                 >
                   <div className="flex items-center space-x-6">
                     <div className={`relative w-16 h-16 ${service.bgPattern} rounded-2xl flex items-center justify-center transition-transform duration-300 ${activeService === index ? 'scale-110' : 'hover:scale-105'}`}>
-                      <service.icon className="w-8 h-8 text-white" />
+                      {React.createElement(service.icon, { className: "w-8 h-8 text-white" })}
                       {activeService === index && (
                         <div className="absolute -top-1 -right-1">
                           <Crown className="w-6 h-6 text-yellow-400 animate-pulse" />
