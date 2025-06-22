@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Gamepad2, Code, Database, Smartphone, Sparkles, Zap, Hexagon } from 'lucide-react';
+import { ArrowRight, Gamepad2, Code, Database, Smartphone, Sparkles, Zap, Hexagon, Star, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Services = () => {
@@ -10,118 +10,118 @@ const Services = () => {
   const services = [
     {
       icon: Gamepad2,
-      title: "Game Universe",
-      subtitle: "Immersive Digital Worlds",
-      description: "Unity-powered survival, horror, and strategy games that transport players to extraordinary realms of possibility and wonder",
-      color: "from-purple-500 to-pink-500",
+      title: "Divine Gaming Realms",
+      subtitle: "Sacred Digital Experiences",
+      description: "Unity-powered spiritual journeys and mystical gaming experiences that transcend ordinary reality",
+      color: "from-purple-600 via-indigo-600 to-blue-600",
       link: "/game-development",
-      stats: { projects: "15+", rating: "4.9★" },
-      tech: ["Unity", "C#", "Blender"],
-      hexColor: "bg-purple-500/20"
+      stats: { projects: "15+", rating: "★★★★★" },
+      tech: ["Unity", "C#", "Sacred Geometry"],
+      bgPattern: "bg-purple-600/10"
     },
     {
       icon: Code,
-      title: "Web Alchemy",
-      subtitle: "Modern Digital Experiences", 
-      description: "React, Next.js, and cutting-edge web solutions that redefine user interaction and digital engagement",
-      color: "from-blue-500 to-cyan-500",
+      title: "Sacred Web Architecture",
+      subtitle: "Divine Digital Foundations", 
+      description: "React, Next.js, and blessed web solutions that create sanctified digital experiences",
+      color: "from-blue-600 via-cyan-600 to-teal-600",
       link: "/web-applications",
-      stats: { projects: "30+", rating: "5.0★" },
-      tech: ["React", "Next.js", "TypeScript"],
-      hexColor: "bg-blue-500/20"
+      stats: { projects: "30+", rating: "★★★★★" },
+      tech: ["React", "Next.js", "Divine Code"],
+      bgPattern: "bg-blue-600/10"
     },
     {
       icon: Database,
-      title: "Backend Architecture",
-      subtitle: "Scalable Infrastructure",
-      description: "FastAPI, MySQL, and enterprise-grade architectures that power the digital revolution with unwavering reliability",
-      color: "from-green-500 to-emerald-500", 
+      title: "Holy Data Sanctuaries",
+      subtitle: "Blessed Backend Systems",
+      description: "FastAPI, MySQL, and consecrated architectures that serve divine digital purposes",
+      color: "from-green-600 via-emerald-600 to-teal-600", 
       link: "/web-applications",
-      stats: { projects: "25+", rating: "4.8★" },
-      tech: ["FastAPI", "MySQL", "Redis"],
-      hexColor: "bg-green-500/20"
+      stats: { projects: "25+", rating: "★★★★★" },
+      tech: ["FastAPI", "MySQL", "Sacred APIs"],
+      bgPattern: "bg-green-600/10"
     },
     {
       icon: Smartphone,
-      title: "Mobile Revolution",
-      subtitle: "Cross-Platform Excellence",
-      description: "Flutter applications that blur the line between mobile and desktop experiences in revolutionary ways",
-      color: "from-orange-500 to-red-500",
+      title: "Mobile Sanctification",
+      subtitle: "Portable Divine Experiences",
+      description: "Flutter applications that bring sacred digital experiences to every device",
+      color: "from-orange-600 via-red-600 to-pink-600",
       link: "/web-applications", 
-      stats: { projects: "12+", rating: "4.9★" },
-      tech: ["Flutter", "Dart", "Firebase"],
-      hexColor: "bg-orange-500/20"
+      stats: { projects: "12+", rating: "★★★★★" },
+      tech: ["Flutter", "Dart", "Mobile Sacred"],
+      bgPattern: "bg-orange-600/10"
     }
   ];
 
   return (
     <section className="py-32 bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative overflow-hidden">
-      {/* Hexagonal Beehive Background Pattern */}
+      {/* Orthodox Sacred Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 opacity-30">
-          {[...Array(20)].map((_, i) => (
-            <Hexagon 
+        <div className="absolute inset-0 opacity-20">
+          {[...Array(12)].map((_, i) => (
+            <div
               key={i}
-              className={`absolute w-20 h-20 text-cyan-500/10 animate-pulse`}
+              className="absolute w-32 h-32 border border-gold-400/20 rotate-45"
               style={{
-                left: `${(i * 15) % 100}%`,
-                top: `${(i * 8) % 100}%`,
-                animationDelay: `${i * 0.2}s`
+                left: `${(i * 25) % 100}%`,
+                top: `${(i * 15) % 100}%`,
+                borderRadius: '20%',
+                animation: `pulse ${3 + (i % 3)}s infinite`
               }}
             />
           ))}
         </div>
         
-        {/* Gradient overlays for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.15),transparent)] opacity-80"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(168,85,247,0.15),transparent)] opacity-80"></div>
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+        {/* Sacred Light Rays */}
+        <div className="absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-yellow-400/30 via-transparent to-transparent transform -translate-x-1/2"></div>
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-blue-400/20 via-transparent to-transparent"></div>
+        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-purple-400/20 via-transparent to-transparent"></div>
+        
+        {/* Orthodox Cross Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,215,0,0.1),transparent_50%)]"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Unified Header with Hexagonal Elements */}
+        {/* Sacred Header */}
         <div className="text-center mb-24">
-          <div className="inline-flex items-center bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-xl border border-cyan-500/30 rounded-full px-8 py-4 mb-10 group hover:scale-105 transition-all duration-300">
-            <div className="relative">
-              <Hexagon className="w-6 h-6 text-cyan-400 mr-4 animate-pulse" />
-              <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-xl"></div>
-            </div>
-            <span className="text-white/90 font-semibold tracking-wide">Digital Consciousness Grid</span>
+          <div className="inline-flex items-center bg-gradient-to-r from-yellow-500/20 to-purple-500/20 backdrop-blur-xl border border-yellow-500/30 rounded-full px-8 py-4 mb-10 group hover:scale-105 transition-all duration-300">
+            <Crown className="w-6 h-6 text-yellow-400 mr-4 animate-pulse" />
+            <span className="text-white/90 font-semibold tracking-wide">Sacred Digital Ministries</span>
+            <Sparkles className="w-5 h-5 text-purple-400 ml-4" />
           </div>
           
           <h2 className="text-6xl lg:text-8xl font-black text-white mb-8 leading-tight relative">
             <span className="relative inline-block">
-              Collective
-              <div className="absolute -top-6 -right-6 w-4 h-4 bg-cyan-400 rounded-full animate-ping"></div>
+              Divine
+              <div className="absolute -top-4 -right-4 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
             </span>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
-              Intelligence
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400">
+              Craftsmanship
             </span>
           </h2>
           
           <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
-            Where individual expertise merges into a unified digital consciousness, 
-            creating solutions that transcend conventional boundaries.
+            Where sacred tradition meets digital innovation, creating blessed experiences 
+            that elevate the spirit and sanctify technology.
           </p>
         </div>
 
-        {/* Hexagonal Service Grid */}
+        {/* Sacred Services Grid */}
         <div className="relative mb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Main Featured Service - Hexagonal Design */}
+            {/* Featured Sacred Service */}
             <div className="relative">
               <Link
                 to={services[activeService].link}
                 className="group block relative transform hover:scale-105 transition-all duration-700"
               >
-                {/* Hexagonal border effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-purple-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
                 
                 <div className="relative bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-10 overflow-hidden">
                   <div className={`absolute inset-0 bg-gradient-to-br ${services[activeService].color} opacity-0 group-hover:opacity-20 transition-opacity duration-700`}></div>
                   
-                  {/* Hexagonal icon container */}
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-8">
                       <div className="relative">
@@ -129,21 +129,21 @@ const Services = () => {
                           <services[activeService].icon className="w-12 h-12 text-white" />
                         </div>
                         <div className="absolute -top-2 -right-2">
-                          <Hexagon className="w-8 h-8 text-cyan-400 animate-spin" style={{ animationDuration: '3s' }} />
+                          <Star className="w-8 h-8 text-yellow-400 animate-pulse" />
                         </div>
                       </div>
                       
                       <div className="text-right space-y-2">
-                        <div className="text-white/60 text-sm font-medium">{services[activeService].stats.projects} Projects</div>
-                        <div className="text-cyan-400 font-bold text-xl">{services[activeService].stats.rating}</div>
+                        <div className="text-white/60 text-sm font-medium">{services[activeService].stats.projects} Sacred Works</div>
+                        <div className="text-yellow-400 font-bold text-xl">{services[activeService].stats.rating}</div>
                       </div>
                     </div>
                     
                     <div className="space-y-4 mb-8">
-                      <h3 className="text-4xl font-black text-white group-hover:text-cyan-300 transition-colors duration-300">
+                      <h3 className="text-4xl font-black text-white group-hover:text-yellow-300 transition-colors duration-300">
                         {services[activeService].title}
                       </h3>
-                      <div className="text-cyan-400 font-bold text-lg">{services[activeService].subtitle}</div>
+                      <div className="text-yellow-400 font-bold text-lg">{services[activeService].subtitle}</div>
                       <p className="text-gray-300 text-xl leading-relaxed">{services[activeService].description}</p>
                     </div>
                     
@@ -156,8 +156,8 @@ const Services = () => {
                         ))}
                       </div>
                       
-                      <div className="flex items-center text-cyan-400 group-hover:text-white transition-colors">
-                        <span className="mr-3 font-semibold">Explore</span>
+                      <div className="flex items-center text-yellow-400 group-hover:text-white transition-colors">
+                        <span className="mr-3 font-semibold">Explore Sacred Work</span>
                         <ArrowRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-300" />
                       </div>
                     </div>
@@ -166,7 +166,7 @@ const Services = () => {
               </Link>
             </div>
 
-            {/* Service Navigation Grid */}
+            {/* Sacred Navigation Grid */}
             <div className="space-y-6">
               {services.map((service, index) => (
                 <div
@@ -174,22 +174,22 @@ const Services = () => {
                   onClick={() => setActiveService(index)}
                   className={`relative p-6 rounded-2xl cursor-pointer transition-all duration-500 transform hover:scale-105 ${
                     activeService === index 
-                      ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border-2 border-cyan-400/50 shadow-xl' 
+                      ? 'bg-gradient-to-r from-yellow-500/20 to-purple-500/20 border-2 border-yellow-400/50 shadow-xl' 
                       : 'bg-white/5 border border-white/10 hover:bg-white/10'
                   }`}
                 >
                   <div className="flex items-center space-x-6">
-                    <div className={`relative w-16 h-16 ${service.hexColor} rounded-2xl flex items-center justify-center transition-transform duration-300 ${activeService === index ? 'scale-110' : 'hover:scale-105'}`}>
+                    <div className={`relative w-16 h-16 ${service.bgPattern} rounded-2xl flex items-center justify-center transition-transform duration-300 ${activeService === index ? 'scale-110' : 'hover:scale-105'}`}>
                       <service.icon className="w-8 h-8 text-white" />
                       {activeService === index && (
                         <div className="absolute -top-1 -right-1">
-                          <Hexagon className="w-6 h-6 text-cyan-400 animate-pulse" />
+                          <Crown className="w-6 h-6 text-yellow-400 animate-pulse" />
                         </div>
                       )}
                     </div>
                     
                     <div className="flex-1">
-                      <h4 className={`text-xl font-bold mb-1 transition-colors ${activeService === index ? 'text-cyan-300' : 'text-white'}`}>
+                      <h4 className={`text-xl font-bold mb-1 transition-colors ${activeService === index ? 'text-yellow-300' : 'text-white'}`}>
                         {service.title}
                       </h4>
                       <p className="text-gray-400 text-sm">{service.subtitle}</p>
@@ -202,28 +202,28 @@ const Services = () => {
                 </div>
               ))}
 
-              {/* Collective Stats */}
-              <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-8 text-center">
+              {/* Sacred Collective Stats */}
+              <div className="bg-gradient-to-r from-yellow-500/10 to-purple-500/10 backdrop-blur-xl border border-yellow-500/30 rounded-2xl p-8 text-center">
                 <div className="flex items-center justify-center mb-4">
-                  <Zap className="w-10 h-10 text-cyan-400 mr-3" />
-                  <Hexagon className="w-8 h-8 text-purple-400 animate-pulse" />
+                  <Zap className="w-10 h-10 text-yellow-400 mr-3" />
+                  <Crown className="w-8 h-8 text-purple-400 animate-pulse" />
                 </div>
                 <div className="text-4xl font-black text-white mb-2">100+</div>
-                <div className="text-cyan-300 font-semibold">Consciousness Nodes</div>
-                <div className="text-gray-400 text-sm mt-1">Connected & Active</div>
+                <div className="text-yellow-300 font-semibold">Sacred Creations</div>
+                <div className="text-gray-400 text-sm mt-1">Blessed & Active</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Unified Call-to-Action */}
+        {/* Sacred Call-to-Action */}
         <div className="text-center">
           <div className="relative inline-block group">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-70"></div>
-            <button className="relative bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-12 py-6 rounded-3xl font-bold text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-500 transform hover:scale-105 border border-white/20">
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-purple-600 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-70"></div>
+            <button className="relative bg-gradient-to-r from-yellow-500 to-purple-600 text-white px-12 py-6 rounded-3xl font-bold text-xl shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 transform hover:scale-105 border border-white/20">
               <div className="flex items-center space-x-4">
-                <Hexagon className="w-6 h-6 animate-spin" style={{ animationDuration: '2s' }} />
-                <span>Join The Digital Consciousness</span>
+                <Crown className="w-6 h-6 animate-pulse" />
+                <span>Begin Sacred Digital Journey</span>
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-300" />
               </div>
             </button>
