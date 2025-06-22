@@ -66,7 +66,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 4,
-    title: "React Component Library",
+    title: "React Component Library Mastery",
     excerpt: "Building production-ready, reusable UI components with React, TypeScript, and Tailwind CSS best practices.",
     category: 'technical',
     type: 'Technical Guide',
@@ -74,7 +74,7 @@ export const blogPosts: BlogPost[] = [
     date: '2024-01-08',
     readTime: '15 min',
     image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop',
-    featured: false,
+    featured: true,
     downloads: 167,
     tags: ['React', 'TypeScript', 'Components', 'UI'],
     difficulty: 'Intermediate'
@@ -139,6 +139,36 @@ export const blogPosts: BlogPost[] = [
     downloads: 89,
     tags: ['AI', 'Game Development', 'Behavior Trees', 'NPCs'],
     difficulty: 'Advanced'
+  },
+  {
+    id: 9,
+    title: "Progressive Web App Development",
+    excerpt: "Building modern PWAs with offline capabilities, push notifications, and native app-like experiences.",
+    category: 'tutorials',
+    type: 'Tutorial',
+    author: 'Web Team',
+    date: '2023-12-25',
+    readTime: '22 min',
+    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=400&fit=crop',
+    featured: false,
+    downloads: 156,
+    tags: ['PWA', 'Web Development', 'Service Workers', 'Mobile'],
+    difficulty: 'Intermediate'
+  },
+  {
+    id: 10,
+    title: "Indie Game Marketing Guide",
+    excerpt: "Essential strategies for marketing your indie game on a budget, from social media to influencer outreach.",
+    category: 'articles',
+    type: 'Article',
+    author: 'Marketing Team',
+    date: '2023-12-20',
+    readTime: '16 min',
+    image: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800&h=400&fit=crop',
+    featured: false,
+    downloads: 203,
+    tags: ['Marketing', 'Indie Games', 'Social Media', 'Strategy'],
+    difficulty: 'Beginner'
   }
 ];
 
