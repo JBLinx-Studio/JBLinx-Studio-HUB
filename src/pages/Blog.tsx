@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, Clock, Download, User, ArrowRight, Gamepad2, Code, BookOpen, Database, FileText, Sparkles, Eye, Star, Grid, List } from 'lucide-react';
+import { Search, Clock, Download, User, ArrowRight, Gamepad2, Code, BookOpen, Database, FileText, Sparkles, Grid, List } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { blogPosts, categories } from '../data/blogData';
@@ -61,7 +61,7 @@ const Blog = () => {
       <Header />
       
       <main className="pt-20">
-        {/* Hero Section */}
+        {/* Compact Hero Section */}
         <section className="py-8 border-b border-white/10">
           <div className="container mx-auto px-6">
             <div className="text-center mb-6">
@@ -93,7 +93,7 @@ const Blog = () => {
               </div>
             </div>
 
-            {/* Search and Filters */}
+            {/* Compact Search and Filters */}
             <div className="space-y-4">
               {/* Search Bar */}
               <div className="relative max-w-xl mx-auto">
@@ -193,70 +193,10 @@ const Blog = () => {
           </div>
         </section>
 
-        {/* Featured Content */}
-        {featuredPosts.length > 0 && (
-          <section className="py-6 border-b border-white/10">
-            <div className="container mx-auto px-6">
-              <h2 className="text-xl font-bold text-white mb-4 flex items-center">
-                <Star className="w-5 h-5 text-yellow-400 mr-2" />
-                Featured Content
-              </h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {featuredPosts.slice(0, 2).map((post) => (
-                  <article 
-                    key={post.id}
-                    className="group bg-white/5 border border-white/20 rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300"
-                  >
-                    <div className="relative h-32">
-                      <img 
-                        src={post.image} 
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute top-2 left-2 flex gap-1">
-                        <span className="bg-yellow-500 text-black px-2 py-1 rounded text-xs font-bold">
-                          Featured
-                        </span>
-                        <span className="bg-black/70 text-white px-2 py-1 rounded text-xs">
-                          {post.type}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="p-4">
-                      <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors line-clamp-2">
-                        {post.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm mb-3 line-clamp-2">
-                        {post.excerpt}
-                      </p>
-                      
-                      <div className="flex items-center justify-between text-xs text-gray-500">
-                        <div className="flex items-center space-x-2">
-                          <Clock className="w-3 h-3" />
-                          <span>{post.readTime}</span>
-                          {post.downloads && (
-                            <>
-                              <span>•</span>
-                              <Download className="w-3 h-3" />
-                              <span>{post.downloads}</span>
-                            </>
-                          )}
-                        </div>
-                        <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
         {/* Main Content */}
         <section className="py-6">
           <div className="container mx-auto px-6">
-            {regularPosts.length === 0 ? (
+            {filteredAndSortedPosts.length === 0 ? (
               <div className="text-center py-12">
                 <div className="text-4xl mb-3">📚</div>
                 <h3 className="text-xl font-bold text-white mb-2">No content found</h3>
@@ -264,7 +204,7 @@ const Blog = () => {
               </div>
             ) : (
               <div className={viewMode === 'grid' ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-4' : 'space-y-4'}>
-                {regularPosts.map((post) => (
+                {filteredAndSortedPosts.map((post) => (
                   <article 
                     key={post.id}
                     className={`group bg-white/5 border border-white/20 rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 ${
@@ -278,6 +218,11 @@ const Blog = () => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute top-2 left-2 flex gap-1">
+                        {post.featured && (
+                          <span className="bg-yellow-500 text-black px-2 py-1 rounded text-xs font-bold">
+                            Featured
+                          </span>
+                        )}
                         <span className="bg-black/70 text-white px-2 py-1 rounded text-xs">
                           {post.type}
                         </span>

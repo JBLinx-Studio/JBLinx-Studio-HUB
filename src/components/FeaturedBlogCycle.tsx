@@ -7,13 +7,8 @@ import { blogPosts } from '../data/blogData';
 const FeaturedBlogCycle = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
 
   const featuredPosts = blogPosts.filter(post => post.featured);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   useEffect(() => {
     if (!isAutoPlaying || featuredPosts.length <= 1) return;
@@ -52,9 +47,7 @@ const FeaturedBlogCycle = () => {
         </div>
 
         <div className="max-w-5xl mx-auto">
-          <div className={`bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-500 ${
-            isVisible ? 'animate-fade-in' : 'opacity-0'
-          }`}>
+          <div className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-500">
             <div className="grid lg:grid-cols-2">
               <div className="relative h-56 lg:h-80 group">
                 <img 
@@ -81,7 +74,6 @@ const FeaturedBlogCycle = () => {
                   </div>
                 )}
 
-                {/* Navigation Controls */}
                 {featuredPosts.length > 1 && (
                   <>
                     <button
