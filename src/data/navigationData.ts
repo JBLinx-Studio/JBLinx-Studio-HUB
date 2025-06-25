@@ -20,96 +20,87 @@ interface NavigationItem {
 export const navigationItems: NavigationItem[] = [
   {
     name: 'Home',
-    href: '#home',
+    href: '/',
     type: 'link' as const
   },
   {
-    name: 'Services',
-    href: '#services',
-    type: 'dropdown' as const,
-    categories: [
-      {
-        title: 'Development',
-        items: [
-          { name: 'Game Development', href: '/game-development', description: 'Unity, Unreal & custom engines' },
-          { name: 'Web Applications', href: '/web-applications', description: 'React, Vue, Angular solutions' },
-          { name: 'Mobile Apps', href: '/mobile-development', description: 'iOS, Android & cross-platform' },
-          { name: 'Desktop Software', href: '/desktop-development', description: 'Windows, Mac & Linux apps' }
-        ]
-      },
-      {
-        title: 'Publishing',
-        items: [
-          { name: 'Digital Books', href: '/digital-publishing', description: 'E-books & technical guides' },
-          { name: 'Content Creation', href: '/content-creation', description: 'Blogs, articles & dev logs' },
-          { name: 'Documentation', href: '/documentation', description: 'Technical documentation' },
-          { name: 'Tutorials', href: '/tutorials', description: 'Step-by-step guides' }
-        ]
-      },
-      {
-        title: 'Infrastructure',
-        items: [
-          { name: 'Cloud Services', href: '/cloud-services', description: 'AWS, Azure & Google Cloud' },
-          { name: 'Database Solutions', href: '/database-solutions', description: 'SQL & NoSQL databases' },
-          { name: 'Cybersecurity', href: '/cybersecurity', description: 'Security audits & protection' },
-          { name: 'DevOps', href: '/devops', description: 'CI/CD & automation' }
-        ]
-      }
-    ]
-  },
-  {
     name: 'Products',
-    href: '#shop',
+    href: '#products',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Digital Products',
+        title: 'Web Applications',
         items: [
-          { name: 'Games', href: '/shop/games', description: 'Our published games' },
-          { name: 'Software Tools', href: '/shop/tools', description: 'Development utilities' },
-          { name: 'Templates', href: '/shop/templates', description: 'Code & design templates' },
-          { name: 'Assets', href: '/shop/assets', description: 'Graphics & audio assets' }
+          { name: 'Dashboard Suite', href: '/products/dashboard', description: 'Professional analytics dashboard' },
+          { name: 'Developer Toolkit', href: '/products/devtools', description: 'Complete development suite' },
+          { name: 'Data Platform', href: '/products/analytics', description: 'Enterprise data processing' },
+          { name: 'Mobile Companion', href: '/products/mobile', description: 'Cross-platform mobile app' }
         ]
       },
       {
-        title: 'Learning Materials',
+        title: 'Games',
         items: [
-          { name: 'E-books', href: '/shop/books', description: 'Technical books & guides' },
-          { name: 'Video Courses', href: '/shop/courses', description: 'Online learning content' },
-          { name: 'Tutorials', href: '/shop/tutorials', description: 'Step-by-step tutorials' },
-          { name: 'Documentation', href: '/shop/docs', description: 'Technical documentation' }
+          { name: 'Survival World', href: '/games/survival', description: 'Open-world survival game' },
+          { name: 'Horror Depths', href: '/games/horror', description: 'Psychological horror experience' },
+          { name: 'Strategy Command', href: '/games/rts', description: 'Real-time strategy game' },
+          { name: 'All Games', href: '/games', description: 'View our complete game portfolio' }
         ]
       }
     ]
   },
   {
-    name: 'Resources',
-    href: '#blog',
+    name: 'Premium',
+    href: '#premium',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Content',
+        title: 'Subscription Plans',
         items: [
-          { name: 'Blog', href: '/blog', description: 'Latest articles & insights' },
-          { name: 'Dev Logs', href: '/dev-logs', description: 'Development progress' },
-          { name: 'Case Studies', href: '/case-studies', description: 'Project breakdowns' },
-          { name: 'Whitepapers', href: '/whitepapers', description: 'Technical deep dives' }
+          { name: 'Starter Plan', href: '/premium/starter', description: '$19/month - Individual access' },
+          { name: 'Professional Plan', href: '/premium/pro', description: '$49/month - Team features' },
+          { name: 'Enterprise Plan', href: '/premium/enterprise', description: '$99/month - Custom solutions' },
+          { name: 'Compare Plans', href: '/premium', description: 'See all features and pricing' }
+        ]
+      },
+      {
+        title: 'Enterprise',
+        items: [
+          { name: 'Custom Development', href: '/enterprise/custom', description: 'Tailored solutions' },
+          { name: 'White Label', href: '/enterprise/whitelabel', description: 'Branded applications' },
+          { name: 'API Access', href: '/enterprise/api', description: 'Direct API integration' },
+          { name: 'Contact Sales', href: '/enterprise/contact', description: 'Discuss your needs' }
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Developers',
+    href: '#developers',
+    type: 'dropdown' as const,
+    categories: [
+      {
+        title: 'Resources',
+        items: [
+          { name: 'Documentation', href: '/docs', description: 'API docs & guides' },
+          { name: 'GitHub Repos', href: 'https://github.com/orgs/JBLinx-Studio/repositories', description: 'Open source projects' },
+          { name: 'Dev Blog', href: '/blog', description: 'Technical articles' },
+          { name: 'Changelog', href: '/changelog', description: 'Latest updates' }
         ]
       },
       {
         title: 'Community',
         items: [
-          { name: 'Forums', href: '/forums', description: 'Developer discussions' },
-          { name: 'Discord', href: '/discord', description: 'Real-time chat' },
-          { name: 'Newsletter', href: '#newsletter', description: 'Weekly updates' },
-          { name: 'Events', href: '/events', description: 'Workshops & meetups' }
+          { name: 'Discord', href: '/discord', description: 'Join our community' },
+          { name: 'Forums', href: '/forums', description: 'Discussion & support' },
+          { name: 'Feature Requests', href: '/feedback', description: 'Suggest improvements' },
+          { name: 'Bug Reports', href: '/issues', description: 'Report problems' }
         ]
       }
     ]
   },
   {
-    name: 'Portfolio',
-    href: '#portfolio',
+    name: 'Blog',
+    href: '/blog',
     type: 'link' as const
   },
   {
