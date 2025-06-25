@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { Search, Clock, Download, User, ArrowRight, Filter, Grid, List, Star, TrendingUp, Calendar, Eye, Heart, Share2, Bookmark, ChevronDown, Settings, Zap, Target, Award, Layers, Code2, Database, Gamepad2, BookOpen, Sparkles, FileText } from 'lucide-react';
+import { Search, Clock, Download, User, ArrowRight, Gamepad2, Code, BookOpen, Database, FileText, Sparkles, Grid, List, Filter, Star, TrendingUp, Calendar, Settings, BarChart3, SortAsc, SortDesc, Eye, Heart, Share2, Bookmark, ChevronDown } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { blogPosts, categories } from '../data/blogData';
@@ -9,10 +9,22 @@ const Blog = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('date');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [difficultyFilter, setDifficultyFilter] = useState('all');
-  const [typeFilter, setTypeFilter] = useState('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showFilters, setShowFilters] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+  const [showSortMenu, setShowSortMenu] = useState(false);
+
+  const iconMap = {
+    FileText,
+    Code,
+    Gamepad2,
+    BookOpen,
+    Download,
+    Database,
+    Sparkles
+  };
 
   const filteredAndSortedPosts = useMemo(() => {
     let filtered = blogPosts.filter(post => {
@@ -21,427 +33,521 @@ const Blog = () => {
                            post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesDifficulty = difficultyFilter === 'all' || post.difficulty === difficultyFilter;
-      const matchesType = typeFilter === 'all' || post.type === typeFilter;
-      
-      return matchesCategory && matchesSearch && matchesDifficulty && matchesType;
+      return matchesCategory && matchesSearch && matchesDifficulty;
     });
 
     filtered.sort((a, b) => {
+      let comparison = 0;
       switch (sortBy) {
         case 'downloads':
-          return (b.downloads || 0) - (a.downloads || 0);
+          comparison = (b.downloads || 0) - (a.downloads || 0);
+          break;
         case 'readTime':
-          return parseInt(a.readTime) - parseInt(b.readTime);
+          comparison = parseInt(a.readTime) - parseInt(b.readTime);
+          break;
         case 'title':
-          return a.title.localeCompare(b.title);
-        case 'popularity':
-          return (b.downloads || 0) - (a.downloads || 0);
+          comparison = a.title.localeCompare(b.title);
+          break;
+        case 'author':
+          comparison = a.author.localeCompare(b.author);
+          break;
         default:
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
+          comparison = new Date(b.date).getTime() - new Date(a.date).getTime();
       }
+      return sortOrder === 'asc' ? comparison : -comparison;
     });
 
     return filtered;
-  }, [activeCategory, searchTerm, sortBy, difficultyFilter, typeFilter]);
+  }, [activeCategory, searchTerm, sortBy, sortOrder, difficultyFilter]);
 
   const featuredPosts = filteredAndSortedPosts.filter(post => post.featured);
   const regularPosts = filteredAndSortedPosts.filter(post => !post.featured);
 
-  const totalDownloads = blogPosts.reduce((sum, post) => sum + (post.downloads || 0), 0);
-  const avgReadTime = Math.round(blogPosts.reduce((sum, post) => sum + parseInt(post.readTime), 0) / blogPosts.length);
+  const stats = {
+    totalPosts: blogPosts.length,
+    totalDownloads: blogPosts.reduce((sum, post) => sum + (post.downloads || 0), 0),
+    categories: categories.length - 1,
+    avgRating: 4.8,
+    totalViews: "245K+",
+    activeUsers: "12.3K"
+  };
+
+  const sortOptions = [
+    { value: 'date', label: 'Latest First', icon: Calendar },
+    { value: 'downloads', label: 'Most Popular', icon: TrendingUp },
+    { value: 'readTime', label: 'Quick Reads', icon: Clock },
+    { value: 'title', label: 'Alphabetical', icon: BookOpen },
+    { value: 'author', label: 'By Author', icon: User }
+  ];
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950">
       <Header />
       
       <main className="pt-20">
-        {/* Hero Header - Inspired by Orthodox-Echoes */}
-        <section className="relative py-12 bg-gradient-to-br from-slate-950 via-indigo-950/30 to-purple-950/30 border-b border-slate-800/50">
+        {/* Enhanced Hero Section */}
+        <section className="py-16 relative overflow-hidden">
           <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-500/5 blur-3xl"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-500/5 blur-3xl"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-500/8 via-purple-500/5 to-pink-500/8"></div>
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-lg blur-3xl transform rotate-12"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-lg blur-3xl transform -rotate-12"></div>
           </div>
           
           <div className="container mx-auto px-6 relative">
-            <div className="grid lg:grid-cols-12 gap-8 items-center">
-              {/* Left: Title & Description */}
-              <div className="lg:col-span-8">
-                <div className="mb-6">
-                  <div className="inline-flex items-center bg-slate-800/80 border border-slate-700/50 px-4 py-2 mb-4" style={{ borderRadius: '8px' }}>
-                    <BookOpen className="w-4 h-4 mr-2 text-cyan-400" />
-                    <span className="text-xs font-bold text-cyan-300 tracking-widest font-mono">DEVELOPMENT CHRONICLES</span>
-                  </div>
-                  
-                  <h1 className="text-5xl lg:text-6xl font-black text-white leading-tight font-mono mb-4">
-                    DEV<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">VAULT</span>
-                  </h1>
-                  
-                  <div className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mb-6"></div>
-                  
-                  <p className="text-xl text-slate-300 leading-relaxed max-w-2xl">
-                    Curated collection of development insights, tutorials, and resources crafted by our engineering team.
-                  </p>
-                </div>
-
-                {/* Advanced Search */}
-                <div className="bg-slate-800/50 border border-slate-700/50 p-6 backdrop-blur-sm" style={{ borderRadius: '12px' }}>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Search Input */}
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                      <input
-                        type="text"
-                        placeholder="Search resources..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 bg-slate-900/80 border border-slate-700 text-white placeholder-slate-400 focus:border-cyan-400 focus:outline-none text-sm font-mono"
-                        style={{ borderRadius: '8px' }}
-                      />
-                    </div>
-
-                    {/* Category Filter */}
-                    <select
-                      value={activeCategory}
-                      onChange={(e) => setActiveCategory(e.target.value)}
-                      className="bg-slate-900/80 border border-slate-700 text-white px-4 py-3 focus:border-cyan-400 focus:outline-none text-sm font-mono"
-                      style={{ borderRadius: '8px' }}
-                    >
-                      {categories.map((category) => (
-                        <option key={category.id} value={category.id}>{category.name}</option>
-                      ))}
-                    </select>
-
-                    {/* Sort Options */}
-                    <select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                      className="bg-slate-900/80 border border-slate-700 text-white px-4 py-3 focus:border-cyan-400 focus:outline-none text-sm font-mono"
-                      style={{ borderRadius: '8px' }}
-                    >
-                      <option value="date">Latest First</option>
-                      <option value="downloads">Most Downloaded</option>
-                      <option value="readTime">Quick Reads</option>
-                      <option value="title">Alphabetical</option>
-                      <option value="popularity">Most Popular</option>
-                    </select>
-
-                    {/* View Toggle */}
-                    <div className="flex items-center space-x-2">
-                      <div className="flex bg-slate-900/80 border border-slate-700 p-1" style={{ borderRadius: '8px' }}>
-                        <button
-                          onClick={() => setViewMode('grid')}
-                          className={`p-2 transition-all ${viewMode === 'grid' ? 'bg-cyan-500 text-white' : 'text-slate-400 hover:text-white'}`}
-                          style={{ borderRadius: '6px' }}
-                        >
-                          <Grid className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => setViewMode('list')}
-                          className={`p-2 transition-all ${viewMode === 'list' ? 'bg-cyan-500 text-white' : 'text-slate-400 hover:text-white'}`}
-                          style={{ borderRadius: '6px' }}
-                        >
-                          <List className="w-4 h-4" />
-                        </button>
-                      </div>
-                      
-                      <button
-                        onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                        className="p-3 bg-slate-900/80 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-400 transition-all"
-                        style={{ borderRadius: '8px' }}
-                      >
-                        <Settings className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Advanced Filters */}
-                  {showAdvancedFilters && (
-                    <div className="mt-4 pt-4 border-t border-slate-700/50">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-xs font-bold text-cyan-300 mb-2 font-mono tracking-wide">DIFFICULTY</label>
-                          <select
-                            value={difficultyFilter}
-                            onChange={(e) => setDifficultyFilter(e.target.value)}
-                            className="w-full bg-slate-900/80 border border-slate-700 text-white px-3 py-2 text-sm font-mono"
-                            style={{ borderRadius: '6px' }}
-                          >
-                            <option value="all">All Levels</option>
-                            <option value="Beginner">Beginner</option>
-                            <option value="Intermediate">Intermediate</option>
-                            <option value="Advanced">Advanced</option>
-                          </select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-xs font-bold text-cyan-300 mb-2 font-mono tracking-wide">TYPE</label>
-                          <select
-                            value={typeFilter}
-                            onChange={(e) => setTypeFilter(e.target.value)}
-                            className="w-full bg-slate-900/80 border border-slate-700 text-white px-3 py-2 text-sm font-mono"
-                            style={{ borderRadius: '6px' }}
-                          >
-                            <option value="all">All Types</option>
-                            <option value="Tutorial">Tutorial</option>
-                            <option value="Dev Log">Dev Log</option>
-                            <option value="eBook">eBook</option>
-                            <option value="Technical Guide">Technical Guide</option>
-                            <option value="Article">Article</option>
-                            <option value="Game Project">Game Project</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+            <div className="text-center mb-12">
+              {/* Floating Badge */}
+              <div className="inline-flex items-center bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 rounded-2xl px-8 py-3 mb-8 backdrop-blur-sm shadow-xl">
+                <Sparkles className="w-5 h-5 mr-3 text-cyan-400" />
+                <span className="text-base font-bold text-cyan-300 tracking-wide">DEVELOPER RESOURCES HUB</span>
+              </div>
+              
+              {/* Main Heading with Enhanced Typography */}
+              <div className="space-y-4 mb-8">
+                <h1 className="text-6xl lg:text-8xl font-black text-white leading-none tracking-tight">
+                  <span className="block">DEV</span>
+                  <span className="block bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    CHRONICLES
+                  </span>
+                </h1>
+                
+                <div className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full"></div>
+                
+                <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-medium">
+                  Comprehensive guides, cutting-edge tutorials, and expert insights 
+                  <br />
+                  <span className="text-cyan-400 font-bold">for developers by developers</span>
+                </p>
               </div>
 
-              {/* Right: Stats Panel */}
-              <div className="lg:col-span-4">
-                <div className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-slate-700/50 p-6 backdrop-blur-sm" style={{ borderRadius: '12px' }}>
-                  <h3 className="text-lg font-black text-white mb-6 font-mono">
-                    <Zap className="w-5 h-5 inline mr-2 text-yellow-400" />
-                    VAULT METRICS
-                  </h3>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center p-4 bg-slate-900/50 border border-slate-700/30" style={{ borderRadius: '8px' }}>
-                      <div className="text-2xl font-black text-cyan-400 font-mono">{blogPosts.length}</div>
-                      <div className="text-xs text-slate-400 font-mono tracking-wide">RESOURCES</div>
-                    </div>
+              {/* Enhanced Search Section */}
+              <div className="max-w-4xl mx-auto space-y-6">
+                <div className="relative">
+                  <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search through our extensive knowledge base..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-16 pr-6 py-5 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none backdrop-blur-sm text-lg shadow-xl"
+                  />
+                  {searchTerm && (
+                    <button 
+                      onClick={() => setSearchTerm('')}
+                      className="absolute right-6 top-1/2 transform -translate-y-1/2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
+
+                {/* Advanced Controls Bar */}
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  {/* Sort Controls */}
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowSortMenu(!showSortMenu)}
+                      className="flex items-center space-x-2 px-6 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/15 transition-all backdrop-blur-sm text-white"
+                    >
+                      <SortAsc className="w-4 h-4" />
+                      <span>Sort: {sortOptions.find(opt => opt.value === sortBy)?.label}</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </button>
                     
-                    <div className="text-center p-4 bg-slate-900/50 border border-slate-700/30" style={{ borderRadius: '8px' }}>
-                      <div className="text-2xl font-black text-green-400 font-mono">{totalDownloads}</div>
-                      <div className="text-xs text-slate-400 font-mono tracking-wide">DOWNLOADS</div>
-                    </div>
-                    
-                    <div className="text-center p-4 bg-slate-900/50 border border-slate-700/30" style={{ borderRadius: '8px' }}>
-                      <div className="text-2xl font-black text-purple-400 font-mono">{categories.length - 1}</div>
-                      <div className="text-xs text-slate-400 font-mono tracking-wide">CATEGORIES</div>
-                    </div>
-                    
-                    <div className="text-center p-4 bg-slate-900/50 border border-slate-700/30" style={{ borderRadius: '8px' }}>
-                      <div className="text-2xl font-black text-orange-400 font-mono">{avgReadTime}m</div>
-                      <div className="text-xs text-slate-400 font-mono tracking-wide">AVG READ</div>
-                    </div>
+                    {showSortMenu && (
+                      <div className="absolute top-full mt-2 w-64 bg-gray-900 border border-gray-700 rounded-xl shadow-xl z-50 backdrop-blur-xl">
+                        {sortOptions.map((option) => (
+                          <button
+                            key={option.value}
+                            onClick={() => {
+                              setSortBy(option.value);
+                              setShowSortMenu(false);
+                            }}
+                            className={`w-full flex items-center space-x-3 px-4 py-3 hover:bg-gray-800 transition-colors first:rounded-t-xl last:rounded-b-xl ${
+                              sortBy === option.value ? 'bg-cyan-500/20 text-cyan-400' : 'text-gray-300'
+                            }`}
+                          >
+                            <option.icon className="w-4 h-4" />
+                            <span>{option.label}</span>
+                          </button>
+                        ))}
+                        <div className="border-t border-gray-700 p-2">
+                          <button
+                            onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                            className="w-full flex items-center justify-center space-x-2 px-3 py-2 hover:bg-gray-800 rounded-lg transition-colors text-gray-300"
+                          >
+                            {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
+                            <span>{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  
-                  <div className="mt-4 text-center">
-                    <div className="text-sm text-slate-400 font-mono">
-                      <span className="text-cyan-400 font-bold">{filteredAndSortedPosts.length}</span> resources match your filters
-                    </div>
+
+                  {/* View Mode Toggle */}
+                  <div className="flex bg-white/10 border border-white/20 rounded-xl p-1 backdrop-blur-sm">
+                    <button
+                      onClick={() => setViewMode('grid')}
+                      className={`p-3 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-cyan-500 text-white' : 'text-gray-300 hover:text-white'}`}
+                    >
+                      <Grid className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode('list')}
+                      className={`p-3 rounded-lg transition-all ${viewMode === 'list' ? 'bg-cyan-500 text-white' : 'text-gray-300 hover:text-white'}`}
+                    >
+                      <List className="w-4 h-4" />
+                    </button>
                   </div>
+
+                  {/* Quick Action Buttons */}
+                  <button
+                    onClick={() => setShowStats(!showStats)}
+                    className="flex items-center space-x-2 px-6 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/15 transition-all backdrop-blur-sm text-white"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    <span>Analytics</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="flex items-center space-x-2 px-6 py-3 bg-white/10 border border-white/20 rounded-xl hover:bg-white/15 transition-all backdrop-blur-sm text-white"
+                  >
+                    <Filter className="w-4 h-4" />
+                    <span>Filters</span>
+                  </button>
+                </div>
+
+                {/* Enhanced Categories */}
+                <div className="flex flex-wrap justify-center gap-3">
+                  {categories.slice(0, 8).map((category) => {
+                    const IconComponent = iconMap[category.icon as keyof typeof iconMap];
+                    return (
+                      <button
+                        key={category.id}
+                        onClick={() => setActiveCategory(category.id)}
+                        className={`flex items-center space-x-3 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+                          activeCategory === category.id
+                            ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-xl scale-105'
+                            : 'bg-white/10 text-gray-300 hover:bg-white/15 border border-white/20 hover:scale-105'
+                        }`}
+                      >
+                        <IconComponent className="w-5 h-5" />
+                        <span className="font-bold">{category.name}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Content Section */}
-        <section className="py-8">
-          <div className="container mx-auto px-6">
-            {/* Featured Posts */}
-            {featuredPosts.length > 0 && (
-              <div className="mb-12">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-black text-white font-mono">
-                    <Star className="w-6 h-6 inline mr-3 text-yellow-400" />
-                    FEATURED VAULT
-                  </h2>
-                  <div className="h-px bg-gradient-to-r from-yellow-400 via-orange-400 to-transparent flex-1 ml-6"></div>
+        {/* Stats Overlay */}
+        {showStats && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+            <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-3xl p-10 max-w-4xl w-full shadow-2xl">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h3 className="text-3xl font-black text-white mb-2">Platform Analytics</h3>
+                  <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
                 </div>
-                
-                <div className="grid lg:grid-cols-2 gap-6">
-                  {featuredPosts.slice(0, 2).map((post) => (
-                    <article 
-                      key={post.id}
-                      className="group bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-slate-700/50 hover:border-yellow-400/50 transition-all duration-500 overflow-hidden"
-                      style={{ borderRadius: '12px' }}
-                    >
-                      <div className="relative h-48">
-                        <img 
-                          src={post.image} 
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                        
-                        <div className="absolute top-4 left-4 flex gap-2">
-                          <span className="bg-yellow-400 text-black px-3 py-1 text-xs font-black font-mono" style={{ borderRadius: '6px' }}>
-                            ⭐ FEATURED
-                          </span>
-                          {post.difficulty && (
-                            <span className="bg-purple-500/90 text-white px-3 py-1 text-xs font-bold font-mono backdrop-blur-sm" style={{ borderRadius: '6px' }}>
-                              {post.difficulty}
-                            </span>
-                          )}
-                        </div>
-                        
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <h3 className="text-xl font-black text-white mb-2 group-hover:text-yellow-300 transition-colors font-mono">
-                            {post.title}
-                          </h3>
-                          
-                          <div className="flex items-center justify-between text-sm">
-                            <div className="flex items-center space-x-3 text-slate-300">
-                              <span className="font-mono">{post.author}</span>
+                <button
+                  onClick={() => setShowStats(false)}
+                  className="text-gray-400 hover:text-white transition-colors text-2xl"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-4xl font-black text-cyan-400 mb-3">{stats.totalPosts}</div>
+                  <div className="text-gray-300 font-medium">Total Resources</div>
+                </div>
+                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-4xl font-black text-green-400 mb-3">{stats.totalDownloads.toLocaleString()}+</div>
+                  <div className="text-gray-300 font-medium">Downloads</div>
+                </div>
+                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-4xl font-black text-purple-400 mb-3">{stats.categories}</div>
+                  <div className="text-gray-300 font-medium">Categories</div>
+                </div>
+                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-4xl font-black text-yellow-400 mb-3">{stats.avgRating}/5</div>
+                  <div className="text-gray-300 font-medium">Average Rating</div>
+                </div>
+                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-4xl font-black text-blue-400 mb-3">{stats.totalViews}</div>
+                  <div className="text-gray-300 font-medium">Total Views</div>
+                </div>
+                <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-4xl font-black text-pink-400 mb-3">{stats.activeUsers}</div>
+                  <div className="text-gray-300 font-medium">Active Users</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Filters Overlay */}
+        {showFilters && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+            <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-3xl p-10 max-w-2xl w-full shadow-2xl">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h3 className="text-3xl font-black text-white mb-2">Advanced Filters</h3>
+                  <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
+                </div>
+                <button
+                  onClick={() => setShowFilters(false)}
+                  className="text-gray-400 hover:text-white transition-colors text-2xl"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <div className="space-y-8">
+                <div>
+                  <label className="block text-white font-bold mb-4 text-lg">Difficulty Level</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {['all', 'Beginner', 'Intermediate', 'Advanced'].map((level) => (
+                      <button
+                        key={level}
+                        onClick={() => setDifficultyFilter(level)}
+                        className={`p-4 rounded-xl font-medium transition-all ${
+                          difficultyFilter === level
+                            ? 'bg-cyan-500 text-white'
+                            : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                        }`}
+                      >
+                        {level === 'all' ? 'All Levels' : level}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => {
+                      setDifficultyFilter('all');
+                      setActiveCategory('all');
+                      setSearchTerm('');
+                    }}
+                    className="flex-1 p-4 bg-red-500/20 border border-red-500/50 text-red-400 rounded-xl hover:bg-red-500/30 transition-all font-medium"
+                  >
+                    Reset Filters
+                  </button>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="flex-1 p-4 bg-cyan-500 text-white rounded-xl hover:bg-cyan-600 transition-all font-medium"
+                  >
+                    Apply Filters
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Results Summary */}
+        <section className="py-6 border-y border-white/10 bg-black/20 backdrop-blur-sm">
+          <div className="container mx-auto px-6">
+            <div className="flex items-center justify-between">
+              <div className="text-gray-300">
+                <span className="text-2xl font-black text-cyan-400">{filteredAndSortedPosts.length}</span> 
+                <span className="ml-2 text-lg">resources found</span>
+                {searchTerm && <span className="ml-2 text-cyan-400">for "{searchTerm}"</span>}
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-400">Sorted by: {sortOptions.find(opt => opt.value === sortBy)?.label}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Content Section */}
+        {featuredPosts.length > 0 && (
+          <section className="py-12 bg-gradient-to-r from-purple-900/20 to-cyan-900/20 border-b border-white/10">
+            <div className="container mx-auto px-6">
+              <div className="text-center mb-10">
+                <h2 className="text-4xl font-black text-white mb-4">
+                  <span className="text-yellow-400">★</span> FEATURED CONTENT <span className="text-yellow-400">★</span>
+                </h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-400 mx-auto rounded-full"></div>
+              </div>
+              
+              <div className="grid lg:grid-cols-2 gap-8">
+                {featuredPosts.slice(0, 2).map((post) => (
+                  <article 
+                    key={post.id}
+                    className="group bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl overflow-hidden hover:border-yellow-400/50 transition-all duration-500 hover:scale-105 shadow-2xl"
+                  >
+                    <div className="relative h-64">
+                      <img 
+                        src={post.image} 
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                      
+                      <div className="absolute top-4 left-4 flex gap-3">
+                        <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-black px-4 py-2 rounded-xl text-sm font-black shadow-lg">
+                          ⭐ FEATURED
+                        </span>
+                        <span className="bg-black/80 text-white px-4 py-2 rounded-xl text-sm font-bold backdrop-blur-sm">
+                          {post.type}
+                        </span>
+                      </div>
+
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="text-2xl font-black text-white mb-2 group-hover:text-yellow-300 transition-colors">
+                          {post.title}
+                        </h3>
+                      </div>
+                    </div>
+                    
+                    <div className="p-8">
+                      <p className="text-gray-300 mb-6 text-base leading-relaxed">
+                        {post.excerpt}
+                      </p>
+                      
+                      <div className="flex items-center justify-between text-sm text-gray-400 mb-6">
+                        <div className="flex items-center space-x-4">
+                          <span className="font-medium">{post.author}</span>
+                          <span>•</span>
+                          <span>{post.readTime}</span>
+                          {post.downloads && (
+                            <>
                               <span>•</span>
-                              <span className="font-mono">{post.readTime}</span>
-                            </div>
-                            {post.downloads && (
-                              <div className="flex items-center space-x-2 text-yellow-400">
-                                <Download className="w-4 h-4" />
-                                <span className="font-bold font-mono">{post.downloads}</span>
-                              </div>
-                            )}
-                          </div>
+                              <span className="text-yellow-400 font-bold">{post.downloads} downloads</span>
+                            </>
+                          )}
                         </div>
                       </div>
                       
-                      <div className="p-6">
-                        <p className="text-slate-300 mb-4 leading-relaxed">
+                      <button className="w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black px-6 py-4 rounded-2xl hover:from-yellow-500 hover:to-orange-500 transition-all duration-300 font-black text-lg flex items-center justify-center space-x-3 shadow-xl hover:shadow-2xl">
+                        <span>EXPLORE NOW</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Main Content Grid */}
+        <section className="py-12">
+          <div className="container mx-auto px-6">
+            {filteredAndSortedPosts.length === 0 ? (
+              <div className="text-center py-20">
+                <div className="text-8xl mb-6">📚</div>
+                <h3 className="text-4xl font-black text-white mb-4">No Content Found</h3>
+                <p className="text-xl text-gray-400 mb-8">Try adjusting your search or filter criteria</p>
+                <button 
+                  onClick={() => {
+                    setSearchTerm('');
+                    setActiveCategory('all');
+                    setDifficultyFilter('all');
+                  }}
+                  className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-8 py-4 rounded-2xl hover:from-cyan-600 hover:to-purple-600 transition-all font-bold text-lg"
+                >
+                  Reset All Filters
+                </button>
+              </div>
+            ) : (
+              <>
+                {/* Section Heading */}
+                <div className="text-center mb-12">
+                  <h2 className="text-4xl font-black text-white mb-4">
+                    ALL <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">RESOURCES</span>
+                  </h2>
+                  <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full"></div>
+                </div>
+
+                <div className={viewMode === 'grid' ? 'grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8' : 'space-y-6'}>
+                  {regularPosts.map((post) => (
+                    <article 
+                      key={post.id}
+                      className={`group bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 hover:scale-105 shadow-xl ${
+                        viewMode === 'list' ? 'flex' : ''
+                      }`}
+                    >
+                      <div className={`relative ${viewMode === 'list' ? 'w-64 h-36' : 'h-48'}`}>
+                        <img 
+                          src={post.image} 
+                          alt={post.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        
+                        <div className="absolute top-3 left-3 flex gap-2">
+                          {post.featured && (
+                            <span className="bg-yellow-500 text-black px-3 py-1 rounded-lg text-xs font-black">
+                              FEATURED
+                            </span>
+                          )}
+                          <span className="bg-black/80 text-white px-3 py-1 rounded-lg text-xs font-bold backdrop-blur-sm">
+                            {post.type}
+                          </span>
+                        </div>
+
+                        <div className="absolute bottom-3 right-3 flex gap-2">
+                          <button className="p-2 bg-black/60 text-white rounded-lg hover:bg-black/80 transition-colors backdrop-blur-sm">
+                            <Heart className="w-4 h-4" />
+                          </button>
+                          <button className="p-2 bg-black/60 text-white rounded-lg hover:bg-black/80 transition-colors backdrop-blur-sm">
+                            <Bookmark className="w-4 h-4" />
+                          </button>
+                          <button className="p-2 bg-black/60 text-white rounded-lg hover:bg-black/80 transition-colors backdrop-blur-sm">
+                            <Share2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <div className="p-6 flex-1">
+                        <h3 className="font-black text-white mb-3 group-hover:text-cyan-300 transition-colors text-lg line-clamp-2">
+                          {post.title}
+                        </h3>
+                        
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">
                           {post.excerpt}
                         </p>
-                        
+
+                        {/* Tags */}
                         <div className="flex flex-wrap gap-2 mb-4">
-                          {post.tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="bg-slate-700/50 text-cyan-400 px-3 py-1 text-xs font-bold font-mono" style={{ borderRadius: '6px' }}>
-                              #{tag}
+                          {post.tags.slice(0, 2).map((tag, index) => (
+                            <span key={index} className="bg-white/10 text-cyan-400 px-2 py-1 rounded-lg text-xs font-medium">
+                              {tag}
                             </span>
                           ))}
                         </div>
                         
-                        <button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-4 py-3 font-black hover:from-yellow-400 hover:to-orange-400 transition-all duration-300 flex items-center justify-center space-x-2 font-mono" style={{ borderRadius: '8px' }}>
-                          <span>EXPLORE RESOURCE</span>
+                        <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                          <div className="flex items-center space-x-3">
+                            <span className="font-medium">{post.author}</span>
+                            <span>•</span>
+                            <span>{post.readTime}</span>
+                          </div>
+                          {post.downloads && (
+                            <div className="flex items-center space-x-1 text-cyan-400 font-bold">
+                              <Download className="w-4 h-4" />
+                              <span>{post.downloads}</span>
+                            </div>
+                          )}
+                        </div>
+                        
+                        <button className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-3 rounded-xl hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 text-sm font-bold flex items-center justify-center space-x-2 shadow-lg">
+                          <span>READ MORE</span>
                           <ArrowRight className="w-4 h-4" />
                         </button>
                       </div>
                     </article>
                   ))}
                 </div>
-              </div>
+              </>
             )}
-
-            {/* All Posts Grid */}
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-black text-white font-mono">
-                  <Layers className="w-6 h-6 inline mr-3 text-cyan-400" />
-                  ALL RESOURCES
-                </h2>
-                <div className="h-px bg-gradient-to-r from-cyan-400 via-purple-400 to-transparent flex-1 ml-6"></div>
-              </div>
-
-              {filteredAndSortedPosts.length === 0 ? (
-                <div className="text-center py-16">
-                  <div className="text-6xl mb-6">🔍</div>
-                  <h3 className="text-2xl font-black text-white mb-4 font-mono">NO RESOURCES FOUND</h3>
-                  <p className="text-slate-400 mb-6 max-w-md mx-auto">
-                    Try adjusting your search criteria or filters to discover more content.
-                  </p>
-                  <button 
-                    onClick={() => {
-                      setSearchTerm('');
-                      setActiveCategory('all');
-                      setDifficultyFilter('all');
-                      setTypeFilter('all');
-                    }}
-                    className="bg-cyan-500 text-white px-6 py-3 font-bold hover:bg-cyan-600 transition-colors font-mono"
-                    style={{ borderRadius: '8px' }}
-                  >
-                    RESET ALL FILTERS
-                  </button>
-                </div>
-              ) : (
-                <div className={viewMode === 'grid' ? 'grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 'space-y-4'}>
-                  {regularPosts.map((post) => (
-                    <article 
-                      key={post.id}
-                      className={`group bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-slate-700/50 hover:border-cyan-400/50 transition-all duration-300 overflow-hidden ${
-                        viewMode === 'list' ? 'flex h-32' : 'h-80'
-                      }`}
-                      style={{ borderRadius: '12px' }}
-                    >
-                      <div className={`relative ${viewMode === 'list' ? 'w-32 h-32' : 'h-40'}`}>
-                        <img 
-                          src={post.image} 
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        
-                        <div className="absolute top-2 left-2">
-                          <span className="bg-slate-900/90 text-white px-2 py-1 text-xs font-bold font-mono backdrop-blur-sm" style={{ borderRadius: '4px' }}>
-                            {post.type}
-                          </span>
-                        </div>
-                        
-                        {viewMode === 'grid' && (
-                          <div className="absolute bottom-2 right-2 flex gap-1">
-                            <button className="p-1.5 bg-slate-900/90 text-white hover:bg-slate-800 transition-colors backdrop-blur-sm" style={{ borderRadius: '4px' }}>
-                              <Heart className="w-3 h-3" />
-                            </button>
-                            <button className="p-1.5 bg-slate-900/90 text-white hover:bg-slate-800 transition-colors backdrop-blur-sm" style={{ borderRadius: '4px' }}>
-                              <Bookmark className="w-3 h-3" />
-                            </button>
-                            <button className="p-1.5 bg-slate-900/90 text-white hover:bg-slate-800 transition-colors backdrop-blur-sm" style={{ borderRadius: '4px' }}>
-                              <Share2 className="w-3 h-3" />
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="flex-1 p-4 flex flex-col justify-between">
-                        <div>
-                          <h3 className="font-black text-white mb-2 group-hover:text-cyan-300 transition-colors line-clamp-2 font-mono text-sm">
-                            {post.title}
-                          </h3>
-                          
-                          {viewMode === 'grid' && (
-                            <>
-                              <p className="text-slate-400 text-xs mb-3 line-clamp-2 leading-relaxed">
-                                {post.excerpt}
-                              </p>
-
-                              <div className="flex flex-wrap gap-1 mb-3">
-                                {post.tags.slice(0, 2).map((tag, index) => (
-                                  <span key={index} className="bg-slate-700/50 text-cyan-400 px-2 py-0.5 text-xs font-bold font-mono" style={{ borderRadius: '4px' }}>
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-                            </>
-                          )}
-                        </div>
-                        
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between text-xs">
-                            <div className="flex items-center space-x-2 text-slate-500">
-                              <span className="font-bold font-mono">{post.author}</span>
-                              <span>•</span>
-                              <span className="font-mono">{post.readTime}</span>
-                            </div>
-                            {post.downloads && (
-                              <div className="flex items-center space-x-1 text-cyan-400">
-                                <Download className="w-3 h-3" />
-                                <span className="font-bold font-mono">{post.downloads}</span>
-                              </div>
-                            )}
-                          </div>
-                          
-                          {viewMode === 'grid' && (
-                            <button className="w-full bg-cyan-500 text-white px-3 py-2 hover:bg-cyan-600 transition-all duration-300 text-xs font-black flex items-center justify-center space-x-2 font-mono" style={{ borderRadius: '6px' }}>
-                              <span>READ MORE</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
         </section>
       </main>
