@@ -19,77 +19,98 @@ interface NavigationItem {
 
 export const navigationItems: NavigationItem[] = [
   {
-    name: 'Web Apps',
-    href: '#apps',
-    type: 'dropdown' as const,
-    categories: [
-      {
-        title: 'Premium Applications',
-        items: [
-          { name: 'Analytics Dashboard', href: '/apps/analytics', description: 'Real-time data insights platform' },
-          { name: 'Project Manager Pro', href: '/apps/projects', description: 'Advanced project management suite' },
-          { name: 'Developer Tools', href: '/apps/devtools', description: 'Code optimization and debugging' },
-          { name: 'Data Visualizer', href: '/apps/dataviz', description: 'Interactive charts and graphs' }
-        ]
-      },
-      {
-        title: 'Subscription Plans',
-        items: [
-          { name: 'Starter Plan', href: '/pricing', description: '$19/month - Essential features' },
-          { name: 'Pro Plan', href: '/pricing', description: '$49/month - Advanced tools' },
-          { name: 'Enterprise', href: '/pricing', description: '$99/month - Full access' },
-          { name: 'Free Trial', href: '/trial', description: '14-day free access' }
-        ]
-      }
-    ]
+    name: 'Home',
+    href: '#home',
+    type: 'link' as const
   },
   {
-    name: 'Games',
-    href: '#games',
+    name: 'Services',
+    href: '#services',
     type: 'dropdown' as const,
     categories: [
-      {
-        title: 'Published Games',
-        items: [
-          { name: 'Survival Nexus', href: '/games/survival', description: 'Open-world survival adventure' },
-          { name: 'Shadow Realm', href: '/games/horror', description: 'Psychological horror experience' },
-          { name: 'Command Central', href: '/games/strategy', description: 'Real-time strategy warfare' },
-          { name: 'All Games', href: '/games', description: 'Browse our complete portfolio' }
-        ]
-      },
       {
         title: 'Development',
         items: [
-          { name: 'Game Dev Blog', href: '/blog/gamedev', description: 'Behind the scenes updates' },
-          { name: 'Unity Assets', href: '/assets', description: 'Downloadable game components' },
-          { name: 'Source Code', href: '/github', description: 'Open source projects' }
+          { name: 'Game Development', href: '/game-development', description: 'Unity, Unreal & custom engines' },
+          { name: 'Web Applications', href: '/web-applications', description: 'React, Vue, Angular solutions' },
+          { name: 'Mobile Apps', href: '/mobile-development', description: 'iOS, Android & cross-platform' },
+          { name: 'Desktop Software', href: '/desktop-development', description: 'Windows, Mac & Linux apps' }
+        ]
+      },
+      {
+        title: 'Publishing',
+        items: [
+          { name: 'Digital Books', href: '/digital-publishing', description: 'E-books & technical guides' },
+          { name: 'Content Creation', href: '/content-creation', description: 'Blogs, articles & dev logs' },
+          { name: 'Documentation', href: '/documentation', description: 'Technical documentation' },
+          { name: 'Tutorials', href: '/tutorials', description: 'Step-by-step guides' }
+        ]
+      },
+      {
+        title: 'Infrastructure',
+        items: [
+          { name: 'Cloud Services', href: '/cloud-services', description: 'AWS, Azure & Google Cloud' },
+          { name: 'Database Solutions', href: '/database-solutions', description: 'SQL & NoSQL databases' },
+          { name: 'Cybersecurity', href: '/cybersecurity', description: 'Security audits & protection' },
+          { name: 'DevOps', href: '/devops', description: 'CI/CD & automation' }
         ]
       }
     ]
   },
   {
-    name: 'Developers',
-    href: '#developers',
+    name: 'Products',
+    href: '#shop',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Resources',
+        title: 'Digital Products',
         items: [
-          { name: 'API Documentation', href: '/docs', description: 'Complete API reference' },
-          { name: 'GitHub Repos', href: 'https://github.com/orgs/JBLinx-Studio/repositories', description: 'Open source projects' },
-          { name: 'Code Examples', href: '/examples', description: 'Implementation guides' },
-          { name: 'SDKs & Tools', href: '/tools', description: 'Development utilities' }
+          { name: 'Games', href: '/shop/games', description: 'Our published games' },
+          { name: 'Software Tools', href: '/shop/tools', description: 'Development utilities' },
+          { name: 'Templates', href: '/shop/templates', description: 'Code & design templates' },
+          { name: 'Assets', href: '/shop/assets', description: 'Graphics & audio assets' }
+        ]
+      },
+      {
+        title: 'Learning Materials',
+        items: [
+          { name: 'E-books', href: '/shop/books', description: 'Technical books & guides' },
+          { name: 'Video Courses', href: '/shop/courses', description: 'Online learning content' },
+          { name: 'Tutorials', href: '/shop/tutorials', description: 'Step-by-step tutorials' },
+          { name: 'Documentation', href: '/shop/docs', description: 'Technical documentation' }
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Resources',
+    href: '#blog',
+    type: 'dropdown' as const,
+    categories: [
+      {
+        title: 'Content',
+        items: [
+          { name: 'Blog', href: '/blog', description: 'Latest articles & insights' },
+          { name: 'Dev Logs', href: '/dev-logs', description: 'Development progress' },
+          { name: 'Case Studies', href: '/case-studies', description: 'Project breakdowns' },
+          { name: 'Whitepapers', href: '/whitepapers', description: 'Technical deep dives' }
         ]
       },
       {
         title: 'Community',
         items: [
-          { name: 'Discord Server', href: '/discord', description: 'Join our community' },
-          { name: 'Developer Blog', href: '/blog/dev', description: 'Technical articles' },
-          { name: 'Contribute', href: '/contribute', description: 'Help improve our tools' }
+          { name: 'Forums', href: '/forums', description: 'Developer discussions' },
+          { name: 'Discord', href: '/discord', description: 'Real-time chat' },
+          { name: 'Newsletter', href: '#newsletter', description: 'Weekly updates' },
+          { name: 'Events', href: '/events', description: 'Workshops & meetups' }
         ]
       }
     ]
+  },
+  {
+    name: 'Portfolio',
+    href: '#portfolio',
+    type: 'link' as const
   },
   {
     name: 'About',

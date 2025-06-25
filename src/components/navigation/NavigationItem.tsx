@@ -26,9 +26,9 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
 
   if (type === 'link') {
     return (
-      <a href={href} className="relative group text-white hover:text-cyan-400 transition-colors font-medium">
+      <a href={href} className="nav-link relative group">
         <span>{name}</span>
-        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
       </a>
     );
   }
@@ -36,7 +36,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
   return (
     <div className="relative">
       <button
-        className="flex items-center group text-white hover:text-cyan-400 transition-colors font-medium"
+        className="nav-link flex items-center group"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
         onClick={() => setIsOpen(!isOpen)}
@@ -46,7 +46,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
           size={16} 
           className={`ml-1 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
         />
-        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
       </button>
       
       <div

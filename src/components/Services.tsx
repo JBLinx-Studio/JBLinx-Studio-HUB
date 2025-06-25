@@ -1,78 +1,79 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Crown, Code, Database, Smartphone, Gamepad2, Zap, Globe } from 'lucide-react';
+import { ArrowRight, Gamepad2, Code, Database, Smartphone, Sparkles, Zap, Hexagon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Services = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [activeService, setActiveService] = useState(0);
 
   const services = [
     {
-      icon: Globe,
-      title: "Premium Web Apps",
-      subtitle: "Professional Applications",
-      description: "Access our suite of premium web applications with advanced features and analytics",
-      color: "from-cyan-500 to-blue-500",
-      link: "#products",
-      stats: { apps: "4+", users: "5k+" },
-      tech: ["React", "FastAPI", "MySQL"],
-      hexColor: "bg-cyan-500/20"
-    },
-    {
-      icon: Crown,
-      title: "Premium Access",
-      subtitle: "Subscription Plans", 
-      description: "Flexible subscription plans for individuals, teams, and enterprises",
-      color: "from-yellow-500 to-orange-500",
-      link: "#premium",
-      stats: { plans: "3", from: "$19/mo" },
-      tech: ["All Apps", "Priority", "Support"],
-      hexColor: "bg-yellow-500/20"
-    },
-    {
       icon: Gamepad2,
-      title: "Game Portfolio",
-      subtitle: "Published Games",
-      description: "Immersive games we've developed including survival, horror, and strategy titles",
+      title: "Game Universe",
+      subtitle: "Immersive Digital Worlds",
+      description: "Unity-powered survival, horror, and strategy games that transport players to extraordinary realms",
       color: "from-purple-500 to-pink-500",
-      link: "#games",
-      stats: { games: "3+", downloads: "25k+" },
-      tech: ["Unity", "C#", "Cross-Platform"],
+      link: "/game-development",
+      stats: { projects: "15+", rating: "4.9★" },
+      tech: ["Unity", "C#", "Blender"],
       hexColor: "bg-purple-500/20"
     },
     {
       icon: Code,
-      title: "Developer Resources",
-      subtitle: "Open Source & APIs",
-      description: "Documentation, GitHub repositories, and developer tools for integration",
-      color: "from-green-500 to-emerald-500",
-      link: "#developers",
-      stats: { repos: "15+", stars: "200+" },
-      tech: ["GitHub", "Docs", "APIs"],
+      title: "Web Development",
+      subtitle: "Modern Digital Experiences", 
+      description: "React, Next.js, and cutting-edge web solutions that redefine user interaction",
+      color: "from-blue-500 to-cyan-500",
+      link: "/web-applications",
+      stats: { projects: "30+", rating: "5.0★" },
+      tech: ["React", "Next.js", "TypeScript"],
+      hexColor: "bg-blue-500/20"
+    },
+    {
+      icon: Database,
+      title: "Backend Systems",
+      subtitle: "Scalable Infrastructure",
+      description: "FastAPI, MySQL, and enterprise-grade architectures that power digital solutions",
+      color: "from-green-500 to-emerald-500", 
+      link: "/web-applications",
+      stats: { projects: "25+", rating: "4.8★" },
+      tech: ["FastAPI", "MySQL", "Redis"],
       hexColor: "bg-green-500/20"
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile Apps",
+      subtitle: "Cross-Platform Excellence",
+      description: "Flutter applications that deliver seamless mobile experiences",
+      color: "from-orange-500 to-red-500",
+      link: "/web-applications", 
+      stats: { projects: "12+", rating: "4.9★" },
+      tech: ["Flutter", "Dart", "Firebase"],
+      hexColor: "bg-orange-500/20"
     }
   ];
 
   return (
     <section className="py-16 bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative">
       <div className="container mx-auto px-6">
-        {/* Header */}
+        {/* Compact Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-6 py-2 mb-6" style={{ borderRadius: '8px' }}>
-            <Zap className="w-5 h-5 text-cyan-400 mr-2" />
-            <span className="text-white/90 font-medium font-mono">WHAT WE OFFER</span>
+          <div className="inline-flex items-center bg-cyan-500/10 border border-cyan-500/30 rounded-full px-6 py-2 mb-6">
+            <Hexagon className="w-5 h-5 text-cyan-400 mr-2" />
+            <span className="text-white/90 font-medium">Our Services</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4 font-mono">
-            Our <span className="text-cyan-400">Products</span> & <span className="text-purple-400">Services</span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+            What We <span className="text-cyan-400">Create</span>
           </h2>
           
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Premium web applications, games, and developer resources built by JBLinx Studio.
+            Professional development services across games, web, mobile, and backend systems.
           </p>
         </div>
 
-        {/* Services Grid */}
+        {/* Compact Service Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {services.map((service, index) => {
             const IconComponent = service.icon;
@@ -80,52 +81,24 @@ const Services = () => {
               <Link
                 key={index}
                 to={service.link}
-                className="group relative bg-slate-800 border border-slate-700 p-6 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105"
-                style={{ borderRadius: '12px' }}
+                className="group relative bg-white/5 border border-white/10 rounded-xl p-6 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105"
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                <div className={`w-12 h-12 ${service.hexColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`} style={{ borderRadius: '8px' }}>
+                <div className={`w-12 h-12 ${service.hexColor} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <IconComponent className="w-6 h-6 text-white" />
                 </div>
                 
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors font-mono">
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
                   {service.title}
                 </h3>
                 
-                <p className="text-slate-400 mb-1 text-sm font-medium">
-                  {service.subtitle}
-                </p>
-                
-                <p className="text-slate-300 text-sm mb-4 leading-relaxed">
+                <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                   {service.description}
                 </p>
                 
-                {/* Stats */}
-                <div className="flex items-center justify-between text-sm mb-4">
-                  <div className="flex space-x-4 text-cyan-400">
-                    {Object.entries(service.stats).map(([key, value]) => (
-                      <span key={key} className="font-medium">
-                        {value} {key}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-1 mb-4">
-                  {service.tech.slice(0, 3).map((tech, techIndex) => (
-                    <span 
-                      key={techIndex} 
-                      className="bg-slate-700 text-slate-300 px-2 py-1 text-xs" 
-                      style={{ borderRadius: '4px' }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-cyan-400 font-medium">{service.stats.projects}</span>
                   <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
                 </div>
               </Link>
@@ -133,27 +106,15 @@ const Services = () => {
           })}
         </div>
 
-        {/* CTA */}
+        {/* Call to Action */}
         <div className="text-center">
-          <div className="bg-slate-800 border border-slate-700 p-8 max-w-2xl mx-auto" style={{ borderRadius: '12px' }}>
-            <Crown className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
-            <h3 className="text-2xl font-black text-white mb-4 font-mono">
-              START YOUR PREMIUM JOURNEY
-            </h3>
-            <p className="text-slate-300 mb-6">
-              Get access to all our premium web applications, games, and developer resources. 
-              Choose the plan that fits your needs.
-            </p>
-            <Link 
-              to="#premium" 
-              className="inline-flex items-center bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-8 py-3 font-bold transition-all duration-300 hover:shadow-lg"
-              style={{ borderRadius: '8px' }}
-            >
-              <Crown className="w-5 h-5 mr-2" />
-              <span>VIEW PREMIUM PLANS</span>
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Link>
-          </div>
+          <Link 
+            to="/blog" 
+            className="inline-flex items-center bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-8 py-3 rounded-xl font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
+          >
+            <span>View Our Work</span>
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Link>
         </div>
       </div>
     </section>
