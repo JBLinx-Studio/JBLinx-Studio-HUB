@@ -19,102 +19,72 @@ interface NavigationItem {
 
 export const navigationItems: NavigationItem[] = [
   {
-    name: 'Home',
-    href: '#home',
-    type: 'link' as const
-  },
-  {
-    name: 'Services',
-    href: '#services',
-    type: 'dropdown' as const,
-    categories: [
-      {
-        title: 'Development',
-        items: [
-          { name: 'Game Development', href: '/game-development', description: 'Unity, Unreal & custom engines' },
-          { name: 'Web Applications', href: '/web-applications', description: 'React, Vue, Angular solutions' },
-          { name: 'Mobile Apps', href: '/mobile-development', description: 'iOS, Android & cross-platform' },
-          { name: 'Desktop Software', href: '/desktop-development', description: 'Windows, Mac & Linux apps' }
-        ]
-      },
-      {
-        title: 'Publishing',
-        items: [
-          { name: 'Digital Books', href: '/digital-publishing', description: 'E-books & technical guides' },
-          { name: 'Content Creation', href: '/content-creation', description: 'Blogs, articles & dev logs' },
-          { name: 'Documentation', href: '/documentation', description: 'Technical documentation' },
-          { name: 'Tutorials', href: '/tutorials', description: 'Step-by-step guides' }
-        ]
-      },
-      {
-        title: 'Infrastructure',
-        items: [
-          { name: 'Cloud Services', href: '/cloud-services', description: 'AWS, Azure & Google Cloud' },
-          { name: 'Database Solutions', href: '/database-solutions', description: 'SQL & NoSQL databases' },
-          { name: 'Cybersecurity', href: '/cybersecurity', description: 'Security audits & protection' },
-          { name: 'DevOps', href: '/devops', description: 'CI/CD & automation' }
-        ]
-      }
-    ]
-  },
-  {
     name: 'Products',
-    href: '#shop',
+    href: '#products',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Digital Products',
+        title: 'Games',
         items: [
-          { name: 'Games', href: '/shop/games', description: 'Our published games' },
-          { name: 'Software Tools', href: '/shop/tools', description: 'Development utilities' },
-          { name: 'Templates', href: '/shop/templates', description: 'Code & design templates' },
-          { name: 'Assets', href: '/shop/assets', description: 'Graphics & audio assets' }
+          { name: 'Survival Horror', href: '/games/horror', description: 'Immersive horror experiences' },
+          { name: 'RTS Strategy', href: '/games/strategy', description: 'Real-time strategic combat' },
+          { name: 'Adventure RPG', href: '/games/rpg', description: 'Epic quest adventures' },
+          { name: 'All Games', href: '/games', description: 'Browse our game portfolio' }
         ]
       },
       {
-        title: 'Learning Materials',
+        title: 'Web Applications',
         items: [
-          { name: 'E-books', href: '/shop/books', description: 'Technical books & guides' },
-          { name: 'Video Courses', href: '/shop/courses', description: 'Online learning content' },
-          { name: 'Tutorials', href: '/shop/tutorials', description: 'Step-by-step tutorials' },
-          { name: 'Documentation', href: '/shop/docs', description: 'Technical documentation' }
+          { name: 'TaskFlow Pro', href: '/apps/taskflow', description: 'Advanced task management' },
+          { name: 'DataViz Analytics', href: '/apps/dataviz', description: 'Business intelligence platform' },
+          { name: 'ShopLink Commerce', href: '/apps/shoplink', description: 'E-commerce solutions' },
+          { name: 'All Web Apps', href: '/apps', description: 'Browse our app collection' }
+        ]
+      },
+      {
+        title: 'Developer Tools',
+        items: [
+          { name: 'FastAPI Template', href: '/tools/fastapi', description: 'Backend development starter' },
+          { name: 'React Components', href: '/tools/react', description: 'Reusable UI components' },
+          { name: 'Database Tools', href: '/tools/database', description: 'Migration and management' },
+          { name: 'All Tools', href: '/tools', description: 'Open source repositories' }
         ]
       }
     ]
   },
   {
     name: 'Resources',
-    href: '#blog',
+    href: '#resources',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Content',
+        title: 'Learning',
         items: [
-          { name: 'Blog', href: '/blog', description: 'Latest articles & insights' },
-          { name: 'Dev Logs', href: '/dev-logs', description: 'Development progress' },
-          { name: 'Case Studies', href: '/case-studies', description: 'Project breakdowns' },
-          { name: 'Whitepapers', href: '/whitepapers', description: 'Technical deep dives' }
+          { name: 'Development Blog', href: '/blog', description: 'Technical articles & tutorials' },
+          { name: 'Game Dev Guides', href: '/guides/gamedev', description: 'Unity development tutorials' },
+          { name: 'Web Dev Courses', href: '/guides/webdev', description: 'Modern web development' },
+          { name: 'API Documentation', href: '/docs', description: 'Technical documentation' }
         ]
       },
       {
         title: 'Community',
         items: [
-          { name: 'Forums', href: '/forums', description: 'Developer discussions' },
-          { name: 'Discord', href: '/discord', description: 'Real-time chat' },
-          { name: 'Newsletter', href: '#newsletter', description: 'Weekly updates' },
-          { name: 'Events', href: '/events', description: 'Workshops & meetups' }
+          { name: 'GitHub Repos', href: 'https://github.com/orgs/JBLinx-Studio/repositories', description: 'Open source projects' },
+          { name: 'Developer Discord', href: '/discord', description: 'Join our community' },
+          { name: 'Newsletter', href: '/newsletter', description: 'Weekly dev updates' },
+          { name: 'Support Forum', href: '/support', description: 'Get help and answers' }
         ]
       }
     ]
   },
   {
-    name: 'Portfolio',
-    href: '#portfolio',
+    name: 'Pricing',
+    href: '/pricing',
     type: 'link' as const
   },
   {
     name: 'About',
-    href: '#about',
+    href: '/about',
     type: 'link' as const
   },
   {
