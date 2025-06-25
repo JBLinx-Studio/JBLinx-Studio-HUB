@@ -19,56 +19,50 @@ interface NavigationItem {
 
 export const navigationItems: NavigationItem[] = [
   {
-    name: 'Home',
-    href: '/',
-    type: 'link' as const
-  },
-  {
-    name: 'Products',
-    href: '#products',
+    name: 'Web Apps',
+    href: '#apps',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Web Applications',
+        title: 'Premium Applications',
         items: [
-          { name: 'Dashboard Suite', href: '/products/dashboard', description: 'Professional analytics dashboard' },
-          { name: 'Developer Toolkit', href: '/products/devtools', description: 'Complete development suite' },
-          { name: 'Data Platform', href: '/products/analytics', description: 'Enterprise data processing' },
-          { name: 'Mobile Companion', href: '/products/mobile', description: 'Cross-platform mobile app' }
+          { name: 'Analytics Dashboard', href: '/apps/analytics', description: 'Real-time data insights platform' },
+          { name: 'Project Manager Pro', href: '/apps/projects', description: 'Advanced project management suite' },
+          { name: 'Developer Tools', href: '/apps/devtools', description: 'Code optimization and debugging' },
+          { name: 'Data Visualizer', href: '/apps/dataviz', description: 'Interactive charts and graphs' }
         ]
       },
       {
-        title: 'Games',
+        title: 'Subscription Plans',
         items: [
-          { name: 'Survival World', href: '/games/survival', description: 'Open-world survival game' },
-          { name: 'Horror Depths', href: '/games/horror', description: 'Psychological horror experience' },
-          { name: 'Strategy Command', href: '/games/rts', description: 'Real-time strategy game' },
-          { name: 'All Games', href: '/games', description: 'View our complete game portfolio' }
+          { name: 'Starter Plan', href: '/pricing', description: '$19/month - Essential features' },
+          { name: 'Pro Plan', href: '/pricing', description: '$49/month - Advanced tools' },
+          { name: 'Enterprise', href: '/pricing', description: '$99/month - Full access' },
+          { name: 'Free Trial', href: '/trial', description: '14-day free access' }
         ]
       }
     ]
   },
   {
-    name: 'Premium',
-    href: '#premium',
+    name: 'Games',
+    href: '#games',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Subscription Plans',
+        title: 'Published Games',
         items: [
-          { name: 'Starter Plan', href: '/premium/starter', description: '$19/month - Individual access' },
-          { name: 'Professional Plan', href: '/premium/pro', description: '$49/month - Team features' },
-          { name: 'Enterprise Plan', href: '/premium/enterprise', description: '$99/month - Custom solutions' },
-          { name: 'Compare Plans', href: '/premium', description: 'See all features and pricing' }
+          { name: 'Survival Nexus', href: '/games/survival', description: 'Open-world survival adventure' },
+          { name: 'Shadow Realm', href: '/games/horror', description: 'Psychological horror experience' },
+          { name: 'Command Central', href: '/games/strategy', description: 'Real-time strategy warfare' },
+          { name: 'All Games', href: '/games', description: 'Browse our complete portfolio' }
         ]
       },
       {
-        title: 'Enterprise',
+        title: 'Development',
         items: [
-          { name: 'Custom Development', href: '/enterprise/custom', description: 'Tailored solutions' },
-          { name: 'White Label', href: '/enterprise/whitelabel', description: 'Branded applications' },
-          { name: 'API Access', href: '/enterprise/api', description: 'Direct API integration' },
-          { name: 'Contact Sales', href: '/enterprise/contact', description: 'Discuss your needs' }
+          { name: 'Game Dev Blog', href: '/blog/gamedev', description: 'Behind the scenes updates' },
+          { name: 'Unity Assets', href: '/assets', description: 'Downloadable game components' },
+          { name: 'Source Code', href: '/github', description: 'Open source projects' }
         ]
       }
     ]
@@ -81,27 +75,21 @@ export const navigationItems: NavigationItem[] = [
       {
         title: 'Resources',
         items: [
-          { name: 'Documentation', href: '/docs', description: 'API docs & guides' },
+          { name: 'API Documentation', href: '/docs', description: 'Complete API reference' },
           { name: 'GitHub Repos', href: 'https://github.com/orgs/JBLinx-Studio/repositories', description: 'Open source projects' },
-          { name: 'Dev Blog', href: '/blog', description: 'Technical articles' },
-          { name: 'Changelog', href: '/changelog', description: 'Latest updates' }
+          { name: 'Code Examples', href: '/examples', description: 'Implementation guides' },
+          { name: 'SDKs & Tools', href: '/tools', description: 'Development utilities' }
         ]
       },
       {
         title: 'Community',
         items: [
-          { name: 'Discord', href: '/discord', description: 'Join our community' },
-          { name: 'Forums', href: '/forums', description: 'Discussion & support' },
-          { name: 'Feature Requests', href: '/feedback', description: 'Suggest improvements' },
-          { name: 'Bug Reports', href: '/issues', description: 'Report problems' }
+          { name: 'Discord Server', href: '/discord', description: 'Join our community' },
+          { name: 'Developer Blog', href: '/blog/dev', description: 'Technical articles' },
+          { name: 'Contribute', href: '/contribute', description: 'Help improve our tools' }
         ]
       }
     ]
-  },
-  {
-    name: 'Blog',
-    href: '/blog',
-    type: 'link' as const
   },
   {
     name: 'About',
