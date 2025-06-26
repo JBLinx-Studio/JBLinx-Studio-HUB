@@ -2,8 +2,8 @@
 import React from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import ProductsShowcase from '../components/ProductsShowcase';
 import GamesSection from '../components/GamesSection';
+import ProductsShowcase from '../components/ProductsShowcase';
 import WebAppsSection from '../components/WebAppsSection';
 import DeveloperTools from '../components/DeveloperTools';
 import Contact from '../components/Contact';
@@ -15,8 +15,8 @@ const Index = () => {
       <Header />
       <main className="relative">
         <Hero />
-        <ProductsShowcase />
         <GamesSection />
+        <ProductsShowcase />
         <WebAppsSection />
         <DeveloperTools />
         <Contact />
