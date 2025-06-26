@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, Download, Star, Gamepad2, Users, Play, Github, Trophy, Zap } from 'lucide-react';
+import { ArrowRight, Download, Star, Gamepad2, Zap, Users, Calendar, Play, Github, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const GamesSection = () => {
@@ -85,119 +85,98 @@ const GamesSection = () => {
           </div>
         </div>
 
-        {/* Games List with Dividers */}
-        <div className="space-y-6 mb-8">
+        {/* Games Grid - More Compact */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-8">
           {games.map((game, index) => (
-            <div key={index} className="group">
-              {/* Game Item */}
-              <div className="flex flex-col lg:flex-row gap-6 items-start hover:bg-slate-800/30 p-6 transition-all duration-300" style={{ borderRadius: '12px' }}>
-                {/* Image Section */}
-                <div className="relative w-full lg:w-80 h-48 flex-shrink-0 overflow-hidden" style={{ borderRadius: '8px' }}>
-                  <img 
-                    src={game.image} 
-                    alt={game.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-                  
-                  {/* Status Badge */}
-                  <div className="absolute top-3 left-3">
-                    <span className={`px-3 py-1 text-xs font-bold ${
-                      game.status === 'Live' 
-                        ? 'bg-green-500 text-white' 
-                        : 'bg-yellow-500 text-black'
-                    }`} style={{ borderRadius: '6px' }}>
-                      {game.status}
-                    </span>
+            <article 
+              key={index}
+              className="bg-slate-800 border border-slate-700 hover:border-purple-400/50 transition-all duration-300 overflow-hidden group"
+              style={{ borderRadius: '8px' }}
+            >
+              {/* Image */}
+              <div className="relative h-40 overflow-hidden">
+                <img 
+                  src={game.image} 
+                  alt={game.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                
+                {/* Status & Stats Overlay */}
+                <div className="absolute top-3 left-3">
+                  <span className={`px-2 py-1 text-xs font-bold ${
+                    game.status === 'Live' 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-yellow-500 text-black'
+                  }`} style={{ borderRadius: '4px' }}>
+                    {game.status}
+                  </span>
+                </div>
+                
+                <div className="absolute top-3 right-3 flex gap-1">
+                  <div className="bg-slate-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1" style={{ borderRadius: '4px' }}>
+                    <Download className="w-3 h-3" />
+                    <span>{game.downloads}</span>
                   </div>
-                  
-                  {/* Price */}
-                  <div className="absolute top-3 right-3">
-                    <div className="bg-slate-900/90 text-green-400 px-3 py-1 text-sm font-bold backdrop-blur-sm" style={{ borderRadius: '6px' }}>
-                      {game.price}
-                    </div>
-                  </div>
-
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="bg-purple-500 text-white p-4 hover:bg-purple-600 transition-colors" style={{ borderRadius: '50%' }}>
-                      <Play className="w-6 h-6" />
-                    </button>
+                  <div className="bg-slate-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1" style={{ borderRadius: '4px' }}>
+                    <Star className="w-3 h-3 text-yellow-400" />
+                    <span>{game.rating}</span>
                   </div>
                 </div>
 
-                {/* Content Section */}
-                <div className="flex-1 space-y-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="text-purple-400 text-sm font-bold font-mono">
+                {/* Quick Info */}
+                <div className="absolute bottom-3 left-3 right-3">
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <div className="text-purple-400 text-xs font-bold font-mono mb-1">
                         {game.category}
                       </div>
-                      <div className="flex items-center space-x-4 text-sm text-slate-400">
-                        <div className="flex items-center space-x-1">
-                          <Download className="w-4 h-4" />
-                          <span>{game.downloads}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Star className="w-4 h-4 text-yellow-400" />
-                          <span className="text-yellow-400">{game.rating}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Users className="w-4 h-4" />
-                          <span>{game.players}</span>
-                        </div>
+                      <h3 className="text-white font-black text-sm font-mono leading-tight">
+                        {game.title}
+                      </h3>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-green-400 font-bold text-sm">{game.price}</div>
+                      <div className="text-slate-400 text-xs flex items-center">
+                        <Users className="w-3 h-3 mr-1" />
+                        {game.players}
                       </div>
                     </div>
-                    
-                    <h3 className="text-2xl font-black text-white mb-3 group-hover:text-purple-300 transition-colors font-mono">
-                      {game.title}
-                    </h3>
-                    
-                    <p className="text-slate-300 leading-relaxed mb-4">
-                      {game.description}
-                    </p>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {game.tags.map((tag, tagIndex) => (
-                      <span 
-                        key={tagIndex} 
-                        className="bg-slate-700 text-purple-400 px-3 py-1 text-sm font-medium border border-purple-400/20" 
-                        style={{ borderRadius: '6px' }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  {/* Actions */}
-                  <div className="flex gap-3">
-                    <button className="bg-purple-500 text-white px-6 py-3 hover:bg-purple-600 transition-all duration-300 font-bold flex items-center space-x-2" style={{ borderRadius: '8px' }}>
-                      <Play className="w-5 h-5" />
-                      <span>PLAY NOW</span>
-                    </button>
-                    <button className="bg-slate-700 text-white px-4 py-3 hover:bg-slate-600 transition-all duration-300 flex items-center" style={{ borderRadius: '8px' }}>
-                      <Github className="w-5 h-5" />
-                    </button>
                   </div>
                 </div>
               </div>
-
-              {/* Elegant Divider */}
-              {index < games.length - 1 && (
-                <div className="relative my-8">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-slate-700"></div>
-                  </div>
-                  <div className="relative flex justify-center">
-                    <div className="bg-slate-950 px-4">
-                      <Zap className="w-6 h-6 text-purple-400/50" />
-                    </div>
-                  </div>
+              
+              {/* Compact Content */}
+              <div className="p-4">
+                <p className="text-slate-400 text-sm leading-relaxed mb-3 line-clamp-2">
+                  {game.description}
+                </p>
+                
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {game.tags.map((tag, tagIndex) => (
+                    <span 
+                      key={tagIndex} 
+                      className="bg-slate-700 text-purple-400 px-2 py-1 text-xs font-medium" 
+                      style={{ borderRadius: '4px' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              )}
-            </div>
+                
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <button className="flex-1 bg-purple-500 text-white px-3 py-2 hover:bg-purple-600 transition-all duration-300 font-bold flex items-center justify-center space-x-2 text-sm" style={{ borderRadius: '6px' }}>
+                    <Play className="w-4 h-4" />
+                    <span>PLAY</span>
+                  </button>
+                  <button className="bg-slate-700 text-white px-3 py-2 hover:bg-slate-600 transition-all duration-300 flex items-center justify-center" style={{ borderRadius: '6px' }}>
+                    <Github className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
 
