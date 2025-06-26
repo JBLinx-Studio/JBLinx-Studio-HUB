@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, Gamepad2, Code, Book, Zap, Download, Star, Users, TrendingUp } from 'lucide-react';
+import { ArrowRight, Gamepad2, Code, Book, Zap, Download, Star, Users, TrendingUp, Monitor, Smartphone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ProductsShowcase = () => {
@@ -12,9 +12,9 @@ const ProductsShowcase = () => {
       bgColor: "bg-blue-500/20",
       borderColor: "border-blue-400/30",
       items: [
-        { name: "Task Management Pro", downloads: "8.5k", rating: "4.9", tech: "React" },
-        { name: "Data Analytics Suite", downloads: "4.2k", rating: "4.8", tech: "Next.js" },
-        { name: "E-Commerce Platform", downloads: "6.7k", rating: "4.9", tech: "Vue.js" }
+        { name: "Task Management Pro", downloads: "8.5k", rating: "4.9", tech: "React", description: "Advanced project management with team collaboration" },
+        { name: "Data Analytics Suite", downloads: "4.2k", rating: "4.8", tech: "Next.js", description: "Powerful business intelligence platform" },
+        { name: "E-Commerce Platform", downloads: "6.7k", rating: "4.9", tech: "Vue.js", description: "Complete online store solution" }
       ]
     },
     {
@@ -24,9 +24,9 @@ const ProductsShowcase = () => {
       bgColor: "bg-green-500/20",
       borderColor: "border-green-400/30",
       items: [
-        { name: "FastAPI Template", downloads: "12k", rating: "5.0", tech: "Python" },
-        { name: "React Component Lib", downloads: "9.3k", rating: "4.8", tech: "TypeScript" },
-        { name: "DB Migration Tool", downloads: "5.1k", rating: "4.9", tech: "Node.js" }
+        { name: "FastAPI Template", downloads: "12k", rating: "5.0", tech: "Python", description: "Production-ready API boilerplate" },
+        { name: "React Component Lib", downloads: "9.3k", rating: "4.8", tech: "TypeScript", description: "Reusable UI component library" },
+        { name: "DB Migration Tool", downloads: "5.1k", rating: "4.9", tech: "Node.js", description: "Database schema management utility" }
       ]
     },
     {
@@ -36,9 +36,9 @@ const ProductsShowcase = () => {
       bgColor: "bg-orange-500/20",
       borderColor: "border-orange-400/30",
       items: [
-        { name: "Game Dev Handbook", downloads: "7.8k", rating: "4.9", tech: "eBook" },
-        { name: "Web Dev Mastery", downloads: "11.2k", rating: "5.0", tech: "Course" },
-        { name: "Tech Articles", downloads: "15.6k", rating: "4.8", tech: "Blog" }
+        { name: "Game Dev Handbook", downloads: "7.8k", rating: "4.9", tech: "eBook", description: "Complete guide to game development" },
+        { name: "Web Dev Mastery", downloads: "11.2k", rating: "5.0", tech: "Course", description: "Comprehensive web development course" },
+        { name: "Tech Articles", downloads: "15.6k", rating: "4.8", tech: "Blog", description: "Latest insights and tutorials" }
       ]
     }
   ];
@@ -85,67 +85,87 @@ const ProductsShowcase = () => {
           </div>
         </div>
 
-        {/* Products Grid - More Compact */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-8">
-          {products.map((product, index) => {
-            const IconComponent = product.icon;
+        {/* Products Categories */}
+        <div className="space-y-8 mb-8">
+          {products.map((category, categoryIndex) => {
+            const IconComponent = category.icon;
             return (
-              <div
-                key={index}
-                className={`bg-slate-800 border border-slate-700 hover:${product.borderColor} transition-all duration-300 overflow-hidden group`}
-                style={{ borderRadius: '8px' }}
-              >
-                {/* Header */}
-                <div className="p-4 border-b border-slate-700">
-                  <div className={`w-10 h-10 ${product.bgColor} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`} style={{ borderRadius: '6px' }}>
-                    <IconComponent className="w-5 h-5 text-white" />
+              <div key={categoryIndex} className="group">
+                {/* Category Header */}
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className={`w-12 h-12 ${category.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform`} style={{ borderRadius: '8px' }}>
+                    <IconComponent className="w-6 h-6 text-white" />
                   </div>
-                  
-                  <h3 className="text-lg font-black text-white mb-1 group-hover:text-cyan-300 transition-colors font-mono">
-                    {product.category}
-                  </h3>
-                  <div className="text-xs text-slate-400">{product.items.length} Products</div>
+                  <div>
+                    <h3 className="text-xl font-black text-white group-hover:text-cyan-300 transition-colors font-mono">
+                      {category.category}
+                    </h3>
+                    <div className="text-sm text-slate-400">{category.items.length} Products Available</div>
+                  </div>
+                  <div className="flex-1 border-t border-slate-700"></div>
                 </div>
 
-                {/* Items - More Compact */}
-                <div className="p-4 space-y-3">
-                  {product.items.map((item, itemIndex) => (
-                    <div key={itemIndex} className="bg-slate-900/50 border border-slate-600 p-3 hover:border-slate-500 transition-colors" style={{ borderRadius: '6px' }}>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="text-white font-medium text-sm line-clamp-1">
-                          {item.name}
+                {/* Products List */}
+                <div className="space-y-4 ml-16">
+                  {category.items.map((item, itemIndex) => (
+                    <div key={itemIndex} className="group/item">
+                      <div className="flex items-center justify-between p-4 hover:bg-slate-800/30 transition-all duration-300" style={{ borderRadius: '8px' }}>
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-4 mb-2">
+                            <h4 className="text-lg font-bold text-white group-hover/item:text-cyan-300 transition-colors">
+                              {item.name}
+                            </h4>
+                            <span className="bg-slate-700 text-slate-300 px-3 py-1 text-xs font-medium" style={{ borderRadius: '6px' }}>
+                              {item.tech}
+                            </span>
+                          </div>
+                          <p className="text-slate-400 text-sm mb-3">{item.description}</p>
+                          <div className="flex items-center space-x-4 text-xs text-slate-500">
+                            <div className="flex items-center space-x-1">
+                              <Download className="w-3 h-3" />
+                              <span>{item.downloads}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <Star className="w-3 h-3 text-yellow-400" />
+                              <span className="text-yellow-400">{item.rating}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <Monitor className="w-3 h-3" />
+                              <Smartphone className="w-3 h-3" />
+                            </div>
+                          </div>
                         </div>
-                        <span className="bg-slate-700 text-slate-300 px-2 py-1 text-xs font-medium" style={{ borderRadius: '4px' }}>
-                          {item.tech}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-xs text-slate-400">
                         <div className="flex items-center space-x-3">
-                          <div className="flex items-center space-x-1">
-                            <Download className="w-3 h-3" />
-                            <span>{item.downloads}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Star className="w-3 h-3 text-yellow-400" />
-                            <span className="text-yellow-400">{item.rating}</span>
-                          </div>
+                          <button className="bg-slate-700 text-white px-4 py-2 hover:bg-cyan-500 transition-all duration-300 text-sm font-bold opacity-0 group-hover/item:opacity-100" style={{ borderRadius: '6px' }}>
+                            VIEW
+                          </button>
+                          <ArrowRight className="w-4 h-4 text-slate-500 group-hover/item:text-cyan-400 group-hover/item:translate-x-1 transition-all duration-300" />
                         </div>
                       </div>
+                      
+                      {/* Item Divider */}
+                      {itemIndex < category.items.length - 1 && (
+                        <div className="ml-4 border-l border-slate-700 h-4"></div>
+                      )}
                     </div>
                   ))}
                 </div>
 
-                {/* Footer */}
-                <div className="p-4 pt-0">
-                  <Link 
-                    to="/web-applications" 
-                    className="w-full bg-slate-700 text-white px-4 py-2 hover:bg-cyan-500 transition-all duration-300 text-sm font-bold flex items-center justify-center space-x-2 group"
-                    style={{ borderRadius: '6px' }}
-                  >
-                    <span>VIEW ALL</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
+                {/* Category Divider */}
+                {categoryIndex < products.length - 1 && (
+                  <div className="relative my-8">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-slate-700"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                      <div className="bg-slate-950 px-4">
+                        <div className="w-8 h-8 bg-slate-800 flex items-center justify-center" style={{ borderRadius: '50%' }}>
+                          <div className="w-2 h-2 bg-cyan-400" style={{ borderRadius: '50%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })}
