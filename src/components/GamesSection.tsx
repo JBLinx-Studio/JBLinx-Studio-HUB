@@ -1,22 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ArrowRight, Download, Star, Gamepad2, Zap, Users, Calendar, Play, Github, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const GamesSection = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const games = [
     {
       title: "Survival Horror Chronicles",
       category: "Horror/Survival",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
       downloads: "5.2k",
       rating: "4.8",
       status: "Live",
@@ -28,7 +20,7 @@ const GamesSection = () => {
     {
       title: "Strategic Conquest RTS",
       category: "Real-Time Strategy",
-      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop",
       downloads: "3.1k",
       rating: "4.9",
       status: "Live",
@@ -40,7 +32,7 @@ const GamesSection = () => {
     {
       title: "Adventure Quest RPG",
       category: "Action/Adventure",
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
       downloads: "2.8k",
       rating: "4.7",
       status: "Beta",
@@ -59,175 +51,129 @@ const GamesSection = () => {
   ];
 
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Enhanced Background with Parallax */}
-      <div className="absolute inset-0">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?w=1920&h=1080&fit=crop')`,
-            transform: `translateY(${scrollY * 0.3}px)`
-          }}
-        />
-        
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-purple-950/50 to-slate-950"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-        
-        {/* Floating Elements */}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-32 h-32 border border-purple-500/20 animate-pulse"
-            style={{
-              left: `${20 + (i * 15) % 60}%`,
-              top: `${10 + (i * 20) % 80}%`,
-              borderRadius: i % 2 === 0 ? '50%' : '12px',
-              animationDelay: `${i * 1.2}s`,
-              transform: `rotate(${i * 45}deg) translateY(${scrollY * (0.1 + i * 0.02)}px)`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section className="py-12 bg-slate-950 border-t border-slate-800">
+      <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 px-6 py-3 mb-6 shadow-lg" style={{ borderRadius: '8px' }}>
-            <Trophy className="w-5 h-5 mr-3 text-purple-400 animate-bounce" />
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-6 py-2 mb-4" style={{ borderRadius: '8px' }}>
+            <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-sm font-bold text-purple-300 tracking-wide font-mono">GAME PORTFOLIO</span>
           </div>
           
-          <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight font-mono mb-4">
-            OUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">GAMES</span>
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
+            OUR <span className="text-purple-400">GAMES</span>
           </h2>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-500 mx-auto mb-6 rounded-full"></div>
+          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
           
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-slate-300 max-w-xl mx-auto mb-6">
             Premium gaming experiences built with Unity and cutting-edge technology
           </p>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
             {gameStats.map((stat, index) => {
               const IconComponent = stat.icon;
               return (
-                <div key={index} className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 text-center shadow-lg hover:shadow-purple-500/20 transition-all duration-300 transform hover:scale-105" style={{ borderRadius: '12px' }}>
-                  <IconComponent className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                  <div className="text-2xl font-black text-white font-mono">{stat.value}</div>
-                  <div className="text-slate-400 text-sm font-medium">{stat.label}</div>
+                <div key={index} className="bg-slate-800/50 border border-slate-700 p-3 text-center" style={{ borderRadius: '6px' }}>
+                  <IconComponent className="w-5 h-5 text-purple-400 mx-auto mb-1" />
+                  <div className="text-lg font-black text-white font-mono">{stat.value}</div>
+                  <div className="text-slate-400 text-xs">{stat.label}</div>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Games Grid - Enhanced Visual Design */}
-        <div className="space-y-8 mb-12">
+        {/* Games Grid - More Compact */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-8">
           {games.map((game, index) => (
             <article 
               key={index}
-              className="group relative overflow-hidden bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 hover:border-purple-400/50 transition-all duration-500 shadow-xl hover:shadow-2xl"
-              style={{ borderRadius: '16px' }}
+              className="bg-slate-800 border border-slate-700 hover:border-purple-400/50 transition-all duration-300 overflow-hidden group"
+              style={{ borderRadius: '8px' }}
             >
-              {/* Background Image with Parallax */}
-              <div className="absolute inset-0">
+              {/* Image */}
+              <div className="relative h-40 overflow-hidden">
                 <img 
                   src={game.image} 
                   alt={game.title}
-                  className="w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-500"
-                  style={{ transform: `scale(1.1) translateY(${scrollY * 0.05}px)` }}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-800/90 to-slate-900/95"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                
+                {/* Status & Stats Overlay */}
+                <div className="absolute top-3 left-3">
+                  <span className={`px-2 py-1 text-xs font-bold ${
+                    game.status === 'Live' 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-yellow-500 text-black'
+                  }`} style={{ borderRadius: '4px' }}>
+                    {game.status}
+                  </span>
+                </div>
+                
+                <div className="absolute top-3 right-3 flex gap-1">
+                  <div className="bg-slate-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1" style={{ borderRadius: '4px' }}>
+                    <Download className="w-3 h-3" />
+                    <span>{game.downloads}</span>
+                  </div>
+                  <div className="bg-slate-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1" style={{ borderRadius: '4px' }}>
+                    <Star className="w-3 h-3 text-yellow-400" />
+                    <span>{game.rating}</span>
+                  </div>
+                </div>
+
+                {/* Quick Info */}
+                <div className="absolute bottom-3 left-3 right-3">
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <div className="text-purple-400 text-xs font-bold font-mono mb-1">
+                        {game.category}
+                      </div>
+                      <h3 className="text-white font-black text-sm font-mono leading-tight">
+                        {game.title}
+                      </h3>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-green-400 font-bold text-sm">{game.price}</div>
+                      <div className="text-slate-400 text-xs flex items-center">
+                        <Users className="w-3 h-3 mr-1" />
+                        {game.players}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-              <div className="relative z-10 p-8 lg:p-12">
-                <div className="grid lg:grid-cols-12 gap-8 items-center">
-                  {/* Game Image */}
-                  <div className="lg:col-span-4">
-                    <div className="relative overflow-hidden shadow-2xl" style={{ borderRadius: '12px' }}>
-                      <img 
-                        src={game.image} 
-                        alt={game.title}
-                        className="w-full h-64 lg:h-48 object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                      
-                      {/* Status Badge */}
-                      <div className="absolute top-4 left-4">
-                        <span className={`px-3 py-1 text-sm font-bold backdrop-blur-sm ${
-                          game.status === 'Live' 
-                            ? 'bg-green-500/90 text-white' 
-                            : 'bg-yellow-500/90 text-black'
-                        }`} style={{ borderRadius: '6px' }}>
-                          {game.status}
-                        </span>
-                      </div>
-
-                      {/* Quick Stats */}
-                      <div className="absolute bottom-4 right-4 flex gap-2">
-                        <div className="bg-slate-900/80 backdrop-blur-sm text-white px-3 py-1 text-sm flex items-center space-x-1" style={{ borderRadius: '6px' }}>
-                          <Download className="w-4 h-4" />
-                          <span>{game.downloads}</span>
-                        </div>
-                        <div className="bg-slate-900/80 backdrop-blur-sm text-white px-3 py-1 text-sm flex items-center space-x-1" style={{ borderRadius: '6px' }}>
-                          <Star className="w-4 h-4 text-yellow-400" />
-                          <span>{game.rating}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Game Info */}
-                  <div className="lg:col-span-8 space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-purple-400 text-sm font-bold font-mono mb-2">
-                          {game.category}
-                        </div>
-                        <h3 className="text-3xl lg:text-4xl font-black text-white group-hover:text-purple-300 transition-colors font-mono leading-tight">
-                          {game.title}
-                        </h3>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-2xl font-black text-green-400 mb-1">{game.price}</div>
-                        <div className="text-slate-400 text-sm flex items-center">
-                          <Users className="w-4 h-4 mr-1" />
-                          {game.players} Players
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <p className="text-slate-300 text-lg leading-relaxed max-w-2xl">
-                      {game.description}
-                    </p>
-                    
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-3">
-                      {game.tags.map((tag, tagIndex) => (
-                        <span 
-                          key={tagIndex} 
-                          className="bg-purple-500/20 border border-purple-400/30 text-purple-300 px-4 py-2 text-sm font-medium backdrop-blur-sm" 
-                          style={{ borderRadius: '8px' }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    {/* Actions */}
-                    <div className="flex gap-4 pt-4">
-                      <button className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-3 hover:from-purple-600 hover:to-pink-700 transition-all duration-300 font-bold flex items-center space-x-3 shadow-lg hover:shadow-purple-500/25 transform hover:scale-105" style={{ borderRadius: '8px' }}>
-                        <Play className="w-5 h-5" />
-                        <span>PLAY NOW</span>
-                      </button>
-                      <button className="bg-slate-700/50 backdrop-blur-sm border border-slate-600 text-white px-6 py-3 hover:bg-slate-600/50 hover:border-slate-500 transition-all duration-300 flex items-center justify-center transform hover:scale-105" style={{ borderRadius: '8px' }}>
-                        <Github className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
+              
+              {/* Compact Content */}
+              <div className="p-4">
+                <p className="text-slate-400 text-sm leading-relaxed mb-3 line-clamp-2">
+                  {game.description}
+                </p>
+                
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {game.tags.map((tag, tagIndex) => (
+                    <span 
+                      key={tagIndex} 
+                      className="bg-slate-700 text-purple-400 px-2 py-1 text-xs font-medium" 
+                      style={{ borderRadius: '4px' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <button className="flex-1 bg-purple-500 text-white px-3 py-2 hover:bg-purple-600 transition-all duration-300 font-bold flex items-center justify-center space-x-2 text-sm" style={{ borderRadius: '6px' }}>
+                    <Play className="w-4 h-4" />
+                    <span>PLAY</span>
+                  </button>
+                  <button className="bg-slate-700 text-white px-3 py-2 hover:bg-slate-600 transition-all duration-300 flex items-center justify-center" style={{ borderRadius: '6px' }}>
+                    <Github className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             </article>
@@ -238,12 +184,12 @@ const GamesSection = () => {
         <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-10 py-4 font-bold text-lg hover:from-purple-600 hover:via-pink-600 hover:to-red-600 shadow-lg hover:shadow-purple-500/25 transition-all duration-300 space-x-3 transform hover:scale-105"
-            style={{ borderRadius: '12px' }}
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 font-bold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 space-x-2"
+            style={{ borderRadius: '8px' }}
           >
-            <Gamepad2 className="w-6 h-6" />
+            <Gamepad2 className="w-5 h-5" />
             <span>VIEW ALL GAMES</span>
-            <ArrowRight className="w-6 h-6" />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>

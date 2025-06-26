@@ -1,17 +1,9 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ArrowRight, Gamepad2, Code, Book, Zap, Download, Star, Users, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ProductsShowcase = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const products = [
     {
       category: "Web Applications",
@@ -59,135 +51,100 @@ const ProductsShowcase = () => {
   ];
 
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Enhanced Background with Parallax */}
-      <div className="absolute inset-0">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1500673922987-e212871fec22?w=1920&h=1080&fit=crop')`,
-            transform: `translateY(${scrollY * 0.2}px)`
-          }}
-        />
-        
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-cyan-950/30 to-slate-950"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-        
-        {/* Floating Code Elements */}
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute text-cyan-400/20 font-mono text-sm animate-pulse"
-            style={{
-              left: `${10 + (i * 12) % 80}%`,
-              top: `${15 + (i * 15) % 70}%`,
-              animationDelay: `${i * 0.8}s`,
-              transform: `translateY(${scrollY * (0.05 + i * 0.01)}px)`
-            }}
-          >
-            {['<div>', '</div>', '{ }', '( )', '[ ]', '=>', '&&', '||'][i]}
-          </div>
-        ))}
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section className="py-12 bg-slate-950 border-t border-slate-800">
+      <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 px-6 py-3 mb-6 shadow-lg" style={{ borderRadius: '8px' }}>
-            <Star className="w-5 h-5 mr-3 text-cyan-400 animate-pulse" />
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-6 py-2 mb-4" style={{ borderRadius: '8px' }}>
+            <Star className="w-4 h-4 mr-2 text-cyan-400" />
             <span className="text-sm font-bold text-cyan-300 tracking-wide font-mono">OUR PRODUCTS</span>
           </div>
           
-          <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight font-mono mb-4">
-            WHAT WE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">BUILD</span>
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
+            WHAT WE <span className="text-cyan-400">BUILD</span>
           </h2>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-6 rounded-full"></div>
+          <div className="w-20 h-0.5 bg-cyan-400 mx-auto mb-4"></div>
           
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-slate-300 max-w-xl mx-auto mb-6">
             Premium digital products developed with cutting-edge technology
           </p>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
             {productStats.map((stat, index) => {
               const IconComponent = stat.icon;
               return (
-                <div key={index} className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-6 text-center shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 transform hover:scale-105" style={{ borderRadius: '12px' }}>
-                  <IconComponent className="w-8 h-8 text-cyan-400 mx-auto mb-3" />
-                  <div className="text-2xl font-black text-white font-mono">{stat.value}</div>
-                  <div className="text-slate-400 text-sm font-medium">{stat.label}</div>
+                <div key={index} className="bg-slate-800/50 border border-slate-700 p-3 text-center" style={{ borderRadius: '6px' }}>
+                  <IconComponent className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
+                  <div className="text-lg font-black text-white font-mono">{stat.value}</div>
+                  <div className="text-slate-400 text-xs">{stat.label}</div>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Products Grid - Enhanced Visual Design */}
-        <div className="space-y-12 mb-12">
+        {/* Products Grid - More Compact */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-8">
           {products.map((product, index) => {
             const IconComponent = product.icon;
             return (
-              <div key={index} className="relative">
-                {/* Category Header */}
-                <div className="flex items-center mb-8">
-                  <div className={`w-16 h-16 ${product.bgColor} backdrop-blur-sm flex items-center justify-center mr-6 shadow-lg`} style={{ borderRadius: '16px' }}>
-                    <IconComponent className="w-8 h-8 text-white" />
+              <div
+                key={index}
+                className={`bg-slate-800 border border-slate-700 hover:${product.borderColor} transition-all duration-300 overflow-hidden group`}
+                style={{ borderRadius: '8px' }}
+              >
+                {/* Header */}
+                <div className="p-4 border-b border-slate-700">
+                  <div className={`w-10 h-10 ${product.bgColor} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`} style={{ borderRadius: '6px' }}>
+                    <IconComponent className="w-5 h-5 text-white" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl lg:text-3xl font-black text-white mb-2 font-mono">
-                      {product.category}
-                    </h3>
-                    <div className={`w-full h-1 bg-gradient-to-r ${product.color} rounded-full`}></div>
-                  </div>
-                  <div className="text-slate-400 text-sm font-mono">
-                    {product.items.length} Products
-                  </div>
+                  
+                  <h3 className="text-lg font-black text-white mb-1 group-hover:text-cyan-300 transition-colors font-mono">
+                    {product.category}
+                  </h3>
+                  <div className="text-xs text-slate-400">{product.items.length} Products</div>
                 </div>
 
-                {/* Products List */}
-                <div className="grid lg:grid-cols-3 gap-6">
+                {/* Items - More Compact */}
+                <div className="p-4 space-y-3">
                   {product.items.map((item, itemIndex) => (
-                    <div 
-                      key={itemIndex} 
-                      className="group bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 hover:border-slate-500/70 transition-all duration-300 p-6 shadow-lg hover:shadow-xl transform hover:scale-105"
-                      style={{ borderRadius: '12px' }}
-                    >
-                      {/* Product Header */}
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <h4 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
-                            {item.name}
-                          </h4>
-                          <span className={`inline-block bg-gradient-to-r ${product.color} text-white px-3 py-1 text-xs font-bold`} style={{ borderRadius: '6px' }}>
-                            {item.tech}
-                          </span>
+                    <div key={itemIndex} className="bg-slate-900/50 border border-slate-600 p-3 hover:border-slate-500 transition-colors" style={{ borderRadius: '6px' }}>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-white font-medium text-sm line-clamp-1">
+                          {item.name}
                         </div>
+                        <span className="bg-slate-700 text-slate-300 px-2 py-1 text-xs font-medium" style={{ borderRadius: '4px' }}>
+                          {item.tech}
+                        </span>
                       </div>
-
-                      {/* Stats */}
-                      <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
-                        <div className="flex items-center space-x-4">
+                      <div className="flex items-center justify-between text-xs text-slate-400">
+                        <div className="flex items-center space-x-3">
                           <div className="flex items-center space-x-1">
-                            <Download className="w-4 h-4" />
-                            <span className="font-medium">{item.downloads}</span>
+                            <Download className="w-3 h-3" />
+                            <span>{item.downloads}</span>
                           </div>
                           <div className="flex items-center space-x-1">
-                            <Star className="w-4 h-4 text-yellow-400" />
-                            <span className="text-yellow-400 font-medium">{item.rating}</span>
+                            <Star className="w-3 h-3 text-yellow-400" />
+                            <span className="text-yellow-400">{item.rating}</span>
                           </div>
                         </div>
                       </div>
-
-                      {/* Action Button */}
-                      <button className={`w-full bg-gradient-to-r ${product.color} text-white px-4 py-3 font-bold text-sm hover:opacity-90 transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg`} style={{ borderRadius: '8px' }}>
-                        <span>VIEW DETAILS</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </button>
                     </div>
                   ))}
+                </div>
+
+                {/* Footer */}
+                <div className="p-4 pt-0">
+                  <Link 
+                    to="/web-applications" 
+                    className="w-full bg-slate-700 text-white px-4 py-2 hover:bg-cyan-500 transition-all duration-300 text-sm font-bold flex items-center justify-center space-x-2 group"
+                    style={{ borderRadius: '6px' }}
+                  >
+                    <span>VIEW ALL</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
             );
@@ -198,12 +155,12 @@ const ProductsShowcase = () => {
         <div className="text-center">
           <Link 
             to="/web-applications" 
-            className="inline-flex items-center bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white px-10 py-4 font-bold text-lg hover:from-cyan-600 hover:via-blue-700 hover:to-purple-700 shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 space-x-3 transform hover:scale-105"
-            style={{ borderRadius: '12px' }}
+            className="inline-flex items-center bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 font-bold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 space-x-2"
+            style={{ borderRadius: '8px' }}
           >
-            <Code className="w-6 h-6" />
+            <Code className="w-5 h-5" />
             <span>EXPLORE ALL PRODUCTS</span>
-            <ArrowRight className="w-6 h-6" />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>

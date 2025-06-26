@@ -1,24 +1,26 @@
 
 import React from 'react';
 import Header from '../components/Header';
-import Hero from '../components/Hero';
-import GamesSection from '../components/GamesSection';
-import ProductsShowcase from '../components/ProductsShowcase';
+import EnhancedHero from '../components/EnhancedHero';
+import InteractiveGamesShowcase from '../components/InteractiveGamesShowcase';
+import ModernProductsCarousel from '../components/ModernProductsCarousel';
 import WebAppsSection from '../components/WebAppsSection';
 import DeveloperTools from '../components/DeveloperTools';
+import FeaturedBlogCycle from '../components/FeaturedBlogCycle';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-950 overflow-x-hidden">
       <Header />
       <main className="relative">
-        <Hero />
-        <GamesSection />
-        <ProductsShowcase />
+        <EnhancedHero />
+        <InteractiveGamesShowcase />
+        <ModernProductsCarousel />
         <WebAppsSection />
         <DeveloperTools />
+        <FeaturedBlogCycle />
         <Contact />
       </main>
       <Footer />
