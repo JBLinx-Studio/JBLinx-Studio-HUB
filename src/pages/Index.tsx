@@ -2,10 +2,9 @@
 import React from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import ProductsShowcase from '../components/ProductsShowcase';
-import GamesSection from '../components/GamesSection';
-import WebAppsSection from '../components/WebAppsSection';
-import DeveloperTools from '../components/DeveloperTools';
+import InteractiveShowcase from '../components/InteractiveShowcase';
+import ProductCarousel from '../components/ProductCarousel';
+import TechShowcase from '../components/TechShowcase';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
@@ -15,10 +14,9 @@ const Index = () => {
       <Header />
       <main className="relative">
         <Hero />
-        <ProductsShowcase />
-        <GamesSection />
-        <WebAppsSection />
-        <DeveloperTools />
+        <InteractiveShowcase />
+        <ProductCarousel />
+        <TechShowcase />
         <Contact />
       </main>
       <Footer />
