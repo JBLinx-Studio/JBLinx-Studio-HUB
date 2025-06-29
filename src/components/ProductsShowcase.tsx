@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Code, Book, Zap, Download, Star, Users, TrendingUp, Smartphone, Database, Monitor, Globe, ShoppingCart, Package, Layers, FileCode } from 'lucide-react';
+import { ArrowRight, Code, Book, Zap, Download, Star, Users, TrendingUp, Smartphone, Database, Monitor, Globe, ShoppingCart, Package, Layers, FileCode, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ProductsShowcase = () => {
