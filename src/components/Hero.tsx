@@ -1,16 +1,37 @@
-
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [terminalText, setTerminalText] = useState('');
   const [currentLine, setCurrentLine] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   const terminalLines = [
     '> initializing_jblinx_studio...',
-    '> loading_games_and_webapps...',
-    '> STATUS: Ready to showcase ⬡'
+    '> loading_premium_content_library...',
+    '> STATUS: 50+ Products Ready ⬡'
+  ];
+
+  const showcaseTabs = [
+    {
+      title: "GAMES",
+      icon: Gamepad2,
+      count: "15+",
+      items: ["Survival Horror", "RTS Strategy", "Adventure RPG", "Multiplayer FPS"]
+    },
+    {
+      title: "WEB APPS",
+      icon: Code,
+      count: "25+",
+      items: ["SaaS Platforms", "E-commerce", "Analytics Tools", "Productivity Apps"]
+    },
+    {
+      title: "RESOURCES",
+      icon: Book,
+      count: "30+",
+      items: ["Game Dev eBooks", "Video Tutorials", "Code Templates", "Dev Blogs"]
+    }
   ];
 
   useEffect(() => {
@@ -30,38 +51,46 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [currentLine]);
 
+  // Auto-rotate tabs
+  useEffect(() => {
+    const tabInterval = setInterval(() => {
+      setActiveTab(prev => (prev + 1) % showcaseTabs.length);
+    }, 3000);
+    return () => clearInterval(tabInterval);
+  }, []);
+
   return (
     <section className="relative min-h-screen bg-slate-950 overflow-hidden flex items-center">
-      {/* Background Pattern */}
+      {/* Enhanced Background Pattern */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/5 blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500/5 blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/5 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500/5 blur-3xl animate-pulse"></div>
         
-        {/* Geometric Pattern */}
-        {[...Array(8)].map((_, i) => (
+        {/* Animated Grid */}
+        {[...Array(12)].map((_, i) => (
           <div 
             key={i}
             className="absolute border border-cyan-500/10 animate-pulse"
             style={{
-              width: `${30 + (i % 3) * 20}px`,
-              height: `${30 + (i % 3) * 20}px`,
-              left: `${(i * 15) % 100}%`,
-              top: `${(i * 12) % 100}%`,
-              animationDelay: `${i * 0.7}s`,
-              borderRadius: '8px'
+              width: `${25 + (i % 4) * 15}px`,
+              height: `${25 + (i % 4) * 15}px`,
+              left: `${(i * 12) % 100}%`,
+              top: `${(i * 8) % 100}%`,
+              animationDelay: `${i * 0.5}s`,
+              borderRadius: '6px'
             }}
           />
         ))}
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-8 items-center">
-          {/* Main Content */}
-          <div className="lg:col-span-7 space-y-6">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          {/* Main Content - Enhanced */}
+          <div className="lg:col-span-7 space-y-8">
             {/* Brand Badge */}
             <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-6 py-3" style={{ borderRadius: '8px' }}>
-              <Hexagon className="w-5 h-5 text-cyan-400 mr-3" />
-              <span className="text-white/90 font-bold font-mono">GAME & WEB APP STUDIO</span>
+              <Hexagon className="w-5 h-5 text-cyan-400 mr-3 animate-spin-slow" />
+              <span className="text-white/90 font-bold font-mono">PREMIUM DIGITAL STUDIO</span>
             </div>
 
             {/* Title */}
@@ -73,33 +102,52 @@ const Hero = () => {
               
               <div className="space-y-2">
                 <div className="text-2xl lg:text-3xl font-light text-white/90">
-                  Premium Games & Web Applications
+                  Games • Web Apps • Digital Content
                 </div>
-                <div className="text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-400">
-                  Built by developers, for everyone.
+                <div className="text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400">
+                  Everything you need to succeed.
                 </div>
               </div>
             </div>
 
-            {/* Description */}
-            <p className="text-xl text-gray-300 leading-relaxed max-w-2xl">
-              We develop and publish our own premium games, web applications, and developer tools. 
-              Subscribe to access our growing library of digital products.
-            </p>
+            {/* Enhanced Description */}
+            <div className="space-y-4">
+              <p className="text-xl text-gray-300 leading-relaxed max-w-2xl">
+                Your one-stop destination for premium games, professional web applications, 
+                educational content, and development resources.
+              </p>
+              
+              {/* What We Offer Pills */}
+              <div className="flex flex-wrap gap-2">
+                {["Unity Games", "React Apps", "FastAPI Templates", "Game Dev Tutorials", "eBooks", "Mobile Apps"].map((item, index) => (
+                  <span 
+                    key={index}
+                    className="bg-slate-800/60 border border-slate-600 text-slate-300 px-3 py-1 text-sm font-medium"
+                    style={{ borderRadius: '6px' }}
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
             
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-6 max-w-lg">
-              <div className="text-center">
-                <div className="text-2xl font-black text-cyan-400 font-mono">15+</div>
-                <div className="text-slate-400 text-sm font-medium">Games Published</div>
+            {/* Enhanced Stats */}
+            <div className="grid grid-cols-4 gap-4 max-w-2xl">
+              <div className="text-center p-3 bg-slate-800/30 border border-slate-700" style={{ borderRadius: '8px' }}>
+                <div className="text-2xl font-black text-cyan-400 font-mono">50+</div>
+                <div className="text-slate-400 text-xs font-medium">Total Products</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-black text-purple-400 font-mono">8+</div>
-                <div className="text-slate-400 text-sm font-medium">Web Apps</div>
+              <div className="text-center p-3 bg-slate-800/30 border border-slate-700" style={{ borderRadius: '8px' }}>
+                <div className="text-2xl font-black text-purple-400 font-mono">15+</div>
+                <div className="text-slate-400 text-xs font-medium">Games Live</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-black text-yellow-400 font-mono">1000+</div>
-                <div className="text-slate-400 text-sm font-medium">Active Users</div>
+              <div className="text-center p-3 bg-slate-800/30 border border-slate-700" style={{ borderRadius: '8px' }}>
+                <div className="text-2xl font-black text-yellow-400 font-mono">25k+</div>
+                <div className="text-slate-400 text-xs font-medium">Downloads</div>
+              </div>
+              <div className="text-center p-3 bg-slate-800/30 border border-slate-700" style={{ borderRadius: '8px' }}>
+                <div className="text-2xl font-black text-green-400 font-mono">4.9★</div>
+                <div className="text-slate-400 text-xs font-medium">Avg Rating</div>
               </div>
             </div>
 
@@ -107,11 +155,11 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link 
                 to="/blog" 
-                className="group bg-cyan-500 text-white px-8 py-4 font-bold text-lg transition-all duration-300 hover:bg-cyan-600 shadow-lg flex items-center justify-center space-x-3"
+                className="group bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 font-bold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 flex items-center justify-center space-x-3"
                 style={{ borderRadius: '8px' }}
               >
-                <Gamepad2 className="w-5 h-5" />
-                <span>EXPLORE GAMES</span>
+                <Play className="w-5 h-5" />
+                <span>EXPLORE ALL</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </Link>
               
@@ -123,13 +171,14 @@ const Hero = () => {
                 style={{ borderRadius: '8px' }}
               >
                 <Github className="w-5 h-5" />
-                <span>VIEW SOURCE</span>
+                <span>OPEN SOURCE</span>
               </a>
             </div>
           </div>
 
-          {/* Terminal */}
-          <div className="lg:col-span-5">
+          {/* Enhanced Terminal + Showcase */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Terminal */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 blur-xl" style={{ borderRadius: '12px' }}></div>
               
@@ -154,6 +203,49 @@ const Hero = () => {
                     <span className="text-green-400">⬡ </span>
                     <div className="w-2 h-5 bg-green-400 ml-2 animate-pulse"></div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Showcase Tabs */}
+            <div className="bg-slate-800/50 border border-slate-700 p-4" style={{ borderRadius: '12px' }}>
+              <div className="flex space-x-1 mb-4">
+                {showcaseTabs.map((tab, index) => {
+                  const IconComponent = tab.icon;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setActiveTab(index)}
+                      className={`flex-1 flex items-center justify-center space-x-2 py-2 px-3 text-sm font-bold transition-all duration-300 ${
+                        activeTab === index 
+                          ? 'bg-cyan-500 text-white' 
+                          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                      }`}
+                      style={{ borderRadius: '6px' }}
+                    >
+                      <IconComponent className="w-4 h-4" />
+                      <span>{tab.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              
+              <div className="min-h-[100px]">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-white font-black font-mono">
+                    {showcaseTabs[activeTab].title}
+                  </h4>
+                  <span className="bg-slate-700 text-cyan-400 px-2 py-1 text-xs font-bold" style={{ borderRadius: '4px' }}>
+                    {showcaseTabs[activeTab].count}
+                  </span>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-2">
+                  {showcaseTabs[activeTab].items.map((item, index) => (
+                    <div key={index} className="bg-slate-700/50 border border-slate-600 p-2 text-slate-300 text-xs" style={{ borderRadius: '4px' }}>
+                      • {item}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
