@@ -61,6 +61,7 @@ const GamesSection = () => {
       description: "Comprehensive guide covering Unity, game mechanics, AI, and multiplayer systems",
       tags: ["Unity", "C#", "Game Design"],
       price: "$29.99",
+      players: "N/A",
       type: "ebook"
     },
     {
@@ -73,6 +74,7 @@ const GamesSection = () => {
       description: "Step-by-step video tutorials for creating atmospheric horror games",
       tags: ["Unity", "Horror", "Atmosphere"],
       price: "$49.99",
+      players: "N/A",
       type: "tutorial"
     },
     {
@@ -85,6 +87,7 @@ const GamesSection = () => {
       description: "Behind-the-scenes development process, challenges, and solutions",
       tags: ["Development", "Process", "Insights"],
       price: "Free",
+      players: "N/A",
       type: "devlog"
     }
   ];
@@ -122,122 +125,120 @@ const GamesSection = () => {
   };
 
   return (
-    <section className="py-12 bg-slate-950 border-t border-slate-800">
+    <section className="py-16 bg-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-6">
-        {/* Enhanced Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-6 py-2 mb-4" style={{ borderRadius: '8px' }}>
-            <Trophy className="w-4 h-4 mr-2 text-purple-400" />
-            <span className="text-sm font-bold text-purple-300 tracking-wide font-mono">GAMES & LEARNING</span>
+        {/* GAMERS FIRST - Enhanced Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-8 py-3 mb-6">
+            <Trophy className="w-5 h-5 mr-3 text-purple-400" />
+            <span className="text-lg font-black text-purple-300 tracking-wide font-mono">FOR GAMERS & DEVELOPERS</span>
           </div>
           
-          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
-            <span className="text-purple-400">GAMES</span> + <span className="text-blue-400">EDUCATION</span>
+          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight font-mono mb-4">
+            <span className="text-purple-400">PREMIUM GAMES</span> + <span className="text-blue-400">DEV RESOURCES</span>
           </h2>
           
-          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
+          <div className="w-24 h-1 bg-purple-400 mx-auto mb-6"></div>
           
-          <p className="text-slate-300 max-w-2xl mx-auto mb-6">
-            Premium games, comprehensive development guides, video tutorials, and behind-the-scenes content
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+            Experience our premium games, learn from comprehensive development guides, watch exclusive tutorials, and follow behind-the-scenes development logs
           </p>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-2 mb-6">
+          {/* Category Filter - Square Design */}
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
             {gameCategories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 text-sm font-bold transition-all duration-300 ${
+                className={`px-6 py-3 text-sm font-black transition-all duration-300 ${
                   activeCategory === category
-                    ? 'bg-purple-500 text-white' 
+                    ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/25' 
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600'
                 }`}
-                style={{ borderRadius: '6px' }}
               >
                 {category}
               </button>
             ))}
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
-            <div className="bg-slate-800/50 border border-slate-700 p-3 text-center" style={{ borderRadius: '6px' }}>
-              <Gamepad2 className="w-5 h-5 text-purple-400 mx-auto mb-1" />
-              <div className="text-lg font-black text-white font-mono">15+</div>
-              <div className="text-slate-400 text-xs">Games</div>
+          {/* Enhanced Stats - Square Panels */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
+            <div className="bg-slate-800/70 border-2 border-slate-700 p-6 text-center">
+              <Gamepad2 className="w-8 h-8 text-purple-400 mx-auto mb-3" />
+              <div className="text-2xl font-black text-white font-mono">15+</div>
+              <div className="text-slate-400 text-sm font-bold">Premium Games</div>
             </div>
-            <div className="bg-slate-800/50 border border-slate-700 p-3 text-center" style={{ borderRadius: '6px' }}>
-              <BookOpen className="w-5 h-5 text-blue-400 mx-auto mb-1" />
-              <div className="text-lg font-black text-white font-mono">8+</div>
-              <div className="text-slate-400 text-xs">eBooks</div>
+            <div className="bg-slate-800/70 border-2 border-slate-700 p-6 text-center">
+              <BookOpen className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+              <div className="text-2xl font-black text-white font-mono">12+</div>
+              <div className="text-slate-400 text-sm font-bold">eBooks & Guides</div>
             </div>
-            <div className="bg-slate-800/50 border border-slate-700 p-3 text-center" style={{ borderRadius: '6px' }}>
-              <Play className="w-5 h-5 text-green-400 mx-auto mb-1" />
-              <div className="text-lg font-black text-white font-mono">25+</div>
-              <div className="text-slate-400 text-xs">Tutorials</div>
+            <div className="bg-slate-800/70 border-2 border-slate-700 p-6 text-center">
+              <Play className="w-8 h-8 text-green-400 mx-auto mb-3" />
+              <div className="text-2xl font-black text-white font-mono">30+</div>
+              <div className="text-slate-400 text-sm font-bold">Video Tutorials</div>
             </div>
-            <div className="bg-slate-800/50 border border-slate-700 p-3 text-center" style={{ borderRadius: '6px' }}>
-              <FileText className="w-5 h-5 text-orange-400 mx-auto mb-1" />
-              <div className="text-lg font-black text-white font-mono">50+</div>
-              <div className="text-slate-400 text-xs">Articles</div>
+            <div className="bg-slate-800/70 border-2 border-slate-700 p-6 text-center">
+              <FileText className="w-8 h-8 text-orange-400 mx-auto mb-3" />
+              <div className="text-2xl font-black text-white font-mono">50+</div>
+              <div className="text-slate-400 text-sm font-bold">Dev Articles</div>
             </div>
           </div>
         </div>
 
-        {/* Enhanced Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-8">
+        {/* Enhanced Content Grid - Square Panels */}
+        <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
           {filteredContent.map((item, index) => {
             const IconComponent = getIcon(item.type);
             return (
               <article 
                 key={index}
-                className="bg-slate-800 border border-slate-700 hover:border-purple-400/50 transition-all duration-300 overflow-hidden group"
-                style={{ borderRadius: '8px' }}
+                className="bg-slate-800/90 border-2 border-slate-700 hover:border-purple-400/50 transition-all duration-300 overflow-hidden group backdrop-blur-sm"
               >
-                {/* Image */}
-                <div className="relative h-40 overflow-hidden">
+                {/* Image Section */}
+                <div className="relative h-48 overflow-hidden">
                   <img 
                     src={item.image} 
                     alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                   
-                  {/* Type Badge */}
-                  <div className="absolute top-3 left-3">
-                    <div className={`${getTypeColor(item.type)} text-white px-2 py-1 text-xs font-bold flex items-center space-x-1`} style={{ borderRadius: '4px' }}>
-                      <IconComponent className="w-3 h-3" />
+                  {/* Type Badge - Square */}
+                  <div className="absolute top-4 left-4">
+                    <div className={`${getTypeColor(item.type)} text-white px-3 py-2 text-xs font-black flex items-center space-x-2`}>
+                      <IconComponent className="w-4 h-4" />
                       <span>{item.type.toUpperCase()}</span>
                     </div>
                   </div>
                   
-                  {/* Status & Stats */}
-                  <div className="absolute top-3 right-3 flex gap-1">
-                    <div className="bg-slate-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1" style={{ borderRadius: '4px' }}>
+                  {/* Stats - Square */}
+                  <div className="absolute top-4 right-4 flex gap-2">
+                    <div className="bg-slate-900/90 text-white px-3 py-2 text-xs font-bold backdrop-blur-sm flex items-center space-x-1">
                       <Download className="w-3 h-3" />
                       <span>{item.downloads}</span>
                     </div>
-                    <div className="bg-slate-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1" style={{ borderRadius: '4px' }}>
+                    <div className="bg-slate-900/90 text-white px-3 py-2 text-xs font-bold backdrop-blur-sm flex items-center space-x-1">
                       <Star className="w-3 h-3 text-yellow-400" />
                       <span>{item.rating}</span>
                     </div>
                   </div>
 
-                  {/* Quick Info */}
-                  <div className="absolute bottom-3 left-3 right-3">
+                  {/* Bottom Info */}
+                  <div className="absolute bottom-4 left-4 right-4">
                     <div className="flex justify-between items-end">
                       <div>
-                        <div className="text-purple-400 text-xs font-bold font-mono mb-1">
+                        <div className="text-purple-400 text-sm font-bold font-mono mb-2">
                           {item.category}
                         </div>
-                        <h3 className="text-white font-black text-sm font-mono leading-tight">
+                        <h3 className="text-white font-black text-lg font-mono leading-tight">
                           {item.title}
                         </h3>
                       </div>
                       <div className="text-right">
-                        <div className="text-green-400 font-bold text-sm">{item.price}</div>
-                        {item.players && (
-                          <div className="text-slate-400 text-xs flex items-center">
+                        <div className="text-green-400 font-black text-lg">{item.price}</div>
+                        {item.players && item.players !== "N/A" && (
+                          <div className="text-slate-400 text-sm flex items-center">
                             <Users className="w-3 h-3 mr-1" />
                             {item.players}
                           </div>
@@ -247,33 +248,32 @@ const GamesSection = () => {
                   </div>
                 </div>
                 
-                {/* Content */}
-                <div className="p-4">
-                  <p className="text-slate-400 text-sm leading-relaxed mb-3 line-clamp-2">
+                {/* Content Section */}
+                <div className="p-6">
+                  <p className="text-slate-400 text-sm leading-relaxed mb-4">
                     {item.description}
                   </p>
                   
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1 mb-4">
+                  {/* Tags - Square */}
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {item.tags.map((tag, tagIndex) => (
                       <span 
                         key={tagIndex} 
-                        className="bg-slate-700 text-purple-400 px-2 py-1 text-xs font-medium" 
-                        style={{ borderRadius: '4px' }}
+                        className="bg-slate-700 text-purple-400 px-3 py-1 text-xs font-bold" 
                       >
-                        {tag}
+                        #{tag}
                       </span>
                     ))}
                   </div>
                   
-                  {/* Actions */}
-                  <div className="flex gap-2">
-                    <button className="flex-1 bg-purple-500 text-white px-3 py-2 hover:bg-purple-600 transition-all duration-300 font-bold flex items-center justify-center space-x-2 text-sm" style={{ borderRadius: '6px' }}>
-                      <IconComponent className="w-4 h-4" />
-                      <span>{item.type === 'game' ? 'PLAY' : item.type === 'ebook' ? 'READ' : item.type === 'tutorial' ? 'WATCH' : 'VIEW'}</span>
+                  {/* Actions - Square */}
+                  <div className="flex gap-3">
+                    <button className="flex-1 bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 font-black transition-all duration-300 flex items-center justify-center space-x-2">
+                      <IconComponent className="w-5 h-5" />
+                      <span>{item.type === 'game' ? 'PLAY NOW' : item.type === 'ebook' ? 'READ NOW' : item.type === 'tutorial' ? 'WATCH NOW' : 'VIEW NOW'}</span>
                     </button>
-                    <button className="bg-slate-700 text-white px-3 py-2 hover:bg-slate-600 transition-all duration-300 flex items-center justify-center" style={{ borderRadius: '6px' }}>
-                      <Github className="w-4 h-4" />
+                    <button className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-3 transition-all duration-300 flex items-center justify-center">
+                      <Github className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -282,16 +282,15 @@ const GamesSection = () => {
           })}
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - Square */}
         <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 font-bold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 space-x-2"
-            style={{ borderRadius: '8px' }}
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white px-10 py-4 font-black text-lg transition-all duration-300 space-x-3 shadow-lg shadow-purple-500/25"
           >
-            <Zap className="w-5 h-5" />
-            <span>EXPLORE EVERYTHING</span>
-            <ArrowRight className="w-5 h-5" />
+            <Zap className="w-6 h-6" />
+            <span>EXPLORE ALL GAMES & RESOURCES</span>
+            <ArrowRight className="w-6 h-6" />
           </Link>
         </div>
       </div>
