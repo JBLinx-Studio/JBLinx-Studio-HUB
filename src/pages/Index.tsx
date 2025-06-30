@@ -6,6 +6,7 @@ import GamesSection from '../components/GamesSection';
 import ProductsShowcase from '../components/ProductsShowcase';
 import WebAppsSection from '../components/WebAppsSection';
 import DeveloperTools from '../components/DeveloperTools';
+import Services from '../components/Services';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
@@ -15,6 +16,9 @@ const Index = () => {
       <Header />
       <main className="relative">
         <Hero />
+        
+        {/* Enhanced Services Overview - Links to all menu categories */}
+        <Services />
         
         {/* PRIORITY 1: GAMERS - Games first to capture gaming audience */}
         <GamesSection />
