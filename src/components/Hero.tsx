@@ -1,12 +1,13 @@
-
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [terminalText, setTerminalText] = useState('');
   const [currentLine, setCurrentLine] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
+  const [sortBy, setSortBy] = useState('featured');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const terminalLines = [
     '> initializing_jblinx_premium_studio...',
@@ -19,25 +20,91 @@ const Hero = () => {
       title: "GAMES",
       icon: Gamepad2,
       count: "25+",
-      items: ["Horror Survival", "Strategy RTS", "Adventure RPG", "Multiplayer FPS"],
       color: "purple",
-      accent: "from-purple-500 to-pink-600"
+      accent: "from-purple-500 to-pink-600",
+      theme: "gaming",
+      sortOptions: ["Featured", "New", "Popular", "Rating"],
+      items: [
+        { name: "Survival Horror", type: "Unity", status: "Released", rating: 4.9, downloads: "12k" },
+        { name: "Strategy RTS", type: "Unity", status: "Beta", rating: 4.7, downloads: "8k" },
+        { name: "Adventure RPG", type: "Unity", status: "Development", rating: 4.8, downloads: "5k" },
+        { name: "Multiplayer FPS", type: "Unity", status: "Coming Soon", rating: 5.0, downloads: "15k" }
+      ]
     },
     {
-      title: "DEV TOOLS",
+      title: "DEV CONTENT",
+      icon: Brain,
+      count: "50+",
+      color: "cyan",
+      accent: "from-cyan-500 to-blue-600",
+      theme: "learning",
+      sortOptions: ["Latest", "Most Popular", "Difficulty", "Duration"],
+      items: [
+        { name: "Unity Mastery Course", type: "Video Series", difficulty: "Advanced", duration: "12h", price: "$89" },
+        { name: "React Best Practices", type: "E-book", difficulty: "Intermediate", duration: "3h", price: "$29" },
+        { name: "Game Design Patterns", type: "Guide", difficulty: "Expert", duration: "8h", price: "$49" },
+        { name: "API Architecture", type: "Workshop", difficulty: "Advanced", duration: "6h", price: "$69" }
+      ]
+    },
+    {
+      title: "DEV PRODUCTS",
       icon: Code,
       count: "40+",
-      items: ["React Kits", "FastAPI Templates", "Mobile Apps", "CLI Tools"],
-      color: "cyan",
-      accent: "from-cyan-500 to-blue-600"
+      color: "green",
+      accent: "from-green-500 to-emerald-600",
+      theme: "development",
+      sortOptions: ["Framework", "Language", "Updated", "Price"],
+      items: [
+        { name: "React SaaS Kit", framework: "React", language: "TypeScript", updated: "2 days", price: "$49" },
+        { name: "FastAPI Template", framework: "FastAPI", language: "Python", updated: "1 week", price: "$39" },
+        { name: "Flutter App Kit", framework: "Flutter", language: "Dart", updated: "3 days", price: "$44" },
+        { name: "Express.js Boilerplate", framework: "Express", language: "Node.js", updated: "5 days", price: "$34" }
+      ]
     },
     {
       title: "ENTERPRISE",
       icon: Database,
       count: "15+",
-      items: ["SaaS Platforms", "E-commerce", "Analytics", "CRM Systems"],
       color: "orange",
-      accent: "from-orange-500 to-red-600"
+      accent: "from-orange-500 to-red-600",
+      theme: "enterprise",
+      sortOptions: ["Industry", "Scale", "Features", "Price"],
+      items: [
+        { name: "CRM Platform", industry: "Sales", scale: "Enterprise", features: "AI-Powered", price: "Custom" },
+        { name: "Analytics Dashboard", industry: "Marketing", scale: "Medium", features: "Real-time", price: "$199/mo" },
+        { name: "E-commerce Suite", industry: "Retail", scale: "Large", features: "Multi-tenant", price: "$299/mo" },
+        { name: "Project Management", industry: "Tech", scale: "Small", features: "Collaboration", price: "$99/mo" }
+      ]
+    },
+    {
+      title: "WEB APPS",
+      icon: Globe,
+      count: "30+",
+      color: "indigo",
+      accent: "from-indigo-500 to-purple-600",
+      theme: "webapp",
+      sortOptions: ["Category", "Technology", "Users", "Rating"],
+      items: [
+        { name: "TaskFlow Pro", category: "Productivity", technology: "React", users: "25k", rating: 4.8 },
+        { name: "DevTracker", category: "Development", technology: "Vue", users: "18k", rating: 4.9 },
+        { name: "FinanceHub", category: "Finance", technology: "Angular", users: "32k", rating: 4.7 },
+        { name: "CollabSpace", category: "Communication", technology: "Svelte", users: "14k", rating: 4.6 }
+      ]
+    },
+    {
+      title: "MOBILE APPS",
+      icon: Smartphone,
+      count: "20+",
+      color: "pink",
+      accent: "from-pink-500 to-rose-600",
+      theme: "mobile",
+      sortOptions: ["Platform", "Category", "Downloads", "Rating"],
+      items: [
+        { name: "FitTracker Pro", platform: "iOS/Android", category: "Health", downloads: "50k", rating: 4.8 },
+        { name: "BudgetMaster", platform: "Flutter", category: "Finance", downloads: "35k", rating: 4.9 },
+        { name: "StudyBuddy", platform: "React Native", category: "Education", downloads: "28k", rating: 4.7 },
+        { name: "TravelGuide", platform: "Native", category: "Travel", downloads: "42k", rating: 4.6 }
+      ]
     }
   ];
 
@@ -64,6 +131,179 @@ const Hero = () => {
     }, 3500);
     return () => clearInterval(tabInterval);
   }, []);
+
+  const currentTab = showcaseTabs[activeTab];
+  const filteredItems = currentTab.items.filter(item => 
+    Object.values(item).some(value => 
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  const renderTabContent = () => {
+    const tab = showcaseTabs[activeTab];
+    
+    switch(tab.theme) {
+      case 'gaming':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((item, index) => (
+              <div key={index} className="bg-slate-700/60 border border-purple-500/30 p-2 hover:border-purple-400 transition-all">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white font-bold text-xs">{item.name}</span>
+                  <div className={`px-1.5 py-0.5 text-xs font-bold ${
+                    item.status === 'Released' ? 'bg-green-500/30 text-green-400' :
+                    item.status === 'Beta' ? 'bg-yellow-500/30 text-yellow-400' :
+                    item.status === 'Development' ? 'bg-blue-500/30 text-blue-400' :
+                    'bg-purple-500/30 text-purple-400'
+                  }`}>
+                    {item.status}
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-purple-300">{item.type}</span>
+                  <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1">
+                      <Star className="w-2.5 h-2.5 text-yellow-400" />
+                      <span className="text-slate-400">{item.rating}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Download className="w-2.5 h-2.5 text-slate-400" />
+                      <span className="text-slate-400">{item.downloads}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      
+      case 'learning':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((item, index) => (
+              <div key={index} className="bg-slate-700/60 border border-cyan-500/30 p-2 hover:border-cyan-400 transition-all">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white font-bold text-xs">{item.name}</span>
+                  <span className="text-green-400 font-bold text-xs">{item.price}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2 text-xs">
+                    <span className="bg-cyan-500/30 text-cyan-400 px-1 py-0.5">{item.type}</span>
+                    <span className="text-slate-400">{item.difficulty}</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-xs text-slate-400">
+                    <Clock className="w-2.5 h-2.5" />
+                    <span>{item.duration}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      
+      case 'development':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((item, index) => (
+              <div key={index} className="bg-slate-700/60 border border-green-500/30 p-2 hover:border-green-400 transition-all">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white font-bold text-xs">{item.name}</span>
+                  <span className="text-green-400 font-bold text-xs">{item.price}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center space-x-1">
+                    <span className="bg-green-500/30 text-green-400 px-1 py-0.5">{item.framework}</span>
+                    <span className="text-slate-400">{item.language}</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-slate-400">
+                    <TrendingUp className="w-2.5 h-2.5" />
+                    <span>{item.updated}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      
+      case 'enterprise':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((item, index) => (
+              <div key={index} className="bg-slate-700/60 border border-orange-500/30 p-2 hover:border-orange-400 transition-all">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white font-bold text-xs">{item.name}</span>
+                  <span className="text-orange-400 font-bold text-xs">{item.price}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center space-x-1">
+                    <span className="bg-orange-500/30 text-orange-400 px-1 py-0.5">{item.industry}</span>
+                    <span className="text-slate-400">{item.scale}</span>
+                  </div>
+                  <span className="text-slate-400">{item.features}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      
+      case 'webapp':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((item, index) => (
+              <div key={index} className="bg-slate-700/60 border border-indigo-500/30 p-2 hover:border-indigo-400 transition-all">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white font-bold text-xs">{item.name}</span>
+                  <div className="flex items-center space-x-1 text-xs">
+                    <Star className="w-2.5 h-2.5 text-yellow-400" />
+                    <span className="text-slate-400">{item.rating}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center space-x-1">
+                    <span className="bg-indigo-500/30 text-indigo-400 px-1 py-0.5">{item.category}</span>
+                    <span className="text-slate-400">{item.technology}</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-slate-400">
+                    <Users className="w-2.5 h-2.5" />
+                    <span>{item.users}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      
+      case 'mobile':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((item, index) => (
+              <div key={index} className="bg-slate-700/60 border border-pink-500/30 p-2 hover:border-pink-400 transition-all">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white font-bold text-xs">{item.name}</span>
+                  <div className="flex items-center space-x-1 text-xs">
+                    <Star className="w-2.5 h-2.5 text-yellow-400" />
+                    <span className="text-slate-400">{item.rating}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center space-x-1">
+                    <span className="bg-pink-500/30 text-pink-400 px-1 py-0.5">{item.category}</span>
+                    <span className="text-slate-400">{item.platform}</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-slate-400">
+                    <Download className="w-2.5 h-2.5" />
+                    <span>{item.downloads}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      
+      default:
+        return null;
+    }
+  };
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
@@ -163,7 +403,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Enhanced Terminal + Showcase */}
+          {/* Enhanced Interactive Showcase */}
           <div className="lg:col-span-5 space-y-2">
             {/* Enhanced Terminal */}
             <div className="bg-slate-900/95 border border-slate-700 p-3 backdrop-blur-sm">
@@ -189,43 +429,77 @@ const Hero = () => {
 
             {/* Enhanced Interactive Showcase */}
             <div className="bg-slate-800/80 border border-slate-700 p-3 backdrop-blur-sm">
-              <div className="flex mb-2">
+              {/* Enhanced Tab Navigation */}
+              <div className="grid grid-cols-3 gap-1 mb-2">
                 {showcaseTabs.map((tab, index) => {
                   const IconComponent = tab.icon;
                   return (
                     <button
                       key={index}
                       onClick={() => setActiveTab(index)}
-                      className={`flex-1 flex items-center justify-center space-x-1 py-1 px-1 text-xs font-black transition-all duration-300 ${
+                      className={`flex flex-col items-center justify-center py-1.5 px-1 text-xs font-black transition-all duration-300 ${
                         activeTab === index 
                           ? `bg-gradient-to-r ${tab.accent} text-white shadow-lg` 
                           : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                       }`}
                     >
-                      <IconComponent className="w-2.5 h-2.5" />
-                      <span>{tab.title}</span>
+                      <IconComponent className="w-2.5 h-2.5 mb-0.5" />
+                      <span className="text-xs">{tab.title}</span>
+                      <span className="text-xs opacity-75">{tab.count}</span>
                     </button>
                   );
                 })}
               </div>
               
-              <div className="min-h-[55px]">
-                <div className="flex items-center justify-between mb-1">
+              {/* Enhanced Content Area */}
+              <div className="min-h-[120px]">
+                {/* Enhanced Header with Search and Sort */}
+                <div className="flex items-center justify-between mb-2">
                   <h4 className="text-white font-black text-xs font-mono">
-                    {showcaseTabs[activeTab].title}
+                    {currentTab.title}
                   </h4>
-                  <span className="bg-slate-700 text-cyan-400 px-1.5 py-0.5 text-xs font-black">
-                    {showcaseTabs[activeTab].count}
-                  </span>
+                  <div className="flex items-center space-x-1">
+                    <select 
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="bg-slate-700 text-white text-xs px-1 py-0.5 border border-slate-600 focus:border-cyan-400 focus:outline-none"
+                    >
+                      {currentTab.sortOptions.map(option => (
+                        <option key={option} value={option.toLowerCase()}>{option}</option>
+                      ))}
+                    </select>
+                    <div className="relative">
+                      <Search className="w-2.5 h-2.5 absolute left-1 top-1 text-slate-400" />
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="bg-slate-700 text-white text-xs pl-4 pr-1 py-0.5 border border-slate-600 focus:border-cyan-400 focus:outline-none w-16"
+                      />
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-1">
-                  {showcaseTabs[activeTab].items.map((item, index) => (
-                    <div key={index} className="bg-slate-700/60 border border-slate-600 p-1 text-slate-300 text-xs">
-                      • {item}
-                    </div>
-                  ))}
+                {/* Dynamic Content Based on Tab Theme */}
+                {renderTabContent()}
+              </div>
+
+              {/* Enhanced Action Footer */}
+              <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-700">
+                <div className="flex items-center space-x-2 text-xs">
+                  <div className="flex items-center space-x-1 text-slate-400">
+                    <Filter className="w-2.5 h-2.5" />
+                    <span>Filtered: {filteredItems.length}</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-slate-400">
+                    <Target className="w-2.5 h-2.5" />
+                    <span>Total: {currentTab.count}</span>
+                  </div>
                 </div>
+                <button className={`bg-gradient-to-r ${currentTab.accent} text-white px-2 py-1 text-xs font-bold hover:shadow-lg transition-all duration-300`}>
+                  VIEW ALL
+                </button>
               </div>
             </div>
           </div>
