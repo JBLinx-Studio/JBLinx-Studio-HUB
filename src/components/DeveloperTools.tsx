@@ -1,104 +1,108 @@
 
 import React from 'react';
-import { ArrowRight, Download, Star, Code, Zap, Github, Book, Terminal } from 'lucide-react';
+import { ArrowRight, Download, Star, Code, Zap, Github, Book, Terminal, Database, Globe, Package } from 'lucide-react';
 
 const DeveloperTools = () => {
   const tools = [
     {
-      title: "FastAPI MySQL Template",
-      category: "Backend Template",
+      title: "FastAPI MySQL Kit",
+      category: "Backend",
       downloads: "12.0k",
       rating: "5.0",
-      description: "Production-ready FastAPI template with MySQL integration",
+      description: "Production-ready FastAPI with MySQL, JWT auth, Docker",
       repo: "fastapi-mysql-template",
-      highlights: ["JWT Auth", "Database ORM", "API Documentation", "Docker Ready"]
+      highlights: ["JWT Auth", "ORM", "Docker", "Docs"],
+      tech: "Python"
     },
     {
       title: "React Component Library",
-      category: "Frontend Library",
+      category: "Frontend",
       downloads: "9.3k",
       rating: "4.8",
-      description: "Reusable React components with TypeScript support",
+      description: "Reusable TypeScript components with Storybook",
       repo: "react-ui-components",
-      highlights: ["TypeScript", "Storybook", "Testing Suite", "Tree Shaking"]
+      highlights: ["TypeScript", "Storybook", "Testing", "Tree Shake"],
+      tech: "React"
     },
     {
       title: "Database Migration CLI",
-      category: "DevOps Tool",
+      category: "DevOps",
       downloads: "5.1k",
       rating: "4.9",
-      description: "Powerful database migration and schema management tool",
+      description: "Multi-database migration with rollback safety",
       repo: "db-migration-cli",
-      highlights: ["Multi-DB Support", "Version Control", "Rollback Safe", "CLI Interface"]
+      highlights: ["Multi-DB", "Version Control", "Rollback", "CLI"],
+      tech: "Node.js"
     }
   ];
 
   const guides = [
-    { title: "Game Development with Unity", downloads: "7.8k", type: "E-book" },
-    { title: "Modern Web Development", downloads: "11.2k", type: "Course" },
-    { title: "Backend API Design Patterns", downloads: "8.9k", type: "Guide" },
-    { title: "Database Optimization Techniques", downloads: "6.4k", type: "Tutorial" }
+    { title: "Unity Game Development Bible", downloads: "7.8k", type: "E-book", price: "$29" },
+    { title: "Modern Web Development Course", downloads: "11.2k", type: "Course", price: "$49" },
+    { title: "API Design Patterns Guide", downloads: "8.9k", type: "Guide", price: "$19" },
+    { title: "Database Optimization Mastery", downloads: "6.4k", type: "Tutorial", price: "$24" }
   ];
 
   return (
-    <section className="py-16 bg-slate-950 border-t border-slate-800">
-      <div className="container mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-6 py-2 mb-6" style={{ borderRadius: '8px' }}>
-            <Zap className="w-4 h-4 mr-2 text-green-400" />
-            <span className="text-sm font-bold text-green-300 tracking-wide font-mono">DEVELOPER RESOURCES</span>
+    <section className="py-6 bg-slate-950 border-t border-slate-800">
+      <div className="container mx-auto px-4">
+        {/* Compact Header */}
+        <div className="text-center mb-5">
+          <div className="inline-flex items-center bg-slate-800/90 border border-green-400/50 px-3 py-1 mb-2 backdrop-blur-sm">
+            <Terminal className="w-3 h-3 mr-1 text-green-400" />
+            <span className="text-green-400 font-black text-xs font-mono tracking-widest">DEVELOPER RESOURCES</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight font-mono mb-4">
-            TOOLS & <span className="text-green-400">GUIDES</span>
+          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
+            DEV <span className="text-green-400">TOOLS</span> & <span className="text-blue-400">GUIDES</span>
           </h2>
           
-          <div className="w-24 h-0.5 bg-green-400 mx-auto mb-6"></div>
+          <div className="w-16 h-0.5 bg-green-400 mx-auto mb-2"></div>
           
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="text-sm text-slate-400 max-w-xl mx-auto">
             Open-source tools, templates, and educational content for developers
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Developer Tools */}
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Compact Development Tools */}
           <div>
-            <h3 className="text-2xl font-black text-white mb-6 font-mono">
-              <Terminal className="w-6 h-6 inline mr-2 text-green-400" />
+            <h3 className="text-lg font-black text-white mb-3 font-mono flex items-center">
+              <Code className="w-4 h-4 mr-2 text-green-400" />
               DEVELOPMENT TOOLS
             </h3>
             
-            <div className="space-y-6">
+            <div className="space-y-3">
               {tools.map((tool, index) => (
                 <div 
                   key={index}
-                  className="bg-slate-800 border border-slate-700 hover:border-green-400/50 transition-all duration-300 p-6"
-                  style={{ borderRadius: '8px' }}
+                  className="bg-slate-800/90 border border-slate-700 hover:border-green-400/60 transition-all duration-300 p-3"
                 >
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h4 className="text-lg font-black text-white font-mono">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h4 className="text-white font-black text-sm font-mono">
                           {tool.title}
                         </h4>
-                        <span className="bg-green-500/20 text-green-400 px-2 py-1 text-xs font-medium" style={{ borderRadius: '4px' }}>
+                        <span className="bg-green-500/30 text-green-400 px-1.5 py-0.5 text-xs font-bold">
                           {tool.category}
                         </span>
+                        <span className="bg-slate-700 text-cyan-400 px-1.5 py-0.5 text-xs font-bold">
+                          {tool.tech}
+                        </span>
                       </div>
-                      <p className="text-slate-400 text-sm mb-3">
+                      <p className="text-slate-400 text-xs mb-2">
                         {tool.description}
                       </p>
                     </div>
                   </div>
                   
-                  {/* Highlights */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  {/* Compact Highlights */}
+                  <div className="flex flex-wrap gap-1 mb-2">
                     {tool.highlights.map((highlight, hIndex) => (
                       <span 
                         key={hIndex} 
-                        className="bg-slate-700 text-green-400 px-2 py-1 text-xs font-medium" 
-                        style={{ borderRadius: '4px' }}
+                        className="bg-slate-700 text-green-400 px-1.5 py-0.5 text-xs font-medium" 
                       >
                         {highlight}
                       </span>
@@ -107,13 +111,13 @@ const DeveloperTools = () => {
                   
                   {/* Stats & Action */}
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4 text-sm text-slate-400">
+                    <div className="flex items-center space-x-3 text-xs text-slate-400">
                       <div className="flex items-center space-x-1">
-                        <Download className="w-4 h-4" />
+                        <Download className="w-3 h-3" />
                         <span>{tool.downloads}</span>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <Star className="w-4 h-4 text-yellow-400" />
+                        <Star className="w-3 h-3 text-yellow-400" />
                         <span>{tool.rating}</span>
                       </div>
                     </div>
@@ -122,11 +126,10 @@ const DeveloperTools = () => {
                       href={`https://github.com/JBLinx-Studio/${tool.repo}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-green-500 text-white px-4 py-2 hover:bg-green-600 transition-colors flex items-center space-x-2 text-sm font-medium"
-                      style={{ borderRadius: '6px' }}
+                      className="bg-green-500 text-white px-3 py-1.5 hover:bg-green-600 transition-colors flex items-center space-x-1 text-xs font-bold"
                     >
-                      <Github className="w-4 h-4" />
-                      <span>VIEW CODE</span>
+                      <Github className="w-3 h-3" />
+                      <span>CODE</span>
                     </a>
                   </div>
                 </div>
@@ -134,58 +137,57 @@ const DeveloperTools = () => {
             </div>
           </div>
 
-          {/* Learning Resources */}
+          {/* Compact Learning Resources */}
           <div>
-            <h3 className="text-2xl font-black text-white mb-6 font-mono">
-              <Book className="w-6 h-6 inline mr-2 text-orange-400" />
+            <h3 className="text-lg font-black text-white mb-3 font-mono flex items-center">
+              <Book className="w-4 h-4 mr-2 text-blue-400" />
               LEARNING CONTENT
             </h3>
             
-            <div className="space-y-4 mb-8">
+            <div className="space-y-2 mb-4">
               {guides.map((guide, index) => (
                 <div 
                   key={index}
-                  className="bg-slate-800 border border-slate-700 hover:border-orange-400/50 transition-all duration-300 p-4 flex items-center justify-between"
-                  style={{ borderRadius: '8px' }}
+                  className="bg-slate-800/90 border border-slate-700 hover:border-blue-400/60 transition-all duration-300 p-3 flex items-center justify-between"
                 >
                   <div className="flex-1">
-                    <h4 className="text-white font-bold mb-1">
+                    <h4 className="text-white font-bold text-sm mb-1">
                       {guide.title}
                     </h4>
-                    <div className="flex items-center space-x-3 text-sm text-slate-400">
-                      <span className="bg-orange-500/20 text-orange-400 px-2 py-1 text-xs font-medium" style={{ borderRadius: '4px' }}>
+                    <div className="flex items-center space-x-3 text-xs text-slate-400">
+                      <span className="bg-blue-500/30 text-blue-400 px-1.5 py-0.5 font-medium">
                         {guide.type}
                       </span>
                       <div className="flex items-center space-x-1">
                         <Download className="w-3 h-3" />
                         <span>{guide.downloads}</span>
                       </div>
+                      <div className="text-green-400 font-bold">{guide.price}</div>
                     </div>
                   </div>
                   
-                  <button className="bg-orange-500 text-white px-3 py-2 hover:bg-orange-600 transition-colors text-sm font-medium" style={{ borderRadius: '4px' }}>
-                    READ
+                  <button className="bg-blue-500 text-white px-3 py-1.5 hover:bg-blue-600 transition-colors text-xs font-bold">
+                    GET
                   </button>
                 </div>
               ))}
             </div>
 
-            {/* Newsletter Signup */}
-            <div className="bg-slate-800 border border-slate-700 p-6" style={{ borderRadius: '8px' }}>
-              <h4 className="text-xl font-black text-white mb-3 font-mono">
+            {/* Compact Newsletter */}
+            <div className="bg-slate-800/90 border border-slate-700 p-4">
+              <h4 className="text-lg font-black text-white mb-2 font-mono">
                 DEV <span className="text-cyan-400">UPDATES</span>
               </h4>
-              <p className="text-slate-400 text-sm mb-4">
-                Get notified about new tools, templates, and learning resources
+              <p className="text-slate-400 text-xs mb-3">
+                Get notified about new tools, templates, and resources
               </p>
               <div className="flex gap-2">
                 <input 
                   type="email" 
                   placeholder="your@email.com"
-                  className="flex-1 bg-slate-700 border border-slate-600 px-3 py-2 text-white text-sm focus:border-cyan-400 focus:outline-none"
-                  style={{ borderRadius: '6px' }}
+                  className="flex-1 bg-slate-700 border border-slate-600 px-2 py-1.5 text-white text-xs focus:border-cyan-400 focus:outline-none"
                 />
-                <button className="bg-cyan-500 text-white px-4 py-2 hover:bg-cyan-600 transition-colors text-sm font-bold" style={{ borderRadius: '6px' }}>
+                <button className="bg-cyan-500 text-white px-3 py-1.5 hover:bg-cyan-600 transition-colors text-xs font-bold">
                   SUBSCRIBE
                 </button>
               </div>
@@ -193,18 +195,17 @@ const DeveloperTools = () => {
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-12">
+        {/* Compact CTA */}
+        <div className="text-center mt-5">
           <a 
             href="https://github.com/orgs/JBLinx-Studio/repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center bg-gradient-to-r from-green-500 to-cyan-600 text-white px-8 py-4 font-bold hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 space-x-3"
-            style={{ borderRadius: '8px' }}
+            className="inline-flex items-center bg-gradient-to-r from-green-500 to-cyan-600 text-white px-5 py-2 font-black hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 space-x-2 text-sm"
           >
-            <Github className="w-5 h-5" />
-            <span>EXPLORE ALL REPOSITORIES</span>
-            <ArrowRight className="w-5 h-5" />
+            <Github className="w-4 h-4" />
+            <span>ALL REPOSITORIES</span>
+            <ArrowRight className="w-4 h-4" />
           </a>
         </div>
       </div>
