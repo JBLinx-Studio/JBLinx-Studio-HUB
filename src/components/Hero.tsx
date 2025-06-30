@@ -1,692 +1,687 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, AlertCircle, XCircle, Calendar, Map, Building2, Factory, Briefcase } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-// Define proper types for each tab's items
-interface GameItem {
-  name: string;
-  type: string;
-  status: string;
-  rating: number;
-  downloads: string;
-}
-
-interface DevContentItem {
-  name: string;
-  type: string;
-  difficulty: string;
-  duration: string;
-  price: string;
-}
-
-interface DevProductItem {
-  name: string;
-  framework: string;
-  language: string;
-  updated: string;
-  price: string;
-}
-
-interface EnterpriseItem {
-  name: string;
-  industry: string;
-  scale: string;
-  features: string;
-  price: string;
-}
-
-interface WebAppItem {
-  name: string;
-  category: string;
-  technology: string;
-  users: string;
-  rating: number;
-}
-
-interface MobileAppItem {
-  name: string;
-  platform: string;
-  category: string;
-  downloads: string;
-  rating: number;
-}
-
-type TabItem = GameItem | DevContentItem | DevProductItem | EnterpriseItem | WebAppItem | MobileAppItem;
+import { Search, Filter, Star, Download, Users, Clock, TrendingUp, BookOpen, Play, Code, Smartphone, Globe, Zap, Award, Calendar, Eye, Heart, Share2, ExternalLink, ChevronRight, Bookmark } from 'lucide-react';
 
 const Hero = () => {
-  const [terminalText, setTerminalText] = useState('');
-  const [currentLine, setCurrentLine] = useState(0);
-  const [activeTab, setActiveTab] = useState(0);
-  const [sortBy, setSortBy] = useState('featured');
+  const [activeTab, setActiveTab] = useState('games');
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('popularity');
+  const [filterBy, setFilterBy] = useState('all');
 
-  const terminalLines = [
-    '> initializing_jblinx_premium_studio...',
-    '> loading_content_library: 200+ assets...',
-    '> STATUS: All Systems Ready ⬡ ONLINE'
-  ];
-
-  const showcaseTabs = [
-    {
-      title: "GAMES",
-      icon: Gamepad2,
-      count: "25+",
-      color: "purple",
-      accent: "from-purple-500 to-pink-600",
-      theme: "gaming",
-      sortOptions: ["Featured", "New", "Popular", "Rating"],
+  // Enhanced data with blog integration and navigation alignment
+  const categories = {
+    games: {
+      title: 'Games Portfolio',
+      subtitle: 'Immersive Gaming Experiences',
+      icon: Play,
+      gradient: 'from-purple-600 via-pink-600 to-red-600',
       items: [
-        { name: "Survival Horror", type: "Unity", status: "Released", rating: 4.9, downloads: "12k" },
-        { name: "Strategy RTS", type: "Unity", status: "Beta", rating: 4.7, downloads: "8k" },
-        { name: "Adventure RPG", type: "Unity", status: "Development", rating: 4.8, downloads: "5k" },
-        { name: "Multiplayer FPS", type: "Unity", status: "Coming Soon", rating: 5.0, downloads: "15k" }
-      ] as GameItem[]
+        {
+          id: 1,
+          title: 'Nightmare Survival',
+          type: 'Horror Survival',
+          status: 'Released',
+          rating: 4.8,
+          downloads: '50K+',
+          image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=200&fit=crop',
+          tags: ['Unity', 'Multiplayer', 'Horror'],
+          price: '$19.99',
+          featured: true,
+          description: 'Psychological horror meets survival mechanics',
+          players: '1-4 Players'
+        },
+        {
+          id: 2,
+          title: 'Empire Command',
+          type: 'RTS Strategy',
+          status: 'Beta',
+          rating: 4.6,
+          downloads: '25K+',
+          image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=200&fit=crop',
+          tags: ['Strategy', 'Real-time', 'Multiplayer'],
+          price: 'Free Beta',
+          featured: false,
+          description: 'Command armies in epic real-time battles',
+          players: '1-8 Players'
+        },
+        {
+          id: 3,
+          title: 'Mystic Quest',
+          type: 'Adventure RPG',
+          status: 'Coming Soon',
+          rating: 0,
+          downloads: 'Pre-order',
+          image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=300&h=200&fit=crop',
+          tags: ['RPG', 'Adventure', 'Story'],
+          price: '$24.99',
+          featured: true,
+          description: 'Epic fantasy adventure with deep storylines',
+          players: 'Single Player'
+        }
+      ]
     },
-    {
-      title: "DEV CONTENT",
-      icon: Brain,
-      count: "50+",
-      color: "cyan",
-      accent: "from-cyan-500 to-blue-600",
-      theme: "learning",
-      sortOptions: ["Latest", "Most Popular", "Difficulty", "Duration"],
+    content: {
+      title: 'Learning Hub',
+      subtitle: 'Tutorials, Guides & Resources',
+      icon: BookOpen,
+      gradient: 'from-blue-600 via-indigo-600 to-purple-600',
       items: [
-        { name: "Unity Mastery Course", type: "Video Series", difficulty: "Advanced", duration: "12h", price: "$89" },
-        { name: "React Best Practices", type: "E-book", difficulty: "Intermediate", duration: "3h", price: "$29" },
-        { name: "Game Design Patterns", type: "Guide", difficulty: "Expert", duration: "8h", price: "$49" },
-        { name: "API Architecture", type: "Workshop", difficulty: "Advanced", duration: "6h", price: "$69" }
-      ] as DevContentItem[]
+        {
+          id: 1,
+          title: 'Unity Horror Game Development',
+          type: 'Video Course',
+          difficulty: 'Advanced',
+          duration: '8 hours',
+          rating: 4.9,
+          students: '2.1K',
+          image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop',
+          tags: ['Unity', 'C#', 'Game Design'],
+          price: '$49.99',
+          featured: true,
+          description: 'Master horror game mechanics and atmosphere',
+          format: 'HD Video + Assets'
+        },
+        {
+          id: 2,
+          title: 'FastAPI Complete Guide',
+          type: 'eBook + Code',
+          difficulty: 'Intermediate',
+          duration: '120 pages',
+          rating: 4.7,
+          students: '1.8K',
+          image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=300&h=200&fit=crop',
+          tags: ['Python', 'API', 'Backend'],
+          price: '$29.99',
+          featured: false,
+          description: 'Production-ready FastAPI development',
+          format: 'PDF + Source Code'
+        },
+        {
+          id: 3,
+          title: 'React Architecture Patterns',
+          type: 'Interactive Tutorial',
+          difficulty: 'Expert',
+          duration: '6 hours',
+          rating: 4.8,
+          students: '950',
+          image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=200&fit=crop',
+          tags: ['React', 'TypeScript', 'Architecture'],
+          price: '$39.99',
+          featured: true,
+          description: 'Enterprise-grade React patterns and practices',
+          format: 'Interactive Labs'
+        }
+      ]
     },
-    {
-      title: "DEV PRODUCTS",
+    tools: {
+      title: 'Developer Tools',
+      subtitle: 'Professional Development Kits',
       icon: Code,
-      count: "40+",
-      color: "green",
-      accent: "from-green-500 to-emerald-600",
-      theme: "development",
-      sortOptions: ["Framework", "Language", "Updated", "Price"],
+      gradient: 'from-emerald-600 via-teal-600 to-cyan-600',
       items: [
-        { name: "React SaaS Kit", framework: "React", language: "TypeScript", updated: "2 days", price: "$49" },
-        { name: "FastAPI Template", framework: "FastAPI", language: "Python", updated: "1 week", price: "$39" },
-        { name: "Flutter App Kit", framework: "Flutter", language: "Dart", updated: "3 days", price: "$44" },
-        { name: "Express.js Boilerplate", framework: "Express", language: "Node.js", updated: "5 days", price: "$34" }
-      ] as DevProductItem[]
+        {
+          id: 1,
+          title: 'FastAPI Starter Kit',
+          type: 'Backend Template',
+          complexity: 'Production Ready',
+          stars: '1.2K',
+          forks: '340',
+          image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=300&h=200&fit=crop',
+          tags: ['FastAPI', 'PostgreSQL', 'Docker'],
+          price: 'Open Source',
+          featured: true,
+          description: 'Complete backend infrastructure template',
+          license: 'MIT'
+        },
+        {
+          id: 2,
+          title: 'React Component Library',
+          type: 'UI Framework',
+          complexity: 'Enterprise',
+          stars: '890',
+          forks: '156',
+          image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=300&h=200&fit=crop',
+          tags: ['React', 'TypeScript', 'Storybook'],
+          price: '$99/license',
+          featured: false,
+          description: 'Premium React components for enterprise apps',
+          license: 'Commercial'
+        },
+        {
+          id: 3,
+          title: 'Database Migration Toolkit',
+          type: 'DevOps Tool',
+          complexity: 'Advanced',
+          stars: '567',
+          forks: '89',
+          image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=300&h=200&fit=crop',
+          tags: ['Database', 'Migration', 'CLI'],
+          price: 'Free',
+          featured: true,
+          description: 'Seamless database migration and versioning',
+          license: 'Apache 2.0'
+        }
+      ]
     },
-    {
-      title: "ENTERPRISE",
-      icon: Building2,
-      count: "15+",
-      color: "orange",
-      accent: "from-orange-500 to-red-600",
-      theme: "enterprise",
-      sortOptions: ["Industry", "Scale", "Features", "Price"],
-      items: [
-        { name: "CRM Platform", industry: "Sales", scale: "Enterprise", features: "AI-Powered", price: "Custom" },
-        { name: "Analytics Dashboard", industry: "Marketing", scale: "Medium", features: "Real-time", price: "$199/mo" },
-        { name: "E-commerce Suite", industry: "Retail", scale: "Large", features: "Multi-tenant", price: "$299/mo" },
-        { name: "Project Management", industry: "Tech", scale: "Small", features: "Collaboration", price: "$99/mo" }
-      ] as EnterpriseItem[]
-    },
-    {
-      title: "WEB APPS",
+    enterprise: {
+      title: 'Enterprise Solutions',
+      subtitle: 'Business Applications',
       icon: Globe,
-      count: "30+",
-      color: "indigo",
-      accent: "from-indigo-500 to-purple-600",
-      theme: "webapp",
-      sortOptions: ["Category", "Technology", "Users", "Rating"],
+      gradient: 'from-orange-600 via-red-600 to-pink-600',
       items: [
-        { name: "TaskFlow Pro", category: "Productivity", technology: "React", users: "25k", rating: 4.8 },
-        { name: "DevTracker", category: "Development", technology: "Vue", users: "18k", rating: 4.9 },
-        { name: "FinanceHub", category: "Finance", technology: "Angular", users: "32k", rating: 4.7 },
-        { name: "CollabSpace", category: "Communication", technology: "Svelte", users: "14k", rating: 4.6 }
-      ] as WebAppItem[]
+        {
+          id: 1,
+          title: 'TaskFlow Enterprise',
+          type: 'Project Management',
+          scale: 'Enterprise',
+          users: '10K+ Active',
+          uptime: '99.9%',
+          image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=300&h=200&fit=crop',
+          tags: ['SaaS', 'Analytics', 'Teams'],
+          price: 'Custom Pricing',
+          featured: true,
+          description: 'Advanced project management for large teams',
+          deployment: 'Cloud + On-Premise'
+        },
+        {
+          id: 2,
+          title: 'DataViz Analytics Pro',
+          type: 'Business Intelligence',
+          scale: 'Corporate',
+          users: '5K+ Users',
+          uptime: '99.8%',
+          image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop',
+          tags: ['BI', 'Analytics', 'Dashboards'],
+          price: '$199/month',
+          featured: false,
+          description: 'Real-time business intelligence platform',
+          deployment: 'Cloud'
+        },
+        {
+          id: 3,
+          title: 'Commerce Platform',
+          type: 'E-commerce Suite',
+          scale: 'Multi-tenant',
+          users: '50K+ Customers',
+          uptime: '99.95%',
+          image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop',
+          tags: ['E-commerce', 'Multi-tenant', 'API'],
+          price: 'Quote Based',
+          featured: true,
+          description: 'Complete e-commerce infrastructure solution',
+          deployment: 'Global CDN'
+        }
+      ]
+    },
+    webapps: {
+      title: 'Web Applications',
+      subtitle: 'Modern Web Solutions',
+      icon: Zap,
+      gradient: 'from-violet-600 via-purple-600 to-indigo-600',
+      items: [
+        {
+          id: 1,
+          title: 'Portfolio Builder Pro',
+          type: 'Website Builder',
+          performance: 'A+ Speed',
+          seo: '98/100 Score',
+          accessibility: 'WCAG 2.1',
+          image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200&fit=crop',
+          tags: ['React', 'SEO', 'Performance'],
+          price: '$49/month',
+          featured: true,
+          description: 'Professional portfolio websites with AI optimization',
+          features: '50+ Templates'
+        },
+        {
+          id: 2,
+          title: 'Event Management Hub',
+          type: 'Event Platform',
+          performance: 'Real-time',
+          seo: '95/100 Score',
+          accessibility: 'AA Compliant',
+          image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=300&h=200&fit=crop',
+          tags: ['Events', 'Real-time', 'Payments'],
+          price: '$29/month',
+          featured: false,
+          description: 'Complete event management and ticketing solution',
+          features: 'Unlimited Events'
+        },
+        {
+          id: 3,
+          title: 'Learning Management System',
+          type: 'EdTech Platform',
+          performance: 'Scalable',
+          seo: '92/100 Score',
+          accessibility: 'AAA Rated',
+          image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=300&h=200&fit=crop',
+          tags: ['Education', 'Videos', 'Certificates'],
+          price: '$99/month',
+          featured: true,
+          description: 'Advanced learning platform with AI recommendations',
+          features: 'Unlimited Courses'
+        }
+      ]
+    },
+    mobile: {
+      title: 'Mobile Solutions',
+      subtitle: 'Cross-Platform Apps',
+      icon: Smartphone,
+      gradient: 'from-cyan-600 via-blue-600 to-indigo-600',
+      items: [
+        {
+          id: 1,
+          title: 'Fitness Tracker Pro',
+          type: 'Health & Fitness',
+          platforms: 'iOS + Android',
+          downloads: '100K+',
+          rating: 4.8,
+          image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=300&h=200&fit=crop',
+          tags: ['React Native', 'Health', 'Wearables'],
+          price: '$4.99',
+          featured: true,
+          description: 'AI-powered fitness tracking with social features',
+          compatibility: 'iOS 14+, Android 8+'
+        },
+        {
+          id: 2,
+          title: 'Expense Manager',
+          type: 'Finance',
+          platforms: 'Cross-Platform',
+          downloads: '75K+',
+          rating: 4.6,
+          image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=200&fit=crop',
+          tags: ['Finance', 'AI', 'Sync'],
+          price: 'Freemium',
+          featured: false,
+          description: 'Smart expense tracking with receipt scanning',
+          compatibility: 'All Devices'
+        },
+        {
+          id: 3,
+          title: 'Recipe Master',
+          type: 'Food & Cooking',
+          platforms: 'PWA + Native',
+          downloads: '60K+',
+          rating: 4.7,
+          image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=200&fit=crop',
+          tags: ['PWA', 'AI', 'Social'],
+          price: '$2.99',
+          featured: true,
+          description: 'AI-powered recipe recommendations and meal planning',
+          compatibility: 'Universal'
+        }
+      ]
+    }
+  };
+
+  // Enhanced blog/tutorial integration
+  const featuredContent = [
+    {
+      id: 1,
+      title: 'Building Scalable React Applications',
+      type: 'Technical Article',
+      author: 'JBLinx Team',
+      readTime: '12 min read',
+      views: '3.2K',
+      date: 'Dec 25, 2024',
+      category: 'Web Development',
+      image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=250&fit=crop',
+      featured: true,
+      tags: ['React', 'Architecture', 'Performance']
     },
     {
-      title: "MOBILE APPS",
-      icon: Smartphone,
-      count: "20+",
-      color: "pink",
-      accent: "from-pink-500 to-rose-600",
-      theme: "mobile",
-      sortOptions: ["Platform", "Category", "Downloads", "Rating"],
-      items: [
-        { name: "FitTracker Pro", platform: "iOS/Android", category: "Health", downloads: "50k", rating: 4.8 },
-        { name: "BudgetMaster", platform: "Flutter", category: "Finance", downloads: "35k", rating: 4.9 },
-        { name: "StudyBuddy", platform: "React Native", category: "Education", downloads: "28k", rating: 4.7 },
-        { name: "TravelGuide", platform: "Native", category: "Travel", downloads: "42k", rating: 4.6 }
-      ] as MobileAppItem[]
+      id: 2,
+      title: 'Game Development Psychology',
+      type: 'Design Guide',
+      author: 'Game Design Team',
+      readTime: '8 min read',
+      views: '2.1K',
+      date: 'Dec 23, 2024',
+      category: 'Game Design',
+      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
+      featured: false,
+      tags: ['Psychology', 'UX', 'Gaming']
+    },
+    {
+      id: 3,
+      title: 'FastAPI Production Deployment',
+      type: 'Tutorial Series',
+      author: 'Backend Team',
+      readTime: '15 min read',
+      views: '1.8K',
+      date: 'Dec 20, 2024',
+      category: 'Backend',
+      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=250&fit=crop',
+      featured: true,
+      tags: ['FastAPI', 'DevOps', 'Production']
     }
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (currentLine < terminalLines.length) {
-        const line = terminalLines[currentLine];
-        setTerminalText(prev => {
-          const newText = prev + line + '\n';
-          if (prev.split('\n').length - 1 === currentLine) {
-            setCurrentLine(currentLine + 1);
-          }
-          return newText;
-        });
-      }
-    }, 1000);
+  const currentCategory = categories[activeTab];
+  const currentItems = currentCategory?.items || [];
 
-    return () => clearInterval(interval);
-  }, [currentLine]);
-
-  useEffect(() => {
-    const tabInterval = setInterval(() => {
-      setActiveTab(prev => (prev + 1) % showcaseTabs.length);
-    }, 4500);
-    return () => clearInterval(tabInterval);
-  }, []);
-
-  const currentTab = showcaseTabs[activeTab];
-  const filteredItems = currentTab.items.filter(item => 
-    Object.values(item).some(value => 
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
-  // Helper functions for type-safe property access
-  const getStatusColor = (status: string) => {
-    switch(status) {
-      case 'Released': return 'bg-green-500/30 text-green-400';
-      case 'Beta': return 'bg-yellow-500/30 text-yellow-400';
-      case 'Development': return 'bg-blue-500/30 text-blue-400';
-      default: return 'bg-purple-500/30 text-purple-400';
-    }
-  };
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch(difficulty) {
-      case 'Beginner': return 'text-green-400';
-      case 'Intermediate': return 'text-yellow-400';
-      case 'Advanced': return 'text-orange-400';
-      case 'Expert': return 'text-red-400';
-      default: return 'text-slate-400';
-    }
-  };
-
-  const renderTabContent = () => {
-    const tab = showcaseTabs[activeTab];
-    
-    switch(tab.theme) {
-      case 'gaming':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((item, index) => {
-              const gameItem = item as GameItem;
-              return (
-                <div key={index} className="relative bg-slate-700/60 border border-purple-500/30 p-3 hover:border-purple-400 transition-all group">
-                  {/* Gaming-specific overlay effects */}
-                  <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r from-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-                  
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <Gamepad2 className="w-3 h-3 text-purple-400" />
-                      <span className="text-white font-bold text-xs">{gameItem.name}</span>
-                    </div>
-                    <div className={`px-2 py-0.5 text-xs font-bold ${getStatusColor(gameItem.status)}`}>
-                      {gameItem.status}
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <Monitor className="w-3 h-3 text-purple-300" />
-                      <span className="text-purple-300">{gameItem.type}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-3 h-3 text-yellow-400" />
-                      <span className="text-slate-400">{gameItem.rating}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Download className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{gameItem.downloads}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      
-      case 'learning':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((item, index) => {
-              const contentItem = item as DevContentItem;
-              return (
-                <div key={index} className="relative bg-slate-700/60 border border-cyan-500/30 p-3 hover:border-cyan-400 transition-all group">
-                  {/* Learning-specific overlay effects */}
-                  <div className="absolute top-1 right-1 w-6 h-6 bg-gradient-to-bl from-cyan-400/20 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-0 right-0 w-12 h-0.5 bg-gradient-to-l from-cyan-400 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></div>
-                  
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <Brain className="w-3 h-3 text-cyan-400" />
-                      <span className="text-white font-bold text-xs">{contentItem.name}</span>
-                    </div>
-                    <span className="text-green-400 font-bold text-xs">{contentItem.price}</span>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <Book className="w-3 h-3 text-cyan-400" />
-                      <span className="bg-cyan-500/30 text-cyan-400 px-1 py-0.5">{contentItem.type}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Award className={`w-3 h-3 ${getDifficultyColor(contentItem.difficulty)}`} />
-                      <span className={getDifficultyColor(contentItem.difficulty)}>{contentItem.difficulty}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{contentItem.duration}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      
-      case 'development':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((item, index) => {
-              const devItem = item as DevProductItem;
-              return (
-                <div key={index} className="relative bg-slate-700/60 border border-green-500/30 p-3 hover:border-green-400 transition-all group">
-                  {/* Development-specific overlay effects */}
-                  <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-green-400/50 to-transparent transform scale-y-0 group-hover:scale-y-100 transition-transform origin-top"></div>
-                  <div className="absolute top-2 right-2 w-4 h-4 border border-green-400/30 rotate-45 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <Code className="w-3 h-3 text-green-400" />
-                      <span className="text-white font-bold text-xs">{devItem.name}</span>
-                    </div>
-                    <span className="text-green-400 font-bold text-xs">{devItem.price}</span>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <Layers className="w-3 h-3 text-green-400" />
-                      <span className="bg-green-500/30 text-green-400 px-1 py-0.5">{devItem.framework}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Settings className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{devItem.language}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <TrendingUp className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{devItem.updated}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      
-      case 'enterprise':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((item, index) => {
-              const enterpriseItem = item as EnterpriseItem;
-              return (
-                <div key={index} className="relative bg-slate-700/60 border border-orange-500/30 p-3 hover:border-orange-400 transition-all group">
-                  {/* Enterprise-specific overlay effects */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute top-1 left-1 w-3 h-3 border-l-2 border-t-2 border-orange-400/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-1 right-1 w-3 h-3 border-r-2 border-b-2 border-orange-400/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  
-                  <div className="relative flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <Building2 className="w-3 h-3 text-orange-400" />
-                      <span className="text-white font-bold text-xs">{enterpriseItem.name}</span>
-                    </div>
-                    <span className="text-orange-400 font-bold text-xs">{enterpriseItem.price}</span>
-                  </div>
-                  
-                  <div className="relative grid grid-cols-3 gap-2 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <Factory className="w-3 h-3 text-orange-400" />
-                      <span className="bg-orange-500/30 text-orange-400 px-1 py-0.5">{enterpriseItem.industry}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <BarChart3 className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{enterpriseItem.scale}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Rocket className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{enterpriseItem.features}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      
-      case 'webapp':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((item, index) => {
-              const webAppItem = item as WebAppItem;
-              return (
-                <div key={index} className="relative bg-slate-700/60 border border-indigo-500/30 p-3 hover:border-indigo-400 transition-all group">
-                  {/* Web app-specific overlay effects */}
-                  <div className="absolute top-0 right-0 w-full h-0.5 bg-gradient-to-l from-indigo-400 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></div>
-                  <div className="absolute bottom-2 left-2 w-2 h-2 bg-indigo-400/30 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <Globe className="w-3 h-3 text-indigo-400" />
-                      <span className="text-white font-bold text-xs">{webAppItem.name}</span>
-                    </div>
-                    <div className="flex items-center space-x-1 text-xs">
-                      <Star className="w-3 h-3 text-yellow-400" />
-                      <span className="text-slate-400">{webAppItem.rating}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-2 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <Palette className="w-3 h-3 text-indigo-400" />
-                      <span className="bg-indigo-500/30 text-indigo-400 px-1 py-0.5">{webAppItem.category}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Cpu className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{webAppItem.technology}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Users className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{webAppItem.users}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      
-      case 'mobile':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((item, index) => {
-              const mobileAppItem = item as MobileAppItem;
-              return (
-                <div key={index} className="relative bg-slate-700/60 border border-pink-500/30 p-3 hover:border-pink-400 transition-all group">
-                  {/* Mobile app-specific overlay effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute top-1 right-1 w-4 h-6 border border-pink-400/40 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute top-2 right-2 w-2 h-1 bg-pink-400/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  
-                  <div className="relative flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <Smartphone className="w-3 h-3 text-pink-400" />
-                      <span className="text-white font-bold text-xs">{mobileAppItem.name}</span>
-                    </div>
-                    <div className="flex items-center space-x-1 text-xs">
-                      <Star className="w-3 h-3 text-yellow-400" />
-                      <span className="text-slate-400">{mobileAppItem.rating}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="relative grid grid-cols-3 gap-2 text-xs">
-                    <div className="flex items-center space-x-1">
-                      <Heart className="w-3 h-3 text-pink-400" />
-                      <span className="bg-pink-500/30 text-pink-400 px-1 py-0.5">{mobileAppItem.category}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Monitor className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{mobileAppItem.platform}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Download className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{mobileAppItem.downloads}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      
-      default:
-        return null;
-    }
-  };
+  // Enhanced filtering and sorting
+  const filteredItems = currentItems.filter(item => {
+    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesFilter = filterBy === 'all' || 
+                         (filterBy === 'featured' && item.featured) ||
+                         (filterBy === 'free' && (item.price === 'Free' || item.price === 'Open Source'));
+    return matchesSearch && matchesFilter;
+  });
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
-      {/* Enhanced Background Pattern */}
+      {/* Enhanced Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-cyan-500/15 to-purple-500/15 blur-2xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-r from-purple-500/15 to-orange-500/15 blur-2xl animate-pulse"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 blur-3xl animate-pulse"></div>
-        
-        {/* Professional grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="w-full h-full" style={{
-            backgroundImage: 'radial-gradient(circle at 25% 25%, cyan 1px, transparent 1px), radial-gradient(circle at 75% 75%, purple 1px, transparent 1px)',
-            backgroundSize: '30px 30px'
-          }}></div>
-        </div>
-        
-        {/* Floating elements */}
-        <div className="absolute inset-0 opacity-20">
-          {[...Array(12)].map((_, i) => (
-            <div 
-              key={i}
-              className="absolute border border-cyan-500/30 animate-pulse"
-              style={{
-                width: `${8 + (i % 3) * 4}px`,
-                height: `${8 + (i % 3) * 4}px`,
-                left: `${(i * 13) % 95}%`,
-                top: `${(i * 17) % 85}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${3 + i * 0.2}s`
-              }}
-            />
-          ))}
-        </div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center py-6">
-        <div className="grid lg:grid-cols-12 gap-5 w-full">
-          {/* Ultra Compact Main Content */}
-          <div className="lg:col-span-7 space-y-3">
-            {/* Premium Badge with animation */}
-            <div className="inline-flex items-center bg-slate-800/95 border border-cyan-400/50 px-3 py-1 backdrop-blur-sm hover:border-cyan-300 transition-colors">
-              <Hexagon className="w-3 h-3 text-cyan-400 mr-1 animate-spin" style={{animationDuration: '3s'}} />
-              <span className="text-cyan-400 font-black text-xs font-mono tracking-widest">PREMIUM STUDIO</span>
-              <div className="w-1 h-1 bg-green-400 rounded-full ml-2 animate-pulse"></div>
-            </div>
+      <div className="container mx-auto px-6 py-20 relative z-10">
+        {/* Enhanced Hero Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center bg-blue-500/10 border border-blue-500/20 rounded-full px-6 py-3 mb-8 backdrop-blur-sm">
+            <Award className="w-5 h-5 mr-3 text-blue-400" />
+            <span className="text-sm font-semibold text-blue-300 tracking-wide">PROFESSIONAL DIGITAL SOLUTIONS</span>
+          </div>
+          
+          <h1 className="text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            Build. Deploy.
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+              Dominate.
+            </span>
+          </h1>
+          
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12">
+            From cutting-edge games to enterprise solutions, we craft digital experiences 
+            that push boundaries and deliver exceptional results for ambitious projects.
+          </p>
 
-            {/* Enhanced Title */}
-            <div className="space-y-1">
-              <h1 className="text-3xl lg:text-4xl font-black text-white leading-none font-mono">
-                <span className="text-cyan-400 hover:text-cyan-300 transition-colors">JBLinx</span>
-                <span className="text-white">Studio</span>
-              </h1>
-              
-              <div className="text-sm lg:text-base font-bold text-slate-300 font-mono">
-                Games • Dev Tools • Enterprise Apps
-              </div>
-              <div className="text-base lg:text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-orange-400 animate-pulse">
-                Everything Premium. Everything Ready. Everything Professional.
-              </div>
-            </div>
+          {/* Enhanced CTA Section */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 flex items-center space-x-3 group">
+              <span>Explore Portfolio</span>
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button className="border border-gray-600 text-gray-300 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white/5 transition-all duration-300 flex items-center space-x-3">
+              <BookOpen className="w-5 h-5" />
+              <span>View Resources</span>
+            </button>
+          </div>
+        </div>
 
-            {/* Compact Description */}
-            <p className="text-sm text-slate-400 leading-relaxed max-w-lg">
-              Professional games, development frameworks, enterprise applications, and premium content library for serious creators.
-            </p>
+        {/* Enhanced Tabs Navigation */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {Object.entries(categories).map(([key, category]) => {
+            const IconComponent = category.icon;
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveTab(key)}
+                className={`flex items-center space-x-3 px-6 py-4 rounded-2xl font-semibold transition-all duration-300 group ${
+                  activeTab === key
+                    ? `bg-gradient-to-r ${category.gradient} text-white shadow-2xl shadow-blue-500/25`
+                    : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-gray-700'
+                }`}
+              >
+                <IconComponent className={`w-5 h-5 ${activeTab === key ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
+                <span className="hidden sm:inline">{category.title}</span>
+                <span className="sm:hidden">{category.title.split(' ')[0]}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Enhanced Search and Filter Bar */}
+        <div className="bg-white/5 backdrop-blur-xl border border-gray-700 rounded-3xl p-6 mb-12">
+          <div className="flex flex-col lg:flex-row gap-4 items-center">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder={`Search ${currentCategory.title.toLowerCase()}...`}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-white/10 border border-gray-600 rounded-2xl pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+              />
+            </div>
             
-            {/* Enhanced Stats Grid */}
-            <div className="grid grid-cols-4 gap-1 max-w-md">
-              {[
-                { value: "80+", label: "Products", icon: Trophy, color: "text-cyan-400" },
-                { value: "25+", label: "Games", icon: Gamepad2, color: "text-purple-400" },
-                { value: "50k+", label: "Users", icon: Users, color: "text-orange-400" },
-                { value: "4.9★", label: "Rating", icon: Star, color: "text-yellow-400" }
-              ].map((stat, index) => {
-                const IconComponent = stat.icon;
-                return (
-                  <div key={index} className="bg-slate-800/70 border border-slate-700 p-1.5 text-center backdrop-blur-sm hover:border-slate-600 transition-colors group">
-                    <IconComponent className={`w-3 h-3 ${stat.color} mx-auto mb-0.5 group-hover:scale-110 transition-transform`} />
-                    <div className={`text-xs font-black ${stat.color} font-mono`}>{stat.value}</div>
-                    <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Enhanced Action Buttons */}
-            <div className="flex gap-2">
-              <Link 
-                to="/blog" 
-                className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-4 py-2 font-black transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 flex items-center space-x-1 text-sm hover:scale-105 transform"
+            <div className="flex gap-4">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-white/10 border border-gray-600 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-blue-500"
               >
-                <Play className="w-3 h-3" />
-                <span>EXPLORE ALL</span>
-                <ArrowRight className="w-3 h-3" />
-              </Link>
+                <option value="popularity">Popular</option>
+                <option value="rating">Rating</option>
+                <option value="newest">Newest</option>
+                <option value="price">Price</option>
+              </select>
               
-              <a 
-                href="https://github.com/orgs/JBLinx-Studio/repositories"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-slate-600 text-slate-300 hover:border-cyan-400 hover:text-cyan-400 px-4 py-2 font-black transition-all duration-300 flex items-center space-x-1 text-sm hover:scale-105 transform"
+              <select
+                value={filterBy}
+                onChange={(e) => setFilterBy(e.target.value)}
+                className="bg-white/10 border border-gray-600 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-blue-500"
               >
-                <Github className="w-3 h-3" />
-                <span>GITHUB</span>
-              </a>
+                <option value="all">All Items</option>
+                <option value="featured">Featured</option>
+                <option value="free">Free</option>
+              </select>
             </div>
           </div>
+        </div>
 
-          {/* Enhanced Interactive Showcase */}
-          <div className="lg:col-span-5 space-y-2">
-            {/* Enhanced Terminal with Professional Effects */}
-            <div className="bg-slate-900/95 border border-slate-700 p-3 backdrop-blur-sm relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-cyan-400 animate-pulse"></div>
-              
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex space-x-1">
-                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
-                  <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                </div>
-                <Terminal className="w-3 h-3 text-slate-500" />
+        {/* Enhanced Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+          {/* Main Content Area */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-3xl font-bold text-white mb-2">{currentCategory.title}</h2>
+                <p className="text-gray-400">{currentCategory.subtitle}</p>
               </div>
-              
-              <div className="font-mono text-xs min-h-[50px] relative">
-                <pre className="text-green-400 whitespace-pre-wrap">
-                  {terminalText}
-                </pre>
-                <div className="flex items-center">
-                  <span className="text-green-400">⬡ </span>
-                  <div className="w-1 h-2 bg-green-400 ml-1 animate-pulse"></div>
-                </div>
+              <div className="text-sm text-gray-400">
+                {filteredItems.length} items found
               </div>
             </div>
 
-            {/* Professional Interactive Showcase */}
-            <div className="bg-slate-800/90 border border-slate-700 p-3 backdrop-blur-sm relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
-              
-              {/* Enhanced Tab Navigation with Professional Grid */}
-              <div className="grid grid-cols-3 gap-1 mb-2">
-                {showcaseTabs.map((tab, index) => {
-                  const IconComponent = tab.icon;
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => setActiveTab(index)}
-                      className={`relative flex flex-col items-center justify-center py-1.5 px-1 text-xs font-black transition-all duration-300 group ${
-                        activeTab === index 
-                          ? `bg-gradient-to-r ${tab.accent} text-white shadow-lg` 
-                          : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
-                      }`}
-                    >
-                      {activeTab === index && (
-                        <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
+            <div className="grid md:grid-cols-2 gap-6">
+              {filteredItems.map((item) => (
+                <div key={item.id} className="group bg-white/5 backdrop-blur-xl border border-gray-700 rounded-3xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    {item.featured && (
+                      <div className="absolute top-4 left-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center">
+                        <Star className="w-3 h-3 mr-1" />
+                        Featured
+                      </div>
+                    )}
+                    <div className="absolute top-4 right-4 flex space-x-2">
+                      <button className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors">
+                        <Heart className="w-4 h-4" />
+                      </button>
+                      <button className="bg-black/50 backdrop-blur-sm text-white p-2 rounded-full hover:bg-black/70 transition-colors">
+                        <Share2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-blue-400 text-sm font-semibold">{item.type}</span>
+                      <span className="text-white font-bold text-lg">{item.price}</span>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                      {item.description}
+                    </p>
+
+                    {/* Dynamic metadata based on category */}
+                    <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+                      {activeTab === 'games' && (
+                        <>
+                          <div className="flex items-center text-gray-300">
+                            <Star className="w-4 h-4 mr-2 text-yellow-400" />
+                            {item.rating}/5
+                          </div>
+                          <div className="flex items-center text-gray-300">
+                            <Download className="w-4 h-4 mr-2 text-green-400" />
+                            {item.downloads}
+                          </div>
+                        </>
                       )}
-                      <IconComponent className="w-2.5 h-2.5 mb-0.5 relative z-10" />
-                      <span className="text-xs relative z-10">{tab.title}</span>
-                      <span className="text-xs opacity-75 relative z-10">{tab.count}</span>
-                      {activeTab === index && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white animate-pulse"></div>
+                      
+                      {activeTab === 'content' && (
+                        <>
+                          <div className="flex items-center text-gray-300">
+                            <Clock className="w-4 h-4 mr-2 text-blue-400" />
+                            {item.duration}
+                          </div>
+                          <div className="flex items-center text-gray-300">
+                            <Users className="w-4 h-4 mr-2 text-purple-400" />
+                            {item.students}
+                          </div>
+                        </>
                       )}
-                    </button>
-                  );
-                })}
-              </div>
-              
-              {/* Professional Content Area */}
-              <div className="min-h-[140px] relative">
-                {/* Enhanced Header with Professional Controls */}
-                <div className="flex items-center justify-between mb-2 bg-slate-900/50 p-2 -m-2 mb-0">
-                  <h4 className="text-white font-black text-xs font-mono flex items-center space-x-1">
-                    <Eye className="w-3 h-3 text-cyan-400" />
-                    <span>{currentTab.title}</span>
-                  </h4>
-                  <div className="flex items-center space-x-1">
-                    <select 
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                      className="bg-slate-700 text-white text-xs px-1 py-0.5 border border-slate-600 focus:border-cyan-400 focus:outline-none hover:border-slate-500 transition-colors"
-                    >
-                      {currentTab.sortOptions.map(option => (
-                        <option key={option} value={option.toLowerCase()}>{option}</option>
+                      
+                      {(activeTab === 'enterprise' || activeTab === 'webapps') && (
+                        <>
+                          <div className="flex items-center text-gray-300">
+                            <TrendingUp className="w-4 h-4 mr-2 text-green-400" />
+                            {item.uptime || item.performance}
+                          </div>
+                          <div className="flex items-center text-gray-300">
+                            <Users className="w-4 h-4 mr-2 text-blue-400" />
+                            {item.users || item.seo}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {item.tags.map((tag, index) => (
+                        <span key={index} className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs font-medium">
+                          {tag}
+                        </span>
                       ))}
-                    </select>
-                    <div className="relative">
-                      <Search className="w-2.5 h-2.5 absolute left-1 top-1 text-slate-400" />
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="bg-slate-700 text-white text-xs pl-4 pr-1 py-0.5 border border-slate-600 focus:border-cyan-400 focus:outline-none w-16 hover:border-slate-500 transition-colors"
-                      />
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <button className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                        <span>View Details</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </button>
+                      <button className="bg-white/10 text-white p-3 rounded-xl hover:bg-white/20 transition-colors">
+                        <Bookmark className="w-5 h-5" />
+                      </button>
                     </div>
                   </div>
                 </div>
-                
-                {/* Dynamic Content Based on Tab Theme */}
-                <div className="mt-2">
-                  {renderTabContent()}
-                </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              {/* Professional Action Footer */}
-              <div className="flex items-center justify-between mt-3 pt-2 border-t border-slate-700/50 bg-slate-900/30 -m-3 mt-3 p-3">
-                <div className="flex items-center space-x-2 text-xs">
-                  <div className="flex items-center space-x-1 text-slate-400">
-                    <Filter className="w-2.5 h-2.5" />
-                    <span>Found: {filteredItems.length}</span>
+          {/* Enhanced Sidebar - Featured Content */}
+          <div className="space-y-8">
+            <div className="bg-white/5 backdrop-blur-xl border border-gray-700 rounded-3xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-white">Featured Content</h3>
+                <BookOpen className="w-5 h-5 text-blue-400" />
+              </div>
+              
+              <div className="space-y-4">
+                {featuredContent.map((content) => (
+                  <div key={content.id} className="group border border-gray-700 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all">
+                    <div className="relative">
+                      <img 
+                        src={content.image} 
+                        alt={content.title}
+                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      {content.featured && (
+                        <div className="absolute top-2 left-2 bg-yellow-500 text-black px-2 py-1 rounded-md text-xs font-bold">
+                          Featured
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-blue-400 text-xs font-semibold">{content.category}</span>
+                        <span className="text-gray-500 text-xs">{content.date}</span>
+                      </div>
+                      
+                      <h4 className="text-white font-semibold mb-2 group-hover:text-blue-400 transition-colors">
+                        {content.title}
+                      </h4>
+                      
+                      <div className="flex items-center justify-between text-xs text-gray-400 mb-3">
+                        <span className="flex items-center">
+                          <Clock className="w-3 h-3 mr-1" />
+                          {content.readTime}
+                        </span>
+                        <span className="flex items-center">
+                          <Eye className="w-3 h-3 mr-1" />
+                          {content.views}
+                        </span>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {content.tags.map((tag, index) => (
+                          <span key={index} className="bg-gray-700 text-gray-300 px-2 py-1 rounded-md text-xs">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      
+                      <button className="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors">
+                        Read More
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1 text-slate-400">
-                    <Target className="w-2.5 h-2.5" />
-                    <span>Total: {currentTab.count}</span>
-                  </div>
-                  <div className="flex items-center space-x-1 text-slate-400">
-                    <CheckCircle className="w-2.5 h-2.5 text-green-400" />
-                    <span>Active</span>
-                  </div>
-                </div>
-                <button className={`bg-gradient-to-r ${currentTab.accent} text-white px-3 py-1 text-xs font-bold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center space-x-1`}>
-                  <Sparkles className="w-2.5 h-2.5" />
-                  <span>VIEW ALL</span>
+                ))}
+              </div>
+              
+              <div className="mt-6 pt-6 border-t border-gray-700">
+                <button className="w-full text-blue-400 hover:text-blue-300 font-semibold text-sm flex items-center justify-center space-x-2">
+                  <span>View All Articles</span>
+                  <ChevronRight className="w-4 h-4" />
                 </button>
+              </div>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="bg-white/5 backdrop-blur-xl border border-gray-700 rounded-3xl p-6">
+              <h3 className="text-xl font-bold text-white mb-6">Platform Stats</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Total Projects</span>
+                  <span className="text-white font-bold">150+</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Active Users</span>
+                  <span className="text-white font-bold">50K+</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Code Downloads</span>
+                  <span className="text-white font-bold">1M+</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Success Rate</span>
+                  <span className="text-green-400 font-bold">99.2%</span>
+                </div>
               </div>
             </div>
           </div>
