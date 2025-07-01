@@ -1,94 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Lightning, Crown, Diamond, Home, Scale, PenTool, Dumbbell, Activity, HeartHandshake, BookOpen, FileCode, Wrench, MapPin } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Lightning, Crown, Diamond } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-// Type definitions for different product categories
-interface GameItem {
-  name: string;
-  type: string;
-  status: string;
-  rating: number;
-  downloads: string;
-  link: string;
-  image?: string;
-  trending?: boolean;
-  featured?: boolean;
-  new?: boolean;
-  coming?: boolean;
-  category?: boolean;
-}
-
-interface LearningItem {
-  name: string;
-  type: string;
-  difficulty: string;
-  duration: string;
-  price: string;
-  link: string;
-  image?: string;
-  bestseller?: boolean;
-  featured?: boolean;
-  new?: boolean;
-  category?: boolean;
-}
-
-interface DevToolItem {
-  name: string;
-  framework: string;
-  language: string;
-  updated: string;
-  price: string;
-  link: string;
-  image?: string;
-  premium?: boolean;
-  trending?: boolean;
-  featured?: boolean;
-  category?: boolean;
-}
-
-interface EnterpriseItem {
-  name: string;
-  industry: string;
-  scale: string;
-  features: string;
-  price: string;
-  link: string;
-  image?: string;
-  enterprise?: boolean;
-  popular?: boolean;
-  featured?: boolean;
-  category?: boolean;
-}
-
-interface WebAppItem {
-  name: string;
-  category: string;
-  technology: string;
-  users: string;
-  rating: number;
-  link: string;
-  image?: string;
-  ai?: boolean;
-  trending?: boolean;
-  premium?: boolean;
-  category?: boolean;
-}
-
-interface MobileAppItem {
-  name: string;
-  platform: string;
-  category: string;
-  downloads: string;
-  rating: number;
-  link: string;
-  image?: string;
-  ai?: boolean;
-  featured?: boolean;
-  trending?: boolean;
-  category?: boolean;
-}
-
-type ShowcaseItem = GameItem | LearningItem | DevToolItem | EnterpriseItem | WebAppItem | MobileAppItem;
 
 const Hero = () => {
   const [terminalText, setTerminalText] = useState('');
@@ -103,8 +16,8 @@ const Hero = () => {
   });
 
   const terminalLines = [
-    '> initializing_jblinx_studio_premium...',
-    '> loading_flagship_products: CodeFusion, VitalitySync, MindMate...',
+    '> initializing_jblinx_premium_studio...',
+    '> loading_premium_content: 200+ professional_assets...',
     '> connecting_smart_navigation_system...',
     '> analytics_engine: ONLINE | performance: 99.7%',
     '> STATUS: All Systems Ready ⬡ PREMIUM ACTIVE'
@@ -123,214 +36,73 @@ const Hero = () => {
       sortOptions: ["Featured", "New", "Popular", "Rating"],
       menuLink: "/games",
       priority: "🎮 PRIORITY #1",
-      description: "Interactive gaming experiences and board game platforms",
+      description: "Immersive experiences with cutting-edge gameplay",
       items: [
-        { 
-          name: "MindMate Board Games", 
-          type: "Strategic Gaming", 
-          status: "Live", 
-          rating: 4.9, 
-          downloads: "15k", 
-          link: "https://github.com/JBLinx-Studio/MindMate",
-          image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=300&fit=crop",
-          trending: true, 
-          featured: true 
-        },
-        { 
-          name: "Chess & Strategy Hub", 
-          type: "Multiplayer", 
-          status: "Beta", 
-          rating: 4.8, 
-          downloads: "8k", 
-          link: "/games/strategy",
-          image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=400&h=300&fit=crop",
-          new: true 
-        },
-        { 
-          name: "Board Game Tutorials", 
-          type: "Educational", 
-          status: "Development", 
-          rating: 4.7, 
-          downloads: "5k", 
-          link: "/games/tutorials",
-          image: "https://images.unsplash.com/photo-1611891487122-207579d67d98?w=400&h=300&fit=crop",
-          coming: true 
-        },
-        { 
-          name: "🏆 Browse All Games", 
-          type: "Premium Collection", 
-          status: "Explore", 
-          rating: 5.0, 
-          downloads: "25+", 
-          link: "/games", 
-          category: true 
-        }
-      ] as GameItem[]
+        { name: "Survival Horror Chronicles", type: "Unity 3D", status: "Released", rating: 4.9, downloads: "12k", link: "/games/horror", trending: true, featured: true },
+        { name: "Strategic Conquest RTS", type: "Multiplayer", status: "Beta", rating: 4.7, downloads: "8k", link: "/games/strategy", new: true },
+        { name: "Adventure RPG Quest", type: "Open World", status: "Development", rating: 4.8, downloads: "5k", link: "/games/rpg", coming: true },
+        { name: "🏆 Browse All Games", type: "Premium Collection", status: "Explore", rating: 5.0, downloads: "25+", link: "/games", category: true }
+      ]
     },
     {
-      title: "HEALTH",
-      subtitle: "Wellness Tech",
-      icon: Heart,
+      title: "LEARNING",
+      subtitle: "Knowledge Hub",
+      icon: Brain,
       count: "50+",
-      color: "green",
-      accent: "from-green-400 via-emerald-500 to-green-600",
-      bgPattern: "from-green-500/10 to-emerald-500/5",
-      theme: "health",
-      sortOptions: ["Latest", "Most Popular", "Category", "Rating"],
-      menuLink: "/health",
-      priority: "💚 VITALITY SYNC",
-      description: "Advanced health tracking and wellness applications",
-      items: [
-        { 
-          name: "VitalitySync Pro", 
-          type: "Health Tracker", 
-          difficulty: "Easy", 
-          duration: "Lifetime", 
-          price: "Free", 
-          link: "https://github.com/JBLinx-Studio/VitalitySync",
-          image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
-          bestseller: true 
-        },
-        { 
-          name: "Nutrition Intelligence", 
-          type: "Diet Tracking", 
-          difficulty: "Intermediate", 
-          duration: "Daily Use", 
-          price: "$29", 
-          link: "/health/nutrition",
-          image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=300&fit=crop",
-          featured: true 
-        },
-        { 
-          name: "Fitness Goal Tracker", 
-          type: "Workout Plans", 
-          difficulty: "Advanced", 
-          duration: "Monthly", 
-          price: "$49", 
-          link: "/health/fitness",
-          image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
-          new: true 
-        },
-        { 
-          name: "📊 All Health Tools", 
-          type: "Complete Suite", 
-          difficulty: "All Levels", 
-          duration: "Unlimited", 
-          price: "Browse", 
-          link: "/health", 
-          category: true 
-        }
-      ] as LearningItem[]
-    },
-    {
-      title: "DEV TOOLS",
-      subtitle: "Code Platform",
-      icon: Code,
-      count: "40+",
       color: "cyan",
       accent: "from-cyan-400 via-blue-500 to-cyan-600",
       bgPattern: "from-cyan-500/10 to-blue-500/5",
+      theme: "learning",
+      sortOptions: ["Latest", "Most Popular", "Difficulty", "Duration"],
+      menuLink: "/blog",
+      priority: "📚 CONTENT HUB",
+      description: "Comprehensive guides and educational resources",
+      items: [
+        { name: "Full-Stack Dev Mastery", type: "Complete Course", difficulty: "Expert", duration: "40h", price: "$149", link: "/guides/fullstack", bestseller: true },
+        { name: "Game Development Bible", type: "E-book", difficulty: "Advanced", duration: "25h", price: "$89", link: "/guides/gamedev", featured: true },
+        { name: "React Best Practices", type: "Video Series", difficulty: "Intermediate", duration: "15h", price: "$69", link: "/guides/react", new: true },
+        { name: "📖 All Learning Content", type: "Knowledge Base", difficulty: "All Levels", duration: "200h+", price: "Browse", link: "/blog", category: true }
+      ]
+    },
+    {
+      title: "DEV TOOLS",
+      subtitle: "Pro Toolkit",
+      icon: Code,
+      count: "40+",
+      color: "green",
+      accent: "from-green-400 via-emerald-500 to-green-600",
+      bgPattern: "from-green-500/10 to-emerald-500/5",
       theme: "development",
       sortOptions: ["Framework", "Language", "Updated", "Price"],
       menuLink: "/tools",
-      priority: "⚡ CODE FUSION",
-      description: "Advanced development tools and AI-powered coding platforms",
+      priority: "⚡ DEV SUITE",
+      description: "Professional development tools and templates",
       items: [
-        { 
-          name: "CodeFusion Studio", 
-          framework: "Multi-Stack", 
-          language: "Universal", 
-          updated: "Live", 
-          price: "Free", 
-          link: "https://github.com/JBLinx-Studio/CodeFusion",
-          image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
-          premium: true 
-        },
-        { 
-          name: "CodeCraftAI Pro", 
-          framework: "AI-Powered", 
-          language: "Full-Stack", 
-          updated: "Daily", 
-          price: "$99", 
-          link: "https://github.com/JBLinx-Studio/CodeCraftAI",
-          image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
-          trending: true 
-        },
-        { 
-          name: "React Dev Toolkit", 
-          framework: "React", 
-          language: "TypeScript", 
-          updated: "Weekly", 
-          price: "$79", 
-          link: "/tools/react",
-          image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop",
-          featured: true 
-        },
-        { 
-          name: "🛠️ All Developer Tools", 
-          framework: "Complete Stack", 
-          language: "Various", 
-          updated: "Real-time", 
-          price: "Browse", 
-          link: "/tools", 
-          category: true 
-        }
-      ] as DevToolItem[]
+        { name: "React SaaS Starter Pro", framework: "React", language: "TypeScript", updated: "2 days", price: "$99", link: "/tools/react", premium: true },
+        { name: "FastAPI Production Kit", framework: "FastAPI", language: "Python", updated: "1 week", price: "$79", link: "/tools/fastapi", trending: true },
+        { name: "Flutter Enterprise Suite", framework: "Flutter", language: "Dart", updated: "3 days", price: "$119", link: "/tools/flutter", featured: true },
+        { name: "🛠️ All Developer Tools", framework: "Multi-Stack", language: "Various", updated: "Daily", price: "Browse", link: "/tools", category: true }
+      ]
     },
     {
-      title: "REAL ESTATE",
-      subtitle: "Property Tech",
+      title: "ENTERPRISE",
+      subtitle: "Business Solutions",
       icon: Building2,
       count: "15+",
       color: "orange",
       accent: "from-orange-400 via-red-500 to-orange-600",
       bgPattern: "from-orange-500/10 to-red-500/5",
-      theme: "realestate",
+      theme: "enterprise",
       sortOptions: ["Industry", "Scale", "Features", "Price"],
-      menuLink: "/realestate",
-      priority: "🏢 NEST CORE",
-      description: "Comprehensive real estate platform for all stakeholders",
+      menuLink: "/enterprise",
+      priority: "🏢 ENTERPRISE",
+      description: "Scalable solutions for growing businesses",
       items: [
-        { 
-          name: "NestCore Platform", 
-          industry: "Real Estate", 
-          scale: "Enterprise", 
-          features: "Complete Suite", 
-          price: "Custom", 
-          link: "https://github.com/JBLinx-Studio/NestCore",
-          image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
-          enterprise: true 
-        },
-        { 
-          name: "Property Management", 
-          industry: "PropTech", 
-          scale: "Medium+", 
-          features: "AI Analytics", 
-          price: "$199/mo", 
-          link: "/realestate/management",
-          image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
-          popular: true 
-        },
-        { 
-          name: "Legal Documentation", 
-          industry: "LegalTech", 
-          scale: "Professional", 
-          features: "Automated Docs", 
-          price: "$299/mo", 
-          link: "/realestate/legal",
-          image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop",
-          featured: true 
-        },
-        { 
-          name: "🏭 Real Estate Suite", 
-          industry: "All Sectors", 
-          scale: "Any Size", 
-          features: "Full Platform", 
-          price: "Contact", 
-          link: "/realestate", 
-          category: true 
-        }
-      ] as EnterpriseItem[]
+        { name: "AI-Powered CRM Suite", industry: "Sales Tech", scale: "Enterprise", features: "AI/ML Ready", price: "Custom", link: "/enterprise/crm", enterprise: true },
+        { name: "Real-time Analytics Pro", industry: "Data Analytics", scale: "Medium+", features: "Live Dashboard", price: "$299/mo", link: "/enterprise/analytics", popular: true },
+        { name: "E-commerce Platform", industry: "Retail Tech", scale: "Large Scale", features: "Multi-tenant", price: "$499/mo", link: "/enterprise/ecommerce", featured: true },
+        { name: "🏭 Enterprise Solutions", industry: "All Sectors", scale: "Any Size", features: "Custom Built", price: "Contact", link: "/enterprise", category: true }
+      ]
     },
     {
       title: "WEB APPS",
@@ -344,48 +116,13 @@ const Hero = () => {
       sortOptions: ["Category", "Technology", "Users", "Rating"],
       menuLink: "/apps",
       priority: "🌐 WEB SUITE",
-      description: "Modern web applications for productivity and entertainment",
+      description: "Modern web applications for every need",
       items: [
-        { 
-          name: "CodeFusion Online IDE", 
-          category: "Development", 
-          technology: "Advanced Editor", 
-          users: "50k+", 
-          rating: 4.9, 
-          link: "https://github.com/JBLinx-Studio/CodeFusion",
-          image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop",
-          ai: true 
-        },
-        { 
-          name: "MindMate Gaming Hub", 
-          category: "Entertainment", 
-          technology: "Real-time Gaming", 
-          users: "35k+", 
-          rating: 4.8, 
-          link: "https://github.com/JBLinx-Studio/MindMate",
-          image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=300&fit=crop",
-          trending: true 
-        },
-        { 
-          name: "VitalitySync Dashboard", 
-          category: "Health Tech", 
-          technology: "Data Analytics", 
-          users: "60k+", 
-          rating: 4.9, 
-          link: "https://github.com/JBLinx-Studio/VitalitySync",
-          image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
-          premium: true 
-        },
-        { 
-          name: "🚀 Browse Web Apps", 
-          category: "All Categories", 
-          technology: "Modern Stack", 
-          users: "200k+", 
-          rating: 4.8, 
-          link: "/apps", 
-          category: true 
-        }
-      ] as WebAppItem[]
+        { name: "TaskFlow Pro Suite", category: "Productivity", technology: "React + AI", users: "50k+", rating: 4.9, link: "/apps/taskflow", ai: true },
+        { name: "DevTracker Analytics", category: "Development", technology: "Vue + D3", users: "35k+", rating: 4.8, link: "/apps/devtracker", trending: true },
+        { name: "DataViz Intelligence", category: "Analytics", technology: "Next.js", users: "60k+", rating: 4.9, link: "/apps/dataviz", premium: true },
+        { name: "🚀 Browse Web Apps", category: "All Categories", technology: "Modern Stack", users: "200k+", rating: 4.8, link: "/apps", category: true }
+      ]
     },
     {
       title: "MOBILE",
@@ -399,48 +136,13 @@ const Hero = () => {
       sortOptions: ["Platform", "Category", "Downloads", "Rating"],
       menuLink: "/mobile",
       priority: "📱 MOBILE HUB",
-      description: "Cross-platform mobile applications and tools",
+      description: "Cross-platform mobile applications",
       items: [
-        { 
-          name: "VitalitySync Mobile", 
-          platform: "Cross-Platform", 
-          category: "Health Tech", 
-          downloads: "100k+", 
-          rating: 4.9, 
-          link: "https://github.com/JBLinx-Studio/VitalitySync",
-          image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
-          ai: true 
-        },
-        { 
-          name: "NestCore Mobile App", 
-          platform: "Native iOS/Android", 
-          category: "PropTech", 
-          downloads: "75k+", 
-          rating: 4.8, 
-          link: "https://github.com/JBLinx-Studio/NestCore",
-          image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
-          featured: true 
-        },
-        { 
-          name: "CodeFusion Mobile IDE", 
-          platform: "React Native", 
-          category: "Development", 
-          downloads: "50k+", 
-          rating: 4.7, 
-          link: "https://github.com/JBLinx-Studio/CodeFusion",
-          image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
-          trending: true 
-        },
-        { 
-          name: "📲 Mobile App Store", 
-          platform: "All Platforms", 
-          category: "Complete Suite", 
-          downloads: "500k+", 
-          rating: 4.8, 
-          link: "/mobile", 
-          category: true 
-        }
-      ] as MobileAppItem[]
+        { name: "FitTracker AI Pro", platform: "Cross-Platform", category: "Health Tech", downloads: "100k+", rating: 4.9, link: "/mobile/fitness", ai: true },
+        { name: "FinanceFlow Master", platform: "Native iOS/Android", category: "FinTech", downloads: "75k+", rating: 4.8, link: "/mobile/finance", featured: true },
+        { name: "StudyBuddy Premium", platform: "React Native", category: "EdTech", downloads: "50k+", rating: 4.7, link: "/mobile/education", trending: true },
+        { name: "📲 Mobile App Store", platform: "All Platforms", category: "Complete Suite", downloads: "500k+", rating: 4.8, link: "/mobile", category: true }
+      ]
     }
   ];
 
@@ -486,21 +188,20 @@ const Hero = () => {
     )
   );
 
-  const getItemBadge = (item: ShowcaseItem) => {
-    if ('category' in item && item.category) return { text: "VIEW ALL", color: "bg-gradient-to-r from-cyan-500 to-purple-500 text-white animate-pulse" };
-    if ('trending' in item && item.trending) return { text: "🔥 TRENDING", color: "bg-red-500/90 text-white" };
-    if ('featured' in item && item.featured) return { text: "⭐ FEATURED", color: "bg-blue-500/90 text-white" };
-    if ('new' in item && item.new) return { text: "✨ NEW", color: "bg-green-500/90 text-white" };
-    if ('bestseller' in item && item.bestseller) return { text: "👑 BESTSELLER", color: "bg-yellow-500/90 text-black font-black" };
-    if ('premium' in item && item.premium) return { text: "💎 PREMIUM", color: "bg-purple-500/90 text-white" };
-    if ('ai' in item && item.ai) return { text: "🤖 AI-POWERED", color: "bg-cyan-500/90 text-white" };
-    if ('enterprise' in item && item.enterprise) return { text: "🏢 ENTERPRISE", color: "bg-orange-500/90 text-white" };
+  const getItemBadge = (item: any) => {
+    if (item.category) return { text: "VIEW ALL", color: "bg-gradient-to-r from-cyan-500 to-purple-500 text-white animate-pulse" };
+    if (item.trending) return { text: "🔥 TRENDING", color: "bg-red-500/90 text-white" };
+    if (item.featured) return { text: "⭐ FEATURED", color: "bg-blue-500/90 text-white" };
+    if (item.new) return { text: "✨ NEW", color: "bg-green-500/90 text-white" };
+    if (item.bestseller) return { text: "👑 BESTSELLER", color: "bg-yellow-500/90 text-black font-black" };
+    if (item.premium) return { text: "💎 PREMIUM", color: "bg-purple-500/90 text-white" };
+    if (item.ai) return { text: "🤖 AI-POWERED", color: "bg-cyan-500/90 text-white" };
+    if (item.enterprise) return { text: "🏢 ENTERPRISE", color: "bg-orange-500/90 text-white" };
     return null;
   };
 
   const getStatusColor = (status: string) => {
     switch(status) {
-      case 'Live': 
       case 'Released': return 'bg-green-500/30 text-green-300 border-green-400/50';
       case 'Beta': return 'bg-cyan-500/30 text-cyan-300 border-cyan-400/50';
       case 'Development': return 'bg-orange-500/30 text-orange-300 border-orange-400/50';
@@ -515,7 +216,7 @@ const Hero = () => {
     return (
       <div className="space-y-2">
         {filteredItems.map((item, index) => {
-          const isMainCategoryItem = 'category' in item && item.category;
+          const isMainCategoryItem = item.category;
           const badge = getItemBadge(item);
           
           return (
@@ -523,26 +224,9 @@ const Hero = () => {
               isMainCategoryItem 
                 ? `bg-gradient-to-r ${tab.accent}/15 border-2 border-dashed border-cyan-400/50 hover:border-solid hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20` 
                 : 'bg-slate-800/80 border border-slate-600/50 hover:border-slate-400 hover:bg-slate-700/90'
-            } backdrop-blur-sm overflow-hidden rounded-lg`}>
+            } backdrop-blur-sm overflow-hidden`}>
               
               <div className={`absolute inset-0 bg-gradient-to-r ${tab.accent}/10 opacity-0 group-hover:opacity-100 transition-all duration-500`}></div>
-              
-              {/* Product Image Preview */}
-              {'image' in item && item.image && !isMainCategoryItem && (
-                <div className="relative h-24 overflow-hidden">
-                  <img 
-                    src={item.image} 
-                    alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                  {badge && (
-                    <div className={`absolute top-2 right-2 px-2 py-1 text-xs font-bold rounded-full ${badge.color}`}>
-                      {badge.text}
-                    </div>
-                  )}
-                </div>
-              )}
               
               <div className="relative p-3">
                 <div className="flex items-center justify-between mb-2">
@@ -555,13 +239,13 @@ const Hero = () => {
                         <span className={`text-white font-black text-sm ${isMainCategoryItem ? 'text-base' : ''} group-hover:text-cyan-300 transition-colors`}>
                           {item.name}
                         </span>
-                        {badge && !('image' in item && item.image) && (
+                        {badge && (
                           <span className={`px-2 py-0.5 text-xs font-bold rounded-full ${badge.color}`}>
                             {badge.text}
                           </span>
                         )}
                       </div>
-                      {tab.theme === 'gaming' && 'type' in item && 'status' in item && (
+                      {tab.theme === 'gaming' && (
                         <div className="flex items-center space-x-2 mt-1">
                           <span className="text-purple-300 text-xs font-medium">{item.type}</span>
                           <div className={`px-1.5 py-0.5 text-xs font-bold border rounded ${getStatusColor(item.status)}`}>
@@ -569,10 +253,10 @@ const Hero = () => {
                           </div>
                         </div>
                       )}
-                      {(tab.theme === 'health') && 'type' in item && 'price' in item && (
+                      {tab.theme === 'learning' && (
                         <div className="flex items-center space-x-2 mt-1">
-                          <span className="bg-green-500/30 text-green-300 px-2 py-0.5 text-xs font-bold rounded">{item.type}</span>
-                          <span className="text-green-400 text-xs font-bold">{item.price}</span>
+                          <span className="bg-cyan-500/30 text-cyan-300 px-2 py-0.5 text-xs font-bold rounded">{item.type}</span>
+                          <span className="text-cyan-400 text-xs font-bold">{item.price}</span>
                         </div>
                       )}
                     </div>
@@ -580,7 +264,7 @@ const Hero = () => {
                   
                   {!isMainCategoryItem && (
                     <div className="flex items-center space-x-2">
-                      {((tab.theme === 'webapp' || tab.theme === 'mobile') && 'rating' in item) && (
+                      {(tab.theme === 'webapp' || tab.theme === 'mobile') && (
                         <div className="flex items-center space-x-1 text-xs">
                           <Star className="w-3 h-3 text-yellow-400" />
                           <span className="text-slate-300 font-bold">{item.rating}</span>
@@ -593,7 +277,7 @@ const Hero = () => {
                 
                 {!isMainCategoryItem && (
                   <div className="grid grid-cols-3 gap-2 text-xs">
-                    {tab.theme === 'gaming' && 'downloads' in item && 'rating' in item && (
+                    {tab.theme === 'gaming' && (
                       <>
                         <div className="flex items-center space-x-1 text-slate-400">
                           <Download className="w-3 h-3 text-green-400" />
@@ -671,7 +355,7 @@ const Hero = () => {
           {/* Enhanced Left Content */}
           <div className="lg:col-span-7 space-y-4">
             {/* Premium Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-slate-800/95 to-slate-700/95 border border-cyan-400/60 px-4 py-2 backdrop-blur-sm hover:border-cyan-300 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20 rounded-lg">
+            <div className="inline-flex items-center bg-gradient-to-r from-slate-800/95 to-slate-700/95 border border-cyan-400/60 px-4 py-2 backdrop-blur-sm hover:border-cyan-300 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
               <Hexagon className="w-4 h-4 text-cyan-400 mr-2 animate-spin" style={{animationDuration: '4s'}} />
               <span className="text-cyan-400 font-black text-sm font-mono tracking-widest">PREMIUM STUDIO</span>
               <div className="w-2 h-2 bg-green-400 rounded-full ml-3 animate-pulse"></div>
@@ -686,35 +370,35 @@ const Hero = () => {
               </h1>
               
               <div className="text-base lg:text-lg font-bold text-slate-300 font-mono">
-                <span className="text-purple-400">MindMate</span> • 
-                <span className="text-green-400"> VitalitySync</span> • 
-                <span className="text-cyan-400"> CodeFusion</span> • 
-                <span className="text-orange-400"> NestCore</span> • 
-                <span className="text-blue-400"> CodeCraftAI</span>
+                <span className="text-purple-400">Games</span> • 
+                <span className="text-cyan-400"> Learning</span> • 
+                <span className="text-green-400"> Dev Tools</span> • 
+                <span className="text-orange-400"> Enterprise</span> • 
+                <span className="text-blue-400"> Web Apps</span> • 
+                <span className="text-pink-400"> Mobile</span>
               </div>
               
               <div className="text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-orange-400 animate-pulse">
-                Premium Products. Real Solutions. Professional Quality.
+                Everything Premium. Everything Connected. Everything Professional.
               </div>
             </div>
 
             <p className="text-slate-400 leading-relaxed max-w-2xl text-base">
-              Professional development studio featuring flagship products: <strong className="text-cyan-400">CodeFusion</strong> (advanced IDE), 
-              <strong className="text-green-400"> VitalitySync</strong> (health tracking), <strong className="text-purple-400"> MindMate</strong> (board games), 
-              <strong className="text-orange-400"> NestCore</strong> (real estate platform), and <strong className="text-blue-400"> CodeCraftAI</strong> (AI engineering).
+              Professional development studio with integrated navigation to premium games, comprehensive learning content, 
+              advanced dev tools, enterprise solutions, and cutting-edge applications.
             </p>
             
             {/* Live Stats Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-2xl">
               {[
-                { value: "5+", label: "Flagship Products", icon: Trophy, color: "text-cyan-400", live: false },
+                { value: "200+", label: "Premium Products", icon: Trophy, color: "text-cyan-400", live: false },
                 { value: liveStats.activeUsers.toLocaleString(), label: "Active Users", icon: Users, color: "text-green-400", live: true },
-                { value: liveStats.todayDownloads.toLocaleString(), label: "GitHub Stars", icon: Star, color: "text-orange-400", live: true },
-                { value: "4.9★", label: "Avg Rating", icon: Award, color: "text-yellow-400", live: false }
+                { value: liveStats.todayDownloads.toLocaleString(), label: "Today's Downloads", icon: Download, color: "text-orange-400", live: true },
+                { value: "4.9★", label: "Avg Rating", icon: Star, color: "text-yellow-400", live: false }
               ].map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="bg-slate-800/80 border border-slate-700 p-3 text-center backdrop-blur-sm hover:border-slate-600 transition-all duration-300 group hover:bg-slate-700/90 rounded-lg">
+                  <div key={index} className="bg-slate-800/80 border border-slate-700 p-3 text-center backdrop-blur-sm hover:border-slate-600 transition-all duration-300 group hover:bg-slate-700/90">
                     <IconComponent className={`w-5 h-5 ${stat.color} mx-auto mb-1 group-hover:scale-110 transition-transform duration-300`} />
                     <div className={`text-sm font-black ${stat.color} font-mono flex items-center justify-center space-x-1`}>
                       <span>{stat.value}</span>
@@ -730,7 +414,7 @@ const Hero = () => {
             <div className="flex flex-wrap gap-3">
               <Link 
                 to="/blog" 
-                className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-6 py-3 font-black transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 flex items-center space-x-2 hover:scale-105 transform rounded-lg"
+                className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-6 py-3 font-black transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 flex items-center space-x-2 hover:scale-105 transform"
               >
                 <Rocket className="w-4 h-4" />
                 <span>EXPLORE ALL</span>
@@ -741,7 +425,7 @@ const Hero = () => {
                 href="https://github.com/orgs/JBLinx-Studio/repositories"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-slate-600 text-slate-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10 px-6 py-3 font-black transition-all duration-300 flex items-center space-x-2 hover:scale-105 transform rounded-lg"
+                className="border border-slate-600 text-slate-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10 px-6 py-3 font-black transition-all duration-300 flex items-center space-x-2 hover:scale-105 transform"
               >
                 <Github className="w-4 h-4" />
                 <span>GITHUB</span>
@@ -750,9 +434,9 @@ const Hero = () => {
 
               <Link 
                 to="#contact"
-                className="border border-orange-500/60 text-orange-400 hover:border-orange-400 hover:bg-orange-500/20 px-6 py-3 font-black transition-all duration-300 flex items-center space-x-2 hover:scale-105 transform rounded-lg"
+                className="border border-orange-500/60 text-orange-400 hover:border-orange-400 hover:bg-orange-500/20 px-6 py-3 font-black transition-all duration-300 flex items-center space-x-2 hover:scale-105 transform"
               >
-                <Zap className="w-4 h-4" />
+                <Lightning className="w-4 h-4" />
                 <span>CONTACT PRO</span>
               </Link>
             </div>
@@ -761,7 +445,7 @@ const Hero = () => {
           {/* Enhanced Right Sidebar */}
           <div className="lg:col-span-5 space-y-3">
             {/* Enhanced Terminal */}
-            <div className="bg-slate-900/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden group hover:border-slate-600 transition-all duration-300 rounded-lg">
+            <div className="bg-slate-900/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden group hover:border-slate-600 transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 animate-pulse"></div>
               
               <div className="flex items-center justify-between p-3 border-b border-slate-700/50">
@@ -781,7 +465,7 @@ const Hero = () => {
                   {terminalText}
                 </pre>
                 <div className="flex items-center mt-2">
-                  <span className="text-green-400">⬡ jblinx_studio</span>
+                  <span className="text-green-400">⬡ premium_studio</span>
                   <span className="text-cyan-400 ml-2">$</span>
                   <div className="w-2 h-4 bg-green-400 ml-2 animate-pulse"></div>
                 </div>
@@ -789,7 +473,7 @@ const Hero = () => {
             </div>
 
             {/* Enhanced Showcase Panel */}
-            <div className="bg-slate-800/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden rounded-lg">
+            <div className="bg-slate-800/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
               
               {/* Enhanced Tab Navigation */}
@@ -801,14 +485,14 @@ const Hero = () => {
                       <button
                         key={index}
                         onClick={() => setActiveTab(index)}
-                        className={`relative flex flex-col items-center justify-center py-2 px-2 text-xs font-black transition-all duration-300 group rounded ${
+                        className={`relative flex flex-col items-center justify-center py-2 px-2 text-xs font-black transition-all duration-300 group ${
                           activeTab === index 
                             ? `bg-gradient-to-r ${tab.accent} text-white shadow-lg transform scale-105` 
                             : 'bg-slate-700/80 text-slate-400 hover:bg-slate-600/80'
                         }`}
                       >
                         {activeTab === index && (
-                          <div className="absolute inset-0 bg-white/10 animate-pulse rounded"></div>
+                          <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
                         )}
                         <IconComponent className="w-3 h-3 mb-1 relative z-10" />
                         <span className="text-xs relative z-10 font-black">{tab.title}</span>
