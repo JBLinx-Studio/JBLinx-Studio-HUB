@@ -1,63 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Lightning, Crown, Diamond } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-// Define proper types for each tab's items
-interface GameItem {
-  name: string;
-  type: string;
-  status: string;
-  rating: number;
-  downloads: string;
-  link: string;
-}
-
-interface DevContentItem {
-  name: string;
-  type: string;
-  difficulty: string;
-  duration: string;
-  price: string;
-  link: string;
-}
-
-interface DevProductItem {
-  name: string;
-  framework: string;
-  language: string;
-  updated: string;
-  price: string;
-  link: string;
-}
-
-interface EnterpriseItem {
-  name: string;
-  industry: string;
-  scale: string;
-  features: string;
-  price: string;
-  link: string;
-}
-
-interface WebAppItem {
-  name: string;
-  category: string;
-  technology: string;
-  users: string;
-  rating: number;
-  link: string;
-}
-
-interface MobileAppItem {
-  name: string;
-  platform: string;
-  category: string;
-  downloads: string;
-  rating: number;
-  link: string;
-}
-
-type TabItem = GameItem | DevContentItem | DevProductItem | EnterpriseItem | WebAppItem | MobileAppItem;
 
 const Hero = () => {
   const [terminalText, setTerminalText] = useState('');
@@ -65,110 +9,140 @@ const Hero = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [sortBy, setSortBy] = useState('featured');
   const [searchTerm, setSearchTerm] = useState('');
+  const [liveStats, setLiveStats] = useState({
+    activeUsers: 1247,
+    todayDownloads: 892,
+    currentProjects: 34
+  });
 
   const terminalLines = [
     '> initializing_jblinx_premium_studio...',
-    '> loading_content_library: 200+ assets...',
-    '> connecting_navigation_system...',
-    '> STATUS: All Systems Ready ⬡ ONLINE'
+    '> loading_premium_content: 200+ professional_assets...',
+    '> connecting_smart_navigation_system...',
+    '> analytics_engine: ONLINE | performance: 99.7%',
+    '> STATUS: All Systems Ready ⬡ PREMIUM ACTIVE'
   ];
 
   const showcaseTabs = [
     {
       title: "GAMES",
+      subtitle: "Premium Gaming",
       icon: Gamepad2,
       count: "25+",
       color: "purple",
-      accent: "from-purple-500 to-pink-600",
+      accent: "from-purple-500 via-pink-500 to-purple-600",
+      bgPattern: "from-purple-500/10 to-pink-500/5",
       theme: "gaming",
       sortOptions: ["Featured", "New", "Popular", "Rating"],
       menuLink: "/games",
+      priority: "🎮 PRIORITY #1",
+      description: "Immersive experiences with cutting-edge gameplay",
       items: [
-        { name: "Survival Horror", type: "Unity", status: "Released", rating: 4.9, downloads: "12k", link: "/games/horror" },
-        { name: "Strategy RTS", type: "Unity", status: "Beta", rating: 4.7, downloads: "8k", link: "/games/strategy" },
-        { name: "Adventure RPG", type: "Unity", status: "Development", rating: 4.8, downloads: "5k", link: "/games/rpg" },
-        { name: "View All Games", type: "Portfolio", status: "Browse", rating: 5.0, downloads: "25+", link: "/games" }
-      ] as GameItem[]
+        { name: "Survival Horror Chronicles", type: "Unity 3D", status: "Released", rating: 4.9, downloads: "12k", link: "/games/horror", trending: true, featured: true },
+        { name: "Strategic Conquest RTS", type: "Multiplayer", status: "Beta", rating: 4.7, downloads: "8k", link: "/games/strategy", new: true },
+        { name: "Adventure RPG Quest", type: "Open World", status: "Development", rating: 4.8, downloads: "5k", link: "/games/rpg", coming: true },
+        { name: "🏆 Browse All Games", type: "Premium Collection", status: "Explore", rating: 5.0, downloads: "25+", link: "/games", category: true }
+      ]
     },
     {
       title: "LEARNING",
+      subtitle: "Knowledge Hub",
       icon: Brain,
       count: "50+",
       color: "cyan",
-      accent: "from-cyan-500 to-blue-600",
+      accent: "from-cyan-400 via-blue-500 to-cyan-600",
+      bgPattern: "from-cyan-500/10 to-blue-500/5",
       theme: "learning",
       sortOptions: ["Latest", "Most Popular", "Difficulty", "Duration"],
       menuLink: "/blog",
+      priority: "📚 CONTENT HUB",
+      description: "Comprehensive guides and educational resources",
       items: [
-        { name: "Unity Game Dev Bible", type: "E-book", difficulty: "Advanced", duration: "12h", price: "$89", link: "/guides/gamedev" },
-        { name: "React Best Practices", type: "Course", difficulty: "Intermediate", duration: "8h", price: "$49", link: "/guides/webdev" },
-        { name: "API Design Patterns", type: "Guide", difficulty: "Expert", duration: "6h", price: "$39", link: "/docs" },
-        { name: "All Learning Content", type: "Library", difficulty: "All Levels", duration: "100h+", price: "Browse", link: "/blog" }
-      ] as DevContentItem[]
+        { name: "Full-Stack Dev Mastery", type: "Complete Course", difficulty: "Expert", duration: "40h", price: "$149", link: "/guides/fullstack", bestseller: true },
+        { name: "Game Development Bible", type: "E-book", difficulty: "Advanced", duration: "25h", price: "$89", link: "/guides/gamedev", featured: true },
+        { name: "React Best Practices", type: "Video Series", difficulty: "Intermediate", duration: "15h", price: "$69", link: "/guides/react", new: true },
+        { name: "📖 All Learning Content", type: "Knowledge Base", difficulty: "All Levels", duration: "200h+", price: "Browse", link: "/blog", category: true }
+      ]
     },
     {
       title: "DEV TOOLS",
+      subtitle: "Pro Toolkit",
       icon: Code,
       count: "40+",
       color: "green",
-      accent: "from-green-500 to-emerald-600",
+      accent: "from-green-400 via-emerald-500 to-green-600",
+      bgPattern: "from-green-500/10 to-emerald-500/5",
       theme: "development",
       sortOptions: ["Framework", "Language", "Updated", "Price"],
       menuLink: "/tools",
+      priority: "⚡ DEV SUITE",
+      description: "Professional development tools and templates",
       items: [
-        { name: "React SaaS Kit", framework: "React", language: "TypeScript", updated: "2 days", price: "$49", link: "/tools/react" },
-        { name: "FastAPI Template", framework: "FastAPI", language: "Python", updated: "1 week", price: "$39", link: "/tools/fastapi" },
-        { name: "Flutter App Kit", framework: "Flutter", language: "Dart", updated: "3 days", price: "$44", link: "/tools/flutter" },
-        { name: "All Dev Tools", framework: "Multi", language: "Various", updated: "Daily", price: "Browse", link: "/tools" }
-      ] as DevProductItem[]
+        { name: "React SaaS Starter Pro", framework: "React", language: "TypeScript", updated: "2 days", price: "$99", link: "/tools/react", premium: true },
+        { name: "FastAPI Production Kit", framework: "FastAPI", language: "Python", updated: "1 week", price: "$79", link: "/tools/fastapi", trending: true },
+        { name: "Flutter Enterprise Suite", framework: "Flutter", language: "Dart", updated: "3 days", price: "$119", link: "/tools/flutter", featured: true },
+        { name: "🛠️ All Developer Tools", framework: "Multi-Stack", language: "Various", updated: "Daily", price: "Browse", link: "/tools", category: true }
+      ]
     },
     {
       title: "ENTERPRISE",
+      subtitle: "Business Solutions",
       icon: Building2,
       count: "15+",
       color: "orange",
-      accent: "from-orange-500 to-red-600",
+      accent: "from-orange-400 via-red-500 to-orange-600",
+      bgPattern: "from-orange-500/10 to-red-500/5",
       theme: "enterprise",
       sortOptions: ["Industry", "Scale", "Features", "Price"],
       menuLink: "/enterprise",
+      priority: "🏢 ENTERPRISE",
+      description: "Scalable solutions for growing businesses",
       items: [
-        { name: "CRM Platform", industry: "Sales", scale: "Enterprise", features: "AI-Powered", price: "Custom", link: "/apps/crm" },
-        { name: "Analytics Dashboard", industry: "Marketing", scale: "Medium", features: "Real-time", price: "$199/mo", link: "/apps/analytics" },
-        { name: "E-commerce Suite", industry: "Retail", scale: "Large", features: "Multi-tenant", price: "$299/mo", link: "/apps/ecommerce" },
-        { name: "All Enterprise Apps", industry: "Various", scale: "All Sizes", features: "Custom", price: "Contact", link: "/enterprise" }
-      ] as EnterpriseItem[]
+        { name: "AI-Powered CRM Suite", industry: "Sales Tech", scale: "Enterprise", features: "AI/ML Ready", price: "Custom", link: "/enterprise/crm", enterprise: true },
+        { name: "Real-time Analytics Pro", industry: "Data Analytics", scale: "Medium+", features: "Live Dashboard", price: "$299/mo", link: "/enterprise/analytics", popular: true },
+        { name: "E-commerce Platform", industry: "Retail Tech", scale: "Large Scale", features: "Multi-tenant", price: "$499/mo", link: "/enterprise/ecommerce", featured: true },
+        { name: "🏭 Enterprise Solutions", industry: "All Sectors", scale: "Any Size", features: "Custom Built", price: "Contact", link: "/enterprise", category: true }
+      ]
     },
     {
       title: "WEB APPS",
+      subtitle: "Digital Solutions",
       icon: Globe,
       count: "30+",
       color: "indigo",
-      accent: "from-indigo-500 to-purple-600",
+      accent: "from-indigo-400 via-purple-500 to-indigo-600",
+      bgPattern: "from-indigo-500/10 to-purple-500/5",
       theme: "webapp",
       sortOptions: ["Category", "Technology", "Users", "Rating"],
       menuLink: "/apps",
+      priority: "🌐 WEB SUITE",
+      description: "Modern web applications for every need",
       items: [
-        { name: "TaskFlow Pro", category: "Productivity", technology: "React", users: "25k", rating: 4.8, link: "/apps/taskflow" },
-        { name: "DevTracker", category: "Development", technology: "Vue", users: "18k", rating: 4.9, link: "/apps/devtracker" },
-        { name: "DataViz Analytics", category: "Analytics", technology: "D3.js", users: "32k", rating: 4.7, link: "/apps/dataviz" },
-        { name: "Browse All Web Apps", category: "Various", technology: "Modern", users: "100k+", rating: 4.8, link: "/apps" }
-      ] as WebAppItem[]
+        { name: "TaskFlow Pro Suite", category: "Productivity", technology: "React + AI", users: "50k+", rating: 4.9, link: "/apps/taskflow", ai: true },
+        { name: "DevTracker Analytics", category: "Development", technology: "Vue + D3", users: "35k+", rating: 4.8, link: "/apps/devtracker", trending: true },
+        { name: "DataViz Intelligence", category: "Analytics", technology: "Next.js", users: "60k+", rating: 4.9, link: "/apps/dataviz", premium: true },
+        { name: "🚀 Browse Web Apps", category: "All Categories", technology: "Modern Stack", users: "200k+", rating: 4.8, link: "/apps", category: true }
+      ]
     },
     {
-      title: "MOBILE APPS",
+      title: "MOBILE",
+      subtitle: "App Ecosystem",
       icon: Smartphone,
       count: "20+",
       color: "pink",
-      accent: "from-pink-500 to-rose-600",
+      accent: "from-pink-400 via-rose-500 to-pink-600",
+      bgPattern: "from-pink-500/10 to-rose-500/5",
       theme: "mobile",
       sortOptions: ["Platform", "Category", "Downloads", "Rating"],
       menuLink: "/mobile",
+      priority: "📱 MOBILE HUB",
+      description: "Cross-platform mobile applications",
       items: [
-        { name: "FitTracker Pro", platform: "iOS/Android", category: "Health", downloads: "50k", rating: 4.8, link: "/mobile/fitness" },
-        { name: "BudgetMaster", platform: "Flutter", category: "Finance", downloads: "35k", rating: 4.9, link: "/mobile/finance" },
-        { name: "StudyBuddy", platform: "React Native", category: "Education", downloads: "28k", rating: 4.7, link: "/mobile/education" },
-        { name: "All Mobile Apps", platform: "Cross-platform", category: "Various", downloads: "200k+", rating: 4.8, link: "/mobile" }
-      ] as MobileAppItem[]
+        { name: "FitTracker AI Pro", platform: "Cross-Platform", category: "Health Tech", downloads: "100k+", rating: 4.9, link: "/mobile/fitness", ai: true },
+        { name: "FinanceFlow Master", platform: "Native iOS/Android", category: "FinTech", downloads: "75k+", rating: 4.8, link: "/mobile/finance", featured: true },
+        { name: "StudyBuddy Premium", platform: "React Native", category: "EdTech", downloads: "50k+", rating: 4.7, link: "/mobile/education", trending: true },
+        { name: "📲 Mobile App Store", platform: "All Platforms", category: "Complete Suite", downloads: "500k+", rating: 4.8, link: "/mobile", category: true }
+      ]
     }
   ];
 
@@ -184,7 +158,7 @@ const Hero = () => {
           return newText;
         });
       }
-    }, 1000);
+    }, 1200);
 
     return () => clearInterval(interval);
   }, [currentLine]);
@@ -192,8 +166,19 @@ const Hero = () => {
   useEffect(() => {
     const tabInterval = setInterval(() => {
       setActiveTab(prev => (prev + 1) % showcaseTabs.length);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(tabInterval);
+  }, []);
+
+  useEffect(() => {
+    const statsInterval = setInterval(() => {
+      setLiveStats(prev => ({
+        activeUsers: prev.activeUsers + Math.floor(Math.random() * 5) - 2,
+        todayDownloads: prev.todayDownloads + Math.floor(Math.random() * 10),
+        currentProjects: prev.currentProjects + Math.floor(Math.random() * 3) - 1
+      }));
+    }, 3000);
+    return () => clearInterval(statsInterval);
   }, []);
 
   const currentTab = showcaseTabs[activeTab];
@@ -203,24 +188,25 @@ const Hero = () => {
     )
   );
 
-  const getStatusColor = (status: string) => {
-    switch(status) {
-      case 'Released': return 'bg-green-500/30 text-green-400 border-green-400/50';
-      case 'Beta': return 'bg-yellow-500/30 text-yellow-400 border-yellow-400/50';
-      case 'Development': return 'bg-blue-500/30 text-blue-400 border-blue-400/50';
-      case 'Browse': return 'bg-purple-500/30 text-purple-400 border-purple-400/50';
-      default: return 'bg-cyan-500/30 text-cyan-400 border-cyan-400/50';
-    }
+  const getItemBadge = (item: any) => {
+    if (item.category) return { text: "VIEW ALL", color: "bg-gradient-to-r from-cyan-500 to-purple-500 text-white animate-pulse" };
+    if (item.trending) return { text: "🔥 TRENDING", color: "bg-red-500/90 text-white" };
+    if (item.featured) return { text: "⭐ FEATURED", color: "bg-blue-500/90 text-white" };
+    if (item.new) return { text: "✨ NEW", color: "bg-green-500/90 text-white" };
+    if (item.bestseller) return { text: "👑 BESTSELLER", color: "bg-yellow-500/90 text-black font-black" };
+    if (item.premium) return { text: "💎 PREMIUM", color: "bg-purple-500/90 text-white" };
+    if (item.ai) return { text: "🤖 AI-POWERED", color: "bg-cyan-500/90 text-white" };
+    if (item.enterprise) return { text: "🏢 ENTERPRISE", color: "bg-orange-500/90 text-white" };
+    return null;
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch(difficulty) {
-      case 'Beginner': return 'text-green-400';
-      case 'Intermediate': return 'text-yellow-400';
-      case 'Advanced': return 'text-orange-400';
-      case 'Expert': return 'text-red-400';
-      case 'All Levels': return 'text-cyan-400';
-      default: return 'text-slate-400';
+  const getStatusColor = (status: string) => {
+    switch(status) {
+      case 'Released': return 'bg-green-500/30 text-green-300 border-green-400/50';
+      case 'Beta': return 'bg-cyan-500/30 text-cyan-300 border-cyan-400/50';
+      case 'Development': return 'bg-orange-500/30 text-orange-300 border-orange-400/50';
+      case 'Explore': return 'bg-purple-500/30 text-purple-300 border-purple-400/50';
+      default: return 'bg-slate-500/30 text-slate-300 border-slate-400/50';
     }
   };
 
@@ -230,96 +216,95 @@ const Hero = () => {
     return (
       <div className="space-y-2">
         {filteredItems.map((item, index) => {
-          const isMainCategoryItem = item.name.includes('All ') || item.name.includes('Browse') || item.name.includes('View All');
+          const isMainCategoryItem = item.category;
+          const badge = getItemBadge(item);
           
           return (
-            <div key={index} className={`relative group transition-all duration-300 ${
+            <div key={index} className={`relative group transition-all duration-500 transform hover:scale-[1.02] cursor-pointer ${
               isMainCategoryItem 
-                ? `bg-gradient-to-r ${tab.accent}/20 border-2 border-dashed hover:border-solid` 
-                : 'bg-slate-700/60 border border-slate-600 hover:border-slate-500'
-            } p-3 hover:scale-[1.02] cursor-pointer`}>
+                ? `bg-gradient-to-r ${tab.accent}/15 border-2 border-dashed border-cyan-400/50 hover:border-solid hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20` 
+                : 'bg-slate-800/80 border border-slate-600/50 hover:border-slate-400 hover:bg-slate-700/90'
+            } backdrop-blur-sm overflow-hidden`}>
               
-              <div className={`absolute inset-0 bg-gradient-to-r ${tab.accent}/5 opacity-0 group-hover:opacity-100 transition-opacity`}></div>
+              <div className={`absolute inset-0 bg-gradient-to-r ${tab.accent}/10 opacity-0 group-hover:opacity-100 transition-all duration-500`}></div>
               
-              <div className="relative flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2 flex-1">
-                  <tab.icon className={`w-3 h-3 text-${tab.color}-400`} />
-                  <span className={`text-white font-bold text-xs ${isMainCategoryItem ? 'text-sm' : ''}`}>
-                    {item.name}
-                  </span>
-                  {isMainCategoryItem && (
-                    <ExternalLink className="w-3 h-3 text-cyan-400 animate-pulse" />
+              <div className="relative p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-2 flex-1">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${tab.accent}/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <tab.icon className={`w-4 h-4 text-${tab.color}-400`} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2">
+                        <span className={`text-white font-black text-sm ${isMainCategoryItem ? 'text-base' : ''} group-hover:text-cyan-300 transition-colors`}>
+                          {item.name}
+                        </span>
+                        {badge && (
+                          <span className={`px-2 py-0.5 text-xs font-bold rounded-full ${badge.color}`}>
+                            {badge.text}
+                          </span>
+                        )}
+                      </div>
+                      {tab.theme === 'gaming' && (
+                        <div className="flex items-center space-x-2 mt-1">
+                          <span className="text-purple-300 text-xs font-medium">{item.type}</span>
+                          <div className={`px-1.5 py-0.5 text-xs font-bold border rounded ${getStatusColor(item.status)}`}>
+                            {item.status}
+                          </div>
+                        </div>
+                      )}
+                      {tab.theme === 'learning' && (
+                        <div className="flex items-center space-x-2 mt-1">
+                          <span className="bg-cyan-500/30 text-cyan-300 px-2 py-0.5 text-xs font-bold rounded">{item.type}</span>
+                          <span className="text-cyan-400 text-xs font-bold">{item.price}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {!isMainCategoryItem && (
+                    <div className="flex items-center space-x-2">
+                      {(tab.theme === 'webapp' || tab.theme === 'mobile') && (
+                        <div className="flex items-center space-x-1 text-xs">
+                          <Star className="w-3 h-3 text-yellow-400" />
+                          <span className="text-slate-300 font-bold">{item.rating}</span>
+                        </div>
+                      )}
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all duration-300" />
+                    </div>
                   )}
                 </div>
                 
-                {tab.theme === 'gaming' && (
-                  <div className={`px-2 py-0.5 text-xs font-bold border ${getStatusColor((item as GameItem).status)}`}>
-                    {(item as GameItem).status}
+                {!isMainCategoryItem && (
+                  <div className="grid grid-cols-3 gap-2 text-xs">
+                    {tab.theme === 'gaming' && (
+                      <>
+                        <div className="flex items-center space-x-1 text-slate-400">
+                          <Download className="w-3 h-3 text-green-400" />
+                          <span>{item.downloads}</span>
+                        </div>
+                        <div className="flex items-center space-x-1 text-slate-400">
+                          <Star className="w-3 h-3 text-yellow-400" />
+                          <span>{item.rating}</span>
+                        </div>
+                        <div className="flex items-center space-x-1 text-slate-400">
+                          <TrendingUp className="w-3 h-3 text-cyan-400" />
+                          <span>Active</span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 )}
                 
-                {tab.theme === 'learning' && (
-                  <span className="text-green-400 font-bold text-xs">{(item as DevContentItem).price}</span>
-                )}
-                
-                {tab.theme === 'development' && (
-                  <span className="text-green-400 font-bold text-xs">{(item as DevProductItem).price}</span>
-                )}
-                
-                {tab.theme === 'enterprise' && (
-                  <span className="text-orange-400 font-bold text-xs">{(item as EnterpriseItem).price}</span>
-                )}
-                
-                {(tab.theme === 'webapp' || tab.theme === 'mobile') && (
-                  <div className="flex items-center space-x-1 text-xs">
-                    <Star className="w-3 h-3 text-yellow-400" />
-                    <span className="text-slate-400">{(item as WebAppItem | MobileAppItem).rating}</span>
+                {isMainCategoryItem && (
+                  <div className="mt-2 pt-2 border-t border-cyan-400/30 flex justify-between items-center">
+                    <span className="text-cyan-300 text-sm font-bold">Explore Full Collection</span>
+                    <div className="flex items-center space-x-1 text-cyan-400">
+                      <Sparkles className="w-4 h-4 animate-pulse" />
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
+                    </div>
                   </div>
                 )}
-              </div>
-              
-              <div className="relative grid grid-cols-3 gap-2 text-xs">
-                {tab.theme === 'gaming' && (
-                  <>
-                    <div className="flex items-center space-x-1">
-                      <Monitor className="w-3 h-3 text-purple-300" />
-                      <span className="text-purple-300">{(item as GameItem).type}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-3 h-3 text-yellow-400" />
-                      <span className="text-slate-400">{(item as GameItem).rating}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Download className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{(item as GameItem).downloads}</span>
-                    </div>
-                  </>
-                )}
-                
-                {tab.theme === 'learning' && (
-                  <>
-                    <div className="flex items-center space-x-1">
-                      <Book className="w-3 h-3 text-cyan-400" />
-                      <span className="bg-cyan-500/30 text-cyan-400 px-1 py-0.5">{(item as DevContentItem).type}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Award className={`w-3 h-3 ${getDifficultyColor((item as DevContentItem).difficulty)}`} />
-                      <span className={getDifficultyColor((item as DevContentItem).difficulty)}>{(item as DevContentItem).difficulty}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3 text-slate-400" />
-                      <span className="text-slate-400">{(item as DevContentItem).duration}</span>
-                    </div>
-                  </>
-                )}
-                
-              </div>
-              
-              <div className="relative mt-2 pt-1 border-t border-slate-600/30 flex justify-between items-center text-xs">
-                <span className="text-slate-500">
-                  {isMainCategoryItem ? 'Browse Category' : 'View Details'}
-                </span>
-                <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
               </div>
             </div>
           );
@@ -330,227 +315,275 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
+      {/* Enhanced Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-cyan-500/15 to-purple-500/15 blur-2xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-r from-purple-500/15 to-orange-500/15 blur-2xl animate-pulse"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 blur-3xl animate-pulse"></div>
+        {/* Animated Gradient Orbs */}
+        <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-orange-500/20 blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
         
-        <div className="absolute inset-0 opacity-10">
+        {/* Geometric Patterns */}
+        <div className="absolute inset-0 opacity-5">
           <div className="w-full h-full" style={{
-            backgroundImage: 'radial-gradient(circle at 25% 25%, cyan 1px, transparent 1px), radial-gradient(circle at 75% 75%, purple 1px, transparent 1px)',
-            backgroundSize: '30px 30px'
+            backgroundImage: 'radial-gradient(circle at 20% 20%, cyan 2px, transparent 2px), radial-gradient(circle at 80% 80%, purple 2px, transparent 2px)',
+            backgroundSize: '60px 60px'
           }}></div>
         </div>
         
+        {/* Floating Elements */}
         <div className="absolute inset-0 opacity-20">
-          {[...Array(12)].map((_, i) => (
+          {[...Array(15)].map((_, i) => (
             <div 
               key={i}
-              className="absolute border border-cyan-500/30 animate-pulse"
+              className={`absolute border-2 ${i % 3 === 0 ? 'border-cyan-400/40' : i % 3 === 1 ? 'border-purple-400/40' : 'border-orange-400/40'} animate-pulse rounded-lg`}
               style={{
-                width: `${8 + (i % 3) * 4}px`,
-                height: `${8 + (i % 3) * 4}px`,
-                left: `${(i * 13) % 95}%`,
-                top: `${(i * 17) % 85}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${3 + i * 0.2}s`
+                width: `${12 + (i % 4) * 6}px`,
+                height: `${12 + (i % 4) * 6}px`,
+                left: `${(i * 11) % 90}%`,
+                top: `${(i * 13) % 80}%`,
+                animationDelay: `${i * 0.3}s`,
+                animationDuration: `${4 + i * 0.2}s`,
+                transform: `rotate(${i * 15}deg)`
               }}
             />
           ))}
         </div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center py-6">
-        <div className="grid lg:grid-cols-12 gap-5 w-full">
-          <div className="lg:col-span-7 space-y-3">
-            <div className="inline-flex items-center bg-slate-800/95 border border-cyan-400/50 px-3 py-1 backdrop-blur-sm hover:border-cyan-300 transition-colors">
-              <Hexagon className="w-3 h-3 text-cyan-400 mr-1 animate-spin" style={{animationDuration: '3s'}} />
-              <span className="text-cyan-400 font-black text-xs font-mono tracking-widest">PREMIUM STUDIO</span>
-              <div className="w-1 h-1 bg-green-400 rounded-full ml-2 animate-pulse"></div>
+      <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center py-8">
+        <div className="grid lg:grid-cols-12 gap-6 w-full">
+          {/* Enhanced Left Content */}
+          <div className="lg:col-span-7 space-y-4">
+            {/* Premium Badge */}
+            <div className="inline-flex items-center bg-gradient-to-r from-slate-800/95 to-slate-700/95 border border-cyan-400/60 px-4 py-2 backdrop-blur-sm hover:border-cyan-300 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
+              <Hexagon className="w-4 h-4 text-cyan-400 mr-2 animate-spin" style={{animationDuration: '4s'}} />
+              <span className="text-cyan-400 font-black text-sm font-mono tracking-widest">PREMIUM STUDIO</span>
+              <div className="w-2 h-2 bg-green-400 rounded-full ml-3 animate-pulse"></div>
+              <span className="text-green-400 text-xs font-bold ml-1">LIVE</span>
             </div>
 
-            <div className="space-y-1">
-              <h1 className="text-3xl lg:text-4xl font-black text-white leading-none font-mono">
-                <span className="text-cyan-400 hover:text-cyan-300 transition-colors">JBLinx</span>
+            {/* Main Title */}
+            <div className="space-y-2">
+              <h1 className="text-4xl lg:text-5xl font-black text-white leading-none font-mono">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 hover:from-cyan-300 hover:to-purple-300 transition-all duration-300">JBLinx</span>
                 <span className="text-white">Studio</span>
               </h1>
               
-              <div className="text-sm lg:text-base font-bold text-slate-300 font-mono">
-                Games • Learning • Dev Tools • Enterprise • Web Apps • Mobile
+              <div className="text-base lg:text-lg font-bold text-slate-300 font-mono">
+                <span className="text-purple-400">Games</span> • 
+                <span className="text-cyan-400"> Learning</span> • 
+                <span className="text-green-400"> Dev Tools</span> • 
+                <span className="text-orange-400"> Enterprise</span> • 
+                <span className="text-blue-400"> Web Apps</span> • 
+                <span className="text-pink-400"> Mobile</span>
               </div>
-              <div className="text-base lg:text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-orange-400 animate-pulse">
+              
+              <div className="text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-orange-400 animate-pulse">
                 Everything Premium. Everything Connected. Everything Professional.
               </div>
             </div>
 
-            <p className="text-sm text-slate-400 leading-relaxed max-w-lg">
-              Professional development studio with integrated navigation to games, learning content, dev tools, enterprise solutions, and comprehensive documentation.
+            <p className="text-slate-400 leading-relaxed max-w-2xl text-base">
+              Professional development studio with integrated navigation to premium games, comprehensive learning content, 
+              advanced dev tools, enterprise solutions, and cutting-edge applications.
             </p>
             
-            <div className="grid grid-cols-4 gap-1 max-w-md">
+            {/* Live Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-2xl">
               {[
-                { value: "180+", label: "Products", icon: Trophy, color: "text-cyan-400" },
-                { value: "50+", label: "Games", icon: Gamepad2, color: "text-purple-400" },
-                { value: "100k+", label: "Users", icon: Users, color: "text-orange-400" },
-                { value: "4.9★", label: "Rating", icon: Star, color: "text-yellow-400" }
+                { value: "200+", label: "Premium Products", icon: Trophy, color: "text-cyan-400", live: false },
+                { value: liveStats.activeUsers.toLocaleString(), label: "Active Users", icon: Users, color: "text-green-400", live: true },
+                { value: liveStats.todayDownloads.toLocaleString(), label: "Today's Downloads", icon: Download, color: "text-orange-400", live: true },
+                { value: "4.9★", label: "Avg Rating", icon: Star, color: "text-yellow-400", live: false }
               ].map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="bg-slate-800/70 border border-slate-700 p-1.5 text-center backdrop-blur-sm hover:border-slate-600 transition-colors group">
-                    <IconComponent className={`w-3 h-3 ${stat.color} mx-auto mb-0.5 group-hover:scale-110 transition-transform`} />
-                    <div className={`text-xs font-black ${stat.color} font-mono`}>{stat.value}</div>
+                  <div key={index} className="bg-slate-800/80 border border-slate-700 p-3 text-center backdrop-blur-sm hover:border-slate-600 transition-all duration-300 group hover:bg-slate-700/90">
+                    <IconComponent className={`w-5 h-5 ${stat.color} mx-auto mb-1 group-hover:scale-110 transition-transform duration-300`} />
+                    <div className={`text-sm font-black ${stat.color} font-mono flex items-center justify-center space-x-1`}>
+                      <span>{stat.value}</span>
+                      {stat.live && <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse"></div>}
+                    </div>
                     <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
                   </div>
                 );
               })}
             </div>
 
-            <div className="flex gap-2">
+            {/* Enhanced Action Buttons */}
+            <div className="flex flex-wrap gap-3">
               <Link 
                 to="/blog" 
-                className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-4 py-2 font-black transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 flex items-center space-x-1 text-sm hover:scale-105 transform"
+                className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-6 py-3 font-black transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 flex items-center space-x-2 hover:scale-105 transform"
               >
-                <Play className="w-3 h-3" />
+                <Rocket className="w-4 h-4" />
                 <span>EXPLORE ALL</span>
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
               
               <a 
                 href="https://github.com/orgs/JBLinx-Studio/repositories"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-slate-600 text-slate-300 hover:border-cyan-400 hover:text-cyan-400 px-4 py-2 font-black transition-all duration-300 flex items-center space-x-1 text-sm hover:scale-105 transform"
+                className="border border-slate-600 text-slate-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10 px-6 py-3 font-black transition-all duration-300 flex items-center space-x-2 hover:scale-105 transform"
               >
-                <Github className="w-3 h-3" />
+                <Github className="w-4 h-4" />
                 <span>GITHUB</span>
+                <ExternalLink className="w-3 h-3" />
               </a>
 
               <Link 
                 to="#contact"
-                className="border border-orange-500/50 text-orange-400 hover:border-orange-400 hover:bg-orange-500/10 px-4 py-2 font-black transition-all duration-300 flex items-center space-x-1 text-sm hover:scale-105 transform"
+                className="border border-orange-500/60 text-orange-400 hover:border-orange-400 hover:bg-orange-500/20 px-6 py-3 font-black transition-all duration-300 flex items-center space-x-2 hover:scale-105 transform"
               >
-                <Sparkles className="w-3 h-3" />
-                <span>CONTACT</span>
+                <Lightning className="w-4 h-4" />
+                <span>CONTACT PRO</span>
               </Link>
             </div>
           </div>
 
-          <div className="lg:col-span-5 space-y-2">
-            <div className="bg-slate-900/95 border border-slate-700 p-3 backdrop-blur-sm relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-green-400 to-cyan-400 animate-pulse"></div>
+          {/* Enhanced Right Sidebar */}
+          <div className="lg:col-span-5 space-y-3">
+            {/* Enhanced Terminal */}
+            <div className="bg-slate-900/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden group hover:border-slate-600 transition-all duration-300">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 animate-pulse"></div>
               
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex space-x-1">
-                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
-                  <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+              <div className="flex items-center justify-between p-3 border-b border-slate-700/50">
+                <div className="flex space-x-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
                 </div>
-                <Terminal className="w-3 h-3 text-slate-500" />
+                <div className="flex items-center space-x-2">
+                  <div className="text-green-400 text-xs font-mono">PREMIUM TERMINAL</div>
+                  <Terminal className="w-4 h-4 text-slate-500" />
+                </div>
               </div>
               
-              <div className="font-mono text-xs min-h-[60px] relative">
-                <pre className="text-green-400 whitespace-pre-wrap">
+              <div className="p-3 font-mono text-xs min-h-[80px] relative">
+                <pre className="text-green-400 whitespace-pre-wrap leading-relaxed">
                   {terminalText}
                 </pre>
-                <div className="flex items-center">
-                  <span className="text-green-400">⬡ </span>
-                  <div className="w-1 h-2 bg-green-400 ml-1 animate-pulse"></div>
+                <div className="flex items-center mt-2">
+                  <span className="text-green-400">⬡ premium_studio</span>
+                  <span className="text-cyan-400 ml-2">$</span>
+                  <div className="w-2 h-4 bg-green-400 ml-2 animate-pulse"></div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-slate-800/90 border border-slate-700 p-3 backdrop-blur-sm relative overflow-hidden">
+            {/* Enhanced Showcase Panel */}
+            <div className="bg-slate-800/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
               
-              <div className="grid grid-cols-3 gap-1 mb-2">
-                {showcaseTabs.map((tab, index) => {
-                  const IconComponent = tab.icon;
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => setActiveTab(index)}
-                      className={`relative flex flex-col items-center justify-center py-1.5 px-1 text-xs font-black transition-all duration-300 group ${
-                        activeTab === index 
-                          ? `bg-gradient-to-r ${tab.accent} text-white shadow-lg` 
-                          : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
-                      }`}
-                    >
-                      {activeTab === index && (
-                        <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
-                      )}
-                      <IconComponent className="w-2.5 h-2.5 mb-0.5 relative z-10" />
-                      <span className="text-xs relative z-10">{tab.title}</span>
-                      <span className="text-xs opacity-75 relative z-10">{tab.count}</span>
-                      {activeTab === index && (
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white animate-pulse"></div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-              
-              <div className="min-h-[140px] relative">
-                <div className="flex items-center justify-between mb-2 bg-slate-900/50 p-2 -m-2 mb-0">
-                  <h4 className="text-white font-black text-xs font-mono flex items-center space-x-1">
-                    <Eye className="w-3 h-3 text-cyan-400" />
-                    <span>{currentTab.title}</span>
-                    <Link 
-                      to={currentTab.menuLink}
-                      className="text-cyan-400 hover:text-cyan-300 transition-colors"
-                    >
-                      <ExternalLink className="w-3 h-3" />
-                    </Link>
-                  </h4>
-                  <div className="flex items-center space-x-1">
+              {/* Enhanced Tab Navigation */}
+              <div className="p-3 border-b border-slate-700/50">
+                <div className="grid grid-cols-3 gap-1 mb-3">
+                  {showcaseTabs.map((tab, index) => {
+                    const IconComponent = tab.icon;
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => setActiveTab(index)}
+                        className={`relative flex flex-col items-center justify-center py-2 px-2 text-xs font-black transition-all duration-300 group ${
+                          activeTab === index 
+                            ? `bg-gradient-to-r ${tab.accent} text-white shadow-lg transform scale-105` 
+                            : 'bg-slate-700/80 text-slate-400 hover:bg-slate-600/80'
+                        }`}
+                      >
+                        {activeTab === index && (
+                          <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
+                        )}
+                        <IconComponent className="w-3 h-3 mb-1 relative z-10" />
+                        <span className="text-xs relative z-10 font-black">{tab.title}</span>
+                        <span className="text-xs opacity-80 relative z-10">{tab.count}</span>
+                        {activeTab === index && (
+                          <div className="absolute bottom-0 left-0 w-full h-1 bg-white animate-pulse"></div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                {/* Enhanced Controls */}
+                <div className="flex items-center justify-between bg-slate-900/50 p-2 -m-2 rounded">
+                  <div className="flex items-center space-x-2">
+                    <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentTab.accent}`}></div>
+                    <h4 className="text-white font-black text-sm font-mono flex items-center space-x-2">
+                      <span>{currentTab.priority}</span>
+                      <Link 
+                        to={currentTab.menuLink}
+                        className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                      </Link>
+                    </h4>
+                  </div>
+                  <div className="flex items-center space-x-2">
                     <select 
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="bg-slate-700 text-white text-xs px-1 py-0.5 border border-slate-600 focus:border-cyan-400 focus:outline-none hover:border-slate-500 transition-colors"
+                      className="bg-slate-700 text-white text-xs px-2 py-1 border border-slate-600 focus:border-cyan-400 focus:outline-none hover:border-slate-500 transition-colors rounded"
                     >
                       {currentTab.sortOptions.map(option => (
                         <option key={option} value={option.toLowerCase()}>{option}</option>
                       ))}
                     </select>
                     <div className="relative">
-                      <Search className="w-2.5 h-2.5 absolute left-1 top-1 text-slate-400" />
+                      <Search className="w-3 h-3 absolute left-2 top-1.5 text-slate-400" />
                       <input
                         type="text"
                         placeholder="Search..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="bg-slate-700 text-white text-xs pl-4 pr-1 py-0.5 border border-slate-600 focus:border-cyan-400 focus:outline-none w-16 hover:border-slate-500 transition-colors"
+                        className="bg-slate-700 text-white text-xs pl-6 pr-2 py-1 border border-slate-600 focus:border-cyan-400 focus:outline-none w-20 hover:border-slate-500 transition-colors rounded"
                       />
                     </div>
                   </div>
                 </div>
-                
-                <div className="mt-2">
-                  {renderTabContent()}
+              </div>
+              
+              {/* Content Area */}
+              <div className="p-3 min-h-[180px]">
+                <div className="mb-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h3 className="text-white font-black text-base">{currentTab.title}</h3>
+                      <p className="text-slate-400 text-xs">{currentTab.description}</p>
+                    </div>
+                    <div className={`px-3 py-1 text-xs font-black bg-gradient-to-r ${currentTab.bgPattern} border border-slate-600 rounded-full`}>
+                      {currentTab.count} ITEMS
+                    </div>
+                  </div>
                 </div>
+                
+                {renderTabContent()}
               </div>
 
-              <div className="flex items-center justify-between mt-3 pt-2 border-t border-slate-700/50 bg-slate-900/30 -m-3 mt-3 p-3">
-                <div className="flex items-center space-x-2 text-xs">
+              {/* Enhanced Footer */}
+              <div className="flex items-center justify-between p-3 border-t border-slate-700/50 bg-slate-900/40">
+                <div className="flex items-center space-x-3 text-xs">
                   <div className="flex items-center space-x-1 text-slate-400">
-                    <Filter className="w-2.5 h-2.5" />
-                    <span>Found: {filteredItems.length}</span>
+                    <Filter className="w-3 h-3" />
+                    <span>Showing: {filteredItems.length}</span>
                   </div>
                   <div className="flex items-center space-x-1 text-slate-400">
-                    <Target className="w-2.5 h-2.5" />
+                    <Target className="w-3 h-3" />
                     <span>Total: {currentTab.count}</span>
                   </div>
-                  <div className="flex items-center space-x-1 text-slate-400">
-                    <CheckCircle className="w-2.5 h-2.5 text-green-400" />
-                    <span>Active</span>
+                  <div className="flex items-center space-x-1">
+                    <CheckCircle className="w-3 h-3 text-green-400" />
+                    <span className="text-green-400 font-bold">LIVE</span>
                   </div>
                 </div>
                 
                 <Link 
                   to={currentTab.menuLink}
-                  className={`bg-gradient-to-r ${currentTab.accent} text-white px-3 py-1 text-xs font-bold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center space-x-1`}
+                  className={`bg-gradient-to-r ${currentTab.accent} hover:shadow-lg text-white px-4 py-2 text-xs font-black transition-all duration-300 transform hover:scale-105 flex items-center space-x-1 rounded`}
                 >
-                  <Sparkles className="w-2.5 h-2.5" />
-                  <span>VIEW ALL</span>
+                  <Sparkles className="w-3 h-3" />
+                  <span>EXPLORE {currentTab.title}</span>
+                  <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
             </div>
