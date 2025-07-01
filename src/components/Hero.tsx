@@ -1,6 +1,127 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Lightning, Crown, Diamond, Home, Scale, PenTool, Dumbbell, Activity, HeartHandshake, BookOpen, FileCode, Wrench, MapPin } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Crown, Diamond, Home, Scale, PenTool, Dumbbell, Activity, HeartHandshake, BookOpen, FileCode, Wrench, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+// Enhanced Terminal Component with Typewriter Effect
+const EnhancedTerminal = () => {
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [currentText, setCurrentText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
+  const [displayedLines, setDisplayedLines] = useState<string[]>([]);
+
+  const terminalContent = [
+    {
+      command: '> initializing_jblinx_studio_ecosystem...',
+      description: 'Loading premium development environment...'
+    },
+    {
+      command: '> loading_codefusion_studio: Advanced IDE Platform',
+      description: '✓ CodePen Alternative - Superior code editing experience'
+    },
+    {
+      command: '> loading_vitalitysync_health: Smart Health Tracker',
+      description: '✓ FatSecret Alternative - Advanced nutrition & fitness tracking'
+    },
+    {
+      command: '> loading_mindmate_gaming: Strategic Board Game Hub',
+      description: '✓ Chess & Strategy - Multiplayer tutorials & tournaments'
+    },
+    {
+      command: '> loading_nestcore_realestate: Complete Property Platform',
+      description: '✓ Real Estate Suite - Owners, agents, lawyers, all-in-one'
+    },
+    {
+      command: '> loading_codecraftai_engineer: Fullstack AI Development',
+      description: '✓ Lovable Alternative - AI-powered application builder'
+    },
+    {
+      command: '> STATUS: All Premium Systems Online ⬡ READY',
+      description: 'Performance: 99.9% | Active Projects: 25+ | Users: 50k+'
+    }
+  ];
+
+  // Typewriter effect
+  useEffect(() => {
+    if (currentLineIndex >= terminalContent.length) return;
+
+    const currentLine = terminalContent[currentLineIndex];
+    const fullText = `${currentLine.command}\n${currentLine.description}`;
+
+    if (isTyping) {
+      if (currentText.length < fullText.length) {
+        const timeout = setTimeout(() => {
+          setCurrentText(fullText.slice(0, currentText.length + 1));
+          // Add typing sound effect here if available
+        }, 50 + Math.random() * 30); // Variable typing speed for realism
+        return () => clearTimeout(timeout);
+      } else {
+        // Line completed
+        setTimeout(() => {
+          setDisplayedLines(prev => [...prev, fullText]);
+          setCurrentText('');
+          setCurrentLineIndex(prev => prev + 1);
+        }, 1000);
+      }
+    }
+  }, [currentText, currentLineIndex, isTyping]);
+
+  // Reset animation cycle
+  useEffect(() => {
+    if (currentLineIndex >= terminalContent.length) {
+      setTimeout(() => {
+        setDisplayedLines([]);
+        setCurrentLineIndex(0);
+        setCurrentText('');
+      }, 3000);
+    }
+  }, [currentLineIndex]);
+
+  return (
+    <div className="bg-slate-900/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden group hover:border-slate-600 transition-all duration-300 rounded-lg">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 animate-pulse"></div>
+      
+      <div className="flex items-center justify-between p-3 border-b border-slate-700/50">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+          <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="text-green-400 text-xs font-mono font-black">JBLINX PREMIUM TERMINAL</div>
+          <Terminal className="w-4 h-4 text-slate-500" />
+        </div>
+      </div>
+      
+      <div className="p-4 font-mono text-xs min-h-[200px] relative">
+        {/* Display completed lines */}
+        {displayedLines.map((line, index) => (
+          <div key={index} className="mb-2">
+            <pre className="text-green-400 whitespace-pre-wrap leading-relaxed font-black">
+              {line}
+            </pre>
+          </div>
+        ))}
+        
+        {/* Current typing line */}
+        {currentText && (
+          <div className="mb-2">
+            <pre className="text-green-400 whitespace-pre-wrap leading-relaxed font-black">
+              {currentText}
+              <span className="inline-block w-2 h-4 bg-green-400 ml-1 animate-pulse"></span>
+            </pre>
+          </div>
+        )}
+        
+        {/* Command prompt */}
+        <div className="flex items-center mt-4">
+          <span className="text-green-400 font-black">⬡ jblinx_studio</span>
+          <span className="text-cyan-400 ml-2 font-black">$</span>
+          <div className="w-2 h-4 bg-green-400 ml-2 animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Type definitions for different product categories
 interface GameItem {
@@ -15,7 +136,7 @@ interface GameItem {
   featured?: boolean;
   new?: boolean;
   coming?: boolean;
-  category?: boolean;
+  isCategory?: boolean;
 }
 
 interface LearningItem {
@@ -29,7 +150,7 @@ interface LearningItem {
   bestseller?: boolean;
   featured?: boolean;
   new?: boolean;
-  category?: boolean;
+  isCategory?: boolean;
 }
 
 interface DevToolItem {
@@ -43,7 +164,7 @@ interface DevToolItem {
   premium?: boolean;
   trending?: boolean;
   featured?: boolean;
-  category?: boolean;
+  isCategory?: boolean;
 }
 
 interface EnterpriseItem {
@@ -57,12 +178,12 @@ interface EnterpriseItem {
   enterprise?: boolean;
   popular?: boolean;
   featured?: boolean;
-  category?: boolean;
+  isCategory?: boolean;
 }
 
 interface WebAppItem {
   name: string;
-  category: string;
+  appCategory: string;
   technology: string;
   users: string;
   rating: number;
@@ -71,13 +192,13 @@ interface WebAppItem {
   ai?: boolean;
   trending?: boolean;
   premium?: boolean;
-  category?: boolean;
+  isCategory?: boolean;
 }
 
 interface MobileAppItem {
   name: string;
   platform: string;
-  category: string;
+  appCategory: string;
   downloads: string;
   rating: number;
   link: string;
@@ -85,14 +206,12 @@ interface MobileAppItem {
   ai?: boolean;
   featured?: boolean;
   trending?: boolean;
-  category?: boolean;
+  isCategory?: boolean;
 }
 
 type ShowcaseItem = GameItem | LearningItem | DevToolItem | EnterpriseItem | WebAppItem | MobileAppItem;
 
 const Hero = () => {
-  const [terminalText, setTerminalText] = useState('');
-  const [currentLine, setCurrentLine] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [sortBy, setSortBy] = useState('featured');
   const [searchTerm, setSearchTerm] = useState('');
@@ -102,18 +221,10 @@ const Hero = () => {
     currentProjects: 34
   });
 
-  const terminalLines = [
-    '> initializing_jblinx_studio_premium...',
-    '> loading_flagship_products: CodeFusion, VitalitySync, MindMate...',
-    '> connecting_smart_navigation_system...',
-    '> analytics_engine: ONLINE | performance: 99.7%',
-    '> STATUS: All Systems Ready ⬡ PREMIUM ACTIVE'
-  ];
-
   const showcaseTabs = [
     {
-      title: "GAMES",
-      subtitle: "Premium Gaming",
+      title: "PRIORITY #1: GAMERS",
+      subtitle: "PREMIUM GAMES + DEV CONTENT",
       icon: Gamepad2,
       count: "25+",
       color: "purple",
@@ -122,344 +233,321 @@ const Hero = () => {
       theme: "gaming",
       sortOptions: ["Featured", "New", "Popular", "Rating"],
       menuLink: "/games",
-      priority: "🎮 PRIORITY #1",
-      description: "Interactive gaming experiences and board game platforms",
+      description: "Strategic board games, chess tournaments, multiplayer experiences with tutorials",
       items: [
         { 
-          name: "MindMate Board Games", 
-          type: "Strategic Gaming", 
+          name: "🎮 MindMate Gaming Hub", 
+          type: "Strategic Board Games", 
           status: "Live", 
           rating: 4.9, 
-          downloads: "15k", 
+          downloads: "15k+", 
           link: "https://github.com/JBLinx-Studio/MindMate",
           image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=300&fit=crop",
           trending: true, 
           featured: true 
         },
         { 
-          name: "Chess & Strategy Hub", 
-          type: "Multiplayer", 
+          name: "♟️ Chess & Strategy Arena", 
+          type: "Multiplayer Tournaments", 
           status: "Beta", 
           rating: 4.8, 
-          downloads: "8k", 
-          link: "/games/strategy",
+          downloads: "8k+", 
+          link: "https://github.com/JBLinx-Studio/MindMate",
           image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=400&h=300&fit=crop",
           new: true 
         },
         { 
-          name: "Board Game Tutorials", 
-          type: "Educational", 
+          name: "📚 Board Game Academy", 
+          type: "Interactive Tutorials", 
           status: "Development", 
           rating: 4.7, 
-          downloads: "5k", 
-          link: "/games/tutorials",
+          downloads: "5k+", 
+          link: "https://github.com/JBLinx-Studio/MindMate",
           image: "https://images.unsplash.com/photo-1611891487122-207579d67d98?w=400&h=300&fit=crop",
           coming: true 
         },
         { 
-          name: "🏆 Browse All Games", 
-          type: "Premium Collection", 
-          status: "Explore", 
+          name: "🏆 EXPLORE ALL GAMES", 
+          type: "Premium Gaming Collection", 
+          status: "Browse Now", 
           rating: 5.0, 
-          downloads: "25+", 
+          downloads: "25+ Games", 
           link: "/games", 
-          category: true 
+          isCategory: true 
         }
       ] as GameItem[]
     },
     {
-      title: "HEALTH",
-      subtitle: "Wellness Tech",
+      title: "PRIORITY #2: HEALTH",
+      subtitle: "ADVANCED WELLNESS TECH",
       icon: Heart,
       count: "50+",
       color: "green",
       accent: "from-green-400 via-emerald-500 to-green-600",
       bgPattern: "from-green-500/10 to-emerald-500/5",
       theme: "health",
-      sortOptions: ["Latest", "Most Popular", "Category", "Rating"],
+      sortOptions: ["Latest", "Most Popular", "Features", "Rating"],
       menuLink: "/health",
-      priority: "💚 VITALITY SYNC",
-      description: "Advanced health tracking and wellness applications",
+      description: "Advanced health tracking, nutrition analysis, fitness planning - FatSecret alternative",
       items: [
         { 
-          name: "VitalitySync Pro", 
-          type: "Health Tracker", 
+          name: "💚 VitalitySync Pro", 
+          type: "Complete Health Suite", 
           difficulty: "Easy", 
-          duration: "Lifetime", 
-          price: "Free", 
+          duration: "Lifetime Access", 
+          price: "Free + Premium", 
           link: "https://github.com/JBLinx-Studio/VitalitySync",
           image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
           bestseller: true 
         },
         { 
-          name: "Nutrition Intelligence", 
-          type: "Diet Tracking", 
-          difficulty: "Intermediate", 
+          name: "🍎 Nutrition Intelligence AI", 
+          type: "Smart Diet Tracking", 
+          difficulty: "Beginner", 
           duration: "Daily Use", 
-          price: "$29", 
-          link: "/health/nutrition",
+          price: "$29/month", 
+          link: "https://github.com/JBLinx-Studio/VitalitySync",
           image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=300&fit=crop",
           featured: true 
         },
         { 
-          name: "Fitness Goal Tracker", 
-          type: "Workout Plans", 
-          difficulty: "Advanced", 
-          duration: "Monthly", 
-          price: "$49", 
-          link: "/health/fitness",
+          name: "💪 Fitness Goal Optimizer", 
+          type: "Workout & Progress", 
+          difficulty: "All Levels", 
+          duration: "Flexible", 
+          price: "$49/month", 
+          link: "https://github.com/JBLinx-Studio/VitalitySync",
           image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
           new: true 
         },
         { 
-          name: "📊 All Health Tools", 
-          type: "Complete Suite", 
-          difficulty: "All Levels", 
+          name: "📊 EXPLORE ALL HEALTH TOOLS", 
+          type: "Complete Wellness Platform", 
+          difficulty: "All Users", 
           duration: "Unlimited", 
-          price: "Browse", 
+          price: "Browse Features", 
           link: "/health", 
-          category: true 
+          isCategory: true 
         }
       ] as LearningItem[]
     },
     {
-      title: "DEV TOOLS",
-      subtitle: "Code Platform",
+      title: "PRIORITY #3: DEVELOPERS",
+      subtitle: "AI-POWERED DEV PLATFORM",
       icon: Code,
       count: "40+",
       color: "cyan",
       accent: "from-cyan-400 via-blue-500 to-cyan-600",
       bgPattern: "from-cyan-500/10 to-blue-500/5",
       theme: "development",
-      sortOptions: ["Framework", "Language", "Updated", "Price"],
+      sortOptions: ["Framework", "Language", "Updated", "Features"],
       menuLink: "/tools",
-      priority: "⚡ CODE FUSION",
-      description: "Advanced development tools and AI-powered coding platforms",
+      description: "Advanced IDE, AI coding assistant, fullstack development - CodePen & Lovable alternative",
       items: [
         { 
-          name: "CodeFusion Studio", 
-          framework: "Multi-Stack", 
-          language: "Universal", 
-          updated: "Live", 
-          price: "Free", 
+          name: "⚡ CodeFusion Studio", 
+          framework: "Universal IDE", 
+          language: "All Languages", 
+          updated: "Live Updates", 
+          price: "Free + Pro", 
           link: "https://github.com/JBLinx-Studio/CodeFusion",
           image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
           premium: true 
         },
         { 
-          name: "CodeCraftAI Pro", 
-          framework: "AI-Powered", 
-          language: "Full-Stack", 
-          updated: "Daily", 
-          price: "$99", 
+          name: "🤖 CodeCraftAI Engineer", 
+          framework: "AI Fullstack Builder", 
+          language: "React + More", 
+          updated: "Daily AI Updates", 
+          price: "$99/month", 
           link: "https://github.com/JBLinx-Studio/CodeCraftAI",
           image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
           trending: true 
         },
         { 
-          name: "React Dev Toolkit", 
-          framework: "React", 
+          name: "⚛️ React DevTools Pro", 
+          framework: "React Ecosystem", 
           language: "TypeScript", 
           updated: "Weekly", 
-          price: "$79", 
-          link: "/tools/react",
+          price: "$79/month", 
+          link: "https://github.com/JBLinx-Studio/CodeFusion",
           image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop",
           featured: true 
         },
         { 
-          name: "🛠️ All Developer Tools", 
-          framework: "Complete Stack", 
-          language: "Various", 
+          name: "🛠️ EXPLORE ALL DEV TOOLS", 
+          framework: "Complete Development Suite", 
+          language: "Universal Support", 
           updated: "Real-time", 
-          price: "Browse", 
+          price: "Browse Platform", 
           link: "/tools", 
-          category: true 
+          isCategory: true 
         }
       ] as DevToolItem[]
     },
     {
-      title: "REAL ESTATE",
-      subtitle: "Property Tech",
+      title: "PRIORITY #4: REAL ESTATE",
+      subtitle: "COMPLETE PROPERTY PLATFORM",
       icon: Building2,
       count: "15+",
       color: "orange",
       accent: "from-orange-400 via-red-500 to-orange-600",
       bgPattern: "from-orange-500/10 to-red-500/5",
       theme: "realestate",
-      sortOptions: ["Industry", "Scale", "Features", "Price"],
+      sortOptions: ["Industry", "Scale", "Features", "Pricing"],
       menuLink: "/realestate",
-      priority: "🏢 NEST CORE",
-      description: "Comprehensive real estate platform for all stakeholders",
+      description: "Complete real estate platform for owners, agents, lawyers, property management",
       items: [
         { 
-          name: "NestCore Platform", 
-          industry: "Real Estate", 
-          scale: "Enterprise", 
-          features: "Complete Suite", 
-          price: "Custom", 
+          name: "🏢 NestCore Platform", 
+          industry: "Real Estate Hub", 
+          scale: "Enterprise Ready", 
+          features: "All-in-One Suite", 
+          price: "Custom Pricing", 
           link: "https://github.com/JBLinx-Studio/NestCore",
           image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
           enterprise: true 
         },
         { 
-          name: "Property Management", 
+          name: "🏠 Property Management Pro", 
           industry: "PropTech", 
-          scale: "Medium+", 
-          features: "AI Analytics", 
-          price: "$199/mo", 
-          link: "/realestate/management",
+          scale: "Multi-Property", 
+          features: "AI Analytics + CRM", 
+          price: "$199/month", 
+          link: "https://github.com/JBLinx-Studio/NestCore",
           image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
           popular: true 
         },
         { 
-          name: "Legal Documentation", 
-          industry: "LegalTech", 
+          name: "⚖️ Legal Documentation AI", 
+          industry: "PropTech + LegalTech", 
           scale: "Professional", 
-          features: "Automated Docs", 
-          price: "$299/mo", 
-          link: "/realestate/legal",
+          features: "Automated Contracts", 
+          price: "$299/month", 
+          link: "https://github.com/JBLinx-Studio/NestCore",
           image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop",
           featured: true 
         },
         { 
-          name: "🏭 Real Estate Suite", 
-          industry: "All Sectors", 
-          scale: "Any Size", 
-          features: "Full Platform", 
-          price: "Contact", 
+          name: "🏭 EXPLORE REAL ESTATE SUITE", 
+          industry: "Complete Platform", 
+          scale: "Any Size Business", 
+          features: "Full Integration", 
+          price: "Contact Sales", 
           link: "/realestate", 
-          category: true 
+          isCategory: true 
         }
       ] as EnterpriseItem[]
     },
     {
-      title: "WEB APPS",
-      subtitle: "Digital Solutions",
+      title: "PRIORITY #5: WEB APPS",
+      subtitle: "MODERN DIGITAL SOLUTIONS",
       icon: Globe,
       count: "30+",
       color: "indigo",
       accent: "from-indigo-400 via-purple-500 to-indigo-600",
       bgPattern: "from-indigo-500/10 to-purple-500/5",
       theme: "webapp",
-      sortOptions: ["Category", "Technology", "Users", "Rating"],
+      sortOptions: ["Popular", "Technology", "Users", "Rating"],
       menuLink: "/apps",
-      priority: "🌐 WEB SUITE",
-      description: "Modern web applications for productivity and entertainment",
+      description: "Modern web applications for productivity, entertainment, and business solutions",
       items: [
         { 
-          name: "CodeFusion Online IDE", 
-          category: "Development", 
-          technology: "Advanced Editor", 
-          users: "50k+", 
+          name: "💻 CodeFusion Online IDE", 
+          appCategory: "Development Platform", 
+          technology: "Advanced Code Editor", 
+          users: "50k+ Developers", 
           rating: 4.9, 
           link: "https://github.com/JBLinx-Studio/CodeFusion",
           image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop",
           ai: true 
         },
         { 
-          name: "MindMate Gaming Hub", 
-          category: "Entertainment", 
+          name: "🎮 MindMate Gaming Portal", 
+          appCategory: "Entertainment Hub", 
           technology: "Real-time Gaming", 
-          users: "35k+", 
+          users: "35k+ Gamers", 
           rating: 4.8, 
           link: "https://github.com/JBLinx-Studio/MindMate",
           image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=300&fit=crop",
           trending: true 
         },
         { 
-          name: "VitalitySync Dashboard", 
-          category: "Health Tech", 
-          technology: "Data Analytics", 
-          users: "60k+", 
+          name: "💚 VitalitySync Dashboard", 
+          appCategory: "Health Analytics", 
+          technology: "AI Health Insights", 
+          users: "60k+ Users", 
           rating: 4.9, 
           link: "https://github.com/JBLinx-Studio/VitalitySync",
           image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
           premium: true 
         },
         { 
-          name: "🚀 Browse Web Apps", 
-          category: "All Categories", 
-          technology: "Modern Stack", 
-          users: "200k+", 
+          name: "🚀 EXPLORE ALL WEB APPS", 
+          appCategory: "Complete Collection", 
+          technology: "Modern Tech Stack", 
+          users: "200k+ Total Users", 
           rating: 4.8, 
           link: "/apps", 
-          category: true 
+          isCategory: true 
         }
       ] as WebAppItem[]
     },
     {
-      title: "MOBILE",
-      subtitle: "App Ecosystem",
+      title: "PRIORITY #6: MOBILE APPS",
+      subtitle: "CROSS-PLATFORM ECOSYSTEM",
       icon: Smartphone,
       count: "20+",
       color: "pink",
       accent: "from-pink-400 via-rose-500 to-pink-600",
       bgPattern: "from-pink-500/10 to-rose-500/5",
       theme: "mobile",
-      sortOptions: ["Platform", "Category", "Downloads", "Rating"],
+      sortOptions: ["Platform", "Downloads", "Rating", "Features"],
       menuLink: "/mobile",
-      priority: "📱 MOBILE HUB",
-      description: "Cross-platform mobile applications and tools",
+      description: "Cross-platform mobile applications and native app development tools",
       items: [
         { 
-          name: "VitalitySync Mobile", 
-          platform: "Cross-Platform", 
-          category: "Health Tech", 
-          downloads: "100k+", 
+          name: "📱 VitalitySync Mobile", 
+          platform: "iOS + Android", 
+          appCategory: "Health & Fitness", 
+          downloads: "100k+ Downloads", 
           rating: 4.9, 
           link: "https://github.com/JBLinx-Studio/VitalitySync",
           image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
           ai: true 
         },
         { 
-          name: "NestCore Mobile App", 
-          platform: "Native iOS/Android", 
-          category: "PropTech", 
-          downloads: "75k+", 
+          name: "🏢 NestCore Mobile Suite", 
+          platform: "Native Cross-Platform", 
+          appCategory: "Real Estate Pro", 
+          downloads: "75k+ Downloads", 
           rating: 4.8, 
           link: "https://github.com/JBLinx-Studio/NestCore",
           image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
           featured: true 
         },
         { 
-          name: "CodeFusion Mobile IDE", 
+          name: "💻 CodeFusion Mobile IDE", 
           platform: "React Native", 
-          category: "Development", 
-          downloads: "50k+", 
+          appCategory: "Development Tools", 
+          downloads: "50k+ Downloads", 
           rating: 4.7, 
           link: "https://github.com/JBLinx-Studio/CodeFusion",
           image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
           trending: true 
         },
         { 
-          name: "📲 Mobile App Store", 
-          platform: "All Platforms", 
-          category: "Complete Suite", 
-          downloads: "500k+", 
+          name: "📲 EXPLORE MOBILE APP STORE", 
+          platform: "Universal Platform", 
+          appCategory: "Complete Mobile Suite", 
+          downloads: "500k+ Total", 
           rating: 4.8, 
           link: "/mobile", 
-          category: true 
+          isCategory: true 
         }
       ] as MobileAppItem[]
     }
   ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (currentLine < terminalLines.length) {
-        const line = terminalLines[currentLine];
-        setTerminalText(prev => {
-          const newText = prev + line + '\n';
-          if (prev.split('\n').length - 1 === currentLine) {
-            setCurrentLine(currentLine + 1);
-          }
-          return newText;
-        });
-      }
-    }, 1200);
-
-    return () => clearInterval(interval);
-  }, [currentLine]);
 
   useEffect(() => {
     const tabInterval = setInterval(() => {
@@ -471,9 +559,9 @@ const Hero = () => {
   useEffect(() => {
     const statsInterval = setInterval(() => {
       setLiveStats(prev => ({
-        activeUsers: prev.activeUsers + Math.floor(Math.random() * 5) - 2,
-        todayDownloads: prev.todayDownloads + Math.floor(Math.random() * 10),
-        currentProjects: prev.currentProjects + Math.floor(Math.random() * 3) - 1
+        activeUsers: Math.max(0, prev.activeUsers + Math.floor(Math.random() * 5) - 2),
+        todayDownloads: Math.max(0, prev.todayDownloads + Math.floor(Math.random() * 10)),
+        currentProjects: Math.max(0, prev.currentProjects + Math.floor(Math.random() * 3) - 1)
       }));
     }, 3000);
     return () => clearInterval(statsInterval);
@@ -487,7 +575,7 @@ const Hero = () => {
   );
 
   const getItemBadge = (item: ShowcaseItem) => {
-    if ('category' in item && item.category) return { text: "VIEW ALL", color: "bg-gradient-to-r from-cyan-500 to-purple-500 text-white animate-pulse" };
+    if ('isCategory' in item && item.isCategory) return { text: "VIEW ALL", color: "bg-gradient-to-r from-cyan-500 to-purple-500 text-white animate-pulse" };
     if ('trending' in item && item.trending) return { text: "🔥 TRENDING", color: "bg-red-500/90 text-white" };
     if ('featured' in item && item.featured) return { text: "⭐ FEATURED", color: "bg-blue-500/90 text-white" };
     if ('new' in item && item.new) return { text: "✨ NEW", color: "bg-green-500/90 text-white" };
@@ -504,7 +592,7 @@ const Hero = () => {
       case 'Released': return 'bg-green-500/30 text-green-300 border-green-400/50';
       case 'Beta': return 'bg-cyan-500/30 text-cyan-300 border-cyan-400/50';
       case 'Development': return 'bg-orange-500/30 text-orange-300 border-orange-400/50';
-      case 'Explore': return 'bg-purple-500/30 text-purple-300 border-purple-400/50';
+      case 'Browse Now': return 'bg-purple-500/30 text-purple-300 border-purple-400/50';
       default: return 'bg-slate-500/30 text-slate-300 border-slate-400/50';
     }
   };
@@ -515,7 +603,7 @@ const Hero = () => {
     return (
       <div className="space-y-2">
         {filteredItems.map((item, index) => {
-          const isMainCategoryItem = 'category' in item && item.category;
+          const isMainCategoryItem = 'isCategory' in item && item.isCategory;
           const badge = getItemBadge(item);
           
           return (
@@ -678,31 +766,41 @@ const Hero = () => {
               <span className="text-green-400 text-xs font-bold ml-1">LIVE</span>
             </div>
 
-            {/* Main Title */}
-            <div className="space-y-2">
-              <h1 className="text-4xl lg:text-5xl font-black text-white leading-none font-mono">
+            {/* Main Title - Enhanced Formatting */}
+            <div className="space-y-3">
+              <h1 className="text-4xl lg:text-6xl font-black text-white leading-none font-mono">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 hover:from-cyan-300 hover:to-purple-300 transition-all duration-300">JBLinx</span>
                 <span className="text-white">Studio</span>
               </h1>
               
-              <div className="text-base lg:text-lg font-bold text-slate-300 font-mono">
-                <span className="text-purple-400">MindMate</span> • 
-                <span className="text-green-400"> VitalitySync</span> • 
-                <span className="text-cyan-400"> CodeFusion</span> • 
-                <span className="text-orange-400"> NestCore</span> • 
-                <span className="text-blue-400"> CodeCraftAI</span>
+              {/* Enhanced Product Showcase */}
+              <div className="text-lg lg:text-xl font-black text-slate-300 font-mono leading-relaxed">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                  <span className="text-purple-400">🎮 MindMate Gaming</span>
+                  <span className="text-green-400">💚 VitalitySync Health</span>
+                  <span className="text-cyan-400">⚡ CodeFusion IDE</span>
+                  <span className="text-orange-400">🏢 NestCore RealEstate</span>
+                  <span className="text-blue-400">🤖 CodeCraftAI Builder</span>
+                </div>
               </div>
               
-              <div className="text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-orange-400 animate-pulse">
-                Premium Products. Real Solutions. Professional Quality.
+              {/* Enhanced Mission Statement */}
+              <div className="text-xl lg:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-orange-400 animate-pulse leading-relaxed">
+                PRIORITY #1: PREMIUM PRODUCTS<br/>
+                PROFESSIONAL SOLUTIONS + REAL RESULTS
               </div>
             </div>
 
-            <p className="text-slate-400 leading-relaxed max-w-2xl text-base">
-              Professional development studio featuring flagship products: <strong className="text-cyan-400">CodeFusion</strong> (advanced IDE), 
-              <strong className="text-green-400"> VitalitySync</strong> (health tracking), <strong className="text-purple-400"> MindMate</strong> (board games), 
-              <strong className="text-orange-400"> NestCore</strong> (real estate platform), and <strong className="text-blue-400"> CodeCraftAI</strong> (AI engineering).
-            </p>
+            {/* Enhanced Description */}
+            <div className="bg-slate-800/50 border border-slate-700 p-4 backdrop-blur-sm rounded-lg">
+              <p className="text-slate-300 leading-relaxed text-base font-medium">
+                Professional development studio featuring <strong className="text-cyan-400 font-black">CodeFusion</strong> (CodePen alternative - advanced IDE), 
+                <strong className="text-green-400 font-black"> VitalitySync</strong> (FatSecret alternative - smart health tracking), 
+                <strong className="text-purple-400 font-black"> MindMate</strong> (strategic board games + chess tournaments), 
+                <strong className="text-orange-400 font-black"> NestCore</strong> (complete real estate platform), 
+                and <strong className="text-blue-400 font-black"> CodeCraftAI</strong> (Lovable alternative - AI fullstack builder).
+              </p>
+            </div>
             
             {/* Live Stats Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-2xl">
@@ -759,34 +857,9 @@ const Hero = () => {
           </div>
 
           {/* Enhanced Right Sidebar */}
-          <div className="lg:col-span-5 space-y-3">
-            {/* Enhanced Terminal */}
-            <div className="bg-slate-900/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden group hover:border-slate-600 transition-all duration-300 rounded-lg">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 animate-pulse"></div>
-              
-              <div className="flex items-center justify-between p-3 border-b border-slate-700/50">
-                <div className="flex space-x-2">
-                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="text-green-400 text-xs font-mono">PREMIUM TERMINAL</div>
-                  <Terminal className="w-4 h-4 text-slate-500" />
-                </div>
-              </div>
-              
-              <div className="p-3 font-mono text-xs min-h-[80px] relative">
-                <pre className="text-green-400 whitespace-pre-wrap leading-relaxed">
-                  {terminalText}
-                </pre>
-                <div className="flex items-center mt-2">
-                  <span className="text-green-400">⬡ jblinx_studio</span>
-                  <span className="text-cyan-400 ml-2">$</span>
-                  <div className="w-2 h-4 bg-green-400 ml-2 animate-pulse"></div>
-                </div>
-              </div>
-            </div>
+          <div className="lg:col-span-5 space-y-4">
+            {/* Enhanced Terminal with Typewriter Effect */}
+            <EnhancedTerminal />
 
             {/* Enhanced Showcase Panel */}
             <div className="bg-slate-800/95 border border-slate-700 backdrop-blur-sm relative overflow-hidden rounded-lg">
@@ -826,7 +899,7 @@ const Hero = () => {
                   <div className="flex items-center space-x-2">
                     <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentTab.accent}`}></div>
                     <h4 className="text-white font-black text-sm font-mono flex items-center space-x-2">
-                      <span>{currentTab.priority}</span>
+                      <span>{currentTab.subtitle}</span>
                       <Link 
                         to={currentTab.menuLink}
                         className="text-cyan-400 hover:text-cyan-300 transition-colors"
