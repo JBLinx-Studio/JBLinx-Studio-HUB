@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+
+import React, { useState } from 'react';
 import { ArrowRight, Gamepad2, Code, Database, Smartphone, Sparkles, Zap, Hexagon, Filter, Search, Grid, List, Star, Users, Download, Eye, Heart, Clock, Award, Target, Rocket, Flame, Crown, Diamond, ChevronDown, Play, BookOpen, FileText, Globe, Cpu, Shield, Calendar, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { audioManager } from '../utils/audioEffects';
 
 const Services = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -155,29 +155,12 @@ const Services = () => {
     }
   ];
 
-  const filteredServices = useMemo(() => {
-    return services.filter(service => {
-      const matchesCategory = activeCategory === 'all' || service.category === activeCategory;
-      const matchesSearch = service.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                           service.description.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [activeCategory, searchTerm]);
-
-  const handleCategoryClick = async (categoryId: string) => {
-    await audioManager.playButtonClick();
-    setActiveCategory(categoryId);
-  };
-
-  const handleViewModeClick = async (mode: string) => {
-    await audioManager.playButtonClick();
-    setViewMode(mode);
-  };
-
-  const handleServiceClick = async (serviceName: string) => {
-    await audioManager.playButtonClick();
-    await audioManager.playSuccessSound();
-  };
+  const filteredServices = services.filter(service => {
+    const matchesCategory = activeCategory === 'all' || service.category === activeCategory;
+    const matchesSearch = service.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         service.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   const getStatusColor = (status: string) => {
     switch(status) {
@@ -190,13 +173,7 @@ const Services = () => {
 
   return (
     <section className="py-16 bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950 relative">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 blur-3xl animate-pulse rounded-full"></div>
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-r from-green-500/5 to-blue-500/5 blur-3xl animate-pulse rounded-full" style={{animationDelay: '3s'}}></div>
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6">
         {/* Enhanced Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center bg-cyan-500/10 border border-cyan-500/30 rounded-lg px-6 py-3 mb-6">
@@ -234,8 +211,7 @@ const Services = () => {
               return (
                 <button
                   key={category.id}
-                  onClick={() => handleCategoryClick(category.id)}
-                  onMouseEnter={() => audioManager.playHoverSound()}
+                  onClick={() => setActiveCategory(category.id)}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 ${
                     activeCategory === category.id
                       ? 'bg-cyan-500 text-white shadow-lg border border-cyan-400' 
@@ -261,15 +237,13 @@ const Services = () => {
               <span className="text-slate-400 text-sm font-medium">View:</span>
               <div className="flex border border-slate-600 rounded-lg overflow-hidden">
                 <button
-                  onClick={() => handleViewModeClick('grid')}
-                  onMouseEnter={() => audioManager.playHoverSound()}
+                  onClick={() => setViewMode('grid')}
                   className={`p-2 ${viewMode === 'grid' ? 'bg-cyan-500 text-white' : 'bg-slate-700 text-slate-300'}`}
                 >
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => handleViewModeClick('list')}
-                  onMouseEnter={() => audioManager.playHoverSound()}
+                  onClick={() => setViewMode('list')}
                   className={`p-2 ${viewMode === 'list' ? 'bg-cyan-500 text-white' : 'bg-slate-700 text-slate-300'}`}
                 >
                   <List className="w-4 h-4" />
@@ -284,12 +258,47 @@ const Services = () => {
           {filteredServices.map((service, index) => {
             const IconComponent = service.icon;
             
+            if (viewMode === 'list') {
+              return (
+                <div key={service.id} className="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-lg flex items-center justify-center`}>
+                      <IconComponent className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <h3 className="text-xl font-bold text-white">{service.title}</h3>
+                        {service.featured && <Crown className="w-5 h-5 text-yellow-400" />}
+                        <div className={`px-2 py-1 text-xs font-bold border rounded ${getStatusColor(service.status)}`}>
+                          {service.status}
+                        </div>
+                      </div>
+                      <p className="text-gray-400 mb-3">{service.description}</p>
+                      <div className="grid grid-cols-2 gap-4 mb-3">
+                        <div className="flex items-center space-x-1 text-sm">
+                          <Star className="w-4 h-4 text-yellow-400" />
+                          <span className="text-slate-300">{service.rating}</span>
+                        </div>
+                        <div className="flex items-center space-x-1 text-sm">
+                          <Users className="w-4 h-4 text-slate-400" />
+                          <span className="text-slate-300">{service.clients} clients</span>
+                        </div>
+                        <div className="flex items-center space-x-1 text-sm">
+                          <Clock className="w-4 h-4 text-slate-400" />
+                          <span className="text-slate-300">{service.duration}</span>
+                        </div>
+                        <div className="text-green-400 font-bold">{service.price}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <div
                 key={service.id}
-                className="group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105 cursor-pointer"
-                onClick={() => handleServiceClick(service.title)}
-                onMouseEnter={() => audioManager.playHoverSound()}
+                className="group relative bg-white/5 border border-white/10 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105"
               >
                 {service.featured && (
                   <div className="absolute -top-2 -right-2 bg-yellow-500 text-black px-3 py-1 text-xs font-black rounded-full flex items-center space-x-1">
@@ -355,8 +364,6 @@ const Services = () => {
           <Link 
             to="/blog" 
             className="inline-flex items-center bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 transform"
-            onClick={() => handleServiceClick('view-all-work')}
-            onMouseEnter={() => audioManager.playHoverSound()}
           >
             <Rocket className="w-5 h-5 mr-2" />
             <span>View All Our Work</span>
