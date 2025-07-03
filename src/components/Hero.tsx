@@ -26,7 +26,6 @@ const Hero = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [scanlineOpacity, setScanlineOpacity] = useState(0.1);
   const [terminalPower, setTerminalPower] = useState(true);
-  const [currentLine, setCurrentLine] = useState(0);
   const [liveStats, setLiveStats] = useState({
     activeUsers: 2847,
     githubStars: 1623,
@@ -35,105 +34,62 @@ const Hero = () => {
     uptime: 99.9
   });
 
-  // Typewriter sound effect
-  const playTypewriterSound = () => {
-    try {
-      // Create a simple beep sound
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-      oscillator.type = 'square';
-      
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
-      
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.05);
-    } catch (error) {
-      // Fallback for browsers that don't support Web Audio API
-      console.log('Typewriter sound not supported');
-    }
-  };
-
   const terminalCommands = [
     {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'system-scan --flagship-products',
-        '',
-        '┌─ JBLINX ECOSYSTEM STATUS ─────────────────┐',
-        '│ ✓ CodeFusion Studio    [OPERATIONAL]      │',
-        '│ ✓ VitalitySync Pro     [OPERATIONAL]      │', 
-        '│ ✓ MindMate Gaming      [OPERATIONAL]      │',
-        '│ ✓ NestCore Platform    [OPERATIONAL]      │',
-        '│ ✓ CodeCraftAI Pro      [BETA-ACTIVE]      │',
-        '└───────────────────────────────────────────┘',
-        '',
-        '[SUCCESS] All flagship systems nominal'
-      ]
-    },
-    {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'analytics --live-metrics --realtime',
-        '',
-        '╔══════════════════════════════════════════╗',
-        '║           LIVE SYSTEM METRICS            ║',
-        '╠══════════════════════════════════════════╣',
-        '║ Active Users     │ 2,847+    [████▲]    ║',
-        '║ GitHub Stars     │ 1,623+    [███▲]     ║',
-        '║ Projects Live    │ 47        [███●]     ║',
-        '║ Satisfaction     │ 98.7%     [████▲]    ║',
-        '║ System Uptime    │ 99.9%     [████●]    ║',
-        '╚══════════════════════════════════════════╝',
-        '',
-        '[INFO] Performance: Optimal across all nodes'
-      ]
-    },
-    {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'tree /ecosystem --depth=3 --active-only',
-        '',
-        '/jblinx-ecosystem/',
-        '├── development-suite/',
-        '│   ├── codefusion-studio/     # Advanced IDE',
-        '│   └── codecraftai-pro/      # AI Engineer',
-        '├── health-platform/',
-        '│   └── vitalitysync/         # Wellness Tracker',
-        '├── gaming-hub/',
-        '│   └── mindmate/             # Strategic Games',
-        '├── property-tech/',
-        '│   └── nestcore/             # Real Estate Suite',
-        '└── community/',
-        '    ├── tutorials/           # Learning Resources',
-        '    └── documentation/       # Technical Docs',
-        '',
-        '[SUMMARY] 5 flagship products | Infinite possibilities'
-      ]
-    },
-    {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'security-audit --comprehensive --realtime',
-        '',
+      command: 'vault-tec system diagnostics --full',
+      output: [
         '████████████████████████████████ 100%',
+        'VAULT-TEC UNIFIED TERMINAL v2.1.7',
+        'Initializing JBLinx Studio Systems...',
         '',
-        'SECURITY SCAN COMPLETE',
-        '┌─ THREAT ASSESSMENT ────────────────────┐',
-        '│ Zero vulnerabilities detected          │',
-        '│ SSL certificates: Valid                │',
-        '│ Authentication: Multi-factor enabled   │',
-        '│ Data encryption: AES-256               │',
-        '│ Backup systems: Operational            │',
-        '└────────────────────────────────────────┘',
+        '┌─ FLAGSHIP PRODUCTS STATUS ─────────────┐',
+        '│ ✓ CodeFusion Studio    [OPERATIONAL]   │',
+        '│ ✓ VitalitySync Pro     [OPERATIONAL]   │', 
+        '│ ✓ MindMate Gaming      [OPERATIONAL]   │',
+        '│ ✓ NestCore Platform    [OPERATIONAL]   │',
+        '│ ✓ CodeCraftAI Pro      [BETA-ACTIVE]   │',
+        '└─────────────────────────────────────────┘',
         '',
-        '[SECURE] All systems protected and monitored'
+        'All systems: NOMINAL'
+      ]
+    },
+    {
+      command: 'query --stats --live',
+      output: [
+        'Retrieving live statistics...',
+        '',
+        '╔══════════════════════════════════════╗',
+        '║           LIVE METRICS               ║',
+        '╠══════════════════════════════════════╣',
+        '║ Active Users     │ 2,847+    [▲]    ║',
+        '║ GitHub Stars     │ 1,623+    [▲]    ║',
+        '║ Projects Live    │ 47        [●]    ║',
+        '║ Satisfaction     │ 98.7%     [▲]    ║',
+        '║ System Uptime    │ 99.9%     [●]    ║',
+        '╚══════════════════════════════════════╝',
+        '',
+        'Status: All green across the board'
+      ]
+    },
+    {
+      command: 'ls /jblinx/ecosystem --tree',
+      output: [
+        '/jblinx/ecosystem/',
+        '├── development/',
+        '│   ├── codefusion-studio/    # Advanced IDE',
+        '│   └── codecraftai-pro/     # AI Engineer',
+        '├── health-tech/',
+        '│   └── vitalitysync/        # Wellness Platform',
+        '├── gaming/',
+        '│   └── mindmate-hub/        # Strategic Games',
+        '├── proptech/',
+        '│   └── nestcore/            # Real Estate Suite',
+        '└── resources/',
+        '    ├── tutorials/',
+        '    ├── templates/',
+        '    └── documentation/',
+        '',
+        '5 flagship products, infinite possibilities'
       ]
     }
   ];
@@ -245,62 +201,43 @@ const Hero = () => {
     }
   ];
 
-  // Enhanced Terminal Animation with cycling content
+  // Enhanced Terminal Animation
   useEffect(() => {
     const typeCommand = async () => {
       if (currentCommand >= terminalCommands.length) {
         setCurrentCommand(0);
+        setTerminalText('');
         return;
       }
 
       setIsTyping(true);
       const cmd = terminalCommands[currentCommand];
-      setCurrentLine(0);
       
-      // Clear terminal
+      // Clear and type command with cursor
       setTerminalText('');
+      const commandText = `[VAULT-TEC@JBLINX]$ ${cmd.command}`;
       
-      // Type prompt
-      const prompt = cmd.prompt;
-      for (let i = 0; i <= prompt.length; i++) {
-        setTerminalText(prompt.slice(0, i));
-        if (i < prompt.length) playTypewriterSound();
-        await new Promise(resolve => setTimeout(resolve, 30));
-      }
-      
-      // Type command (first line)
-      if (cmd.lines.length > 0) {
-        const command = cmd.lines[0];
-        for (let i = 0; i <= command.length; i++) {
-          setTerminalText(prompt + command.slice(0, i));
-          if (i < command.length) playTypewriterSound();
-          await new Promise(resolve => setTimeout(resolve, 40));
-        }
+      // Type command character by character
+      for (let i = 0; i <= commandText.length; i++) {
+        setTerminalText(commandText.slice(0, i) + (i < commandText.length ? '█' : ''));
+        await new Promise(resolve => setTimeout(resolve, 40));
       }
       
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      // Show output lines one by one
-      let fullText = prompt + (cmd.lines[0] || '') + '\n';
-      for (let i = 1; i < cmd.lines.length; i++) {
-        fullText += cmd.lines[i] + '\n';
-        setTerminalText(fullText);
-        await new Promise(resolve => setTimeout(resolve, 150));
+      // Show output line by line
+      setTerminalText(commandText);
+      for (let i = 0; i < cmd.output.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, 200));
+        setTerminalText(prev => prev + '\n' + cmd.output[i]);
       }
       
-      // Hold display for a moment
-      await new Promise(resolve => setTimeout(resolve, 4000));
-      
-      // Clear with fade effect
-      for (let opacity = 100; opacity >= 0; opacity -= 10) {
-        await new Promise(resolve => setTimeout(resolve, 50));
-      }
-      
-      setCurrentCommand(prev => (prev + 1) % terminalCommands.length);
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      setCurrentCommand(prev => prev + 1);
       setIsTyping(false);
     };
 
-    const interval = setInterval(typeCommand, 8000);
+    const interval = setInterval(typeCommand, 12000);
     typeCommand();
     return () => clearInterval(interval);
   }, [currentCommand]);
@@ -365,7 +302,7 @@ const Hero = () => {
             <div className="inline-flex items-center bg-gradient-to-r from-slate-900/95 to-slate-800/95 border border-green-400/40 backdrop-blur-sm px-5 py-2.5 rounded-xl hover:border-green-300 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/20">
               <div className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></div>
               <Hexagon className="w-5 h-5 text-green-400 mr-3 animate-spin" style={{animationDuration: '8s'}} />
-              <span className="text-green-400 font-black text-sm font-mono tracking-wider">JBLINX DEVELOPMENT STUDIO</span>
+              <span className="text-green-400 font-black text-sm font-mono tracking-wider">VAULT-TEC DEVELOPMENT STUDIO</span>
               <div className="flex items-center ml-4 space-x-1">
                 <Signal className="w-3 h-3 text-green-400" />
                 <Wifi className="w-3 h-3 text-green-400" />
@@ -398,11 +335,11 @@ const Hero = () => {
             </div>
 
             <p className="text-slate-400 leading-relaxed max-w-2xl text-lg font-mono">
-              &gt; Elite development ecosystem creating flagship products across development tools, 
+              > Elite development ecosystem creating flagship products across development tools, 
               health tech, gaming platforms, and property management solutions.
             </p>
             
-            {/* Compact Stats Grid */}
+            {/* Compact Stats Grid - Fallout Style */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
               {[
                 { value: "5", label: "FLAGSHIP", icon: Trophy, color: "text-green-400" },
@@ -449,59 +386,70 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Panel - Enhanced Terminal */}
+          {/* Right Panel - Retro Terminal */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Retro Terminal */}
-            <div className="bg-black border-2 border-green-400/60 backdrop-blur-sm relative overflow-hidden group hover:border-green-300 transition-all duration-300 rounded-none shadow-2xl shadow-green-400/20" style={{fontFamily: 'monospace'}}>
-              {/* CRT Effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/5 to-transparent pointer-events-none animate-pulse"></div>
-              
-              {/* Scanlines */}
+            {/* Enhanced Fallout-Style Terminal */}
+            <div className="bg-black/95 border-2 border-green-400/60 backdrop-blur-sm relative overflow-hidden group hover:border-green-300 transition-all duration-300 rounded-lg shadow-2xl shadow-green-400/20">
+              {/* Scanline Effect */}
               <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 0, 0.03) 2px, rgba(0, 255, 0, 0.03) 4px)',
-                  opacity: scanlineOpacity
-                }}
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/10 to-transparent pointer-events-none animate-pulse"
+                style={{ opacity: scanlineOpacity }}
               ></div>
               
               {/* Terminal Header */}
-              <div className="flex items-center justify-between p-3 border-b border-green-400/40 bg-green-400/5">
+              <div className="flex items-center justify-between p-4 border-b-2 border-green-400/40 bg-green-400/5">
                 <div className="flex items-center space-x-3">
-                  <div className="text-green-400 text-xs font-mono font-bold flex items-center space-x-2">
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse border border-red-600"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse border border-yellow-600" style={{animationDelay: '0.3s'}}></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse border border-green-600" style={{animationDelay: '0.6s'}}></div>
+                  </div>
+                  <div className="text-green-400 text-sm font-mono font-bold flex items-center space-x-2">
                     <Terminal className="w-4 h-4" />
-                    <span>JBLINX MAINFRAME v3.7.2</span>
+                    <span>VAULT-TEC TERMINAL</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
+                  <button 
+                    onClick={() => setTerminalPower(!terminalPower)}
+                    className="text-green-400 hover:text-green-300 transition-colors"
+                  >
+                    <Power className="w-4 h-4" />
+                  </button>
                   <div className="text-green-400 text-xs font-mono">
-                    UPTIME: {liveStats.uptime.toFixed(1)}%
+                    {new Date().toLocaleTimeString()}
                   </div>
                 </div>
               </div>
               
               {/* Terminal Content */}
-              <div className="p-4 font-mono text-sm h-80 bg-black relative overflow-hidden">
-                <div className="text-green-400/70 mb-2 text-xs">
-                  JBLinx Unified Operating System - Secure Terminal Access
+              <div className="p-4 font-mono text-sm min-h-[240px] relative bg-black/90">
+                <div className="text-green-400 mb-2 text-xs opacity-70">
+                  VAULT-TEC UNIFIED OPERATING SYSTEM v2.1.7
                 </div>
-                <pre className="text-green-400 whitespace-pre-wrap leading-relaxed text-sm h-full overflow-hidden">
+                <pre className="text-green-400 whitespace-pre-wrap leading-relaxed text-sm">
                   {terminalText}
                 </pre>
-                
-                {/* Blinking cursor */}
                 {isTyping && (
-                  <div className="inline-block w-2 h-4 bg-green-400 animate-pulse"></div>
+                  <div className="inline-block w-2 h-5 bg-green-400 animate-pulse ml-1"></div>
+                )}
+                
+                {/* Terminal Cursor */}
+                {!isTyping && (
+                  <div className="text-green-400 mt-2 flex items-center">
+                    <span className="mr-2">[VAULT-TEC@JBLINX]$</span>
+                    <div className="w-2 h-4 bg-green-400 animate-pulse"></div>
+                  </div>
                 )}
               </div>
             </div>
 
             {/* Enhanced Product Showcase */}
-            <div className="bg-black border-2 border-cyan-400/60 backdrop-blur-sm relative overflow-hidden rounded-none shadow-2xl shadow-cyan-400/20">
+            <div className="bg-black/95 border-2 border-cyan-400/60 backdrop-blur-sm relative overflow-hidden rounded-lg shadow-2xl shadow-cyan-400/20">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent"></div>
               
               {/* Category Navigation */}
-              <div className="p-4 border-b border-cyan-400/40 bg-cyan-400/5">
+              <div className="p-4 border-b-2 border-cyan-400/40 bg-cyan-400/5">
                 <div className="grid grid-cols-2 gap-2 mb-3">
                   {productCategories.map((category, index) => {
                     const IconComponent = category.icon;
@@ -509,10 +457,10 @@ const Hero = () => {
                       <button
                         key={index}
                         onClick={() => setActiveCategory(index)}
-                        className={`relative flex items-center justify-center py-3 px-2 text-xs font-black transition-all duration-300 group border ${
+                        className={`relative flex items-center justify-center py-3 px-2 text-xs font-black transition-all duration-300 group rounded-lg border-2 ${
                           activeCategory === index 
                             ? `bg-gradient-to-r ${category.color} text-black shadow-lg transform scale-105 border-white/50` 
-                            : 'bg-black text-slate-400 hover:bg-slate-800/80 border-slate-600/50 hover:border-slate-500'
+                            : 'bg-black/80 text-slate-400 hover:bg-slate-800/80 border-slate-600/50 hover:border-slate-500'
                         }`}
                       >
                         <IconComponent className="w-4 h-4 mr-2" />
@@ -527,7 +475,7 @@ const Hero = () => {
               </div>
               
               {/* Current Category Display */}
-              <div className="p-4 bg-black">
+              <div className="p-4 bg-black/90">
                 <div className="mb-4">
                   <h3 className={`font-black text-lg mb-1 ${currentCategory.terminalColor}`}>
                     {currentCategory.title}
@@ -538,7 +486,7 @@ const Hero = () => {
                 {/* Products List */}
                 <div className="space-y-3">
                   {currentCategory.products.map((product, index) => (
-                    <div key={index} className="bg-slate-900/60 border border-slate-600/50 p-4 hover:border-slate-500 hover:bg-slate-800/80 transition-all duration-300 group cursor-pointer">
+                    <div key={index} className="bg-slate-900/60 border border-slate-600/50 p-4 rounded-lg hover:border-slate-500 hover:bg-slate-800/80 transition-all duration-300 group cursor-pointer">
                       <div className="space-y-2">
                         <div className="flex items-start justify-between">
                           <div>
@@ -563,7 +511,7 @@ const Hero = () => {
                         </p>
                         
                         <div className="flex items-center justify-between pt-2">
-                          <div className={`px-3 py-1 text-xs font-bold border ${
+                          <div className={`px-3 py-1 text-xs font-bold border rounded-full ${
                             product.status === 'Production' ? 'bg-green-500/20 text-green-400 border-green-500/50' :
                             product.status === 'Beta Launch' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50' :
                             'bg-orange-500/20 text-orange-400 border-orange-500/50'
@@ -587,7 +535,7 @@ const Hero = () => {
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between p-4 border-t border-cyan-400/40 bg-cyan-400/5">
+              <div className="flex items-center justify-between p-4 border-t-2 border-cyan-400/40 bg-cyan-400/5">
                 <div className="flex items-center space-x-4 text-xs text-slate-400">
                   <div className="flex items-center space-x-1">
                     <CheckCircle className="w-3 h-3 text-green-400" />
@@ -599,7 +547,7 @@ const Hero = () => {
                   href="https://github.com/orgs/JBLinx-Studio/repositories"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`bg-gradient-to-r ${currentCategory.color} hover:shadow-lg text-black px-4 py-2 text-xs font-black transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 border border-white/20`}
+                  className={`bg-gradient-to-r ${currentCategory.color} hover:shadow-lg text-black px-4 py-2 text-xs font-black transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 rounded-lg border border-white/20`}
                 >
                   <Github className="w-3 h-3" />
                   <span>VIEW ALL</span>
