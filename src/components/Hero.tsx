@@ -1,7 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Crown, Diamond, Home, Scale, PenTool, Dumbbell, Activity, HeartHandshake, BookOpen, FileCode, Wrench, MapPin, Bolt, Power, Wifi, Battery, Signal } from 'lucide-react';
+import { ArrowRight, Github, Hexagon, Gamepad2, Code, Heart, Building2, Star, Users, Award, Trophy, Rocket, ExternalLink, CheckCircle, Signal, Wifi, Battery, Globe, Target, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import OptimizedTerminal from './terminal/OptimizedTerminal';
+import { audioManager } from '../utils/audioEffects';
 
 // Unified product interface
 interface ProductItem {
@@ -20,13 +21,7 @@ interface ProductItem {
 }
 
 const Hero = () => {
-  const [terminalText, setTerminalText] = useState('');
-  const [currentCommand, setCurrentCommand] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
   const [activeCategory, setActiveCategory] = useState(0);
-  const [scanlineOpacity, setScanlineOpacity] = useState(0.1);
-  const [terminalPower, setTerminalPower] = useState(true);
-  const [currentLine, setCurrentLine] = useState(0);
   const [liveStats, setLiveStats] = useState({
     activeUsers: 2847,
     githubStars: 1623,
@@ -34,109 +29,6 @@ const Hero = () => {
     satisfaction: 98.7,
     uptime: 99.9
   });
-
-  // Typewriter sound effect
-  const playTypewriterSound = () => {
-    try {
-      // Create a simple beep sound
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-      oscillator.type = 'square';
-      
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
-      
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.05);
-    } catch (error) {
-      // Fallback for browsers that don't support Web Audio API
-      console.log('Typewriter sound not supported');
-    }
-  };
-
-  const terminalCommands = [
-    {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'system-scan --flagship-products',
-        '',
-        '┌─ JBLINX ECOSYSTEM STATUS ─────────────────┐',
-        '│ ✓ CodeFusion Studio    [OPERATIONAL]      │',
-        '│ ✓ VitalitySync Pro     [OPERATIONAL]      │', 
-        '│ ✓ MindMate Gaming      [OPERATIONAL]      │',
-        '│ ✓ NestCore Platform    [OPERATIONAL]      │',
-        '│ ✓ CodeCraftAI Pro      [BETA-ACTIVE]      │',
-        '└───────────────────────────────────────────┘',
-        '',
-        '[SUCCESS] All flagship systems nominal'
-      ]
-    },
-    {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'analytics --live-metrics --realtime',
-        '',
-        '╔══════════════════════════════════════════╗',
-        '║           LIVE SYSTEM METRICS            ║',
-        '╠══════════════════════════════════════════╣',
-        '║ Active Users     │ 2,847+    [████▲]    ║',
-        '║ GitHub Stars     │ 1,623+    [███▲]     ║',
-        '║ Projects Live    │ 47        [███●]     ║',
-        '║ Satisfaction     │ 98.7%     [████▲]    ║',
-        '║ System Uptime    │ 99.9%     [████●]    ║',
-        '╚══════════════════════════════════════════╝',
-        '',
-        '[INFO] Performance: Optimal across all nodes'
-      ]
-    },
-    {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'tree /ecosystem --depth=3 --active-only',
-        '',
-        '/jblinx-ecosystem/',
-        '├── development-suite/',
-        '│   ├── codefusion-studio/     # Advanced IDE',
-        '│   └── codecraftai-pro/      # AI Engineer',
-        '├── health-platform/',
-        '│   └── vitalitysync/         # Wellness Tracker',
-        '├── gaming-hub/',
-        '│   └── mindmate/             # Strategic Games',
-        '├── property-tech/',
-        '│   └── nestcore/             # Real Estate Suite',
-        '└── community/',
-        '    ├── tutorials/           # Learning Resources',
-        '    └── documentation/       # Technical Docs',
-        '',
-        '[SUMMARY] 5 flagship products | Infinite possibilities'
-      ]
-    },
-    {
-      prompt: 'root@jblinx-mainframe:~# ',
-      lines: [
-        'security-audit --comprehensive --realtime',
-        '',
-        '████████████████████████████████ 100%',
-        '',
-        'SECURITY SCAN COMPLETE',
-        '┌─ THREAT ASSESSMENT ────────────────────┐',
-        '│ Zero vulnerabilities detected          │',
-        '│ SSL certificates: Valid                │',
-        '│ Authentication: Multi-factor enabled   │',
-        '│ Data encryption: AES-256               │',
-        '│ Backup systems: Operational            │',
-        '└────────────────────────────────────────┘',
-        '',
-        '[SECURE] All systems protected and monitored'
-      ]
-    }
-  ];
 
   const productCategories = [
     {
@@ -245,74 +137,6 @@ const Hero = () => {
     }
   ];
 
-  // Enhanced Terminal Animation with cycling content
-  useEffect(() => {
-    const typeCommand = async () => {
-      if (currentCommand >= terminalCommands.length) {
-        setCurrentCommand(0);
-        return;
-      }
-
-      setIsTyping(true);
-      const cmd = terminalCommands[currentCommand];
-      setCurrentLine(0);
-      
-      // Clear terminal
-      setTerminalText('');
-      
-      // Type prompt
-      const prompt = cmd.prompt;
-      for (let i = 0; i <= prompt.length; i++) {
-        setTerminalText(prompt.slice(0, i));
-        if (i < prompt.length) playTypewriterSound();
-        await new Promise(resolve => setTimeout(resolve, 30));
-      }
-      
-      // Type command (first line)
-      if (cmd.lines.length > 0) {
-        const command = cmd.lines[0];
-        for (let i = 0; i <= command.length; i++) {
-          setTerminalText(prompt + command.slice(0, i));
-          if (i < command.length) playTypewriterSound();
-          await new Promise(resolve => setTimeout(resolve, 40));
-        }
-      }
-      
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // Show output lines one by one
-      let fullText = prompt + (cmd.lines[0] || '') + '\n';
-      for (let i = 1; i < cmd.lines.length; i++) {
-        fullText += cmd.lines[i] + '\n';
-        setTerminalText(fullText);
-        await new Promise(resolve => setTimeout(resolve, 150));
-      }
-      
-      // Hold display for a moment
-      await new Promise(resolve => setTimeout(resolve, 4000));
-      
-      // Clear with fade effect
-      for (let opacity = 100; opacity >= 0; opacity -= 10) {
-        await new Promise(resolve => setTimeout(resolve, 50));
-      }
-      
-      setCurrentCommand(prev => (prev + 1) % terminalCommands.length);
-      setIsTyping(false);
-    };
-
-    const interval = setInterval(typeCommand, 8000);
-    typeCommand();
-    return () => clearInterval(interval);
-  }, [currentCommand]);
-
-  // Scanline effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setScanlineOpacity(prev => prev === 0.1 ? 0.2 : 0.1);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
   // Auto-rotate categories
   useEffect(() => {
     const interval = setInterval(() => {
@@ -335,6 +159,15 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleButtonClick = async (action: string) => {
+    await audioManager.playButtonClick();
+    console.log(`Button clicked: ${action}`);
+  };
+
+  const handleHover = async () => {
+    await audioManager.playHoverSound();
+  };
+
   const currentCategory = productCategories[activeCategory];
 
   return (
@@ -342,8 +175,8 @@ const Hero = () => {
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0">
         {/* Animated gradient orbs */}
-        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-green-500/10 to-blue-500/10 blur-3xl animate-pulse rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-orange-500/10 to-purple-500/10 blur-3xl animate-pulse rounded-full" style={{animationDelay: '3s'}}></div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-green-500/8 to-blue-500/8 blur-3xl animate-pulse rounded-full"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-orange-500/8 to-purple-500/8 blur-3xl animate-pulse rounded-full" style={{animationDelay: '3s'}}></div>
         
         {/* Matrix-style grid */}
         <div className="absolute inset-0 opacity-5">
@@ -358,11 +191,12 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center py-6">
-        <div className="grid lg:grid-cols-12 gap-6 w-full">
-          {/* Left Content - Streamlined */}
-          <div className="lg:col-span-7 space-y-5">
+        <div className="grid lg:grid-cols-12 gap-8 w-full">
+          {/* Left Content - Enhanced Layout */}
+          <div className="lg:col-span-7 space-y-6">
             {/* Studio Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-slate-900/95 to-slate-800/95 border border-green-400/40 backdrop-blur-sm px-5 py-2.5 rounded-xl hover:border-green-300 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/20">
+            <div className="inline-flex items-center bg-gradient-to-r from-slate-900/95 to-slate-800/95 border border-green-400/40 backdrop-blur-sm px-6 py-3 rounded-xl hover:border-green-300 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/20"
+                 onMouseEnter={handleHover}>
               <div className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></div>
               <Hexagon className="w-5 h-5 text-green-400 mr-3 animate-spin" style={{animationDuration: '8s'}} />
               <span className="text-green-400 font-black text-sm font-mono tracking-wider">JBLINX DEVELOPMENT STUDIO</span>
@@ -373,14 +207,14 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Main Branding */}
-            <div className="space-y-3">
+            {/* Main Branding - Improved Spacing */}
+            <div className="space-y-4">
               <h1 className="text-5xl lg:text-7xl font-black text-white leading-none font-mono">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-green-400">JBLinx</span>
-                <span className="text-white ml-3">Studio</span>
+                <span className="text-white ml-4">Studio</span>
               </h1>
               
-              <div className="text-lg font-bold text-slate-300 font-mono flex flex-wrap items-center gap-2">
+              <div className="text-lg font-bold text-slate-300 font-mono flex flex-wrap items-center gap-3">
                 <span className="text-green-400">CodeFusion</span>
                 <span className="text-slate-600">█</span>
                 <span className="text-red-400">VitalitySync</span>
@@ -402,7 +236,7 @@ const Hero = () => {
               health tech, gaming platforms, and property management solutions.
             </p>
             
-            {/* Compact Stats Grid */}
+            {/* Enhanced Stats Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
               {[
                 { value: "5", label: "FLAGSHIP", icon: Trophy, color: "text-green-400" },
@@ -412,7 +246,10 @@ const Hero = () => {
               ].map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="bg-black/80 border border-green-400/30 p-4 text-center backdrop-blur-sm hover:border-green-400/60 transition-all duration-300 group hover:bg-green-400/5 rounded-lg relative overflow-hidden">
+                  <div key={index} 
+                       className="bg-black/80 border border-green-400/30 p-4 text-center backdrop-blur-sm hover:border-green-400/60 transition-all duration-300 group hover:bg-green-400/5 rounded-lg relative overflow-hidden cursor-pointer"
+                       onMouseEnter={handleHover}
+                       onClick={() => handleButtonClick(`stat-${stat.label}`)}>
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <IconComponent className={`w-5 h-5 ${stat.color} mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`} />
                     <div className={`text-lg font-black ${stat.color} font-mono flex items-center justify-center space-x-1`}>
@@ -425,11 +262,13 @@ const Hero = () => {
               })}
             </div>
 
-            {/* Action Buttons */}
+            {/* Enhanced Action Buttons */}
             <div className="flex flex-wrap gap-4">
               <Link 
                 to="/blog" 
                 className="bg-gradient-to-r from-green-500/90 to-cyan-500/90 hover:from-green-400 hover:to-cyan-400 text-black px-8 py-4 font-black transition-all duration-300 hover:shadow-xl hover:shadow-green-500/30 flex items-center space-x-3 hover:scale-105 transform rounded-lg text-lg border border-green-400/50"
+                onMouseEnter={handleHover}
+                onClick={() => handleButtonClick('explore-ecosystem')}
               >
                 <Rocket className="w-5 h-5" />
                 <span>EXPLORE ECOSYSTEM</span>
@@ -441,6 +280,8 @@ const Hero = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-green-400/50 text-green-400 hover:border-green-300 hover:text-green-300 hover:bg-green-400/10 px-8 py-4 font-black transition-all duration-300 flex items-center space-x-3 hover:scale-105 transform rounded-lg text-lg font-mono"
+                onMouseEnter={handleHover}
+                onClick={() => handleButtonClick('view-source')}
               >
                 <Github className="w-5 h-5" />
                 <span>VIEW SOURCE</span>
@@ -449,55 +290,13 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Panel - Enhanced Terminal */}
-          <div className="lg:col-span-5 space-y-4">
-            {/* Retro Terminal */}
-            <div className="bg-black border-2 border-green-400/60 backdrop-blur-sm relative overflow-hidden group hover:border-green-300 transition-all duration-300 rounded-none shadow-2xl shadow-green-400/20" style={{fontFamily: 'monospace'}}>
-              {/* CRT Effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/5 to-transparent pointer-events-none animate-pulse"></div>
-              
-              {/* Scanlines */}
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 0, 0.03) 2px, rgba(0, 255, 0, 0.03) 4px)',
-                  opacity: scanlineOpacity
-                }}
-              ></div>
-              
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between p-3 border-b border-green-400/40 bg-green-400/5">
-                <div className="flex items-center space-x-3">
-                  <div className="text-green-400 text-xs font-mono font-bold flex items-center space-x-2">
-                    <Terminal className="w-4 h-4" />
-                    <span>JBLINX MAINFRAME v3.7.2</span>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="text-green-400 text-xs font-mono">
-                    UPTIME: {liveStats.uptime.toFixed(1)}%
-                  </div>
-                </div>
-              </div>
-              
-              {/* Terminal Content */}
-              <div className="p-4 font-mono text-sm h-80 bg-black relative overflow-hidden">
-                <div className="text-green-400/70 mb-2 text-xs">
-                  JBLinx Unified Operating System - Secure Terminal Access
-                </div>
-                <pre className="text-green-400 whitespace-pre-wrap leading-relaxed text-sm h-full overflow-hidden">
-                  {terminalText}
-                </pre>
-                
-                {/* Blinking cursor */}
-                {isTyping && (
-                  <div className="inline-block w-2 h-4 bg-green-400 animate-pulse"></div>
-                )}
-              </div>
-            </div>
+          {/* Right Panel - Enhanced Layout */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Optimized Terminal */}
+            <OptimizedTerminal />
 
             {/* Enhanced Product Showcase */}
-            <div className="bg-black border-2 border-cyan-400/60 backdrop-blur-sm relative overflow-hidden rounded-none shadow-2xl shadow-cyan-400/20">
+            <div className="bg-black border-2 border-cyan-400/60 backdrop-blur-sm relative overflow-hidden shadow-2xl shadow-cyan-400/20">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent"></div>
               
               {/* Category Navigation */}
@@ -508,7 +307,11 @@ const Hero = () => {
                     return (
                       <button
                         key={index}
-                        onClick={() => setActiveCategory(index)}
+                        onClick={() => {
+                          setActiveCategory(index);
+                          handleButtonClick(`category-${category.id}`);
+                        }}
+                        onMouseEnter={handleHover}
                         className={`relative flex items-center justify-center py-3 px-2 text-xs font-black transition-all duration-300 group border ${
                           activeCategory === index 
                             ? `bg-gradient-to-r ${category.color} text-black shadow-lg transform scale-105 border-white/50` 
@@ -538,7 +341,10 @@ const Hero = () => {
                 {/* Products List */}
                 <div className="space-y-3">
                   {currentCategory.products.map((product, index) => (
-                    <div key={index} className="bg-slate-900/60 border border-slate-600/50 p-4 hover:border-slate-500 hover:bg-slate-800/80 transition-all duration-300 group cursor-pointer">
+                    <div key={index} 
+                         className="bg-slate-900/60 border border-slate-600/50 p-4 hover:border-slate-500 hover:bg-slate-800/80 transition-all duration-300 group cursor-pointer"
+                         onMouseEnter={handleHover}
+                         onClick={() => handleButtonClick(`product-${product.name}`)}>
                       <div className="space-y-2">
                         <div className="flex items-start justify-between">
                           <div>
@@ -600,6 +406,8 @@ const Hero = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`bg-gradient-to-r ${currentCategory.color} hover:shadow-lg text-black px-4 py-2 text-xs font-black transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 border border-white/20`}
+                  onMouseEnter={handleHover}
+                  onClick={() => handleButtonClick('view-all-github')}
                 >
                   <Github className="w-3 h-3" />
                   <span>VIEW ALL</span>
