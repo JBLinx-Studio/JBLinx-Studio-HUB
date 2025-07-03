@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Crown, Diamond, Home, Scale, PenTool, Dumbbell, Activity, HeartHandshake, BookOpen, FileCode, Wrench, MapPin, Bolt } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Book, Zap, Play, Download, Users, Trophy, Star, Shield, Globe, Database, Filter, Search, TrendingUp, Clock, Award, Layers, Smartphone, Rocket, Brain, Sparkles, Target, Heart, Eye, Cpu, Monitor, Palette, Settings, BarChart3, Lock, CheckCircle, Building2, Factory, Briefcase, ExternalLink, ChevronRight, Flame, Crown, Diamond, Home, Scale, PenTool, Dumbbell, Activity, HeartHandshake, BookOpen, FileCode, Wrench, MapPin, Bolt, Power, Wifi, Battery, Signal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Unified product interface
@@ -24,46 +24,72 @@ const Hero = () => {
   const [currentCommand, setCurrentCommand] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [activeCategory, setActiveCategory] = useState(0);
+  const [scanlineOpacity, setScanlineOpacity] = useState(0.1);
+  const [terminalPower, setTerminalPower] = useState(true);
   const [liveStats, setLiveStats] = useState({
     activeUsers: 2847,
     githubStars: 1623,
     totalProjects: 47,
-    satisfaction: 98.7
+    satisfaction: 98.7,
+    uptime: 99.9
   });
 
   const terminalCommands = [
     {
-      command: 'ls -la /jblinx-studio/flagship-products/',
+      command: 'vault-tec system diagnostics --full',
       output: [
-        'total 5 flagship products',
-        'drwxr-xr-x  codefusion-ide/     # Advanced IDE Platform',
-        'drwxr-xr-x  vitalitysync/       # Health & Wellness Tracker',
-        'drwxr-xr-x  mindmate-games/     # Strategic Board Gaming Hub',
-        'drwxr-xr-x  nestcore-realestate/  # Property Management Suite',
-        'drwxr-xr-x  codecraftai/        # AI Development Assistant'
+        '████████████████████████████████ 100%',
+        'VAULT-TEC UNIFIED TERMINAL v2.1.7',
+        'Initializing JBLinx Studio Systems...',
+        '',
+        '┌─ FLAGSHIP PRODUCTS STATUS ─────────────┐',
+        '│ ✓ CodeFusion Studio    [OPERATIONAL]   │',
+        '│ ✓ VitalitySync Pro     [OPERATIONAL]   │', 
+        '│ ✓ MindMate Gaming      [OPERATIONAL]   │',
+        '│ ✓ NestCore Platform    [OPERATIONAL]   │',
+        '│ ✓ CodeCraftAI Pro      [BETA-ACTIVE]   │',
+        '└─────────────────────────────────────────┘',
+        '',
+        'All systems: NOMINAL'
       ]
     },
     {
-      command: 'cat /jblinx-studio/stats.json',
+      command: 'query --stats --live',
       output: [
-        '{',
-        '  "active_users": "2,847+",',
-        '  "github_stars": "1,623+",',
-        '  "projects_live": 47,',
-        '  "client_satisfaction": "98.7%",',
-        '  "uptime": "99.9%"',
-        '}'
+        'Retrieving live statistics...',
+        '',
+        '╔══════════════════════════════════════╗',
+        '║           LIVE METRICS               ║',
+        '╠══════════════════════════════════════╣',
+        '║ Active Users     │ 2,847+    [▲]    ║',
+        '║ GitHub Stars     │ 1,623+    [▲]    ║',
+        '║ Projects Live    │ 47        [●]    ║',
+        '║ Satisfaction     │ 98.7%     [▲]    ║',
+        '║ System Uptime    │ 99.9%     [●]    ║',
+        '╚══════════════════════════════════════╝',
+        '',
+        'Status: All green across the board'
       ]
     },
     {
-      command: 'systemctl status jblinx-studio',
+      command: 'ls /jblinx/ecosystem --tree',
       output: [
-        '● jblinx-studio.service - Premium Development Studio',
-        '   Loaded: loaded (/etc/systemd/system/jblinx-studio.service)',
-        '   Active: active (running) since 2024',
-        '   Status: "All systems operational - Premium tier active"',
-        '   Memory: Optimized for performance',
-        '   Tasks: 5 flagship products running'
+        '/jblinx/ecosystem/',
+        '├── development/',
+        '│   ├── codefusion-studio/    # Advanced IDE',
+        '│   └── codecraftai-pro/     # AI Engineer',
+        '├── health-tech/',
+        '│   └── vitalitysync/        # Wellness Platform',
+        '├── gaming/',
+        '│   └── mindmate-hub/        # Strategic Games',
+        '├── proptech/',
+        '│   └── nestcore/            # Real Estate Suite',
+        '└── resources/',
+        '    ├── tutorials/',
+        '    ├── templates/',
+        '    └── documentation/',
+        '',
+        '5 flagship products, infinite possibilities'
       ]
     }
   ];
@@ -71,13 +97,12 @@ const Hero = () => {
   const productCategories = [
     {
       id: 'development',
-      title: 'DEVELOPMENT SUITE',
+      title: 'DEV SUITE',
       subtitle: 'Professional IDE & AI Tools',
       icon: Code,
-      color: 'cyan',
-      gradient: 'from-cyan-400 via-blue-500 to-cyan-600',
-      bgGradient: 'from-cyan-500/15 to-blue-500/10',
-      count: '3 Premium Tools',
+      color: 'from-green-400 to-emerald-500',
+      terminalColor: 'text-green-400',
+      count: '2 Tools',
       products: [
         {
           name: 'CodeFusion Studio',
@@ -88,9 +113,8 @@ const Hero = () => {
           users: '50k+',
           price: 'Free',
           link: 'https://github.com/JBLinx-Studio/CodeFusion',
-          image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop',
           badges: ['🚀 FLAGSHIP', '⚡ LIVE'],
-          description: 'Advanced web-based IDE similar to CodePen but with superior features, real-time collaboration, and professional development tools.'
+          description: 'Advanced web-based IDE with real-time collaboration and professional development tools.'
         },
         {
           name: 'CodeCraftAI Pro',
@@ -101,21 +125,19 @@ const Hero = () => {
           users: '25k+',
           price: '$99/mo',
           link: 'https://github.com/JBLinx-Studio/CodeCraftAI',
-          image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop',
           badges: ['🤖 AI-POWERED', '🔥 TRENDING'],
-          description: 'AI-powered fullstack development assistant similar to Lovable, building complete applications with intelligent code generation.'
+          description: 'AI-powered fullstack development assistant building complete applications.'
         }
       ] as ProductItem[]
     },
     {
       id: 'health',
-      title: 'HEALTH & WELLNESS',
-      subtitle: 'Advanced Health Tracking',
+      title: 'HEALTH TECH',
+      subtitle: 'Advanced Wellness Platform',
       icon: Heart,
-      color: 'emerald',
-      gradient: 'from-emerald-400 via-green-500 to-emerald-600',
-      bgGradient: 'from-emerald-500/15 to-green-500/10',
-      count: '1 Premium App',
+      color: 'from-red-400 to-pink-500',
+      terminalColor: 'text-red-400',
+      count: '1 Platform',
       products: [
         {
           name: 'VitalitySync Pro',
@@ -126,21 +148,19 @@ const Hero = () => {
           users: '85k+',
           price: 'Freemium',
           link: 'https://github.com/JBLinx-Studio/VitalitySync',
-          image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop',
           badges: ['💚 FLAGSHIP', '📊 ANALYTICS'],
-          description: 'Comprehensive health tracking platform similar to FatSecret and health apps, with advanced analytics and personalized insights.'
+          description: 'Comprehensive health tracking with advanced analytics and personalized insights.'
         }
       ] as ProductItem[]
     },
     {
       id: 'gaming',
-      title: 'STRATEGIC GAMING',
-      subtitle: 'Interactive Board Games',
+      title: 'GAMING HUB',
+      subtitle: 'Strategic Board Games',
       icon: Gamepad2,
-      color: 'purple',
-      gradient: 'from-purple-400 via-pink-500 to-purple-600',
-      bgGradient: 'from-purple-500/15 to-pink-500/10',
-      count: '1 Gaming Hub',
+      color: 'from-purple-400 to-violet-500',
+      terminalColor: 'text-purple-400',
+      count: '1 Hub',
       products: [
         {
           name: 'MindMate Gaming Hub',
@@ -151,21 +171,19 @@ const Hero = () => {
           users: '42k+',
           price: 'Free',
           link: 'https://github.com/JBLinx-Studio/MindMate',
-          image: 'https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=250&fit=crop',
           badges: ['🎮 FLAGSHIP', '🏆 FEATURED'],
-          description: 'Premium gaming webapp featuring chess, strategic board games, comprehensive tutorials, and multiplayer lobbies.'
+          description: 'Premium gaming platform featuring chess, strategic games, and multiplayer lobbies.'
         }
       ] as ProductItem[]
     },
     {
-      id: 'realestate',
+      id: 'proptech',
       title: 'PROPERTY TECH',
       subtitle: 'Complete Real Estate Platform',
       icon: Building2,
-      color: 'orange',
-      gradient: 'from-orange-400 via-red-500 to-orange-600',
-      bgGradient: 'from-orange-500/15 to-red-500/10',
-      count: '1 Platform Suite',
+      color: 'from-orange-400 to-yellow-500',
+      terminalColor: 'text-orange-400',
+      count: '1 Suite',
       products: [
         {
           name: 'NestCore Platform',
@@ -176,15 +194,14 @@ const Hero = () => {
           users: '12k+',
           price: 'Enterprise',
           link: 'https://github.com/JBLinx-Studio/NestCore',
-          image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=250&fit=crop',
           badges: ['🏢 ENTERPRISE', '⭐ PREMIUM'],
-          description: 'Comprehensive real estate platform for property owners, lessees, agents, lawyers, and all stakeholders in the property ecosystem.'
+          description: 'Comprehensive real estate platform for all property ecosystem stakeholders.'
         }
       ] as ProductItem[]
     }
   ];
 
-  // Terminal typewriter effect
+  // Enhanced Terminal Animation
   useEffect(() => {
     const typeCommand = async () => {
       if (currentCommand >= terminalCommands.length) {
@@ -196,39 +213,48 @@ const Hero = () => {
       setIsTyping(true);
       const cmd = terminalCommands[currentCommand];
       
-      // Clear and type command
+      // Clear and type command with cursor
       setTerminalText('');
-      const commandText = `jblinx@studio:~$ ${cmd.command}`;
+      const commandText = `[VAULT-TEC@JBLINX]$ ${cmd.command}`;
       
+      // Type command character by character
       for (let i = 0; i <= commandText.length; i++) {
         setTerminalText(commandText.slice(0, i) + (i < commandText.length ? '█' : ''));
-        await new Promise(resolve => setTimeout(resolve, 50));
+        await new Promise(resolve => setTimeout(resolve, 40));
       }
       
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 800));
       
-      // Show output
+      // Show output line by line
       setTerminalText(commandText);
       for (let i = 0; i < cmd.output.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 200));
         setTerminalText(prev => prev + '\n' + cmd.output[i]);
       }
       
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
       setCurrentCommand(prev => prev + 1);
       setIsTyping(false);
     };
 
-    const interval = setInterval(typeCommand, 8000);
+    const interval = setInterval(typeCommand, 12000);
     typeCommand();
     return () => clearInterval(interval);
   }, [currentCommand]);
+
+  // Scanline effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setScanlineOpacity(prev => prev === 0.1 ? 0.2 : 0.1);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Auto-rotate categories
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveCategory(prev => (prev + 1) % productCategories.length);
-    }, 6000);
+    }, 8000);
     return () => clearInterval(interval);
   }, []);
 
@@ -239,93 +265,98 @@ const Hero = () => {
         activeUsers: prev.activeUsers + Math.floor(Math.random() * 3),
         githubStars: prev.githubStars + Math.floor(Math.random() * 2),
         totalProjects: prev.totalProjects,
-        satisfaction: Math.min(99.9, prev.satisfaction + (Math.random() - 0.5) * 0.1)
+        satisfaction: Math.min(99.9, prev.satisfaction + (Math.random() - 0.5) * 0.1),
+        uptime: Math.min(99.9, prev.uptime + (Math.random() - 0.5) * 0.05)
       }));
-    }, 4000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const currentCategory = productCategories[activeCategory];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black overflow-hidden">
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0">
         {/* Animated gradient orbs */}
-        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-3xl animate-pulse rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-emerald-500/20 to-orange-500/20 blur-3xl animate-pulse rounded-full" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-green-500/10 to-blue-500/10 blur-3xl animate-pulse rounded-full"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-orange-500/10 to-purple-500/10 blur-3xl animate-pulse rounded-full" style={{animationDelay: '3s'}}></div>
         
-        {/* Tech grid pattern */}
-        <div className="absolute inset-0 opacity-10">
+        {/* Matrix-style grid */}
+        <div className="absolute inset-0 opacity-5">
           <div className="w-full h-full" style={{
             backgroundImage: `
-              linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px),
-              radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 50%)
+              linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px)
             `,
-            backgroundSize: '60px 60px, 60px 60px, 800px 800px, 600px 600px'
+            backgroundSize: '40px 40px'
           }}></div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center py-8">
+      <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center py-6">
         <div className="grid lg:grid-cols-12 gap-6 w-full">
-          {/* Left Content - More Compact */}
-          <div className="lg:col-span-7 space-y-6">
+          {/* Left Content - Streamlined */}
+          <div className="lg:col-span-7 space-y-5">
             {/* Studio Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-slate-800/90 to-slate-700/90 border border-cyan-400/60 backdrop-blur-sm px-4 py-2 rounded-xl hover:border-cyan-300 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-400/20">
-              <Hexagon className="w-5 h-5 text-cyan-400 mr-3 animate-spin" style={{animationDuration: '6s'}} />
-              <span className="text-cyan-400 font-black text-sm font-mono tracking-wider">PREMIUM DEVELOPMENT STUDIO</span>
-              <div className="w-2 h-2 bg-green-400 rounded-full ml-3 animate-pulse"></div>
+            <div className="inline-flex items-center bg-gradient-to-r from-slate-900/95 to-slate-800/95 border border-green-400/40 backdrop-blur-sm px-5 py-2.5 rounded-xl hover:border-green-300 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/20">
+              <div className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></div>
+              <Hexagon className="w-5 h-5 text-green-400 mr-3 animate-spin" style={{animationDuration: '8s'}} />
+              <span className="text-green-400 font-black text-sm font-mono tracking-wider">VAULT-TEC DEVELOPMENT STUDIO</span>
+              <div className="flex items-center ml-4 space-x-1">
+                <Signal className="w-3 h-3 text-green-400" />
+                <Wifi className="w-3 h-3 text-green-400" />
+                <Battery className="w-3 h-3 text-green-400" />
+              </div>
             </div>
 
             {/* Main Branding */}
             <div className="space-y-3">
-              <h1 className="text-5xl lg:text-6xl font-black text-white leading-none font-mono">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">JBLinx</span>
-                <span className="text-white ml-2">Studio</span>
+              <h1 className="text-5xl lg:text-7xl font-black text-white leading-none font-mono">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-green-400">JBLinx</span>
+                <span className="text-white ml-3">Studio</span>
               </h1>
               
-              <div className="text-xl font-bold text-slate-300 font-mono flex flex-wrap items-center gap-2">
-                <span className="text-cyan-400">CodeFusion</span>
-                <span className="text-slate-500">•</span>
-                <span className="text-emerald-400">VitalitySync</span>
-                <span className="text-slate-500">•</span>
+              <div className="text-lg font-bold text-slate-300 font-mono flex flex-wrap items-center gap-2">
+                <span className="text-green-400">CodeFusion</span>
+                <span className="text-slate-600">█</span>
+                <span className="text-red-400">VitalitySync</span>
+                <span className="text-slate-600">█</span>
                 <span className="text-purple-400">MindMate</span>
-                <span className="text-slate-500">•</span>
+                <span className="text-slate-600">█</span>
                 <span className="text-orange-400">NestCore</span>
-                <span className="text-slate-500">•</span>
-                <span className="text-blue-400">CodeCraftAI</span>
+                <span className="text-slate-600">█</span>
+                <span className="text-cyan-400">CodeCraftAI</span>
               </div>
               
-              <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-orange-400">
-                Professional Solutions. Real Innovation. Premium Quality.
+              <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-green-400">
+                PROFESSIONAL SOLUTIONS. REAL INNOVATION. PREMIUM QUALITY.
               </p>
             </div>
 
-            <p className="text-slate-400 leading-relaxed max-w-2xl text-lg">
-              Elite development studio creating flagship products: Advanced IDE platforms, AI-powered development tools, 
-              comprehensive health tracking, strategic gaming hubs, and complete real estate solutions.
+            <p className="text-slate-400 leading-relaxed max-w-2xl text-lg font-mono">
+              > Elite development ecosystem creating flagship products across development tools, 
+              health tech, gaming platforms, and property management solutions.
             </p>
             
-            {/* Compact Stats Grid */}
+            {/* Compact Stats Grid - Fallout Style */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-2xl">
               {[
-                { value: "5", label: "Flagship Products", icon: Trophy, color: "text-cyan-400" },
-                { value: liveStats.activeUsers.toLocaleString(), label: "Active Users", icon: Users, color: "text-emerald-400", live: true },
-                { value: liveStats.githubStars.toLocaleString(), label: "GitHub Stars", icon: Star, color: "text-orange-400", live: true },
-                { value: `${liveStats.satisfaction.toFixed(1)}%`, label: "Satisfaction", icon: Award, color: "text-purple-400" }
+                { value: "5", label: "FLAGSHIP", icon: Trophy, color: "text-green-400" },
+                { value: liveStats.activeUsers.toLocaleString(), label: "ACTIVE", icon: Users, color: "text-cyan-400", live: true },
+                { value: liveStats.githubStars.toLocaleString(), label: "STARS", icon: Star, color: "text-orange-400", live: true },
+                { value: `${liveStats.satisfaction.toFixed(1)}%`, label: "RATING", icon: Award, color: "text-purple-400" }
               ].map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="bg-slate-800/80 border border-slate-700/50 p-4 text-center backdrop-blur-sm hover:border-slate-600 transition-all duration-300 group hover:bg-slate-700/90 rounded-xl">
+                  <div key={index} className="bg-black/80 border border-green-400/30 p-4 text-center backdrop-blur-sm hover:border-green-400/60 transition-all duration-300 group hover:bg-green-400/5 rounded-lg relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <IconComponent className={`w-5 h-5 ${stat.color} mx-auto mb-2 group-hover:scale-110 transition-transform duration-300`} />
                     <div className={`text-lg font-black ${stat.color} font-mono flex items-center justify-center space-x-1`}>
                       <span>{stat.value}</span>
                       {stat.live && <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>}
                     </div>
-                    <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
+                    <div className="text-green-400/70 text-xs font-mono font-bold">{stat.label}</div>
                   </div>
                 );
               })}
@@ -335,10 +366,10 @@ const Hero = () => {
             <div className="flex flex-wrap gap-4">
               <Link 
                 to="/blog" 
-                className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-8 py-4 font-black transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/30 flex items-center space-x-3 hover:scale-105 transform rounded-xl text-lg"
+                className="bg-gradient-to-r from-green-500/90 to-cyan-500/90 hover:from-green-400 hover:to-cyan-400 text-black px-8 py-4 font-black transition-all duration-300 hover:shadow-xl hover:shadow-green-500/30 flex items-center space-x-3 hover:scale-105 transform rounded-lg text-lg border border-green-400/50"
               >
                 <Rocket className="w-5 h-5" />
-                <span>EXPLORE PORTFOLIO</span>
+                <span>EXPLORE ECOSYSTEM</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
               
@@ -346,7 +377,7 @@ const Hero = () => {
                 href="https://github.com/orgs/JBLinx-Studio/repositories"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-slate-600 text-slate-300 hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10 px-8 py-4 font-black transition-all duration-300 flex items-center space-x-3 hover:scale-105 transform rounded-xl text-lg"
+                className="border-2 border-green-400/50 text-green-400 hover:border-green-300 hover:text-green-300 hover:bg-green-400/10 px-8 py-4 font-black transition-all duration-300 flex items-center space-x-3 hover:scale-105 transform rounded-lg text-lg font-mono"
               >
                 <Github className="w-5 h-5" />
                 <span>VIEW SOURCE</span>
@@ -355,53 +386,81 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Panel - Enhanced */}
+          {/* Right Panel - Retro Terminal */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Enhanced Terminal */}
-            <div className="bg-slate-900/95 border border-slate-700/50 backdrop-blur-sm relative overflow-hidden group hover:border-slate-600 transition-all duration-300 rounded-xl">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-cyan-400 to-green-400"></div>
+            {/* Enhanced Fallout-Style Terminal */}
+            <div className="bg-black/95 border-2 border-green-400/60 backdrop-blur-sm relative overflow-hidden group hover:border-green-300 transition-all duration-300 rounded-lg shadow-2xl shadow-green-400/20">
+              {/* Scanline Effect */}
+              <div 
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/10 to-transparent pointer-events-none animate-pulse"
+                style={{ opacity: scanlineOpacity }}
+              ></div>
               
               {/* Terminal Header */}
-              <div className="flex items-center justify-between p-4 border-b border-slate-700/50">
-                <div className="flex space-x-2">
-                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+              <div className="flex items-center justify-between p-4 border-b-2 border-green-400/40 bg-green-400/5">
+                <div className="flex items-center space-x-3">
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse border border-red-600"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse border border-yellow-600" style={{animationDelay: '0.3s'}}></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse border border-green-600" style={{animationDelay: '0.6s'}}></div>
+                  </div>
+                  <div className="text-green-400 text-sm font-mono font-bold flex items-center space-x-2">
+                    <Terminal className="w-4 h-4" />
+                    <span>VAULT-TEC TERMINAL</span>
+                  </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div className="text-green-400 text-sm font-mono font-bold">JBLINX TERMINAL</div>
-                  <Terminal className="w-4 h-4 text-slate-500" />
+                  <button 
+                    onClick={() => setTerminalPower(!terminalPower)}
+                    className="text-green-400 hover:text-green-300 transition-colors"
+                  >
+                    <Power className="w-4 h-4" />
+                  </button>
+                  <div className="text-green-400 text-xs font-mono">
+                    {new Date().toLocaleTimeString()}
+                  </div>
                 </div>
               </div>
               
               {/* Terminal Content */}
-              <div className="p-4 font-mono text-sm min-h-[200px] relative">
-                <pre className="text-green-400 whitespace-pre-wrap leading-relaxed">
+              <div className="p-4 font-mono text-sm min-h-[240px] relative bg-black/90">
+                <div className="text-green-400 mb-2 text-xs opacity-70">
+                  VAULT-TEC UNIFIED OPERATING SYSTEM v2.1.7
+                </div>
+                <pre className="text-green-400 whitespace-pre-wrap leading-relaxed text-sm">
                   {terminalText}
                 </pre>
                 {isTyping && (
                   <div className="inline-block w-2 h-5 bg-green-400 animate-pulse ml-1"></div>
                 )}
+                
+                {/* Terminal Cursor */}
+                {!isTyping && (
+                  <div className="text-green-400 mt-2 flex items-center">
+                    <span className="mr-2">[VAULT-TEC@JBLINX]$</span>
+                    <div className="w-2 h-4 bg-green-400 animate-pulse"></div>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Enhanced Product Showcase */}
-            <div className="bg-slate-800/95 border border-slate-700/50 backdrop-blur-sm relative overflow-hidden rounded-xl">
-              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+            <div className="bg-black/95 border-2 border-cyan-400/60 backdrop-blur-sm relative overflow-hidden rounded-lg shadow-2xl shadow-cyan-400/20">
+              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent"></div>
               
               {/* Category Navigation */}
-              <div className="p-4 border-b border-slate-700/50">
-                <div className="grid grid-cols-2 gap-2 mb-4">
+              <div className="p-4 border-b-2 border-cyan-400/40 bg-cyan-400/5">
+                <div className="grid grid-cols-2 gap-2 mb-3">
                   {productCategories.map((category, index) => {
                     const IconComponent = category.icon;
                     return (
                       <button
                         key={index}
                         onClick={() => setActiveCategory(index)}
-                        className={`relative flex items-center justify-center py-3 px-3 text-xs font-black transition-all duration-300 group rounded-lg ${
+                        className={`relative flex items-center justify-center py-3 px-2 text-xs font-black transition-all duration-300 group rounded-lg border-2 ${
                           activeCategory === index 
-                            ? `bg-gradient-to-r ${category.gradient} text-white shadow-lg transform scale-105` 
-                            : 'bg-slate-700/80 text-slate-400 hover:bg-slate-600/80'
+                            ? `bg-gradient-to-r ${category.color} text-black shadow-lg transform scale-105 border-white/50` 
+                            : 'bg-black/80 text-slate-400 hover:bg-slate-800/80 border-slate-600/50 hover:border-slate-500'
                         }`}
                       >
                         <IconComponent className="w-4 h-4 mr-2" />
@@ -416,40 +475,22 @@ const Hero = () => {
               </div>
               
               {/* Current Category Display */}
-              <div className="p-4">
+              <div className="p-4 bg-black/90">
                 <div className="mb-4">
-                  <h3 className="text-white font-black text-lg mb-1">{currentCategory.title}</h3>
-                  <p className="text-slate-400 text-sm">{currentCategory.subtitle}</p>
+                  <h3 className={`font-black text-lg mb-1 ${currentCategory.terminalColor}`}>
+                    {currentCategory.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm font-mono">{currentCategory.subtitle}</p>
                 </div>
                 
                 {/* Products List */}
                 <div className="space-y-3">
                   {currentCategory.products.map((product, index) => (
                     <div key={index} className="bg-slate-900/60 border border-slate-600/50 p-4 rounded-lg hover:border-slate-500 hover:bg-slate-800/80 transition-all duration-300 group cursor-pointer">
-                      {/* Product Image */}
-                      {product.image && (
-                        <div className="relative h-32 mb-3 overflow-hidden rounded-lg">
-                          <img 
-                            src={product.image} 
-                            alt={product.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                          <div className="absolute top-2 right-2 flex space-x-1">
-                            {product.badges?.map((badge, badgeIndex) => (
-                              <span key={badgeIndex} className="px-2 py-1 text-xs font-bold bg-slate-900/80 text-white rounded-full">
-                                {badge}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Product Info */}
                       <div className="space-y-2">
                         <div className="flex items-start justify-between">
                           <div>
-                            <h4 className="text-white font-black text-base group-hover:text-cyan-300 transition-colors">
+                            <h4 className="text-white font-black text-base group-hover:text-cyan-300 transition-colors font-mono">
                               {product.name}
                             </h4>
                             <p className="text-slate-400 text-sm">{product.type}</p>
@@ -483,7 +524,7 @@ const Hero = () => {
                             rel="noopener noreferrer"
                             className="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center space-x-1 text-sm font-bold"
                           >
-                            <span>VIEW PROJECT</span>
+                            <span>ACCESS</span>
                             <ArrowRight className="w-4 h-4" />
                           </a>
                         </div>
@@ -494,11 +535,11 @@ const Hero = () => {
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between p-4 border-t border-slate-700/50 bg-slate-900/40">
+              <div className="flex items-center justify-between p-4 border-t-2 border-cyan-400/40 bg-cyan-400/5">
                 <div className="flex items-center space-x-4 text-xs text-slate-400">
                   <div className="flex items-center space-x-1">
                     <CheckCircle className="w-3 h-3 text-green-400" />
-                    <span className="text-green-400 font-bold">ALL SYSTEMS LIVE</span>
+                    <span className="text-green-400 font-bold font-mono">ALL SYSTEMS OPERATIONAL</span>
                   </div>
                 </div>
                 
@@ -506,10 +547,10 @@ const Hero = () => {
                   href="https://github.com/orgs/JBLinx-Studio/repositories"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`bg-gradient-to-r ${currentCategory.gradient} hover:shadow-lg text-white px-4 py-2 text-xs font-black transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 rounded-lg`}
+                  className={`bg-gradient-to-r ${currentCategory.color} hover:shadow-lg text-black px-4 py-2 text-xs font-black transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 rounded-lg border border-white/20`}
                 >
                   <Github className="w-3 h-3" />
-                  <span>VIEW ALL PROJECTS</span>
+                  <span>VIEW ALL</span>
                   <ArrowRight className="w-3 h-3" />
                 </a>
               </div>
