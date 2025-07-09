@@ -91,3 +91,32 @@ html {
 .code-hover:hover .hover-text {
   opacity: 1;
 }
+
+/* Link hover effect with < prefix */
+.link-hover {
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.link-hover::before {
+  content: '<_ ';
+  position: absolute;
+  left: -1em;
+  opacity: 0;
+  color: #10b981;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  transform: translateX(-10px);
+}
+
+.link-hover:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.link-hover:hover {
+  color: #10b981;
+  transform: translateX(1em);
+}

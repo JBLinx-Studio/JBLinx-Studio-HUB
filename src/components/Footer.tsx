@@ -86,23 +86,19 @@ const Footer = () => {
             <div className="space-y-2 mb-4">
               <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
                 <Phone size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
-                <span className="code-hover">
-                  <span className="normal-text">+1 (555) 123-4567</span>
-                  <span className="hover-text">&gt;_ +1 (555) 123-4567</span>
-                </span>
+                <span className="link-hover">+1 (555) 123-4567</span>
               </div>
               <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
                 <Mail size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
-                <a href="mailto:hello@jblinxstudio.com" className="code-hover">
-                  <span className="normal-text">hello@jblinxstudio.com</span>
-                  <span className="hover-text">&gt;_ hello@jblinxstudio.com</span>
+                <a href="mailto:hello@jblinxstudio.com" className="link-hover">
+                  hello@jblinxstudio.com
                 </a>
               </div>
             </div>
 
             {/* Social Links - Compact */}
             <div className="flex space-x-2">
-              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110 code-hover">
+              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
                 <Github size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
               <a href="https://linkedin.com/company/jblinx-studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
@@ -126,9 +122,12 @@ const Footer = () => {
             <ul className="space-y-1">
               {services.map((service, index) => (
                 <li key={index}>
-                  <CodeHoverLink href={service.href}>
+                  <Link 
+                    to={service.href}
+                    className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform link-hover"
+                  >
                     {service.name}
-                  </CodeHoverLink>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -143,9 +142,12 @@ const Footer = () => {
             <ul className="space-y-1">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <CodeHoverLink href={link.href}>
+                  <Link 
+                    to={link.href}
+                    className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform link-hover"
+                  >
                     {link.name}
-                  </CodeHoverLink>
+                  </Link>
                 </li>
               ))}
             </ul>

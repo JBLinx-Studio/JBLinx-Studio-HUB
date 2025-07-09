@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Menu, X, Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,13 +6,6 @@ import NavigationItem from './navigation/NavigationItem';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-  const CodeHoverSpan = ({ children }: { children: string }) => (
-    <span className="code-hover">
-      <span className="normal-text">{children}</span>
-      <span className="hover-text">&gt;_ {children}</span>
-    </span>
-  );
 
   return (
     <>
@@ -61,10 +53,9 @@ const Header = () => {
             {/* Desktop Navigation - Gaming Style */}
             <nav className="hidden lg:flex items-center space-x-6">
               <Link to="/" className="relative group">
-                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">
-                  <CodeHoverSpan>HOME</CodeHoverSpan>
+                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300 link-hover">
+                  HOME
                 </span>
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
               </Link>
               {navigationItems.map((item, index) => (
                 <NavigationItem
@@ -76,10 +67,9 @@ const Header = () => {
                 />
               ))}
               <Link to="/blog" className="relative group">
-                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">
-                  <CodeHoverSpan>BLOG</CodeHoverSpan>
+                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300 link-hover">
+                  BLOG
                 </span>
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
               </Link>
             </nav>
 
@@ -109,10 +99,10 @@ const Header = () => {
               <div className="px-4 py-4 space-y-3 max-h-96 overflow-y-auto">
                 <Link 
                   to="/" 
-                  className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
+                  className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800 link-hover"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <CodeHoverSpan>HOME</CodeHoverSpan>
+                  HOME
                 </Link>
                 
                 {navigationItems.map((item, index) => (
@@ -120,10 +110,10 @@ const Header = () => {
                     {item.type === 'link' ? (
                       <Link 
                         to={item.href} 
-                        className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
+                        className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800 link-hover"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <CodeHoverSpan>{item.name.toUpperCase()}</CodeHoverSpan>
+                        {item.name.toUpperCase()}
                       </Link>
                     ) : (
                       <div className="border-b border-slate-800">
@@ -136,11 +126,11 @@ const Header = () => {
                                 <Link
                                   key={subIndex}
                                   to={subItem.href}
-                                  className="block py-1 px-2 text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50 transition-colors text-xs border border-slate-700/50 hover:border-emerald-400/30"
+                                  className="block py-1 px-2 text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50 transition-colors text-xs border border-slate-700/50 hover:border-emerald-400/30 link-hover"
                                   onClick={() => setIsMenuOpen(false)}
                                 >
                                   <div className="font-medium font-mono">
-                                    <CodeHoverSpan>{subItem.name}</CodeHoverSpan>
+                                    {subItem.name}
                                   </div>
                                   <div className="text-xs text-slate-500">{subItem.description}</div>
                                 </Link>
@@ -155,10 +145,10 @@ const Header = () => {
                 
                 <Link 
                   to="/blog" 
-                  className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
+                  className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800 link-hover"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <CodeHoverSpan>BLOG</CodeHoverSpan>
+                  BLOG
                 </Link>
                 
                 {/* Mobile CTA */}
