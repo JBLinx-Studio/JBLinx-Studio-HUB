@@ -210,3 +210,8 @@ document.addEventListener('DOMContentLoaded', function() {
 const script = document.createElement('script');
 script.src = './src/js/interactive-neural.js';
 document.head.appendChild(script);
+
+// Load terminal sounds and effects
+const terminalScript = document.createElement('script');
+terminalScript.src = './src/js/terminal-sounds.js';
+document.head.appendChild(terminalScript);
