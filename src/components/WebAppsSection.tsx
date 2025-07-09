@@ -79,8 +79,8 @@ const WebAppsSection = () => {
   );
 
   return (
-    <section className="py-8 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950/20 border-t border-slate-800 relative overflow-hidden">
-      {/* Dashboard-style Background Grid */}
+    <section className="py-12 bg-slate-950 relative overflow-hidden">
+      {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `
@@ -92,62 +92,59 @@ const WebAppsSection = () => {
       </div>
 
       <div className="container mx-auto px-4 relative">
-        {/* Dashboard Header - Left Aligned */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
-          <div className="text-left mb-4 lg:mb-0">
-            <div className="inline-flex items-center bg-blue-500/20 border border-blue-400/40 px-4 py-2 mb-3 backdrop-blur-sm">
-              <Monitor className="w-4 h-4 mr-2 text-blue-400" />
-              <span className="text-blue-400 font-black text-sm font-mono tracking-wider">PRIORITY #3: APP USERS</span>
+        {/* Header Section - Compact Design */}
+        <div className="text-center mb-12">
+          <div className="inline-block bg-slate-800/50 backdrop-blur-sm border border-slate-600/50 px-6 py-3 mb-6 rounded-lg">
+            <div className="flex items-center justify-center space-x-3">
+              <Monitor className="w-5 h-5 text-blue-400" />
+              <span className="text-blue-400 font-bold text-sm tracking-wider uppercase">Priority #3: App Users</span>
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             </div>
-            
-            <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-2">
-              ENTERPRISE <span className="text-blue-400">WEB APPS</span>
-            </h2>
-            
-            <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mb-3"></div>
-            
-            <p className="text-slate-300 max-w-xl">
-              Professional SaaS platforms, e-commerce solutions, analytics tools, and enterprise applications
-            </p>
           </div>
+          
+          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
+            ENTERPRISE <span className="text-blue-400">WEB APPS</span>
+          </h2>
+          
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto mb-4"></div>
+          
+          <p className="text-slate-300 max-w-2xl mx-auto text-lg">
+            Professional SaaS platforms, e-commerce solutions, and enterprise applications built for modern businesses
+          </p>
+        </div>
 
-          {/* Dashboard Controls - Right Side */}
-          <div className="flex flex-col items-end space-y-3">
-            <div className="flex items-center space-x-2 text-sm text-slate-400">
-              <Clock className="w-4 h-4" />
-              <span>Last updated: 2 min ago</span>
-            </div>
-            <div className="flex space-x-2">
-              {appFilters.map((filter) => (
-                <button
-                  key={filter}
-                  onClick={() => setActiveFilter(filter)}
-                  className={`px-3 py-1.5 text-xs font-bold transition-all duration-300 ${
-                    activeFilter === filter
-                      ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/25' 
-                      : 'bg-slate-800/60 text-slate-400 hover:bg-slate-700 border border-slate-600'
-                  }`}
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
+        {/* Filter Navigation */}
+        <div className="flex justify-center mb-8">
+          <div className="flex space-x-2 bg-slate-800/50 backdrop-blur-sm p-2 rounded-lg border border-slate-600/50">
+            {appFilters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-4 py-2 text-sm font-bold rounded-md transition-all duration-300 ${
+                  activeFilter === filter
+                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/25' 
+                    : 'text-slate-400 hover:text-blue-400 hover:bg-slate-700/50'
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Dashboard Layout - Asymmetric Grid */}
+        {/* Dashboard-Style Layout */}
         <div className="grid lg:grid-cols-12 gap-6">
-          {/* Left Column - Main Featured App */}
-          <div className="lg:col-span-7">
-            <div className="bg-slate-800/90 border border-blue-400/30 p-6 h-full hover:border-blue-400/60 transition-all duration-500">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+          {/* Left Column - Featured App */}
+          <div className="lg:col-span-8">
+            <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl p-6 h-full hover:border-blue-400/50 transition-all duration-500 group">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
                     <Monitor className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-white font-mono">{filteredApps[0]?.title}</h3>
-                    <div className="text-blue-400 text-sm font-bold">{filteredApps[0]?.category}</div>
+                    <h3 className="text-2xl font-black text-white mb-1">{filteredApps[0]?.title}</h3>
+                    <div className="text-blue-400 font-semibold">{filteredApps[0]?.category}</div>
                   </div>
                 </div>
                 <div className="text-right">
@@ -159,65 +156,65 @@ const WebAppsSection = () => {
                 </div>
               </div>
 
-              <p className="text-slate-300 mb-6 leading-relaxed">{filteredApps[0]?.description}</p>
+              <p className="text-slate-300 mb-6 leading-relaxed text-lg">{filteredApps[0]?.description}</p>
 
-              {/* Dashboard Metrics */}
+              {/* Metrics */}
               <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="bg-slate-700/50 p-3 text-center">
-                  <div className="text-blue-400 font-black text-lg">{filteredApps[0]?.downloads}</div>
-                  <div className="text-slate-400 text-xs">Downloads</div>
+                <div className="bg-slate-700/50 rounded-lg p-4 text-center">
+                  <div className="text-blue-400 font-black text-xl">{filteredApps[0]?.downloads}</div>
+                  <div className="text-slate-400 text-sm">Downloads</div>
                 </div>
-                <div className="bg-slate-700/50 p-3 text-center">
-                  <div className="text-yellow-400 font-black text-lg flex items-center justify-center">
-                    <Star className="w-4 h-4 mr-1" />{filteredApps[0]?.rating}
+                <div className="bg-slate-700/50 rounded-lg p-4 text-center">
+                  <div className="text-yellow-400 font-black text-xl flex items-center justify-center">
+                    <Star className="w-4 h-4 mr-1 fill-yellow-400" />{filteredApps[0]?.rating}
                   </div>
-                  <div className="text-slate-400 text-xs">Rating</div>
+                  <div className="text-slate-400 text-sm">Rating</div>
                 </div>
-                <div className="bg-slate-700/50 p-3 text-center">
-                  <div className="text-green-400 font-black text-lg">{filteredApps[0]?.users}</div>
-                  <div className="text-slate-400 text-xs">Active Users</div>
+                <div className="bg-slate-700/50 rounded-lg p-4 text-center">
+                  <div className="text-green-400 font-black text-xl">{filteredApps[0]?.users}</div>
+                  <div className="text-slate-400 text-sm">Active Users</div>
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex flex-wrap gap-2">
                   {filteredApps[0]?.tech.slice(0, 3).map((tech, index) => (
-                    <span key={index} className="bg-blue-500/20 text-blue-400 px-2 py-1 text-xs font-bold border border-blue-400/30">
+                    <span key={index} className="bg-blue-500/20 text-blue-400 px-3 py-1 text-sm font-semibold rounded-md border border-blue-400/30">
                       {tech}
                     </span>
                   ))}
                 </div>
-                <button className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 font-black text-sm hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+                <button className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 font-bold rounded-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group-hover:scale-105">
                   VIEW DEMO
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Right Column - App Grid & Stats */}
-          <div className="lg:col-span-5 space-y-6">
-            {/* Quick Stats Panel */}
-            <div className="bg-gradient-to-r from-slate-800/80 to-blue-900/20 border border-slate-700 p-4">
-              <h4 className="text-white font-black text-sm font-mono mb-3 flex items-center">
-                <BarChart3 className="w-4 h-4 mr-2 text-blue-400" />
+          {/* Right Column - Stats & Apps */}
+          <div className="lg:col-span-4 space-y-6">
+            {/* Live Stats Panel */}
+            <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl p-6">
+              <h4 className="text-white font-black text-lg mb-4 flex items-center">
+                <BarChart3 className="w-5 h-5 mr-2 text-blue-400" />
                 LIVE METRICS
               </h4>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="text-center">
-                  <div className="text-blue-400 font-black text-xl">25+</div>
-                  <div className="text-slate-400 text-xs">Active Apps</div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-3 bg-slate-700/30 rounded-lg">
+                  <div className="text-blue-400 font-black text-2xl">25+</div>
+                  <div className="text-slate-400 text-sm">Apps</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-green-400 font-black text-xl">50k+</div>
-                  <div className="text-slate-400 text-xs">Total Users</div>
+                <div className="text-center p-3 bg-slate-700/30 rounded-lg">
+                  <div className="text-green-400 font-black text-2xl">50k+</div>
+                  <div className="text-slate-400 text-sm">Users</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-yellow-400 font-black text-xl">4.8★</div>
-                  <div className="text-slate-400 text-xs">Avg Rating</div>
+                <div className="text-center p-3 bg-slate-700/30 rounded-lg">
+                  <div className="text-yellow-400 font-black text-2xl">4.8★</div>
+                  <div className="text-slate-400 text-sm">Rating</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-purple-400 font-black text-xl">99.9%</div>
-                  <div className="text-slate-400 text-xs">Uptime</div>
+                <div className="text-center p-3 bg-slate-700/30 rounded-lg">
+                  <div className="text-purple-400 font-black text-2xl">99.9%</div>
+                  <div className="text-slate-400 text-sm">Uptime</div>
                 </div>
               </div>
             </div>
@@ -225,10 +222,10 @@ const WebAppsSection = () => {
             {/* Compact App List */}
             <div className="space-y-3">
               {filteredApps.slice(1, 4).map((app, index) => (
-                <div key={index} className="bg-slate-800/70 border border-slate-700 p-4 hover:bg-slate-700/80 transition-all duration-300 group">
+                <div key={index} className="bg-slate-800/60 backdrop-blur-sm border border-slate-600/30 rounded-lg p-4 hover:bg-slate-700/60 transition-all duration-300 group cursor-pointer">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500/30 to-cyan-500/30 flex items-center justify-center">
+                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500/30 to-cyan-500/30 rounded-md flex items-center justify-center">
                         <Database className="w-4 h-4 text-blue-400" />
                       </div>
                       <div>
@@ -251,19 +248,19 @@ const WebAppsSection = () => {
             </div>
 
             {/* Action Panel */}
-            <div className="bg-slate-800/90 border border-blue-400/30 p-4">
-              <h4 className="text-white font-black text-sm font-mono mb-3">ENTERPRISE SOLUTIONS</h4>
-              <p className="text-slate-400 text-xs mb-4">
+            <div className="bg-slate-800/80 backdrop-blur-sm border border-blue-400/30 rounded-xl p-6">
+              <h4 className="text-white font-black text-lg mb-3">ENTERPRISE SOLUTIONS</h4>
+              <p className="text-slate-400 text-sm mb-4 leading-relaxed">
                 Scalable, secure, and performance-optimized applications for modern businesses.
               </p>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Link 
-                  to="/blog" 
-                  className="block bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 font-black text-xs text-center hover:shadow-lg transition-all duration-300"
+                  to="/web-applications" 
+                  className="block bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-3 font-bold text-center rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105"
                 >
                   VIEW ALL APPS
                 </Link>
-                <button className="w-full border border-blue-400/60 text-blue-400 hover:bg-blue-400/10 px-4 py-2 font-bold text-xs transition-all duration-300">
+                <button className="w-full border border-blue-400/60 text-blue-400 hover:bg-blue-400/10 px-4 py-3 font-semibold rounded-lg transition-all duration-300">
                   ENTERPRISE PRICING
                 </button>
               </div>

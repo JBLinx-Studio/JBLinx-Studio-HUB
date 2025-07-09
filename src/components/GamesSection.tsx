@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Gamepad2, Users, Calendar, Play, Github, Trophy, BookOpen, FileText, Zap, Shield, Cpu, Globe, Clock, Eye, Heart, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -113,8 +114,8 @@ const GamesSection = () => {
     allContent;
 
   return (
-    <section className="py-8 bg-gradient-to-tr from-slate-950 via-purple-950/30 to-slate-900 border-t border-slate-800 relative overflow-hidden">
-      {/* Magazine-style Background Pattern */}
+    <section className="py-12 bg-slate-950 relative overflow-hidden">
+      {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.4) 2px, transparent 2px)`,
@@ -124,32 +125,36 @@ const GamesSection = () => {
       </div>
 
       <div className="container mx-auto px-4 relative">
-        {/* Magazine Header - Centered with Flair */}
-        <div className="text-center mb-8">
-          <div className="relative inline-block">
-            <div className="absolute -inset-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-xl"></div>
-            <div className="relative inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-6 py-3 mb-4 backdrop-blur-sm">
-              <Trophy className="w-5 h-5 mr-2 text-purple-400" />
-              <span className="text-purple-400 font-black text-lg font-mono tracking-widest">PRIORITY #1: GAMERS</span>
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          <div className="inline-block bg-slate-800/50 backdrop-blur-sm border border-slate-600/50 px-6 py-3 mb-6 rounded-lg">
+            <div className="flex items-center justify-center space-x-3">
+              <Trophy className="w-5 h-5 text-purple-400" />
+              <span className="text-purple-400 font-bold text-sm tracking-wider uppercase">Priority #1: Gamers</span>
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             </div>
           </div>
           
-          <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight font-mono mb-4">
+          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
             PREMIUM <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600">GAMES</span>
             <br />
             <span className="text-2xl lg:text-3xl text-blue-400">+ DEV CONTENT</span>
           </h2>
           
-          <div className="w-32 h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 mx-auto mb-4"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 mx-auto mb-4"></div>
+          
+          <p className="text-slate-300 max-w-2xl mx-auto text-lg">
+            Immersive games, comprehensive development guides, and exclusive behind-the-scenes content
+          </p>
         </div>
 
-        {/* Magazine Layout */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        {/* Magazine-Style Layout */}
+        <div className="grid lg:grid-cols-4 gap-6">
           {/* Left Sidebar - Categories & Stats */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Category Navigation - Vertical */}
-            <div className="bg-slate-800/90 border-l-4 border-purple-500 p-5">
-              <h3 className="text-purple-400 font-black text-lg font-mono mb-4 flex items-center">
+            {/* Category Navigation */}
+            <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl p-6">
+              <h3 className="text-purple-400 font-black text-lg mb-4 flex items-center">
                 <Gamepad2 className="w-5 h-5 mr-2" />
                 CATEGORIES
               </h3>
@@ -158,10 +163,10 @@ const GamesSection = () => {
                   <button
                     key={category}
                     onClick={() => setActiveCategory(category)}
-                    className={`w-full text-left px-4 py-3 font-bold text-sm transition-all duration-300 ${
+                    className={`w-full text-left px-4 py-3 font-semibold text-sm rounded-lg transition-all duration-300 ${
                       activeCategory === category
-                        ? 'bg-purple-500 text-white shadow-lg transform translate-x-2' 
-                        : 'text-slate-400 hover:text-purple-300 hover:bg-slate-700/50 hover:translate-x-1'
+                        ? 'bg-purple-500 text-white shadow-lg' 
+                        : 'text-slate-400 hover:text-purple-300 hover:bg-slate-700/50'
                     }`}
                   >
                     {category}
@@ -170,9 +175,9 @@ const GamesSection = () => {
               </div>
             </div>
 
-            {/* Gaming Stats - Vertical */}
-            <div className="bg-gradient-to-b from-purple-900/20 to-slate-800/90 border border-purple-500/30 p-5">
-              <h3 className="text-white font-black text-lg font-mono mb-4 flex items-center">
+            {/* Gaming Stats */}
+            <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl p-6">
+              <h3 className="text-white font-black text-lg mb-4 flex items-center">
                 <Award className="w-5 h-5 mr-2 text-purple-400" />
                 GAMING HQ
               </h3>
@@ -181,20 +186,19 @@ const GamesSection = () => {
                   { icon: Gamepad2, value: "25+", label: "Premium Games", color: "text-purple-400" },
                   { icon: BookOpen, value: "15+", label: "Dev Guides", color: "text-blue-400" },
                   { icon: Play, value: "40+", label: "Video Tutorials", color: "text-green-400" },
-                  { icon: FileText, value: "60+", label: "Dev Blog Posts", color: "text-orange-400" },
                   { icon: Users, value: "25k+", label: "Active Players", color: "text-cyan-400" },
                   { icon: Trophy, value: "4.8★", label: "Avg Rating", color: "text-yellow-400" }
                 ].map((stat, index) => {
                   const IconComponent = stat.icon;
                   return (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 hover:bg-slate-700/50 transition-all duration-300">
+                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 transition-all duration-300">
                       <div className="flex items-center space-x-3">
-                        <div className={`w-8 h-8 bg-slate-700 flex items-center justify-center`}>
+                        <div className="w-8 h-8 bg-slate-700/50 rounded-md flex items-center justify-center">
                           <IconComponent className={`w-4 h-4 ${stat.color}`} />
                         </div>
                         <span className="text-slate-300 text-sm font-medium">{stat.label}</span>
                       </div>
-                      <div className={`${stat.color} font-black text-lg font-mono`}>{stat.value}</div>
+                      <div className={`${stat.color} font-black text-lg`}>{stat.value}</div>
                     </div>
                   );
                 })}
@@ -202,13 +206,12 @@ const GamesSection = () => {
             </div>
           </div>
 
-          {/* Main Content Area - Magazine Style */}
-          <div className="lg:col-span-2">
-            {/* Featured Content - Hero Style */}
+          {/* Main Content Area */}
+          <div className="lg:col-span-3">
+            {/* Featured Content */}
             {filteredContent.length > 0 && (
               <div className="mb-8 relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 via-pink-500/50 to-purple-500/50 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative bg-slate-800/95 border border-purple-500/30 overflow-hidden">
+                <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl overflow-hidden hover:border-purple-400/50 transition-all duration-500">
                   <div className="relative h-80 lg:h-96 overflow-hidden">
                     <img 
                       src={filteredContent[0].image} 
@@ -217,22 +220,21 @@ const GamesSection = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
                     
-                    {/* Magazine Overlay Info */}
                     <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
                       <div className="flex gap-2">
-                        <span className="bg-purple-500 text-white px-3 py-1 text-sm font-black">
+                        <span className="bg-purple-500 text-white px-3 py-1 text-sm font-bold rounded-md">
                           FEATURED
                         </span>
-                        <span className="bg-slate-900/80 text-white px-3 py-1 text-sm font-bold backdrop-blur-sm">
+                        <span className="bg-slate-900/80 text-white px-3 py-1 text-sm font-semibold rounded-md backdrop-blur-sm">
                           {filteredContent[0].category}
                         </span>
                       </div>
                       <div className="flex space-x-2">
-                        <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-bold backdrop-blur-sm flex items-center space-x-1">
+                        <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-semibold rounded-md backdrop-blur-sm flex items-center space-x-1">
                           <Eye className="w-3 h-3" />
                           <span>{filteredContent[0].downloads}</span>
                         </div>
-                        <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-bold backdrop-blur-sm flex items-center space-x-1">
+                        <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-semibold rounded-md backdrop-blur-sm flex items-center space-x-1">
                           <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
                           <span>{filteredContent[0].rating}</span>
                         </div>
@@ -240,7 +242,7 @@ const GamesSection = () => {
                     </div>
 
                     <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-white font-black text-2xl lg:text-3xl font-mono mb-2 group-hover:text-purple-300 transition-colors">
+                      <h3 className="text-white font-black text-2xl lg:text-3xl mb-2 group-hover:text-purple-300 transition-colors">
                         {filteredContent[0].title}
                       </h3>
                       <p className="text-slate-200 text-sm mb-4 leading-relaxed">
@@ -249,15 +251,15 @@ const GamesSection = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex flex-wrap gap-2">
                           {filteredContent[0].tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="bg-purple-500/30 text-purple-300 px-2 py-1 text-xs font-bold backdrop-blur-sm">
+                            <span key={index} className="bg-purple-500/30 text-purple-300 px-2 py-1 text-xs font-semibold rounded-md backdrop-blur-sm">
                               #{tag}
                             </span>
                           ))}
                         </div>
                         <div className="flex items-center space-x-3">
                           <div className="text-green-400 font-black text-xl">{filteredContent[0].price}</div>
-                          <button className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-2 font-black text-sm hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
-                            PLAY NOW
+                          <button className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-2 font-bold rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
+                            EXPLORE
                           </button>
                         </div>
                       </div>
@@ -267,30 +269,30 @@ const GamesSection = () => {
               </div>
             )}
 
-            {/* Content Grid - Magazine Style */}
+            {/* Content Grid */}
             <div className="grid md:grid-cols-2 gap-6">
               {filteredContent.slice(1, 5).map((item, index) => (
-                <div key={index} className="bg-slate-800/80 border border-slate-700 hover:border-purple-400/60 transition-all duration-300 overflow-hidden group">
+                <div key={index} className="bg-slate-800/60 backdrop-blur-sm border border-slate-600/30 rounded-xl hover:border-purple-400/60 transition-all duration-300 overflow-hidden group cursor-pointer">
                   <div className="relative h-40 overflow-hidden">
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     <div className="absolute top-2 left-2">
-                      <span className="bg-slate-900/90 text-purple-400 px-2 py-1 text-xs font-black">
+                      <span className="bg-slate-900/90 text-purple-400 px-2 py-1 text-xs font-bold rounded-md">
                         {item.type?.toUpperCase() || 'GAME'}
                       </span>
                     </div>
                     <div className="absolute bottom-2 left-2 right-2">
-                      <h4 className="text-white font-bold text-sm font-mono mb-1 group-hover:text-purple-300 transition-colors">
+                      <h4 className="text-white font-bold text-sm mb-1 group-hover:text-purple-300 transition-colors">
                         {item.title}
                       </h4>
                       <div className="flex justify-between items-center">
-                        <div className="text-purple-400 text-xs font-bold">{item.category}</div>
+                        <div className="text-purple-400 text-xs font-semibold">{item.category}</div>
                         <div className="text-green-400 font-bold text-sm">{item.price}</div>
                       </div>
                     </div>
                   </div>
-                  <div className="p-3">
-                    <p className="text-slate-400 text-xs mb-2 leading-relaxed">{item.description}</p>
+                  <div className="p-4">
+                    <p className="text-slate-400 text-xs mb-3 leading-relaxed">{item.description}</p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2 text-xs text-slate-400">
                         <Download className="w-3 h-3" />
@@ -298,7 +300,7 @@ const GamesSection = () => {
                         <Star className="w-3 h-3 text-yellow-400 ml-2" />
                         <span>{item.rating}</span>
                       </div>
-                      <button className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 font-bold text-xs transition-all duration-300">
+                      <button className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 font-semibold text-xs rounded-md transition-all duration-300">
                         EXPLORE
                       </button>
                     </div>
@@ -307,11 +309,11 @@ const GamesSection = () => {
               ))}
             </div>
 
-            {/* Magazine CTA */}
+            {/* CTA */}
             <div className="mt-8 text-center">
               <Link 
                 to="/game-development" 
-                className="inline-flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white px-8 py-4 font-black text-lg hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 space-x-2"
+                className="inline-flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white px-8 py-4 font-bold text-lg rounded-lg hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 space-x-2"
               >
                 <Zap className="w-5 h-5" />
                 <span>EXPLORE GAMING UNIVERSE</span>
