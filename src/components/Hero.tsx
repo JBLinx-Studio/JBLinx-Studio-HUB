@@ -1,236 +1,139 @@
 
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Code, Zap, Play, Pause, Crown, Star, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { ArrowRight, Play, Code, Palette, Globe, Zap, Shield, Database, CheckCircle } from 'lucide-react';
 
 const Hero = () => {
-  const [terminalText, setTerminalText] = useState('');
-  const [currentLine, setCurrentLine] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const terminalLines = [
-    '> connecting_to_divine_consciousness...',
-    '> synchronizing_sacred_protocols...',
-    '> initializing_blessed_frameworks...',
-    '> activating_orthodox_innovation...',
-    '> STATUS: Sacred digital realm online ✟'
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (currentLine < terminalLines.length && isTyping) {
-        const line = terminalLines[currentLine];
-        setTerminalText(prev => {
-          const newText = prev + line + '\n';
-          if (prev.split('\n').length - 1 === currentLine) {
-            setCurrentLine(currentLine + 1);
-          }
-          return newText;
-        });
-      } else if (currentLine >= terminalLines.length) {
-        setIsTyping(false);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [currentLine, isTyping]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-indigo-950 overflow-hidden">
-      {/* Sacred Orthodox Grid */}
+    <section id="home" className="relative min-h-screen flex items-center bg-white overflow-hidden">
+      {/* Background Elements */}
       <div className="absolute inset-0">
-        {/* Sacred Cross Pattern */}
-        <div className="absolute inset-0">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-24 h-24 border-2 border-yellow-400/10 rotate-45 animate-pulse"
-              style={{
-                left: `${(i * 20 + mousePosition.x * 0.01) % 100}%`,
-                top: `${(i * 15 + mousePosition.y * 0.01) % 100}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${3 + (i % 2)}s`,
-                borderRadius: '20%'
-              }}
-            />
-          ))}
-        </div>
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-white to-purple-50/30"></div>
         
-        {/* Divine Light Emanations */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-2xl" />
+        {/* Geometric shapes */}
+        <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-blue-100/40 to-purple-100/40 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-br from-cyan-100/40 to-blue-100/40 rounded-full blur-3xl"></div>
         
-        {/* Sacred Geometry Overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,215,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,215,0,0.1)_1px,transparent_1px)] bg-[size:80px_80px]" />
-        </div>
-
-        {/* Divine Rays */}
-        <div className="absolute top-0 left-1/2 w-1 h-full bg-gradient-to-b from-yellow-400/30 via-transparent to-transparent transform -translate-x-1/2"></div>
+        {/* Dot pattern */}
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: `radial-gradient(circle at 25px 25px, #3b82f6 2px, transparent 0)`,
+          backgroundSize: '50px 50px'
+        }}></div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 pt-20">
-        <div className="grid lg:grid-cols-12 gap-12 items-center min-h-screen">
-          {/* Left: Divine Interface */}
-          <div className="lg:col-span-7 space-y-10">
-            {/* Sacred Digital Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-yellow-500/10 to-purple-500/10 backdrop-blur-xl border border-yellow-500/30 rounded-full px-8 py-4 transform hover:scale-105 transition-all duration-300 group">
-              <div className="relative mr-4">
-                <Crown className="w-6 h-6 text-yellow-400 animate-pulse" />
-                <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-lg"></div>
-              </div>
-              <Sparkles className="w-5 h-5 text-orange-400 mr-3" />
-              <span className="text-white/90 font-semibold tracking-wide">Sacred Digital Artisans • Blessed Innovation</span>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          {/* Left Content */}
+          <div className="animate-on-scroll fade-in-left">
+            {/* Status Badge */}
+            <div className="inline-flex items-center bg-green-50 border border-green-200 text-green-700 rounded-full px-6 py-3 mb-8 shadow-sm">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
+              <span className="text-sm font-semibold">Available for New Projects</span>
+            </div>
+            
+            {/* Main Headline */}
+            <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 mb-8 leading-[1.1]">
+              Digital Solutions
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600">
+                That Drive Success
+              </span>
+            </h1>
+            
+            {/* Description */}
+            <p className="text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl">
+              JBLinx Studio delivers premium games, applications, digital publishing, and comprehensive 
+              tech solutions that transform businesses and exceed expectations.
+            </p>
+
+            {/* Key Features */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+              {[
+                { icon: Code, text: "Custom Development", color: "from-blue-500 to-cyan-500" },
+                { icon: Palette, text: "Creative Design", color: "from-purple-500 to-pink-500" },
+                { icon: Globe, text: "Global Solutions", color: "from-green-500 to-emerald-500" },
+                { icon: Zap, text: "Fast Delivery", color: "from-orange-500 to-red-500" }
+              ].map((feature, index) => (
+                <div key={index} className="flex items-center space-x-4 p-4 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300">
+                  <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center shadow-lg`}>
+                    <feature.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="font-semibold text-gray-800">{feature.text}</span>
+                </div>
+              ))}
             </div>
 
-            {/* Divine Title */}
-            <div className="space-y-8">
-              <div className="relative">
-                <h1 className="text-7xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 leading-tight tracking-tight">
-                  JBLinx
-                </h1>
-                <div className="absolute -top-6 -right-6 flex space-x-2">
-                  <Crown className="w-10 h-10 text-yellow-400 animate-bounce" />
-                  <div className="w-4 h-4 bg-orange-400 rounded-full animate-ping"></div>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="text-4xl lg:text-5xl font-light text-white/90 leading-relaxed">
-                  We don't just build software.
-                </div>
-                <div className="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-400">
-                  We craft sacred digital experiences.
-                </div>
-              </div>
-            </div>
-
-            {/* Sacred Description */}
-            <div className="space-y-6">
-              <p className="text-2xl text-gray-300 leading-relaxed max-w-3xl">
-                Where ancient wisdom meets modern innovation, creating digital sanctuaries 
-                that elevate the human spirit and bless every interaction.
-              </p>
-              
-              <div className="flex flex-wrap items-center gap-8 text-yellow-300">
-                <div className="flex items-center space-x-3 group hover:scale-105 transition-transform">
-                  <Crown className="w-6 h-6 group-hover:rotate-12 transition-transform duration-500" />
-                  <span className="font-semibold">15+ Sacred Projects</span>
-                </div>
-                <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
-                <div className="flex items-center space-x-3 group hover:scale-105 transition-transform">
-                  <Terminal className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                  <span className="font-semibold">∞ Divine Possibilities</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Sacred Action Interfaces */}
-            <div className="flex flex-col sm:flex-row gap-6">
-              <Link 
-                to="/blog" 
-                className="group relative bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-10 py-5 rounded-3xl font-bold text-xl overflow-hidden transform hover:scale-105 transition-all duration-500 shadow-2xl"
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 mb-16">
+              <a 
+                href="#contact" 
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-5 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center group"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative flex items-center justify-center space-x-4">
-                  <Crown className="w-6 h-6 group-hover:rotate-180 transition-transform duration-500" />
-                  <span>Enter Sacred Realm</span>
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-300" />
-                </div>
-              </Link>
+                Get Started Today
+                <ArrowRight className="ml-3 group-hover:translate-x-1 transition-transform" size={20} />
+              </a>
               
               <a 
-                href="https://github.com/orgs/JBLinx-Studio/repositories"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative border-2 border-yellow-400/50 text-white px-10 py-5 rounded-3xl font-bold text-xl hover:border-yellow-400 transition-all duration-500 backdrop-blur-sm"
+                href="#portfolio" 
+                className="border-2 border-gray-300 text-gray-700 px-12 py-5 rounded-full hover:border-blue-500 hover:text-blue-600 transition-all duration-300 flex items-center justify-center group text-lg font-semibold"
               >
-                <div className="flex items-center justify-center space-x-4">
-                  <Github className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>Sacred Repository</span>
-                </div>
+                <Play className="mr-3 group-hover:scale-110 transition-transform" size={20} />
+                View Our Work
               </a>
             </div>
-          </div>
 
-          {/* Right: Sacred Terminal */}
-          <div className="lg:col-span-5">
-            <div className="relative">
-              {/* Sacred Terminal Frame */}
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-3xl blur-xl"></div>
-              
-              <div className="relative bg-gray-900/70 backdrop-blur-2xl border-2 border-yellow-500/30 rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-all duration-700">
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-5 h-5 bg-red-500 rounded-full animate-pulse"></div>
-                    <div className="w-5 h-5 bg-yellow-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-5 h-5 bg-green-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Crown className="w-5 h-5 text-yellow-400 animate-pulse" />
-                    <span className="text-gray-400 text-sm font-mono">~/sacred-realm</span>
-                    <button 
-                      onClick={() => setIsTyping(!isTyping)}
-                      className="text-gray-400 hover:text-white transition-colors"
-                    >
-                      {isTyping ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="font-mono text-sm space-y-3 min-h-[240px] relative">
-                  <pre className="text-yellow-400 whitespace-pre-wrap leading-relaxed">
-                    {terminalText}
-                  </pre>
-                  {isTyping && (
-                    <div className="flex items-center">
-                      <span className="text-yellow-400">✟ </span>
-                      <div className="w-3 h-6 bg-yellow-400 ml-2 animate-pulse"></div>
-                    </div>
-                  )}
-                </div>
+            {/* Trust Indicators */}
+            <div className="flex items-center space-x-8 pt-8 border-t border-gray-200">
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="w-6 h-6 text-green-500" />
+                <span className="text-gray-600 font-medium">100+ Projects Delivered</span>
               </div>
-
-              {/* Sacred Metrics */}
-              <div className="absolute -bottom-8 -left-8 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl border border-yellow-500/30 rounded-2xl p-6 group hover:scale-110 transition-transform duration-300">
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Crown className="w-6 h-6 text-yellow-400 mr-2" />
-                    <div className="text-3xl font-black text-white">99.9%</div>
-                  </div>
-                  <div className="text-xs text-gray-300">Sacred Uptime</div>
-                </div>
-              </div>
-
-              <div className="absolute -top-8 -right-8 bg-gradient-to-r from-purple-500/20 to-orange-500/20 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-6 group hover:scale-110 transition-transform duration-300">
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Star className="w-6 h-6 text-purple-400 mr-2" />
-                    <div className="text-3xl font-black text-white">∞</div>
-                  </div>
-                  <div className="text-xs text-gray-300">Divine Grace</div>
-                </div>
+              <div className="flex items-center space-x-3">
+                <CheckCircle className="w-6 h-6 text-green-500" />
+                <span className="text-gray-600 font-medium">5+ Years Experience</span>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Sacred Flow Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center relative">
-          <div className="w-2 h-4 bg-white/60 rounded-full mt-3 animate-pulse"></div>
-          <Crown className="absolute -top-2 -left-2 w-4 h-4 text-yellow-400 animate-pulse" />
+          {/* Right Side - Enhanced Visual */}
+          <div className="relative animate-on-scroll fade-in-right">
+            <div className="relative">
+              {/* Main Image Container */}
+              <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-12 shadow-2xl border border-gray-200">
+                {/* Tech Stack Grid */}
+                <div className="grid grid-cols-3 gap-6 mb-8">
+                  {[
+                    { icon: Code, label: "Development", color: "from-blue-500 to-cyan-500" },
+                    { icon: Palette, label: "Design", color: "from-purple-500 to-pink-500" },
+                    { icon: Database, label: "Data", color: "from-green-500 to-emerald-500" },
+                    { icon: Shield, label: "Security", color: "from-red-500 to-orange-500" },
+                    { icon: Globe, label: "Web", color: "from-indigo-500 to-purple-500" },
+                    { icon: Zap, label: "Speed", color: "from-yellow-500 to-orange-500" }
+                  ].map((tech, index) => (
+                    <div key={index} className="group cursor-pointer">
+                      <div className={`w-20 h-20 bg-gradient-to-r ${tech.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300 mx-auto mb-3`}>
+                        <tech.icon className="w-10 h-10 text-white" />
+                      </div>
+                      <div className="text-center text-sm font-semibold text-gray-700">{tech.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Central Logo */}
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl shadow-xl mb-4">
+                    <span className="text-white font-bold text-2xl">JB</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">JBLinx Studio</h3>
+                  <p className="text-gray-600">Premium Tech Solutions</p>
+                </div>
+              </div>
+
+              {/* Floating Elements */}
+              <div className="absolute -top-6 -left-6 w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl rotate-12 shadow-lg"></div>
+              <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl -rotate-12 shadow-lg"></div>
+              <div className="absolute top-1/2 -right-8 w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg rotate-45 shadow-lg"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
