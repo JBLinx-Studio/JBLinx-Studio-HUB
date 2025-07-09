@@ -118,9 +118,15 @@ const GamesSection = () => {
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.4) 2px, transparent 2px)`,
-          backgroundSize: '60px 60px',
-          backgroundPosition: '0 0, 30px 30px'
+          backgroundImage: `
+            repeating-linear-gradient(
+              0deg,
+              rgba(34, 197, 94, 0.3) 0px,
+              transparent 1px,
+              transparent 20px,
+              rgba(34, 197, 94, 0.3) 21px
+            )
+          `
         }}></div>
       </div>
 
@@ -129,196 +135,241 @@ const GamesSection = () => {
         <div className="text-center mb-12">
           <div className="inline-block bg-slate-800/50 backdrop-blur-sm border border-slate-600/50 px-6 py-3 mb-6 rounded-lg">
             <div className="flex items-center justify-center space-x-3">
-              <Trophy className="w-5 h-5 text-purple-400" />
-              <span className="text-purple-400 font-bold text-sm tracking-wider uppercase">Priority #1: Gamers</span>
+              <Trophy className="w-5 h-5 text-green-400" />
+              <span className="text-green-400 font-bold text-sm tracking-wider uppercase">Priority #1: Gamers</span>
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             </div>
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-            PREMIUM <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600">GAMES</span>
+            PREMIUM <span className="text-green-400">GAMES</span>
             <br />
-            <span className="text-2xl lg:text-3xl text-blue-400">+ DEV CONTENT</span>
+            <span className="text-2xl lg:text-3xl text-cyan-400">+ DEV CONTENT</span>
           </h2>
           
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 mx-auto mb-4"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-green-400 to-cyan-400 mx-auto mb-4"></div>
           
           <p className="text-slate-300 max-w-2xl mx-auto text-lg">
             Immersive games, comprehensive development guides, and exclusive behind-the-scenes content
           </p>
         </div>
 
-        {/* Magazine-Style Layout */}
-        <div className="grid lg:grid-cols-4 gap-6">
-          {/* Left Sidebar - Categories & Stats */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Category Navigation */}
-            <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl p-6">
-              <h3 className="text-purple-400 font-black text-lg mb-4 flex items-center">
-                <Gamepad2 className="w-5 h-5 mr-2" />
-                CATEGORIES
-              </h3>
-              <div className="space-y-2">
-                {gameCategories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`w-full text-left px-4 py-3 font-semibold text-sm rounded-lg transition-all duration-300 ${
-                      activeCategory === category
-                        ? 'bg-purple-500 text-white shadow-lg' 
-                        : 'text-slate-400 hover:text-purple-300 hover:bg-slate-700/50'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
+        {/* Terminal-Style Layout with Magazine Structure */}
+        <div className="bg-slate-900/90 backdrop-blur-sm border border-green-400/30 rounded-xl min-h-[600px] overflow-hidden">
+          {/* Terminal Header */}
+          <div className="bg-slate-800/90 border-b border-green-400/30 px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex space-x-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Gamepad2 className="w-5 h-5 text-green-400" />
+                <h2 className="text-green-400 font-black text-xl font-mono">
+                  GAMING_ARCHIVE_v2.1
+                </h2>
               </div>
             </div>
-
-            {/* Gaming Stats */}
-            <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl p-6">
-              <h3 className="text-white font-black text-lg mb-4 flex items-center">
-                <Award className="w-5 h-5 mr-2 text-purple-400" />
-                GAMING HQ
-              </h3>
-              <div className="space-y-4">
-                {[
-                  { icon: Gamepad2, value: "25+", label: "Premium Games", color: "text-purple-400" },
-                  { icon: BookOpen, value: "15+", label: "Dev Guides", color: "text-blue-400" },
-                  { icon: Play, value: "40+", label: "Video Tutorials", color: "text-green-400" },
-                  { icon: Users, value: "25k+", label: "Active Players", color: "text-cyan-400" },
-                  { icon: Trophy, value: "4.8★", label: "Avg Rating", color: "text-yellow-400" }
-                ].map((stat, index) => {
-                  const IconComponent = stat.icon;
-                  return (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 transition-all duration-300">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-slate-700/50 rounded-md flex items-center justify-center">
-                          <IconComponent className={`w-4 h-4 ${stat.color}`} />
-                        </div>
-                        <span className="text-slate-300 text-sm font-medium">{stat.label}</span>
-                      </div>
-                      <div className={`${stat.color} font-black text-lg`}>{stat.value}</div>
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="flex items-center space-x-2 text-xs text-slate-400">
+              <span>◉ LIVE</span>
+              <span>|</span>
+              <span>GAME-ENV v2.1.0</span>
             </div>
           </div>
 
-          {/* Main Content Area */}
-          <div className="lg:col-span-3">
-            {/* Featured Content */}
-            {filteredContent.length > 0 && (
-              <div className="mb-8 relative group">
-                <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/50 rounded-xl overflow-hidden hover:border-purple-400/50 transition-all duration-500">
-                  <div className="relative h-80 lg:h-96 overflow-hidden">
-                    <img 
-                      src={filteredContent[0].image} 
-                      alt={filteredContent[0].title} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                    
-                    <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-                      <div className="flex gap-2">
-                        <span className="bg-purple-500 text-white px-3 py-1 text-sm font-bold rounded-md">
-                          FEATURED
-                        </span>
-                        <span className="bg-slate-900/80 text-white px-3 py-1 text-sm font-semibold rounded-md backdrop-blur-sm">
-                          {filteredContent[0].category}
-                        </span>
-                      </div>
-                      <div className="flex space-x-2">
-                        <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-semibold rounded-md backdrop-blur-sm flex items-center space-x-1">
-                          <Eye className="w-3 h-3" />
-                          <span>{filteredContent[0].downloads}</span>
+          {/* Terminal Content */}
+          <div className="p-6">
+            {/* Command Prompt */}
+            <div className="mb-6 font-mono">
+              <div className="text-green-400 text-sm mb-2">
+                <span className="text-slate-500">gamer@jblinx-studio</span>
+                <span className="text-white">:</span>
+                <span className="text-cyan-400">~/gaming-universe</span>
+                <span className="text-white">$ </span>
+                <span className="text-green-400">ls -la --premium-content</span>
+              </div>
+              <div className="w-2 h-4 bg-green-400 animate-pulse inline-block"></div>
+            </div>
+
+            {/* Two-Column Magazine Layout */}
+            <div className="grid lg:grid-cols-4 gap-6">
+              {/* Left Sidebar - Categories & Stats */}
+              <div className="lg:col-span-1 space-y-6">
+                {/* Category Navigation */}
+                <div>
+                  <h3 className="text-green-400 font-black text-lg mb-4 flex items-center font-mono">
+                    <Trophy className="w-5 h-5 mr-2" />
+                    CATEGORIES/
+                  </h3>
+                  <div className="space-y-2">
+                    {gameCategories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setActiveCategory(category)}
+                        className={`w-full text-left px-4 py-3 font-semibold text-sm font-mono rounded-lg transition-all duration-300 ${
+                          activeCategory === category
+                            ? 'bg-green-500 text-white shadow-lg' 
+                            : 'bg-slate-800/50 text-slate-400 hover:text-green-300 hover:bg-slate-700/50'
+                        }`}
+                      >
+                        --{category.toLowerCase().replace(' ', '-')}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Gaming Stats */}
+                <div className="bg-slate-800/50 backdrop-blur-sm border border-green-400/30 rounded-lg p-6">
+                  <h3 className="text-green-400 font-black text-base mb-4 flex items-center font-mono">
+                    <Award className="w-4 h-4 mr-2" />
+                    STATS
+                  </h3>
+                  <div className="grid grid-cols-1 gap-4 text-sm font-mono">
+                    <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                      <span className="text-slate-400 block text-xs">games</span>
+                      <span className="text-green-400 text-lg font-bold">25+</span>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                      <span className="text-slate-400 block text-xs">guides</span>
+                      <span className="text-cyan-400 text-lg font-bold">15+</span>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                      <span className="text-slate-400 block text-xs">players</span>
+                      <span className="text-green-400 text-lg font-bold">25k+</span>
+                    </div>
+                    <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                      <span className="text-slate-400 block text-xs">rating</span>
+                      <span className="text-yellow-400 text-lg font-bold">4.8★</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Content Area */}
+              <div className="lg:col-span-3">
+                {/* Featured Content */}
+                {filteredContent.length > 0 && (
+                  <div className="mb-8 relative group">
+                    <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg overflow-hidden hover:border-green-400/50 transition-all duration-500">
+                      <div className="relative h-80 lg:h-96 overflow-hidden">
+                        <img 
+                          src={filteredContent[0].image} 
+                          alt={filteredContent[0].title} 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+                        
+                        <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+                          <div className="flex gap-2">
+                            <span className="bg-green-500 text-white px-3 py-1 text-sm font-bold font-mono rounded-md">
+                              FEATURED
+                            </span>
+                            <span className="bg-slate-900/80 text-white px-3 py-1 text-sm font-semibold font-mono rounded-md backdrop-blur-sm">
+                              [{filteredContent[0].category}]
+                            </span>
+                          </div>
+                          <div className="flex space-x-2">
+                            <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-semibold font-mono rounded-md backdrop-blur-sm flex items-center space-x-1">
+                              <Eye className="w-3 h-3" />
+                              <span>{filteredContent[0].downloads}</span>
+                            </div>
+                            <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-semibold font-mono rounded-md backdrop-blur-sm flex items-center space-x-1">
+                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                              <span>{filteredContent[0].rating}</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="bg-slate-900/80 text-white px-2 py-1 text-sm font-semibold rounded-md backdrop-blur-sm flex items-center space-x-1">
-                          <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                          <span>{filteredContent[0].rating}</span>
+
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <h3 className="text-white font-black text-2xl lg:text-3xl mb-2 group-hover:text-green-300 transition-colors font-mono">
+                            {filteredContent[0].title}
+                          </h3>
+                          <div className="bg-slate-900/50 rounded-lg p-3 font-mono text-sm mb-4">
+                            <div className="text-slate-500 mb-1">$ game --description:</div>
+                            <div className="text-slate-200"># {filteredContent[0].description}</div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex flex-wrap gap-2">
+                              {filteredContent[0].tags.slice(0, 3).map((tag, index) => (
+                                <span key={index} className="bg-green-500/30 text-green-300 px-2 py-1 text-xs font-semibold font-mono rounded-md backdrop-blur-sm">
+                                  --{tag.toLowerCase()}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="flex items-center space-x-3">
+                              <div className="text-green-400 font-black text-xl font-mono">{filteredContent[0].price}</div>
+                              <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 font-bold font-mono rounded-lg hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300">
+                                LAUNCH
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                )}
 
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-white font-black text-2xl lg:text-3xl mb-2 group-hover:text-purple-300 transition-colors">
-                        {filteredContent[0].title}
-                      </h3>
-                      <p className="text-slate-200 text-sm mb-4 leading-relaxed">
-                        {filteredContent[0].description}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-wrap gap-2">
-                          {filteredContent[0].tags.slice(0, 3).map((tag, index) => (
-                            <span key={index} className="bg-purple-500/30 text-purple-300 px-2 py-1 text-xs font-semibold rounded-md backdrop-blur-sm">
-                              #{tag}
-                            </span>
-                          ))}
+                {/* Content Grid */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {filteredContent.slice(1, 5).map((item, index) => (
+                    <div key={index} className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/30 rounded-lg hover:border-green-400/60 transition-all duration-300 overflow-hidden group cursor-pointer">
+                      <div className="relative h-40 overflow-hidden">
+                        <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div className="absolute top-2 left-2">
+                          <span className="bg-slate-900/90 text-green-400 px-2 py-1 text-xs font-bold font-mono rounded-md">
+                            [{item.type?.toUpperCase() || 'GAME'}]
+                          </span>
                         </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="text-green-400 font-black text-xl">{filteredContent[0].price}</div>
-                          <button className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-2 font-bold rounded-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
-                            EXPLORE
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <h4 className="text-white font-bold text-sm mb-1 group-hover:text-green-300 transition-colors font-mono">
+                            {item.title}
+                          </h4>
+                          <div className="flex justify-between items-center">
+                            <div className="text-green-400 text-xs font-semibold font-mono">[{item.category}]</div>
+                            <div className="text-green-400 font-bold text-sm font-mono">{item.price}</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <div className="bg-slate-900/50 rounded-lg p-2 font-mono text-xs mb-3">
+                          <div className="text-slate-500 mb-1">$ description:</div>
+                          <div className="text-slate-300"># {item.description}</div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2 text-xs text-slate-400 font-mono">
+                            <Download className="w-3 h-3" />
+                            <span>{item.downloads}</span>
+                            <Star className="w-3 h-3 text-yellow-400 ml-2" />
+                            <span>{item.rating}</span>
+                          </div>
+                          <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 font-semibold text-xs font-mono rounded-md transition-all duration-300">
+                            RUN
                           </button>
                         </div>
                       </div>
                     </div>
+                  ))}
+                </div>
+
+                {/* Terminal Command Line */}
+                <div className="pt-6 border-t border-slate-700/50 mt-8">
+                  <div className="text-green-400 font-mono text-sm flex items-center space-x-2">
+                    <span className="text-slate-500">gamer@jblinx-studio</span>
+                    <span className="text-white">:</span>
+                    <span className="text-cyan-400">~/gaming-universe</span>
+                    <span className="text-white">$</span>
+                    <Link 
+                      to="/game-development"
+                      className="text-green-400 hover:text-green-300 underline decoration-dashed transition-colors"
+                    >
+                      explore --all-games
+                    </Link>
                   </div>
+                  <div className="w-2 h-4 bg-green-400 animate-pulse inline-block mt-1"></div>
                 </div>
               </div>
-            )}
-
-            {/* Content Grid */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {filteredContent.slice(1, 5).map((item, index) => (
-                <div key={index} className="bg-slate-800/60 backdrop-blur-sm border border-slate-600/30 rounded-xl hover:border-purple-400/60 transition-all duration-300 overflow-hidden group cursor-pointer">
-                  <div className="relative h-40 overflow-hidden">
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div className="absolute top-2 left-2">
-                      <span className="bg-slate-900/90 text-purple-400 px-2 py-1 text-xs font-bold rounded-md">
-                        {item.type?.toUpperCase() || 'GAME'}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <h4 className="text-white font-bold text-sm mb-1 group-hover:text-purple-300 transition-colors">
-                        {item.title}
-                      </h4>
-                      <div className="flex justify-between items-center">
-                        <div className="text-purple-400 text-xs font-semibold">{item.category}</div>
-                        <div className="text-green-400 font-bold text-sm">{item.price}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <p className="text-slate-400 text-xs mb-3 leading-relaxed">{item.description}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2 text-xs text-slate-400">
-                        <Download className="w-3 h-3" />
-                        <span>{item.downloads}</span>
-                        <Star className="w-3 h-3 text-yellow-400 ml-2" />
-                        <span>{item.rating}</span>
-                      </div>
-                      <button className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 font-semibold text-xs rounded-md transition-all duration-300">
-                        EXPLORE
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div className="mt-8 text-center">
-              <Link 
-                to="/game-development" 
-                className="inline-flex items-center bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white px-8 py-4 font-bold text-lg rounded-lg hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 space-x-2"
-              >
-                <Zap className="w-5 h-5" />
-                <span>EXPLORE GAMING UNIVERSE</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
             </div>
           </div>
         </div>
