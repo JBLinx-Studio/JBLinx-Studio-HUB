@@ -17,35 +17,75 @@ const Index = () => {
       <main className="relative">
         <Hero />
         
-        {/* Enhanced Services Overview - Links to all menu categories */}
+        {/* Enhanced Services Overview */}
         <Services />
         
-        {/* Add spacing between priority sections */}
-        <div className="py-8"></div>
+        {/* Large Spacing with Divider */}
+        <div className="py-16 bg-gradient-to-b from-slate-950 to-slate-900">
+          <div className="container mx-auto px-4">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>
+          </div>
+        </div>
         
-        {/* PRIORITY 1: GAMERS - Games first to capture gaming audience */}
-        <GamesSection />
+        {/* PRIORITY 1: GAMERS - Dark Purple Theme */}
+        <div className="bg-gradient-to-b from-slate-900 via-purple-950/20 to-slate-900">
+          <GamesSection />
+        </div>
         
-        {/* Spacer */}
-        <div className="py-12"></div>
+        {/* Large Spacing with Divider */}
+        <div className="py-20 bg-gradient-to-b from-slate-900 to-slate-800">
+          <div className="container mx-auto px-4">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-500 to-transparent mb-8"></div>
+            <div className="text-center">
+              <div className="w-2 h-2 bg-slate-500 rounded-full mx-auto mb-4"></div>
+              <div className="w-16 h-px bg-slate-600 mx-auto"></div>
+            </div>
+          </div>
+        </div>
         
-        {/* PRIORITY 2: GENERAL PRODUCTS - Templates, tools, ebooks for broader audience */}
-        <ProductsShowcase />
+        {/* PRIORITY 2: GENERAL PRODUCTS - Dark Blue Theme */}
+        <div className="bg-gradient-to-b from-slate-800 via-blue-950/20 to-slate-800">
+          <ProductsShowcase />
+        </div>
         
-        {/* Spacer */}
-        <div className="py-12"></div>
+        {/* Large Spacing with Divider */}
+        <div className="py-20 bg-gradient-to-b from-slate-800 to-slate-900">
+          <div className="container mx-auto px-4">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-500 to-transparent mb-8"></div>
+            <div className="text-center">
+              <div className="w-2 h-2 bg-slate-500 rounded-full mx-auto mb-4"></div>
+              <div className="w-16 h-px bg-slate-600 mx-auto"></div>
+            </div>
+          </div>
+        </div>
         
-        {/* PRIORITY 3: APP USERS - Web and mobile apps for end users */}
-        <WebAppsSection />
+        {/* PRIORITY 3: APP USERS - Dark Green Theme */}
+        <div className="bg-gradient-to-b from-slate-900 via-green-950/20 to-slate-900">
+          <WebAppsSection />
+        </div>
         
-        {/* Spacer */}
-        <div className="py-12"></div>
+        {/* Large Spacing with Divider */}
+        <div className="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+          <div className="container mx-auto px-4">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-500 to-transparent mb-8"></div>
+            <div className="text-center">
+              <div className="w-2 h-2 bg-slate-500 rounded-full mx-auto mb-4"></div>
+              <div className="w-16 h-px bg-slate-600 mx-auto"></div>
+            </div>
+          </div>
+        </div>
         
-        {/* PRIORITY 4: DEVELOPERS - Dev tools and resources moved to bottom, more compact */}
-        <DeveloperTools />
+        {/* PRIORITY 4: DEVELOPERS - Dark Cyan Theme */}
+        <div className="bg-gradient-to-b from-slate-950 via-cyan-950/20 to-slate-950">
+          <DeveloperTools />
+        </div>
         
-        {/* Final spacer before contact */}
-        <div className="py-8"></div>
+        {/* Final Large Spacing */}
+        <div className="py-16 bg-slate-950">
+          <div className="container mx-auto px-4">
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>
+          </div>
+        </div>
         
         <Contact />
       </main>
