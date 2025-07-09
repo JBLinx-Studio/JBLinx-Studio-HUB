@@ -69,44 +69,47 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="relative py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-purple-500/5 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-r from-green-500/5 to-cyan-500/5 blur-3xl rounded-full"></div>
-        
-        {/* Geometric patterns */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="w-full h-full" style={{
-            backgroundImage: `
-              linear-gradient(45deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-              linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px'
-          }}></div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-full px-8 py-4 mb-8">
-            <Hexagon className="w-6 h-6 text-emerald-400 mr-3" />
-            <span className="text-emerald-400 font-bold text-lg">Our Services</span>
+    <section className="py-6 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
+      <div className="container mx-auto px-4">
+        {/* Compact Services Header */}
+        <div className="text-center mb-5">
+          <div className="inline-flex items-center bg-slate-800/95 border border-emerald-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
+            <Trophy className="w-3 h-3 mr-1 text-emerald-400" />
+            <span className="text-emerald-400 font-black text-xs font-mono tracking-widest">OUR SERVICES</span>
           </div>
           
-          <h2 className="text-5xl lg:text-7xl font-black text-white mb-6">
-            What We <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Create</span>
+          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
+            WHAT WE <span className="text-emerald-400">CREATE</span>
           </h2>
           
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            Professional development services across games, web, mobile, and backend systems. 
-            Building the future with cutting-edge technology and innovative solutions.
+          <div className="w-16 h-0.5 bg-emerald-400 mx-auto mb-2"></div>
+          
+          <p className="text-sm text-slate-400 max-w-xl mx-auto mb-3">
+            Professional development services across games, web, mobile, and backend systems
           </p>
+
+          {/* Services Stats */}
+          <div className="grid grid-cols-4 gap-1 max-w-xl mx-auto mb-4">
+            {[
+              { icon: Gamepad2, value: "15+", label: "Games", color: "text-purple-400" },
+              { icon: Code, value: "30+", label: "Web Apps", color: "text-blue-400" },
+              { icon: Database, value: "25+", label: "Backend", color: "text-green-400" },
+              { icon: Smartphone, value: "12+", label: "Mobile", color: "text-orange-400" }
+            ].map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={index} className="bg-slate-800/80 border border-slate-700 p-1.5 text-center backdrop-blur-sm">
+                  <IconComponent className={`w-3 h-3 ${stat.color} mx-auto mb-0.5`} />
+                  <div className={`text-xs font-black ${stat.color} font-mono`}>{stat.value}</div>
+                  <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-20">
+        {/* Services Grid - Compact */}
+        <div className="grid lg:grid-cols-2 gap-3 mb-5">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             const isActive = activeService === index;
@@ -114,47 +117,46 @@ const ServicesSection = () => {
             return (
               <div
                 key={index}
-                className={`group relative p-8 rounded-3xl transition-all duration-500 cursor-pointer transform hover:scale-105 ${
+                className={`bg-slate-800/95 border transition-all duration-300 cursor-pointer p-3 ${
                   isActive 
-                    ? `${service.bgColor} ${service.borderColor} border-2 shadow-2xl` 
-                    : 'bg-slate-800/50 border border-slate-700/50 hover:bg-slate-800/80'
+                    ? `${service.borderColor} shadow-lg` 
+                    : 'border-slate-700 hover:border-slate-600'
                 }`}
                 onMouseEnter={() => setActiveService(index)}
               >
-                {/* Icon & Title */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 bg-gradient-to-r ${service.gradient}`}>
-                    <IconComponent className="w-8 h-8 text-white" />
+                {/* Service Header */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-2">
+                    <div className={`w-8 h-8 bg-gradient-to-r ${service.gradient} flex items-center justify-center`}>
+                      <IconComponent className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <h3 className={`text-sm font-black font-mono ${isActive ? service.accent : 'text-white'}`}>
+                        {service.title}
+                      </h3>
+                      <p className="text-xs text-slate-400">{service.subtitle}</p>
+                    </div>
                   </div>
                   
                   <div className="text-right">
-                    <div className="flex items-center space-x-1 mb-1">
-                      <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                      <span className="text-white font-bold">{service.stats.rating}</span>
+                    <div className="flex items-center space-x-1">
+                      <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                      <span className="text-white font-bold text-xs">{service.stats.rating}</span>
                     </div>
-                    <div className={`text-sm font-bold ${service.accent}`}>{service.stats.projects}</div>
+                    <div className={`text-xs font-bold ${service.accent}`}>{service.stats.projects}</div>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="space-y-4">
-                  <div>
-                    <h3 className={`text-2xl font-black mb-2 transition-colors duration-300 ${
-                      isActive ? service.accent : 'text-white group-hover:text-emerald-300'
-                    }`}>
-                      {service.title}
-                    </h3>
-                    <p className="text-slate-400 text-sm font-semibold mb-3">{service.subtitle}</p>
-                  </div>
-                  
-                  <p className="text-slate-300 leading-relaxed">{service.description}</p>
+                {/* Service Content */}
+                <div className="space-y-2">
+                  <p className="text-slate-300 text-xs leading-relaxed">{service.description}</p>
                   
                   {/* Features */}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1">
                     {service.features.map((feature, featureIndex) => (
                       <span 
                         key={featureIndex} 
-                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-all duration-300 ${
+                        className={`px-2 py-0.5 text-xs font-bold border transition-all duration-300 ${
                           isActive 
                             ? `${service.borderColor} ${service.bgColor} ${service.accent}` 
                             : 'border-slate-600 bg-slate-700/50 text-slate-300'
@@ -166,53 +168,48 @@ const ServicesSection = () => {
                   </div>
                   
                   {/* Stats & CTA */}
-                  <div className="flex items-center justify-between pt-4">
-                    <div className="flex items-center space-x-4 text-sm">
-                      <div className="flex items-center space-x-1">
-                        <Users className="w-4 h-4 text-slate-400" />
-                        <span className="text-slate-300 font-medium">{service.stats.users}</span>
-                      </div>
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center space-x-2 text-xs">
+                      <Users className="w-3 h-3 text-slate-400" />
+                      <span className="text-slate-300 font-medium">{service.stats.users}</span>
                     </div>
                     
                     <Link 
                       to={service.link}
-                      className={`flex items-center space-x-2 font-bold transition-all duration-300 hover:scale-105 ${
+                      className={`flex items-center space-x-1 text-xs font-bold transition-all duration-300 hover:scale-105 ${
                         isActive ? service.accent : 'text-slate-400 hover:text-emerald-400'
                       }`}
                     >
-                      <span>Learn More</span>
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      <span>EXPLORE</span>
+                      <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
                 </div>
-
-                {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl pointer-events-none`}></div>
               </div>
             );
           })}
         </div>
 
-        {/* Achievements */}
-        <div className="bg-gradient-to-r from-slate-800/80 to-slate-700/80 backdrop-blur-sm border border-slate-600/50 rounded-3xl p-12 mb-16">
-          <h3 className="text-3xl font-bold text-white text-center mb-12">
-            Proven <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Excellence</span>
+        {/* Achievements - Compact */}
+        <div className="bg-slate-800/80 border border-slate-600/50 p-3 mb-4">
+          <h3 className="text-sm font-bold text-white text-center mb-3 font-mono">
+            PROVEN <span className="text-emerald-400">EXCELLENCE</span>
           </h3>
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-4 gap-2">
             {achievements.map((achievement, index) => {
               const IconComponent = achievement.icon;
               return (
                 <div key={index} className="text-center group cursor-pointer">
-                  <div className="w-20 h-20 bg-gradient-to-r from-slate-700 to-slate-600 border border-slate-500/50 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-125 group-hover:border-emerald-400/50 transition-all duration-300">
-                    <IconComponent className={`w-10 h-10 ${achievement.color} group-hover:text-emerald-400 transition-colors duration-300`} />
+                  <div className="w-12 h-12 bg-slate-700 border border-slate-500/50 flex items-center justify-center mx-auto mb-1 group-hover:scale-110 group-hover:border-emerald-400/50 transition-all duration-300">
+                    <IconComponent className={`w-4 h-4 ${achievement.color} group-hover:text-emerald-400 transition-colors duration-300`} />
                   </div>
                   
-                  <div className="text-3xl font-black text-white mb-2 group-hover:text-emerald-300 transition-colors duration-300">
+                  <div className="text-sm font-black text-white mb-0.5 group-hover:text-emerald-300 transition-colors duration-300 font-mono">
                     {achievement.value}
                   </div>
                   
-                  <div className="text-slate-400 font-medium">
+                  <div className="text-slate-400 font-medium text-xs">
                     {achievement.label}
                   </div>
                 </div>
@@ -221,24 +218,16 @@ const ServicesSection = () => {
           </div>
         </div>
 
-        {/* Call to Action */}
+        {/* CTA */}
         <div className="text-center">
-          <div className="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 backdrop-blur-sm rounded-3xl p-12 max-w-4xl mx-auto">
-            <Zap className="w-16 h-16 text-emerald-400 mx-auto mb-6" />
-            <h3 className="text-4xl font-bold text-white mb-6">
-              Ready to Build Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Amazing?</span>
-            </h3>
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-2xl mx-auto">
-              Join thousands of satisfied clients who trust us to deliver exceptional digital solutions.
-            </p>
-            <Link 
-              to="/blog" 
-              className="inline-flex items-center bg-gradient-to-r from-emerald-500 to-cyan-500 text-black px-12 py-6 rounded-2xl font-black text-xl hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 transform"
-            >
-              <span>Explore Our Work</span>
-              <ArrowRight className="w-6 h-6 ml-3" />
-            </Link>
-          </div>
+          <Link 
+            to="/blog" 
+            className="inline-flex items-center bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-black px-5 py-2 font-black transition-all duration-300 space-x-1 shadow-lg text-sm"
+          >
+            <Zap className="w-3 h-3" />
+            <span>EXPLORE ALL SERVICES</span>
+            <ArrowRight className="w-3 h-3" />
+          </Link>
         </div>
       </div>
     </section>
