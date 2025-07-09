@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, Power, Wifi, Signal, Battery } from 'lucide-react';
+import { Terminal, Wifi, Signal, Battery } from 'lucide-react';
 
 interface TerminalCommand {
   command: string;
@@ -127,34 +127,32 @@ const ProfessionalTerminal: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-black/95 border-2 border-emerald-400/60 backdrop-blur-sm rounded-xl shadow-2xl shadow-emerald-400/20 overflow-hidden">
-      {/* Terminal Header */}
-      <div className="flex items-center justify-between p-4 border-b-2 border-emerald-400/40 bg-emerald-400/5">
+    <div className="bg-black border border-emerald-400/60 rounded-lg shadow-2xl shadow-emerald-400/20 overflow-hidden">
+      {/* Terminal Header - More Realistic */}
+      <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-600">
         <div className="flex items-center space-x-3">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-            <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
-          </div>
-          <div className="text-emerald-400 text-sm font-bold flex items-center space-x-2">
-            <Terminal className="w-4 h-4" />
-            <span>JBLINX TERMINAL</span>
+          <div className="flex items-center space-x-2">
+            <Terminal className="w-4 h-4 text-emerald-400" />
+            <span className="text-gray-300 text-sm font-mono">Terminal</span>
           </div>
         </div>
-        <div className="flex items-center space-x-3 text-emerald-400/70">
-          <Signal className="w-3 h-3" />
-          <Wifi className="w-3 h-3" />
-          <Battery className="w-3 h-3" />
-          <Power className="w-3 h-3" />
+        
+        <div className="flex items-center space-x-2">
+          <div className="text-gray-400 text-xs font-mono">jblinx@studio</div>
+          <div className="flex items-center space-x-1 text-gray-500">
+            <Signal className="w-3 h-3" />
+            <Wifi className="w-3 h-3" />
+            <Battery className="w-3 h-3" />
+          </div>
         </div>
       </div>
       
       {/* Terminal Content - Fixed Height to Prevent Layout Shift */}
       <div 
         ref={terminalRef}
-        className="p-4 bg-black/90 h-80 overflow-hidden relative"
+        className="p-4 bg-black h-80 overflow-hidden relative"
       >
-        <div className="text-emerald-400/60 text-xs mb-2">
+        <div className="text-emerald-400/60 text-xs mb-2 font-mono">
           JBLinx Studio Operating System v2.1.7
         </div>
         
