@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, Wifi, Signal, Battery } from 'lucide-react';
+import { Terminal, Power, Wifi, Signal, Battery } from 'lucide-react';
 
 interface TerminalCommand {
   command: string;
@@ -127,30 +127,35 @@ const ProfessionalTerminal: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-slate-950/95 border border-emerald-400/60 backdrop-blur-sm shadow-2xl shadow-emerald-400/20 overflow-hidden">
-      {/* Terminal Header - More authentic without color circles */}
-      <div className="flex items-center justify-between p-3 border-b border-emerald-400/40 bg-slate-900/90">
+    <div className="bg-black/95 border-2 border-emerald-400/60 backdrop-blur-sm rounded-xl shadow-2xl shadow-emerald-400/20 overflow-hidden">
+      {/* Terminal Header */}
+      <div className="flex items-center justify-between p-4 border-b-2 border-emerald-400/40 bg-emerald-400/5">
         <div className="flex items-center space-x-3">
-          <div className="text-emerald-400 text-sm font-bold flex items-center space-x-2 font-mono">
+          <div className="flex space-x-2">
+            <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+            <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+            <div className="w-3 h-3 bg-emerald-400 rounded-full"></div>
+          </div>
+          <div className="text-emerald-400 text-sm font-bold flex items-center space-x-2">
             <Terminal className="w-4 h-4" />
-            <span>jblinx@studio:~</span>
+            <span>JBLINX TERMINAL</span>
           </div>
         </div>
         <div className="flex items-center space-x-3 text-emerald-400/70">
           <Signal className="w-3 h-3" />
           <Wifi className="w-3 h-3" />
           <Battery className="w-3 h-3" />
-          <div className="text-xs font-mono">◉ LIVE</div>
+          <Power className="w-3 h-3" />
         </div>
       </div>
       
       {/* Terminal Content - Fixed Height to Prevent Layout Shift */}
       <div 
         ref={terminalRef}
-        className="p-4 bg-slate-950/90 h-80 overflow-hidden relative"
+        className="p-4 bg-black/90 h-80 overflow-hidden relative"
       >
-        <div className="text-emerald-400/60 text-xs mb-2 font-mono">
-          JBLinx Studio Operating System v2.1.7 - Terminal Session Active
+        <div className="text-emerald-400/60 text-xs mb-2">
+          JBLinx Studio Operating System v2.1.7
         </div>
         
         <div className="font-mono text-sm leading-relaxed h-full overflow-hidden">
@@ -160,7 +165,7 @@ const ProfessionalTerminal: React.FC = () => {
           
           {/* Cursor */}
           <div className="flex items-center mt-2">
-            <span className="text-emerald-400 mr-1 font-mono">[jblinx@studio]$</span>
+            <span className="text-emerald-400 mr-1">[jblinx@studio]$</span>
             {(isTyping || showCursor) && (
               <div className="w-2 h-4 bg-emerald-400 animate-pulse"></div>
             )}
@@ -168,10 +173,10 @@ const ProfessionalTerminal: React.FC = () => {
         </div>
         
         {/* Status indicators at bottom */}
-        <div className="absolute bottom-2 right-4 flex items-center space-x-2 text-xs font-mono">
+        <div className="absolute bottom-2 right-4 flex items-center space-x-2 text-xs">
           <div className="flex items-center space-x-1 text-emerald-400/60">
             <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
-            <span>SYSTEM ONLINE</span>
+            <span>LIVE</span>
           </div>
         </div>
       </div>
