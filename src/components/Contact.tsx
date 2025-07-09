@@ -1,59 +1,54 @@
 
 import React from 'react';
-import { Mail, Phone, MapPin, Send, MessageCircle, Calendar, Clock, Globe, Terminal, Code, Zap } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
+import { Mail, Phone, MapPin, Send, MessageCircle, Calendar, Clock, Globe } from 'lucide-react';
 
 const Contact = () => {
   const contactMethods = [
     {
       icon: Mail,
-      title: "EMAIL_US",
+      title: "Email Us",
       description: "Send us an email anytime",
       contact: "hello@jblinxstudio.com",
-      color: "from-emerald-500/20 to-cyan-500/20",
-      borderColor: "border-emerald-500/30"
+      color: "from-blue-500 to-cyan-500"
     },
     {
       icon: Phone,
-      title: "CALL_US",
+      title: "Call Us",
       description: "Mon-Fri from 8am to 5pm",
       contact: "+1 (555) 123-4567",
-      color: "from-cyan-500/20 to-blue-500/20",
-      borderColor: "border-cyan-500/30"
+      color: "from-green-500 to-emerald-500"
     },
     {
       icon: MapPin,
-      title: "VISIT_US",
+      title: "Visit Us",
       description: "Come say hello at our HQ",
       contact: "123 Innovation Street, Tech City, TC 12345",
-      color: "from-purple-500/20 to-pink-500/20",
-      borderColor: "border-purple-500/30"
+      color: "from-purple-500 to-pink-500"
     },
     {
       icon: Globe,
-      title: "FOLLOW_US",
+      title: "Follow Us",
       description: "Connect on social media",
       contact: "@jblinxstudio",
-      color: "from-orange-500/20 to-red-500/20",
-      borderColor: "border-orange-500/30"
+      color: "from-orange-500 to-red-500"
     }
   ];
 
   const offices = [
     {
-      city: "NEW_YORK",
+      city: "New York",
       address: "123 Innovation Street, NYC 10001",
       phone: "+1 (555) 123-4567",
       email: "ny@jblinxstudio.com"
     },
     {
-      city: "SAN_FRANCISCO",
+      city: "San Francisco",
       address: "456 Tech Valley, SF 94105",
       phone: "+1 (555) 987-6543",
       email: "sf@jblinxstudio.com"
     },
     {
-      city: "LONDON",
+      city: "London",
       address: "789 Digital Lane, London SW1A 1AA",
       phone: "+44 20 7946 0958",
       email: "london@jblinxstudio.com"
@@ -61,91 +56,59 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-slate-900 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/5 to-cyan-500/5 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/5 to-orange-500/5 blur-3xl rounded-full"></div>
-        
-        {/* Tech grid pattern */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="w-full h-full" style={{
-            backgroundImage: `
-              linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Header Section */}
+    <section id="contact" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-slate-800/60 backdrop-blur-sm border border-emerald-500/30 text-emerald-400 px-8 py-4 mb-8 hover:bg-slate-800/80 transition-all duration-300">
-            <Terminal size={18} className="mr-3" />
-            <span className="font-black text-sm font-mono tracking-[0.2em]">CONTACT_PROTOCOL</span>
+          <div className="inline-flex items-center bg-blue-100 text-blue-600 rounded-full px-4 py-2 mb-4">
+            <MessageCircle size={16} className="mr-2" />
+            <span className="text-sm font-semibold">CONTACT US</span>
           </div>
-          
-          <h2 className="text-5xl lg:text-6xl font-black text-white mb-8 font-mono tracking-wider leading-tight">
-            LET'S START YOUR NEXT
-            <span className="block text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text mt-2">
-              DIGITAL JOURNEY
-            </span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            Let's Start Your Next
+            <span className="block text-blue-600">Digital Journey</span>
           </h2>
-          
-          <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 mx-auto mb-8"></div>
-          
-          <p className="text-xl text-slate-300 max-w-4xl mx-auto font-mono leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Ready to transform your ideas into reality? Get in touch with our team and let's discuss 
             how we can help bring your vision to life with cutting-edge technology solutions.
           </p>
         </div>
 
-        <Separator className="bg-emerald-500/30 mb-16" />
-
-        {/* Contact Methods Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        {/* Contact Methods */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {contactMethods.map((method, index) => (
-            <div key={index} className={`bg-slate-800/60 backdrop-blur-sm border ${method.borderColor} p-8 hover:bg-slate-800/80 transition-all duration-300 group hover:scale-105 hover:border-emerald-400/50`}>
-              <div className={`w-16 h-16 bg-gradient-to-r ${method.color} border ${method.borderColor} flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-                <method.icon className="text-emerald-400" size={24} />
+            <div key={index} className="text-center group">
+              <div className={`w-16 h-16 bg-gradient-to-r ${method.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <method.icon className="text-white" size={32} />
               </div>
-              <h3 className="font-black text-emerald-400 mb-3 font-mono text-base tracking-[0.15em]">{method.title}</h3>
-              <p className="text-slate-400 text-sm mb-4 font-mono leading-relaxed">{method.description}</p>
-              <p className="text-cyan-300 font-bold font-mono text-base break-all">{method.contact}</p>
+              <h3 className="font-bold text-gray-900 mb-2">{method.title}</h3>
+              <p className="text-gray-600 text-sm mb-3">{method.description}</p>
+              <p className="text-blue-600 font-semibold">{method.contact}</p>
             </div>
           ))}
         </div>
 
-        <Separator className="bg-emerald-500/30 mb-16" />
-
-        <div className="grid lg:grid-cols-2 gap-20">
+        <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Form */}
-          <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 p-10 hover:border-emerald-500/30 transition-all duration-300">
-            <div className="flex items-center mb-8">
-              <Code className="mr-4 text-emerald-400" size={28} />
-              <h3 className="text-3xl font-black text-white font-mono tracking-wider">SEND_MESSAGE</h3>
-            </div>
+          <div className="bg-gray-50 rounded-3xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
             
-            <Separator className="bg-emerald-500/20 mb-8" />
-            
-            <form className="space-y-8">
-              <div className="grid sm:grid-cols-2 gap-6">
+            <form className="space-y-6">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-black text-emerald-400 mb-3 font-mono tracking-[0.1em]">FIRST_NAME *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
                   <input 
                     type="text" 
-                    className="w-full px-5 py-4 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono placeholder:text-slate-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
                     placeholder="John"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-black text-emerald-400 mb-3 font-mono tracking-[0.1em]">LAST_NAME *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name *</label>
                   <input 
                     type="text" 
-                    className="w-full px-5 py-4 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono placeholder:text-slate-500"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
                     placeholder="Doe"
                     required
                   />
@@ -153,27 +116,27 @@ const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-black text-emerald-400 mb-3 font-mono tracking-[0.1em]">EMAIL_ADDRESS *</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
                 <input 
                   type="email" 
-                  className="w-full px-5 py-4 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono placeholder:text-slate-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
                   placeholder="john@example.com"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-black text-emerald-400 mb-3 font-mono tracking-[0.1em]">PHONE_NUMBER</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
                 <input 
                   type="tel" 
-                  className="w-full px-5 py-4 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono placeholder:text-slate-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-black text-emerald-400 mb-3 font-mono tracking-[0.1em]">SERVICE_NEEDED</label>
-                <select className="w-full px-5 py-4 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Service Needed</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white">
                   <option>Select a service</option>
                   <option>Game Development</option>
                   <option>Mobile Applications</option>
@@ -188,8 +151,8 @@ const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-black text-emerald-400 mb-3 font-mono tracking-[0.1em]">PROJECT_BUDGET</label>
-                <select className="w-full px-5 py-4 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Project Budget</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white">
                   <option>Select budget range</option>
                   <option>Under $5,000</option>
                   <option>$5,000 - $15,000</option>
@@ -201,10 +164,10 @@ const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-black text-emerald-400 mb-3 font-mono tracking-[0.1em]">PROJECT_DETAILS *</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Project Details *</label>
                 <textarea 
-                  rows={6}
-                  className="w-full px-5 py-4 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all resize-none font-mono placeholder:text-slate-500"
+                  rows={5}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none bg-white"
                   placeholder="Tell us about your project requirements, timeline, and any specific technologies you'd like us to use..."
                   required
                 ></textarea>
@@ -212,93 +175,83 @@ const Contact = () => {
 
               <button 
                 type="submit"
-                className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-black py-5 px-8 font-black transition-all duration-300 font-mono tracking-[0.1em] hover:from-emerald-600 hover:to-cyan-600 flex items-center justify-center group hover:scale-[1.02] hover:shadow-lg hover:shadow-emerald-500/25"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center group"
               >
-                SEND_MESSAGE
-                <Send className="ml-4 group-hover:translate-x-1 transition-transform" size={22} />
+                Send Message
+                <Send className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
               </button>
             </form>
           </div>
 
-          {/* Contact Information & Actions */}
-          <div className="space-y-10">
-            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 p-10 hover:border-emerald-500/30 transition-all duration-300">
-              <div className="flex items-center mb-6">
-                <Zap className="mr-4 text-emerald-400" size={28} />
-                <h3 className="text-3xl font-black text-white font-mono tracking-wider">GET_IN_TOUCH</h3>
-              </div>
-              
-              <Separator className="bg-emerald-500/20 mb-8" />
-              
-              <p className="text-lg text-slate-300 mb-10 font-mono leading-relaxed">
+          {/* Contact Information & Quick Actions */}
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h3>
+              <p className="text-lg text-gray-600 mb-8">
                 Have a project in mind? We'd love to hear from you. Send us a message and we'll 
                 respond as soon as possible.
               </p>
 
               {/* Quick Actions */}
-              <div className="space-y-5 mb-10">
-                <button className="w-full flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-black py-5 px-8 transition-all duration-300 font-black font-mono tracking-[0.1em] hover:scale-[1.02] hover:shadow-lg hover:shadow-emerald-500/25 group">
-                  <MessageCircle className="mr-4 group-hover:scale-110 transition-transform" size={22} />
-                  START_LIVE_CHAT
+              <div className="space-y-4 mb-8">
+                <button className="w-full flex items-center justify-center bg-blue-600 text-white py-4 px-6 rounded-xl hover:bg-blue-700 transition-colors shadow-lg">
+                  <MessageCircle className="mr-3" size={20} />
+                  Start Live Chat
                 </button>
                 
-                <button className="w-full flex items-center justify-center bg-cyan-600 hover:bg-cyan-700 text-black py-5 px-8 transition-all duration-300 font-black font-mono tracking-[0.1em] hover:scale-[1.02] hover:shadow-lg hover:shadow-cyan-500/25 group">
-                  <Calendar className="mr-4 group-hover:scale-110 transition-transform" size={22} />
-                  SCHEDULE_MEETING
+                <button className="w-full flex items-center justify-center bg-green-600 text-white py-4 px-6 rounded-xl hover:bg-green-700 transition-colors shadow-lg">
+                  <Calendar className="mr-3" size={20} />
+                  Schedule a Meeting
                 </button>
 
-                <button className="w-full flex items-center justify-center border-2 border-slate-600 hover:border-emerald-400 bg-slate-800/40 hover:bg-slate-800/60 text-slate-300 hover:text-emerald-400 py-5 px-8 transition-all duration-300 font-black font-mono tracking-[0.1em] hover:scale-[1.02] group">
-                  <Phone className="mr-4 group-hover:scale-110 transition-transform" size={22} />
-                  REQUEST_CALLBACK
+                <button className="w-full flex items-center justify-center border-2 border-gray-300 text-gray-700 py-4 px-6 rounded-xl hover:border-blue-600 hover:text-blue-600 transition-colors">
+                  <Phone className="mr-3" size={20} />
+                  Request a Call Back
                 </button>
               </div>
 
-              <Separator className="bg-emerald-500/20 mb-8" />
-
               {/* Office Hours */}
-              <div className="bg-slate-900/60 border border-emerald-500/30 p-8">
-                <h4 className="font-black text-white mb-6 flex items-center font-mono tracking-[0.1em] text-lg">
-                  <Clock className="mr-3 text-emerald-400" size={22} />
-                  OFFICE_HOURS
+              <div className="bg-blue-50 rounded-2xl p-6">
+                <h4 className="font-bold text-gray-900 mb-4 flex items-center">
+                  <Clock className="mr-2 text-blue-600" size={20} />
+                  Office Hours
                 </h4>
-                <div className="space-y-3 font-mono text-base">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-400">MONDAY - FRIDAY</span>
-                    <span className="font-bold text-emerald-400">8:00 AM - 6:00 PM</span>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Monday - Friday</span>
+                    <span className="font-semibold">8:00 AM - 6:00 PM</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-400">SATURDAY</span>
-                    <span className="font-bold text-emerald-400">9:00 AM - 4:00 PM</span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Saturday</span>
+                    <span className="font-semibold">9:00 AM - 4:00 PM</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-400">SUNDAY</span>
-                    <span className="font-bold text-slate-500">CLOSED</span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Sunday</span>
+                    <span className="font-semibold">Closed</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <Separator className="bg-emerald-500/30" />
-
             {/* Multiple Offices */}
-            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 p-10 hover:border-emerald-500/30 transition-all duration-300">
-              <h4 className="font-black text-white mb-8 font-mono tracking-[0.1em] text-2xl">OUR_OFFICES</h4>
-              <div className="space-y-8">
+            <div>
+              <h4 className="font-bold text-gray-900 mb-6">Our Offices</h4>
+              <div className="space-y-6">
                 {offices.map((office, index) => (
-                  <div key={index} className="bg-slate-900/60 border border-slate-700/50 p-8 hover:border-emerald-500/30 transition-all duration-300 hover:scale-[1.02] group">
-                    <h5 className="font-black text-xl text-emerald-400 mb-5 font-mono tracking-[0.1em] group-hover:text-emerald-300 transition-colors">{office.city}</h5>
-                    <div className="space-y-3 font-mono text-base">
+                  <div key={index} className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-shadow">
+                    <h5 className="font-bold text-lg text-gray-900 mb-3">{office.city}</h5>
+                    <div className="space-y-2 text-sm">
                       <div className="flex items-start">
-                        <MapPin className="text-slate-500 mr-4 mt-1 group-hover:text-emerald-400 transition-colors" size={18} />
-                        <span className="text-slate-300">{office.address}</span>
+                        <MapPin className="text-gray-400 mr-2 mt-0.5" size={16} />
+                        <span className="text-gray-600">{office.address}</span>
                       </div>
                       <div className="flex items-center">
-                        <Phone className="text-slate-500 mr-4 group-hover:text-emerald-400 transition-colors" size={18} />
-                        <span className="text-slate-300">{office.phone}</span>
+                        <Phone className="text-gray-400 mr-2" size={16} />
+                        <span className="text-gray-600">{office.phone}</span>
                       </div>
                       <div className="flex items-center">
-                        <Mail className="text-slate-500 mr-4 group-hover:text-emerald-400 transition-colors" size={18} />
-                        <span className="text-cyan-300 group-hover:text-cyan-200 transition-colors">{office.email}</span>
+                        <Mail className="text-gray-400 mr-2" size={16} />
+                        <span className="text-blue-600">{office.email}</span>
                       </div>
                     </div>
                   </div>

@@ -26,11 +26,9 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
 
   if (type === 'link') {
     return (
-      <a href={href} className="relative group">
-        <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">
-          {name}
-        </span>
-        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+      <a href={href} className="nav-link relative group">
+        <span>{name}</span>
+        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
       </a>
     );
   }
@@ -38,23 +36,20 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
   return (
     <div className="relative">
       <button
-        className="flex items-center group"
+        className="nav-link flex items-center group"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">
-          {name}
-        </span>
+        <span>{name}</span>
         <ChevronDown 
-          size={14} 
-          className={`ml-1 text-slate-400 group-hover:text-emerald-400 transition-all duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+          size={16} 
+          className={`ml-1 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
         />
-        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
       </button>
       
       <div
-        className="absolute top-full left-1/2 transform -translate-x-1/2"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >

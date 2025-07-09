@@ -19,72 +19,102 @@ interface NavigationItem {
 
 export const navigationItems: NavigationItem[] = [
   {
-    name: 'Products',
-    href: '#products',
+    name: 'Home',
+    href: '#home',
+    type: 'link' as const
+  },
+  {
+    name: 'Services',
+    href: '#services',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Games',
+        title: 'Development',
         items: [
-          { name: 'All Games', href: '/games', description: 'Browse our complete game portfolio' },
-          { name: 'Survival Horror', href: '/games/horror', description: 'Immersive horror experiences' },
-          { name: 'RTS Strategy', href: '/games/strategy', description: 'Real-time strategic combat' },
-          { name: 'Adventure RPG', href: '/games/rpg', description: 'Epic quest adventures' }
+          { name: 'Game Development', href: '/game-development', description: 'Unity, Unreal & custom engines' },
+          { name: 'Web Applications', href: '/web-applications', description: 'React, Vue, Angular solutions' },
+          { name: 'Mobile Apps', href: '/mobile-development', description: 'iOS, Android & cross-platform' },
+          { name: 'Desktop Software', href: '/desktop-development', description: 'Windows, Mac & Linux apps' }
         ]
       },
       {
-        title: 'Web Applications', 
+        title: 'Publishing',
         items: [
-          { name: 'All Web Apps', href: '/apps', description: 'Browse our app collection' },
-          { name: 'TaskFlow Pro', href: '/apps/taskflow', description: 'Advanced task management' },
-          { name: 'DataViz Analytics', href: '/apps/dataviz', description: 'Business intelligence platform' },
-          { name: 'ShopLink Commerce', href: '/apps/shoplink', description: 'E-commerce solutions' }
+          { name: 'Digital Books', href: '/digital-publishing', description: 'E-books & technical guides' },
+          { name: 'Content Creation', href: '/content-creation', description: 'Blogs, articles & dev logs' },
+          { name: 'Documentation', href: '/documentation', description: 'Technical documentation' },
+          { name: 'Tutorials', href: '/tutorials', description: 'Step-by-step guides' }
         ]
       },
       {
-        title: 'Developer Tools',
+        title: 'Infrastructure',
         items: [
-          { name: 'All Tools', href: '/tools', description: 'Open source repositories' },
-          { name: 'FastAPI Template', href: '/tools/fastapi', description: 'Backend development starter' },
-          { name: 'React Components', href: '/tools/react', description: 'Reusable UI components' },
-          { name: 'Database Tools', href: '/tools/database', description: 'Migration and management' }
+          { name: 'Cloud Services', href: '/cloud-services', description: 'AWS, Azure & Google Cloud' },
+          { name: 'Database Solutions', href: '/database-solutions', description: 'SQL & NoSQL databases' },
+          { name: 'Cybersecurity', href: '/cybersecurity', description: 'Security audits & protection' },
+          { name: 'DevOps', href: '/devops', description: 'CI/CD & automation' }
         ]
       }
     ]
   },
   {
-    name: 'Learn',
-    href: '#learn',
+    name: 'Products',
+    href: '#shop',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Learning',
+        title: 'Digital Products',
         items: [
-          { name: 'Development Blog', href: '/blog', description: 'Technical articles & tutorials' },
-          { name: 'Game Dev Guides', href: '/guides/gamedev', description: 'Unity development tutorials' },
-          { name: 'Web Dev Courses', href: '/guides/webdev', description: 'Modern web development' },
-          { name: 'API Documentation', href: '/docs', description: 'Technical documentation' }
+          { name: 'Games', href: '/shop/games', description: 'Our published games' },
+          { name: 'Software Tools', href: '/shop/tools', description: 'Development utilities' },
+          { name: 'Templates', href: '/shop/templates', description: 'Code & design templates' },
+          { name: 'Assets', href: '/shop/assets', description: 'Graphics & audio assets' }
+        ]
+      },
+      {
+        title: 'Learning Materials',
+        items: [
+          { name: 'E-books', href: '/shop/books', description: 'Technical books & guides' },
+          { name: 'Video Courses', href: '/shop/courses', description: 'Online learning content' },
+          { name: 'Tutorials', href: '/shop/tutorials', description: 'Step-by-step tutorials' },
+          { name: 'Documentation', href: '/shop/docs', description: 'Technical documentation' }
+        ]
+      }
+    ]
+  },
+  {
+    name: 'Resources',
+    href: '#blog',
+    type: 'dropdown' as const,
+    categories: [
+      {
+        title: 'Content',
+        items: [
+          { name: 'Blog', href: '/blog', description: 'Latest articles & insights' },
+          { name: 'Dev Logs', href: '/dev-logs', description: 'Development progress' },
+          { name: 'Case Studies', href: '/case-studies', description: 'Project breakdowns' },
+          { name: 'Whitepapers', href: '/whitepapers', description: 'Technical deep dives' }
         ]
       },
       {
         title: 'Community',
         items: [
-          { name: 'GitHub Repos', href: 'https://github.com/orgs/JBLinx-Studio/repositories', description: 'Open source projects' },
-          { name: 'Developer Discord', href: '/discord', description: 'Join our community' },
-          { name: 'Newsletter', href: '/newsletter', description: 'Weekly dev updates' },
-          { name: 'Support Forum', href: '/support', description: 'Get help and answers' }
+          { name: 'Forums', href: '/forums', description: 'Developer discussions' },
+          { name: 'Discord', href: '/discord', description: 'Real-time chat' },
+          { name: 'Newsletter', href: '#newsletter', description: 'Weekly updates' },
+          { name: 'Events', href: '/events', description: 'Workshops & meetups' }
         ]
       }
     ]
   },
   {
-    name: 'Pricing',
-    href: '/pricing',
+    name: 'Portfolio',
+    href: '#portfolio',
     type: 'link' as const
   },
   {
     name: 'About',
-    href: '/about',
+    href: '#about',
     type: 'link' as const
   },
   {

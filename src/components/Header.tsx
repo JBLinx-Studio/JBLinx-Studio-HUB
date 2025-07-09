@@ -10,95 +10,89 @@ const Header = () => {
 
   return (
     <>
-      {/* Top bar with contact info - Gaming Style */}
-      <div className="bg-slate-950 text-slate-300 py-1.5 px-4 hidden lg:block border-b border-slate-800">
-        <div className="container mx-auto flex justify-between items-center text-xs font-mono">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-1">
-              <Phone className="w-3 h-3 text-emerald-400" />
+      {/* Top bar with contact info */}
+      <div className="bg-gray-900 text-white py-2 px-4 hidden lg:block">
+        <div className="container mx-auto flex justify-between items-center text-sm">
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
+              <Phone className="w-4 h-4" />
               <span>+1 (555) 123-4567</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <Mail className="w-3 h-3 text-cyan-400" />
+            <div className="flex items-center space-x-2">
+              <Mail className="w-4 h-4" />
               <span>hello@jblinxstudio.com</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <Clock className="w-3 h-3 text-purple-400" />
+            <div className="flex items-center space-x-2">
+              <Clock className="w-4 h-4" />
               <span>Mon - Fri: 9:00 AM - 6:00 PM</span>
             </div>
           </div>
-          <div className="flex items-center space-x-1">
-            <MapPin className="w-3 h-3 text-orange-400" />
+          <div className="flex items-center space-x-2">
+            <MapPin className="w-4 h-4" />
             <span>San Francisco, CA</span>
           </div>
         </div>
       </div>
 
-      {/* Main header - Gaming Theme */}
-      <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-xl shadow-2xl border-b border-slate-700">
+      {/* Main header */}
+      <header className="header sticky top-0 z-50 bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo - Gaming Style */}
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
             <Link to="/" className="flex items-center group">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform border border-emerald-400/30">
-                  <span className="text-black font-black text-lg font-mono">JB</span>
+              <div className="logo flex items-center space-x-3">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <span className="text-white font-bold text-xl">JB</span>
                 </div>
                 <div>
-                  <div className="text-xl font-black text-white font-mono">JBLinx</div>
-                  <div className="text-xs text-emerald-400 -mt-1 font-bold font-mono tracking-widest">STUDIO</div>
+                  <div className="text-2xl font-bold text-gray-900">JBLinx</div>
+                  <div className="text-xs text-gray-500 -mt-1">Digital Studio</div>
                 </div>
               </div>
             </Link>
 
-            {/* Desktop Navigation - Gaming Style */}
-            <nav className="hidden lg:flex items-center space-x-6">
-              <Link to="/" className="relative group">
-                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">HOME</span>
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
-              </Link>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8">
+              <Link to="/" className="nav-link">Home</Link>
               {navigationItems.map((item, index) => (
                 <NavigationItem
                   key={index}
-                  name={item.name.toUpperCase()}
+                  name={item.name}
                   href={item.href}
                   type={item.type}
                   categories={item.categories}
                 />
               ))}
-              <Link to="/blog" className="relative group">
-                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">BLOG</span>
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
-              </Link>
+              <Link to="/blog" className="nav-link">Blog</Link>
             </nav>
 
-            {/* CTA Button - Gaming Style */}
+            {/* CTA Button */}
             <div className="hidden lg:flex items-center space-x-4">
-              <a href="#contact" className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-black px-4 py-2 font-black text-sm hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 shadow-lg border border-emerald-400/30 font-mono">
-                <span>GET STARTED</span>
-                <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
+              <a href="#contact" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 shadow-lg">
+                <span>Get Started</span>
+                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
               </a>
             </div>
 
-            {/* Mobile Menu Button - Gaming Style */}
+            {/* Mobile Menu Button */}
             <button 
-              className="lg:hidden p-2 bg-slate-800 hover:bg-slate-700 transition-colors border border-slate-600"
+              className="lg:hidden p-3 rounded-xl hover:bg-gray-100 transition-colors border border-gray-200"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X size={20} className="text-emerald-400" /> : <Menu size={20} className="text-emerald-400" />}
+              {isMenuOpen ? <X size={24} className="text-gray-700" /> : <Menu size={24} className="text-gray-700" />}
             </button>
           </div>
 
-          {/* Mobile Menu - Gaming Style */}
+          {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="lg:hidden absolute top-full left-0 right-0 bg-slate-900/98 backdrop-blur-xl shadow-2xl border-t border-slate-700 z-50 animate-in slide-in-from-top-4 duration-300">
-              <div className="px-4 py-4 space-y-3 max-h-96 overflow-y-auto">
+            <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-2xl border-t border-gray-100 z-50 animate-in slide-in-from-top-4 duration-300">
+              <div className="px-4 py-6 space-y-4 max-h-96 overflow-y-auto">
                 <Link 
                   to="/" 
-                  className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
+                  className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  HOME
+                  Home
                 </Link>
                 
                 {navigationItems.map((item, index) => (
@@ -106,27 +100,27 @@ const Header = () => {
                     {item.type === 'link' ? (
                       <a 
                         href={item.href} 
-                        className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
+                        className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        {item.name.toUpperCase()}
+                        {item.name}
                       </a>
                     ) : (
-                      <div className="border-b border-slate-800">
-                        <div className="py-2 text-emerald-400 font-bold text-sm font-mono tracking-wider">{item.name.toUpperCase()}</div>
+                      <div className="border-b border-gray-100">
+                        <div className="py-4 text-gray-700 font-medium">{item.name}</div>
                         {item.categories?.map((category, catIndex) => (
-                          <div key={catIndex} className="ml-3 mb-3">
-                            <h4 className="font-bold text-cyan-400 mb-1 text-xs font-mono">{category.title.toUpperCase()}</h4>
-                            <div className="space-y-1">
+                          <div key={catIndex} className="ml-4 mb-4">
+                            <h4 className="font-semibold text-gray-900 mb-2">{category.title}</h4>
+                            <div className="space-y-2">
                               {category.items.map((subItem, subIndex) => (
                                 <Link
                                   key={subIndex}
                                   to={subItem.href}
-                                  className="block py-1 px-2 text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50 transition-colors text-xs border border-slate-700/50 hover:border-emerald-400/30"
+                                  className="block py-2 px-4 text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors rounded-lg"
                                   onClick={() => setIsMenuOpen(false)}
                                 >
-                                  <div className="font-medium font-mono">{subItem.name}</div>
-                                  <div className="text-xs text-slate-500">{subItem.description}</div>
+                                  <div className="font-medium">{subItem.name}</div>
+                                  <div className="text-sm text-gray-500">{subItem.description}</div>
                                 </Link>
                               ))}
                             </div>
@@ -139,27 +133,27 @@ const Header = () => {
                 
                 <Link 
                   to="/blog" 
-                  className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
+                  className="block py-4 text-gray-700 hover:text-blue-600 transition-colors border-b border-gray-100 font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  BLOG
+                  Blog
                 </Link>
                 
                 {/* Mobile CTA */}
-                <div className="pt-3">
-                  <a href="#contact" className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-black px-4 py-3 font-black shadow-lg block text-center hover:shadow-xl transition-all text-sm font-mono">
-                    GET STARTED TODAY
+                <div className="pt-4">
+                  <a href="#contact" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-2xl font-semibold shadow-lg block text-center hover:shadow-xl transition-all">
+                    Get Started Today
                   </a>
                 </div>
 
                 {/* Mobile contact info */}
-                <div className="pt-3 space-y-1 text-xs text-slate-400 font-mono">
+                <div className="pt-4 space-y-2 text-sm text-gray-500">
                   <div className="flex items-center space-x-2">
-                    <Phone className="w-3 h-3 text-emerald-400" />
+                    <Phone className="w-4 h-4" />
                     <span>+1 (555) 123-4567</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Mail className="w-3 h-3 text-cyan-400" />
+                    <Mail className="w-4 h-4" />
                     <span>hello@jblinxstudio.com</span>
                   </div>
                 </div>
