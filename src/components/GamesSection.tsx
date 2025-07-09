@@ -121,127 +121,115 @@ const GamesSection = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
+        {/* Section Header - Matching Developer Section Style */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/50 border border-purple-500/30 px-4 py-2 mb-4 backdrop-blur-sm">
+          <div className="inline-flex items-center bg-slate-800 border border-slate-700 px-4 py-2 mb-4 rounded-lg">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-semibold text-sm tracking-wider">PRIORITY #1: GAMERS</span>
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-            <span className="text-purple-400">GAMES</span> & DEV CONTENT
+            PREMIUM <span className="text-purple-400">DEVELOPMENT</span> PRODUCTS
           </h2>
           
           <div className="w-20 h-1 bg-purple-400 mx-auto mb-6"></div>
           
           <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-            Premium games, comprehensive guides, exclusive tutorials, and development insights
+            Professional games, comprehensive guides, tutorials, and development content
           </p>
         </div>
 
-        {/* Matrix-Style Data Grid Layout */}
-        <div className="grid lg:grid-cols-12 gap-6 mb-12">
-          {/* Left Column - Command Center */}
-          <div className="lg:col-span-4 space-y-4">
-            <div className="bg-slate-800/90 border border-slate-700 p-6">
-              <div className="flex items-center space-x-2 mb-4">
-                <Terminal className="w-5 h-5 text-green-400" />
-                <h3 className="text-white font-semibold">COMMAND CENTER</h3>
-              </div>
-              
-              <div className="space-y-3">
-                {gameCategories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`w-full text-left px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                      activeCategory === category
-                        ? 'bg-purple-500 text-white' 
-                        : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                    }`}
-                  >
-                    <span className="text-green-400 font-mono mr-2">></span>
-                    {category.toUpperCase()}
-                  </button>
-                ))}
-              </div>
+        {/* Content Filter Section */}
+        <div className="bg-slate-800 border border-slate-700 rounded-lg p-6 mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center space-x-2">
+              <Terminal className="w-5 h-5 text-purple-400" />
+              <h3 className="text-white font-semibold">SELECT CATEGORY</h3>
             </div>
-
-            {/* Stats Panel */}
-            <div className="bg-slate-800/90 border border-slate-700 p-6">
-              <h4 className="text-white font-semibold mb-4 flex items-center">
-                <Monitor className="w-4 h-4 mr-2 text-cyan-400" />
-                SYSTEM STATUS
-              </h4>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { label: "Games", value: "25+", color: "text-purple-400" },
-                  { label: "Guides", value: "15+", color: "text-blue-400" },
-                  { label: "Tutorials", value: "40+", color: "text-green-400" },
-                  { label: "Dev Logs", value: "60+", color: "text-orange-400" }
-                ].map((stat, index) => (
-                  <div key={index} className="bg-slate-900/50 p-3 text-center">
-                    <div className={`text-lg font-bold ${stat.color}`}>{stat.value}</div>
-                    <div className="text-slate-400 text-xs">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - Content Display */}
-          <div className="lg:col-span-8">
-            <div className="grid gap-4">
-              {filteredContent.slice(0, 4).map((item, index) => (
-                <div key={index} className="bg-slate-800/90 border border-slate-700 hover:border-purple-400/50 transition-all duration-300 p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-20 h-20 bg-slate-700 overflow-hidden flex-shrink-0">
-                      <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                    </div>
-                    
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-white font-semibold text-lg">{item.title}</h3>
-                        <div className="flex items-center space-x-2">
-                          <span className="bg-purple-500 text-white px-2 py-1 text-xs font-semibold">
-                            {item.type.toUpperCase()}
-                          </span>
-                          <div className="text-green-400 font-bold">{item.price}</div>
-                        </div>
-                      </div>
-                      
-                      <div className="text-purple-400 text-sm font-medium mb-2">{item.category}</div>
-                      <p className="text-slate-300 text-sm mb-3">{item.description}</p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4 text-sm text-slate-400">
-                          <div className="flex items-center space-x-1">
-                            <Download className="w-4 h-4" />
-                            <span>{item.downloads}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Star className="w-4 h-4 text-yellow-400" />
-                            <span>{item.rating}</span>
-                          </div>
-                        </div>
-                        
-                        <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 text-sm font-semibold transition-colors">
-                          ACCESS
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            
+            <div className="flex flex-wrap gap-2">
+              {gameCategories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    activeCategory === category
+                      ? 'bg-purple-500 text-white' 
+                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  }`}
+                >
+                  {category}
+                </button>
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Grid Layout */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-12">
+          {filteredContent.slice(0, 6).map((item, index) => (
+            <div key={index} className="bg-slate-800 border border-slate-700 hover:border-purple-400/50 transition-all duration-300 rounded-lg overflow-hidden group">
+              {/* Image */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                
+                <div className="absolute top-4 left-4">
+                  <span className="bg-purple-500 text-white px-3 py-1 text-xs font-bold rounded-lg">
+                    {item.type?.toUpperCase()}
+                  </span>
+                </div>
+                
+                <div className="absolute bottom-4 right-4 flex gap-2">
+                  <div className="bg-slate-900/80 text-white px-2 py-1 text-xs rounded flex items-center space-x-1">
+                    <Download className="w-3 h-3" />
+                    <span>{item.downloads}</span>
+                  </div>
+                  <div className="bg-slate-900/80 text-white px-2 py-1 text-xs rounded flex items-center space-x-1">
+                    <Star className="w-3 h-3 text-yellow-400" />
+                    <span>{item.rating}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Content */}
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-white font-semibold text-lg group-hover:text-purple-300 transition-colors">
+                    {item.title}
+                  </h3>
+                  <div className="text-green-400 font-bold">{item.price}</div>
+                </div>
+                
+                <div className="text-purple-400 text-sm font-medium mb-2">{item.category}</div>
+                <p className="text-slate-300 text-sm mb-4">{item.description}</p>
+                
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {item.tags.slice(0, 3).map((tag, tagIndex) => (
+                    <span key={tagIndex} className="bg-slate-700 text-purple-400 px-2 py-1 text-xs rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                
+                <button className="w-full bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 font-semibold rounded-lg transition-colors">
+                  ACCESS NOW
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* CTA Section */}
         <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white px-8 py-4 font-semibold transition-all duration-300 space-x-2 shadow-lg"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 space-x-2 shadow-lg"
           >
             <Zap className="w-5 h-5" />
             <span>EXPLORE ALL CONTENT</span>
