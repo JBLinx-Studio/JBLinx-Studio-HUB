@@ -1,94 +1,88 @@
 
 import React from 'react';
-import { Github, Linkedin, Twitter, Mail, Heart, Phone, MapPin, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, Heart, Phone, MapPin, Code, Zap, Trophy } from 'lucide-react';
 
 const Footer = () => {
   const services = [
-    "Game Development",
-    "Mobile Applications", 
-    "Web Development",
-    "Custom Software",
-    "Database Solutions",
-    "Cybersecurity",
-    "Cloud Services",
-    "Digital Publishing"
+    "Game Development", "Web Applications", "Mobile Development", "Backend Systems",
+    "Cloud Services", "Cybersecurity", "Digital Publishing", "Content Creation"
   ];
 
   const quickLinks = [
-    { name: "About Us", href: "#about" },
-    { name: "Our Services", href: "#services" },
+    { name: "About", href: "#about" },
+    { name: "Services", href: "#services" },
     { name: "Portfolio", href: "#portfolio" },
-    { name: "Case Studies", href: "#" },
     { name: "Blog", href: "#blog" },
+    { name: "Contact", href: "#contact" },
     { name: "Careers", href: "#" },
     { name: "Support", href: "#" },
-    { name: "Contact", href: "#contact" }
+    { name: "Privacy", href: "#" }
   ];
 
-  const legalLinks = [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Cookie Policy", href: "#" },
-    { name: "GDPR Compliance", href: "#" }
+  const achievements = [
+    { icon: Trophy, value: "98.7%", label: "Satisfaction", color: "text-yellow-400" },
+    { icon: Code, value: "100+", label: "Projects", color: "text-blue-400" },
+    { icon: Heart, value: "150+", label: "Clients", color: "text-purple-400" },
+    { icon: Zap, value: "99.9%", label: "Uptime", color: "text-green-400" }
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
-      {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-black text-white border-t border-slate-800">
+      {/* Main Footer - Compact */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Company Info */}
-          <div className="lg:col-span-1">
-            <div className="text-3xl font-bold mb-6">
-              <span className="text-blue-400">JBLinx</span>
-              <span className="text-white">Studio</span>
+          <div>
+            <div className="text-2xl font-black mb-4 font-mono tracking-wider hover:scale-105 transition-transform duration-300 cursor-pointer">
+              <span className="text-emerald-400">JBLINX</span>
+              <span className="text-white">STUDIO</span>
             </div>
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              Leading technology solutions provider specializing in innovative games, applications, 
-              web solutions, and digital services that transform businesses and exceed expectations.
+            
+            <div className="w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 mb-4"></div>
+            
+            <p className="text-slate-300 mb-4 leading-relaxed font-mono text-sm">
+              Leading technology solutions provider specializing in innovative digital experiences.
             </p>
             
-            {/* Contact Info */}
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center text-gray-400">
-                <Phone size={16} className="mr-3" />
+            {/* Contact Info - Compact */}
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
+                <Phone size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
                 <span>+1 (555) 123-4567</span>
               </div>
-              <div className="flex items-center text-gray-400">
-                <Mail size={16} className="mr-3" />
+              <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
+                <Mail size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
                 <span>hello@jblinxstudio.com</span>
-              </div>
-              <div className="flex items-start text-gray-400">
-                <MapPin size={16} className="mr-3 mt-1" />
-                <span>123 Innovation Street<br />Tech City, TC 12345</span>
               </div>
             </div>
 
-            {/* Social Links */}
-            <div className="flex space-x-4">
-              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors group">
-                <Github size={20} className="group-hover:scale-110 transition-transform" />
+            {/* Social Links - Compact */}
+            <div className="flex space-x-2">
+              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
+                <Github size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors group">
-                <Linkedin size={20} className="group-hover:scale-110 transition-transform" />
+              <a href="#" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
+                <Linkedin size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors group">
-                <Twitter size={20} className="group-hover:scale-110 transition-transform" />
+              <a href="#" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
+                <Twitter size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="mailto:hello@jblinxstudio.com" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors group">
-                <Mail size={20} className="group-hover:scale-110 transition-transform" />
+              <a href="mailto:hello@jblinxstudio.com" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
+                <Mail size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
             </div>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white">Our Services</h4>
-            <ul className="space-y-3">
+            <h4 className="text-sm font-black mb-3 text-white font-mono tracking-[0.1em] flex items-center">
+              <Code className="mr-2 text-emerald-400" size={16} />
+              OUR_SERVICES
+            </h4>
+            <ul className="space-y-1">
               {services.map((service, index) => (
                 <li key={index}>
-                  <a href="#services" className="text-gray-400 hover:text-blue-400 transition-colors flex items-center group">
-                    <ExternalLink size={14} className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <a href="#services" className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform">
                     {service}
                   </a>
                 </li>
@@ -98,12 +92,14 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white">Quick Links</h4>
-            <ul className="space-y-3">
+            <h4 className="text-sm font-black mb-3 text-white font-mono tracking-[0.1em] flex items-center">
+              <Zap className="mr-2 text-emerald-400" size={16} />
+              QUICK_LINKS
+            </h4>
+            <ul className="space-y-1">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-gray-400 hover:text-blue-400 transition-colors flex items-center group">
-                    <ExternalLink size={14} className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <a href={link.href} className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform">
                     {link.name}
                   </a>
                 </li>
@@ -111,56 +107,63 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter & Legal */}
+          {/* Achievements - Compact */}
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white">Stay Updated</h4>
-            <p className="text-gray-400 mb-4">
-              Subscribe to our newsletter for the latest updates on projects, technologies, and industry insights.
-            </p>
+            <h4 className="text-sm font-black mb-3 text-white font-mono tracking-[0.1em] flex items-center">
+              <Trophy className="mr-2 text-emerald-400" size={16} />
+              ACHIEVEMENTS
+            </h4>
             
-            {/* Newsletter Signup */}
-            <div className="mb-8">
-              <div className="flex">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:border-blue-500 text-white"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-r-lg transition-colors">
-                  <Mail size={20} />
-                </button>
-              </div>
-              <p className="text-xs text-gray-500 mt-2">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {achievements.map((achievement, index) => {
+                const IconComponent = achievement.icon;
+                return (
+                  <div key={index} className="text-center group cursor-pointer">
+                    <div className="w-8 h-8 bg-slate-700 border border-slate-500/50 flex items-center justify-center mx-auto mb-1 group-hover:scale-110 group-hover:border-emerald-400/50 transition-all duration-300">
+                      <IconComponent className={`w-3 h-3 ${achievement.color} group-hover:text-emerald-400 transition-colors duration-300`} />
+                    </div>
+                    
+                    <div className="text-xs font-black text-white mb-0.5 group-hover:text-emerald-300 transition-colors duration-300 font-mono">
+                      {achievement.value}
+                    </div>
+                    
+                    <div className="text-slate-400 font-medium text-xs">
+                      {achievement.label}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Legal Links */}
+            {/* Newsletter - Compact */}
             <div>
-              <h5 className="font-semibold mb-3 text-white">Legal</h5>
-              <ul className="space-y-2">
-                {legalLinks.map((link, index) => (
-                  <li key={index}>
-                    <a href={link.href} className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <p className="text-slate-300 mb-2 font-mono text-xs">
+                Stay updated with our latest projects
+              </p>
+              <div className="flex border border-slate-600/50 hover:border-emerald-400/50 transition-colors">
+                <input 
+                  type="email" 
+                  placeholder="Enter email"
+                  className="flex-1 px-2 py-1 bg-slate-900/60 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 text-white font-mono text-xs placeholder:text-slate-500"
+                />
+                <button className="bg-emerald-600 hover:bg-emerald-700 px-2 py-1 transition-all duration-300 group hover:scale-105">
+                  <Mail size={12} className="text-black group-hover:scale-110 transition-transform" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
-        <div className="container mx-auto px-4 py-6">
+      {/* Bottom Bar - Compact */}
+      <div className="border-t border-slate-800/50">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2024 JBLinx Studio. All rights reserved. Built with passion and cutting-edge technology.
+            <div className="text-slate-400 text-xs mb-2 md:mb-0 font-mono">
+              © 2024 JBLinx Studio. All rights reserved.
             </div>
-            <div className="flex items-center text-gray-400 text-sm">
-              Made with <Heart className="mx-2 text-red-500" size={16} /> by the JBLinx Studio Team
+            <div className="flex items-center text-slate-400 text-xs font-mono">
+              Made with <Heart className="mx-2 text-emerald-400 animate-pulse" size={12} /> by JBLinx Studio
             </div>
           </div>
         </div>

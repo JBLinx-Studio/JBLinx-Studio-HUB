@@ -1,56 +1,37 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
+import GamesSection from '../components/GamesSection';
+import ProductsShowcase from '../components/ProductsShowcase';
+import WebAppsSection from '../components/WebAppsSection';
+import DeveloperTools from '../components/DeveloperTools';
 import Services from '../components/Services';
-import About from '../components/About';
-import Portfolio from '../components/Portfolio';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
 const Index = () => {
-  useEffect(() => {
-    // Initialize animations on scroll
-    const animateOnScroll = () => {
-      const elements = document.querySelectorAll('.animate-on-scroll');
-      elements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < window.innerHeight - elementVisible) {
-          element.classList.add('animate');
-        }
-      });
-    };
-
-    // Header scroll effect
-    const handleScroll = () => {
-      const header = document.querySelector('.header');
-      if (window.scrollY > 100) {
-        header?.classList.add('scrolled');
-      } else {
-        header?.classList.remove('scrolled');
-      }
-      
-      animateOnScroll();
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    animateOnScroll(); // Initial check
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-950">
       <Header />
-      <main>
+      <main className="relative">
         <Hero />
-        <About />
+        
+        {/* Enhanced Services Overview - Links to all menu categories */}
         <Services />
-        <Portfolio />
+        
+        {/* PRIORITY 1: GAMERS - Games first to capture gaming audience */}
+        <GamesSection />
+        
+        {/* PRIORITY 2: GENERAL PRODUCTS - Templates, tools, ebooks for broader audience */}
+        <ProductsShowcase />
+        
+        {/* PRIORITY 3: APP USERS - Web and mobile apps for end users */}
+        <WebAppsSection />
+        
+        {/* PRIORITY 4: DEVELOPERS - Dev tools and resources moved to bottom, more compact */}
+        <DeveloperTools />
+        
         <Contact />
       </main>
       <Footer />
