@@ -1,12 +1,13 @@
+
 /* ---- particles.js config ---- */
 
 particlesJS("particles-js", {
   "particles": {
     "number": {
-      "value": 150,
+      "value": 200,
       "density": {
         "enable": true,
-        "value_area": 4000
+        "value_area": 3000
       }
     },
     "color": {
@@ -28,44 +29,44 @@ particlesJS("particles-js", {
       }
     },
     "opacity": {
-      "value": 0.5,
-      "random": false,
+      "value": 0.3,
+      "random": true,
       "anim": {
-        "enable": false,
-        "speed": 1,
+        "enable": true,
+        "speed": 0.5,
         "opacity_min": 0.1,
         "sync": false
       }
     },
     "size": {
-      "value": 6,
+      "value": 2,
       "random": true,
       "anim": {
-        "enable": false,
-        "speed": 40,
-        "size_min": 0.1,
+        "enable": true,
+        "speed": 1,
+        "size_min": 0.5,
         "sync": false
       }
     },
     "line_linked": {
       "enable": true,
-      "distance": 150,
+      "distance": 120,
       "color": "#ffffff",
-      "opacity": 0.4,
-      "width": 1
+      "opacity": 0.2,
+      "width": 0.5
     },
     "move": {
       "enable": true,
-      "speed": 6,
+      "speed": 1.5,
       "direction": "none",
-      "random": false,
+      "random": true,
       "straight": false,
-      "out_mode": "out",
-      "bounce": false,
+      "out_mode": "bounce",
+      "bounce": true,
       "attract": {
-        "enable": false,
-        "rotateX": 600,
-        "rotateY": 1200
+        "enable": true,
+        "rotateX": 300,
+        "rotateY": 300
       }
     }
   },
@@ -74,34 +75,41 @@ particlesJS("particles-js", {
     "events": {
       "onhover": {
         "enable": true,
-        "mode": "grab"
+        "mode": ["grab", "attract"]
       },
       "onclick": {
         "enable": true,
-        "mode": "push"
+        "mode": "repulse"
       },
       "resize": true
     },
     "modes": {
       "grab": {
-        "distance": 140,
+        "distance": 180,
         "line_linked": {
-          "opacity": 1
+          "opacity": 0.8,
+          "color": "#ffffff",
+          "width": 1
         }
       },
+      "attract": {
+        "distance": 200,
+        "duration": 0.4,
+        "factor": 5
+      },
       "bubble": {
-        "distance": 400,
-        "size": 40,
+        "distance": 250,
+        "size": 6,
         "duration": 2,
-        "opacity": 8,
+        "opacity": 0.8,
         "speed": 3
       },
       "repulse": {
-        "distance": 200,
+        "distance": 150,
         "duration": 0.4
       },
       "push": {
-        "particles_nb": 4
+        "particles_nb": 3
       },
       "remove": {
         "particles_nb": 2
@@ -109,4 +117,26 @@ particlesJS("particles-js", {
     }
   },
   "retina_detect": true
+});
+
+// Enhanced mouse interaction for floating dust effect
+document.addEventListener('DOMContentLoaded', function() {
+  const canvas = document.querySelector('#particles-js canvas');
+  if (canvas) {
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    canvas.addEventListener('mousemove', function(e) {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      
+      // Add subtle glow effect around mouse
+      canvas.style.cursor = 'none';
+    });
+    
+    canvas.addEventListener('mouseleave', function() {
+      canvas.style.cursor = 'default';
+    });
+  }
 });
