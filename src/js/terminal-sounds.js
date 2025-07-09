@@ -1,12 +1,12 @@
-
 // Professional Terminal Sound Effects System with Real Audio Files
 class TerminalSounds {
   constructor() {
     this.sounds = {};
     this.isEnabled = true;
-    this.volume = 0.7;
+    this.volume = 0.3; // Lower default volume
     this.isInitialized = false;
     this.pendingActions = [];
+    this.audioContext = null;
     this.initializeSounds();
   }
 
@@ -26,30 +26,48 @@ class TerminalSounds {
     };
   }
 
+  async initializeAudioContext() {
+    try {
+      // Create AudioContext for better browser compatibility
+      this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      console.log('✓ Audio context initialized');
+    } catch (e) {
+      console.warn('Failed to initialize audio context:', e);
+    }
+  }
+
   async initializeSounds() {
     try {
+      await this.initializeAudioContext();
       const soundUrls = this.getSoundUrls();
       
-      // Preload all audio files
-      for (const [name, url] of Object.entries(soundUrls)) {
-        const audio = new Audio(url);
-        audio.volume = this.volume;
-        audio.preload = 'auto';
-        
-        // Handle audio loading
-        audio.addEventListener('canplaythrough', () => {
-          console.log(`✓ Loaded sound: ${name}`);
+      // Preload all audio files with better error handling
+      const loadPromises = Object.entries(soundUrls).map(([name, url]) => {
+        return new Promise((resolve) => {
+          const audio = new Audio();
+          audio.crossOrigin = 'anonymous';
+          audio.volume = this.volume;
+          audio.preload = 'auto';
+          
+          audio.addEventListener('canplaythrough', () => {
+            console.log(`✓ Loaded sound: ${name}`);
+            this.sounds[name] = audio;
+            resolve();
+          });
+          
+          audio.addEventListener('error', (e) => {
+            console.warn(`Failed to load sound: ${name}`, e);
+            resolve(); // Don't block other sounds
+          });
+          
+          // Set source after event listeners
+          audio.src = url;
         });
-        
-        audio.addEventListener('error', (e) => {
-          console.warn(`Failed to load sound: ${name}`, e);
-        });
-        
-        this.sounds[name] = audio;
-      }
+      });
       
+      await Promise.all(loadPromises);
       this.isInitialized = true;
-      console.log('Terminal sounds system initialized');
+      console.log('Terminal sounds system initialized with', Object.keys(this.sounds).length, 'sounds');
       
       // Process any pending actions
       this.pendingActions.forEach(action => action());
@@ -72,20 +90,32 @@ class TerminalSounds {
     const audio = this.sounds[soundName];
     if (audio) {
       try {
-        // Reset audio to beginning
-        audio.currentTime = 0;
-        audio.volume = this.volume;
+        // Resume audio context if suspended
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+          await this.audioContext.resume();
+        }
         
-        // Play the sound
-        const playPromise = audio.play();
+        // Clone audio for overlapping sounds
+        const audioClone = audio.cloneNode();
+        audioClone.volume = this.volume;
+        audioClone.currentTime = 0;
+        
+        const playPromise = audioClone.play();
         if (playPromise !== undefined) {
           playPromise.catch(error => {
-            console.warn(`Error playing sound ${soundName}:`, error);
+            // Try original audio if clone fails
+            audio.currentTime = 0;
+            audio.volume = this.volume;
+            return audio.play().catch(e => {
+              console.warn(`Error playing sound ${soundName}:`, e);
+            });
           });
         }
       } catch (error) {
         console.warn(`Error playing sound ${soundName}:`, error);
       }
+    } else {
+      console.warn(`Sound not found: ${soundName}`);
     }
   }
 
@@ -175,10 +205,11 @@ class TerminalSounds {
 
   setupEventListeners() {
     // Initialize audio context on first user interaction
-    const initAudio = () => {
-      if (!this.isInitialized) {
-        this.initializeSounds();
+    const initAudio = async () => {
+      if (this.audioContext && this.audioContext.state === 'suspended') {
+        await this.audioContext.resume();
       }
+      console.log('Audio context activated by user interaction');
     };
 
     // Initialize on first interaction
@@ -186,18 +217,18 @@ class TerminalSounds {
     document.addEventListener('keydown', initAudio, { once: true });
     document.addEventListener('touchstart', initAudio, { once: true });
 
-    // Hyperlink hover effects
+    // Enhanced hover effects for all interactive elements
     document.addEventListener('mouseover', (e) => {
-      const link = e.target.closest('a');
-      if (link && !link.hasAttribute('data-sound-disabled')) {
+      const interactive = e.target.closest('a, button, [role="button"], .nav-item, [role="menuitem"], nav a, .navigation-item');
+      if (interactive && !interactive.hasAttribute('data-sound-disabled')) {
         this.playSound('hover');
-        this.createScanlineEffect(link);
+        this.createScanlineEffect(interactive);
       }
     });
 
-    // Button interactions
+    // Enhanced click effects
     document.addEventListener('click', (e) => {
-      const button = e.target.closest('button');
+      const button = e.target.closest('button, [role="button"]');
       const link = e.target.closest('a');
       
       if (button && !button.hasAttribute('data-sound-disabled')) {
@@ -209,7 +240,7 @@ class TerminalSounds {
       }
     });
 
-    // Form input focus
+    // Form interactions
     document.addEventListener('focus', (e) => {
       if ((e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') && 
           !e.target.hasAttribute('data-sound-disabled')) {
@@ -217,40 +248,34 @@ class TerminalSounds {
       }
     });
 
-    // Navigation items
-    document.addEventListener('mouseover', (e) => {
-      const navItem = e.target.closest('.nav-item, [role="menuitem"], nav a, .navigation-item');
-      if (navItem && !navItem.hasAttribute('data-sound-disabled')) {
-        this.playSound('navigation');
-      }
-    });
-
-    // Typing simulation for inputs
+    // Typing sounds with better throttling
     let lastInputTime = 0;
     document.addEventListener('input', (e) => {
       if ((e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') && 
           !e.target.hasAttribute('data-sound-disabled')) {
         const now = Date.now();
-        if (now - lastInputTime > 100) { // Throttle typing sounds
+        if (now - lastInputTime > 150) {
           this.playSound('type');
           lastInputTime = now;
         }
       }
     });
 
-    // Success/Error sounds for form submissions
+    // Form submission sounds
     document.addEventListener('submit', (e) => {
       if (!e.target.hasAttribute('data-sound-disabled')) {
         this.playSound('success');
       }
     });
 
-    // Error sounds for invalid inputs
+    // Error sounds
     document.addEventListener('invalid', (e) => {
       if (!e.target.hasAttribute('data-sound-disabled')) {
         this.playSound('error');
       }
     });
+
+    console.log('Terminal sound event listeners set up');
   }
 
   // Volume control
@@ -334,7 +359,7 @@ const initializeTerminalSounds = () => {
   if (typeof window !== 'undefined') {
     const terminalSounds = new TerminalSounds();
     
-    // Set up event listeners when DOM is ready
+    // Set up event listeners immediately
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         terminalSounds.setupEventListeners();
@@ -345,11 +370,9 @@ const initializeTerminalSounds = () => {
 
     // Export for global use
     window.terminalSounds = terminalSounds;
-
-    // Test sound function for debugging
     window.testTerminalSound = (soundName) => {
       console.log('Testing sound:', soundName);
-      terminalSounds.testSound(soundName);
+      terminalSounds.playSound(soundName);
     };
 
     console.log('Terminal sounds system ready!');
