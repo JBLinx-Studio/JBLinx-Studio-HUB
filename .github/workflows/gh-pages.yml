@@ -32,6 +32,9 @@ jobs:
       
       - name: Build
         run: npm run build
+        env:
+          # Set the correct base path for the repository
+          VITE_BASE_URL: /JBLinx-Studio-HUB/
       
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3

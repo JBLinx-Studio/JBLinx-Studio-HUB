@@ -37,12 +37,7 @@ jobs:
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: custom
+        id: pages
       
       - name: Install dependencies
         run: npm ci
@@ -50,7 +45,7 @@ jobs:
       - name: Build with Vite
         run: npm run build
         env:
-          # Set base URL for GitHub Pages
+          # Set base URL for GitHub Pages using the configured base path
           VITE_BASE_URL: ${{ steps.pages.outputs.base_path }}/
       
       - name: Upload artifact
