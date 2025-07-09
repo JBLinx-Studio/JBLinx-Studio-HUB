@@ -35,8 +35,8 @@ export default defineConfig(({ mode }) => ({
     },
     // Ensure source maps are generated for debugging
     sourcemap: false,
-    // Optimize for production
-    minify: 'terser',
+    // Optimize for production only
+    minify: mode === 'production' ? 'terser' : false,
     target: 'es2015'
   },
 }));
