@@ -35,6 +35,7 @@ jobs:
         env:
           # Set the correct base path for the repository
           VITE_BASE_URL: /JBLinx-Studio-HUB/
+          NODE_ENV: production
       
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
