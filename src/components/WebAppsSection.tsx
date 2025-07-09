@@ -61,27 +61,24 @@ const WebAppsSection = () => {
   const filteredApps = activeCategory === 'All' ? webApps : webApps.slice(0, 3);
 
   return (
-    <section className="py-6 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
+    <section className="py-16">
       <div className="container mx-auto px-4">
-        {/* Compact Header - Same style as Services */}
-        <div className="text-center mb-5">
-          <div className="inline-flex items-center bg-slate-800/95 border border-green-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
-            <Globe className="w-3 h-3 mr-1 text-green-400" />
-            <span className="text-green-400 font-black text-xs font-mono tracking-widest">PRIORITY #3: APP USERS</span>
+        {/* Vertical Layout Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center bg-slate-800/50 border border-green-500/30 px-4 py-2 rounded-full mb-4">
+            <Globe className="w-4 h-4 mr-2 text-green-400" />
+            <span className="text-green-400 font-bold text-sm tracking-wide">PRIORITY #3: APP USERS</span>
           </div>
           
-          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
             ENTERPRISE <span className="text-green-400">WEB APPS</span>
           </h2>
-          
-          <div className="w-16 h-0.5 bg-green-400 mx-auto mb-2"></div>
-          
-          <p className="text-sm text-slate-400 max-w-xl mx-auto mb-3">
-            Professional SaaS platforms, e-commerce solutions, and enterprise applications
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-8">
+            Professional SaaS platforms, e-commerce solutions, and enterprise applications built for modern businesses
           </p>
-
-          {/* Stats - Same style as Services */}
-          <div className="grid grid-cols-4 gap-1 max-w-xl mx-auto mb-4">
+          
+          {/* Vertical Stats Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-2xl mx-auto">
             {[
               { icon: Globe, value: "25+", label: "Apps", color: "text-green-400" },
               { icon: Users, value: "50k+", label: "Users", color: "text-blue-400" },
@@ -90,25 +87,25 @@ const WebAppsSection = () => {
             ].map((stat, index) => {
               const IconComponent = stat.icon;
               return (
-                <div key={index} className="bg-slate-800/80 border border-slate-700 p-1.5 text-center backdrop-blur-sm">
-                  <IconComponent className={`w-3 h-3 ${stat.color} mx-auto mb-0.5`} />
-                  <div className={`text-xs font-black ${stat.color} font-mono`}>{stat.value}</div>
-                  <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
+                <div key={index} className="bg-slate-800/30 border border-slate-700 rounded-lg p-4 text-center">
+                  <IconComponent className={`w-6 h-6 ${stat.color} mx-auto mb-2`} />
+                  <div className={`text-xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
+                  <div className="text-slate-500 text-sm font-medium">{stat.label}</div>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Category Filter - Same style as Services */}
-        <div className="flex flex-wrap justify-center gap-1 mb-5">
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-3 py-1 text-xs font-black transition-all duration-300 ${
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
                 activeCategory === category
-                  ? 'bg-green-500 text-white shadow-lg' 
+                  ? 'bg-green-500 text-white' 
                   : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 border border-slate-600'
               }`}
             >
@@ -117,63 +114,55 @@ const WebAppsSection = () => {
           ))}
         </div>
 
-        {/* Content Grid - Vertical Layout */}
-        <div className="grid lg:grid-cols-2 gap-3 mb-5">
+        {/* Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-8">
           {filteredApps.map((app, index) => (
-            <div key={index} className="bg-slate-800/95 border border-slate-700 transition-all duration-300 cursor-pointer hover:border-green-400/50 p-3">
-              {/* Header with Image */}
-              <div className="relative h-32 overflow-hidden mb-3">
-                <img src={app.image} alt={app.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                <div className="absolute top-2 right-2">
-                  <div className="bg-green-500 text-white px-2 py-0.5 text-xs font-black">
+            <div key={index} className="bg-slate-800/50 border border-slate-700 rounded-lg overflow-hidden hover:border-green-400/50 transition-all duration-300 group">
+              <div className="relative h-48 overflow-hidden">
+                <img src={app.image} alt={app.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                <div className="absolute top-4 right-4">
+                  <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
                     {app.status}
                   </div>
                 </div>
-                <div className="absolute bottom-2 left-2 right-2">
-                  <h3 className="text-white font-black text-sm font-mono mb-1">{app.title}</h3>
-                  <div className="text-green-400 text-xs font-bold">{app.category}</div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-white font-bold text-xl mb-1">{app.title}</h3>
+                  <div className="text-green-400 text-sm font-medium">{app.category}</div>
                 </div>
               </div>
-
-              {/* Content */}
-              <div className="space-y-2">
-                <p className="text-slate-300 text-xs leading-relaxed">{app.description}</p>
+              <div className="p-6">
+                <p className="text-slate-400 text-sm mb-4">{app.description}</p>
                 
                 {/* App Stats */}
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-4 mb-4">
                   <div className="text-center">
-                    <div className="text-blue-400 font-black text-xs font-mono">{app.users}</div>
+                    <div className="text-blue-400 font-bold text-sm">{app.users}</div>
                     <div className="text-slate-500 text-xs">Users</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-yellow-400 font-black text-xs font-mono">{app.rating}</div>
+                    <div className="text-yellow-400 font-bold text-sm">{app.rating}</div>
                     <div className="text-slate-500 text-xs">Rating</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-purple-400 font-black text-xs font-mono">{app.uptime}</div>
+                    <div className="text-purple-400 font-bold text-sm">{app.uptime}</div>
                     <div className="text-slate-500 text-xs">Uptime</div>
                   </div>
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-2 mb-4">
                   {app.tags.slice(0, 3).map((tag, tagIndex) => (
-                    <span 
-                      key={tagIndex} 
-                      className="px-2 py-0.5 text-xs font-bold border border-green-500/40 bg-green-500/10 text-green-400"
-                    >
+                    <span key={tagIndex} className="bg-slate-700 text-green-400 px-2 py-1 text-xs font-medium rounded">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                {/* Price & CTA */}
-                <div className="flex items-center justify-between pt-2">
-                  <div className="text-green-400 font-black text-xs font-mono">{app.price}</div>
-                  <button className="flex items-center space-x-1 text-xs font-bold text-green-400 hover:text-green-300 transition-all duration-300">
-                    <span>TRY FREE</span>
-                    <ArrowRight className="w-3 h-3" />
+                <div className="flex items-center justify-between">
+                  <div className="text-green-400 font-bold">{app.price}</div>
+                  <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg font-medium transition-colors duration-300">
+                    TRY FREE
                   </button>
                 </div>
               </div>
@@ -181,12 +170,12 @@ const WebAppsSection = () => {
           ))}
         </div>
 
-        {/* CTA - Same style as Services */}
+        {/* CTA */}
         <div className="text-center">
-          <button className="inline-flex items-center bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-black px-5 py-2 font-black transition-all duration-300 space-x-1 shadow-lg text-sm">
-            <TrendingUp className="w-3 h-3" />
-            <span>VIEW ALL APPS</span>
-            <ArrowRight className="w-3 h-3" />
+          <button className="inline-flex items-center bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white px-8 py-3 rounded-full font-bold transition-all duration-300 space-x-2">
+            <TrendingUp className="w-5 h-5" />
+            <span>VIEW ALL WEB APPLICATIONS</span>
+            <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       </div>
