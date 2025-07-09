@@ -61,47 +61,94 @@ const Index = () => {
           <GamesSection />
         </div>
         
-        {/* Enhanced Transition Zone with Connected Vertices Background */}
+        {/* Enhanced Interactive Neural Network Transition Zone */}
         <div className="py-40 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 relative overflow-hidden">
-          {/* Connected Vertices Background */}
+          {/* Interactive Neural Network Background */}
           <div className="absolute inset-0 pointer-events-none">
-            <svg className="w-full h-full opacity-10" viewBox="0 0 800 400">
-              <defs>
-                <linearGradient id="vertexGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.3" />
-                </linearGradient>
-              </defs>
-              
-              {/* Animated connecting lines */}
-              <g stroke="url(#vertexGradient1)" strokeWidth="1" fill="none">
-                <line x1="100" y1="80" x2="200" y2="150" className="animate-pulse" />
-                <line x1="200" y1="150" x2="350" y2="120" className="animate-pulse" style={{animationDelay: '300ms'}} />
-                <line x1="350" y1="120" x2="500" y2="200" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                <line x1="500" y1="200" x2="650" y2="140" className="animate-pulse" style={{animationDelay: '900ms'}} />
-                <line x1="150" y1="250" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                <line x1="300" y1="280" x2="450" y2="250" className="animate-pulse" style={{animationDelay: '1500ms'}} />
-                <line x1="450" y1="250" x2="600" y2="320" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+            <div 
+              id="neural-network-canvas" 
+              className="w-full h-full opacity-80 cursor-none"
+              style={{
+                background: `
+                  radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.1) 0%, transparent 40%),
+                  radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%)
+                `
+              }}
+            >
+              <svg className="w-full h-full" viewBox="0 0 800 400">
+                <defs>
+                  <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
+                    <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.8" />
+                  </linearGradient>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge> 
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
                 
-                {/* Cross connections */}
-                <line x1="200" y1="150" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                <line x1="350" y1="120" x2="450" y2="250" className="animate-pulse" style={{animationDelay: '700ms'}} />
-                <line x1="500" y1="200" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '1000ms'}} />
-              </g>
-              
-              {/* Animated vertices */}
-              <g fill="url(#vertexGradient1)">
-                <circle cx="100" cy="80" r="3" className="animate-pulse" />
-                <circle cx="200" cy="150" r="4" className="animate-pulse" style={{animationDelay: '200ms'}} />
-                <circle cx="350" cy="120" r="3" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                <circle cx="500" cy="200" r="5" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                <circle cx="650" cy="140" r="3" className="animate-pulse" style={{animationDelay: '800ms'}} />
-                <circle cx="150" cy="250" r="4" className="animate-pulse" style={{animationDelay: '1000ms'}} />
-                <circle cx="300" cy="280" r="6" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                <circle cx="450" cy="250" r="3" className="animate-pulse" style={{animationDelay: '1400ms'}} />
-                <circle cx="600" cy="320" r="4" className="animate-pulse" style={{animationDelay: '1600ms'}} />
-              </g>
-            </svg>
+                {/* Interactive Neural Network Lines */}
+                <g stroke="url(#neuralGradient)" strokeWidth="1.5" fill="none" filter="url(#glow)">
+                  {/* Primary network connections */}
+                  <line x1="80" y1="100" x2="180" y2="80" className="neural-line opacity-70 hover:opacity-100 transition-opacity duration-300" />
+                  <line x1="180" y1="80" x2="300" y2="120" className="neural-line opacity-70 hover:opacity-100 transition-opacity duration-300" />
+                  <line x1="300" y1="120" x2="420" y2="90" className="neural-line opacity-70 hover:opacity-100 transition-opacity duration-300" />
+                  <line x1="420" y1="90" x2="540" y2="140" className="neural-line opacity-70 hover:opacity-100 transition-opacity duration-300" />
+                  <line x1="540" y1="140" x2="660" y2="110" className="neural-line opacity-70 hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Secondary layer */}
+                  <line x1="120" y1="200" x2="240" y2="180" className="neural-line opacity-60 hover:opacity-90 transition-opacity duration-300" />
+                  <line x1="240" y1="180" x2="360" y2="220" className="neural-line opacity-60 hover:opacity-90 transition-opacity duration-300" />
+                  <line x1="360" y1="220" x2="480" y2="190" className="neural-line opacity-60 hover:opacity-90 transition-opacity duration-300" />
+                  <line x1="480" y1="190" x2="600" y2="240" className="neural-line opacity-60 hover:opacity-90 transition-opacity duration-300" />
+                  
+                  {/* Tertiary layer */}
+                  <line x1="100" y1="300" x2="220" y2="280" className="neural-line opacity-50 hover:opacity-80 transition-opacity duration-300" />
+                  <line x1="220" y1="280" x2="340" y2="320" className="neural-line opacity-50 hover:opacity-80 transition-opacity duration-300" />
+                  <line x1="340" y1="320" x2="460" y2="290" className="neural-line opacity-50 hover:opacity-80 transition-opacity duration-300" />
+                  <line x1="460" y1="290" x2="580" y2="340" className="neural-line opacity-50 hover:opacity-80 transition-opacity duration-300" />
+                  
+                  {/* Cross connections for complexity */}
+                  <line x1="180" y1="80" x2="240" y2="180" className="neural-line opacity-40 hover:opacity-70 transition-opacity duration-300" />
+                  <line x1="300" y1="120" x2="360" y2="220" className="neural-line opacity-40 hover:opacity-70 transition-opacity duration-300" />
+                  <line x1="420" y1="90" x2="480" y2="190" className="neural-line opacity-40 hover:opacity-70 transition-opacity duration-300" />
+                  <line x1="540" y1="140" x2="600" y2="240" className="neural-line opacity-40 hover:opacity-70 transition-opacity duration-300" />
+                  <line x1="240" y1="180" x2="220" y2="280" className="neural-line opacity-40 hover:opacity-70 transition-opacity duration-300" />
+                  <line x1="360" y1="220" x2="340" y2="320" className="neural-line opacity-40 hover:opacity-70 transition-opacity duration-300" />
+                  <line x1="480" y1="190" x2="460" y2="290" className="neural-line opacity-40 hover:opacity-70 transition-opacity duration-300" />
+                </g>
+                
+                {/* Interactive Neural Nodes */}
+                <g fill="url(#neuralGradient)" filter="url(#glow)">
+                  {/* Primary nodes */}
+                  <circle cx="80" cy="100" r="4" className="neural-node opacity-90 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="180" cy="80" r="5" className="neural-node opacity-90 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="300" cy="120" r="4" className="neural-node opacity-90 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="420" cy="90" r="6" className="neural-node opacity-90 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="540" cy="140" r="4" className="neural-node opacity-90 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="660" cy="110" r="5" className="neural-node opacity-90 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  
+                  {/* Secondary nodes */}
+                  <circle cx="120" cy="200" r="3" className="neural-node opacity-80 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="240" cy="180" r="4" className="neural-node opacity-80 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="360" cy="220" r="3" className="neural-node opacity-80 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="480" cy="190" r="5" className="neural-node opacity-80 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  <circle cx="600" cy="240" r="3" className="neural-node opacity-80 hover:opacity-100 transition-all duration-300 cursor-pointer" />
+                  
+                  {/* Tertiary nodes */}
+                  <circle cx="100" cy="300" r="3" className="neural-node opacity-70 hover:opacity-90 transition-all duration-300 cursor-pointer" />
+                  <circle cx="220" cy="280" r="4" className="neural-node opacity-70 hover:opacity-90 transition-all duration-300 cursor-pointer" />
+                  <circle cx="340" cy="320" r="3" className="neural-node opacity-70 hover:opacity-90 transition-all duration-300 cursor-pointer" />
+                  <circle cx="460" cy="290" r="4" className="neural-node opacity-70 hover:opacity-90 transition-all duration-300 cursor-pointer" />
+                  <circle cx="580" cy="340" r="3" className="neural-node opacity-70 hover:opacity-90 transition-all duration-300 cursor-pointer" />
+                </g>
+              </svg>
+            </div>
           </div>
           
           {/* Multi-layer Background Effects */}
@@ -124,7 +171,7 @@ const Index = () => {
               
               <div className="px-4 py-2 bg-slate-800/95 border border-slate-600 backdrop-blur-sm">
                 <div className="text-slate-600 font-mono text-xs font-black tracking-widest">
-                  NEURAL NETWORK TRANSITION
+                  INTERACTIVE NEURAL NETWORK
                 </div>
               </div>
               
@@ -142,7 +189,7 @@ const Index = () => {
                   className={`w-2 h-2 ${
                     index % 3 === 0 ? 'bg-purple-400/40' : 
                     index % 3 === 1 ? 'bg-blue-400/40' : 'bg-cyan-400/40'
-                  } animate-pulse`}
+                  } animate-pulse hover:scale-150 transition-transform duration-300 cursor-pointer`}
                   style={{ animationDelay: `${index * 50}ms` }}
                 ></div>
               ))}
