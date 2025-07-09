@@ -26,35 +26,35 @@ export const navigationItems: NavigationItem[] = [
       {
         title: 'Games',
         items: [
+          { name: 'All Games', href: '/games', description: 'Browse our complete game portfolio' },
           { name: 'Survival Horror', href: '/games/horror', description: 'Immersive horror experiences' },
           { name: 'RTS Strategy', href: '/games/strategy', description: 'Real-time strategic combat' },
-          { name: 'Adventure RPG', href: '/games/rpg', description: 'Epic quest adventures' },
-          { name: 'All Games', href: '/games', description: 'Browse our game portfolio' }
+          { name: 'Adventure RPG', href: '/games/rpg', description: 'Epic quest adventures' }
         ]
       },
       {
-        title: 'Web Applications',
+        title: 'Web Applications', 
         items: [
+          { name: 'All Web Apps', href: '/apps', description: 'Browse our app collection' },
           { name: 'TaskFlow Pro', href: '/apps/taskflow', description: 'Advanced task management' },
           { name: 'DataViz Analytics', href: '/apps/dataviz', description: 'Business intelligence platform' },
-          { name: 'ShopLink Commerce', href: '/apps/shoplink', description: 'E-commerce solutions' },
-          { name: 'All Web Apps', href: '/apps', description: 'Browse our app collection' }
+          { name: 'ShopLink Commerce', href: '/apps/shoplink', description: 'E-commerce solutions' }
         ]
       },
       {
         title: 'Developer Tools',
         items: [
+          { name: 'All Tools', href: '/tools', description: 'Open source repositories' },
           { name: 'FastAPI Template', href: '/tools/fastapi', description: 'Backend development starter' },
           { name: 'React Components', href: '/tools/react', description: 'Reusable UI components' },
-          { name: 'Database Tools', href: '/tools/database', description: 'Migration and management' },
-          { name: 'All Tools', href: '/tools', description: 'Open source repositories' }
+          { name: 'Database Tools', href: '/tools/database', description: 'Migration and management' }
         ]
       }
     ]
   },
   {
-    name: 'Resources',
-    href: '#resources',
+    name: 'Learn',
+    href: '#learn',
     type: 'dropdown' as const,
     categories: [
       {

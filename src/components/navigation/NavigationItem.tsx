@@ -54,6 +54,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
       </button>
       
       <div
+        className="absolute top-full left-1/2 transform -translate-x-1/2"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
