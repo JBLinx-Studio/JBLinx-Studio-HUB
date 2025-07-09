@@ -17,35 +17,55 @@ const Index = () => {
       <main className="relative">
         <Hero />
         
-        {/* Enhanced Services Overview - Links to all menu categories */}
+        {/* Enhanced Services Overview */}
         <Services />
         
-        {/* Add spacing between priority sections */}
-        <div className="py-8"></div>
+        {/* Large Divider Section */}
+        <div className="py-16 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-y border-slate-700">
+          <div className="container mx-auto px-4 text-center">
+            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-slate-500 to-transparent mx-auto"></div>
+          </div>
+        </div>
         
-        {/* PRIORITY 1: GAMERS - Games first to capture gaming audience */}
+        {/* PRIORITY 1: GAMERS */}
         <GamesSection />
         
-        {/* Spacer */}
-        <div className="py-12"></div>
+        {/* Spacer with background transition */}
+        <div className="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+          <div className="container mx-auto px-4 text-center">
+            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
+          </div>
+        </div>
         
-        {/* PRIORITY 2: GENERAL PRODUCTS - Templates, tools, ebooks for broader audience */}
+        {/* PRIORITY 2: GENERAL PRODUCTS */}
         <ProductsShowcase />
         
-        {/* Spacer */}
-        <div className="py-12"></div>
+        {/* Spacer with background transition */}
+        <div className="py-20 bg-gradient-to-b from-slate-950 to-slate-900">
+          <div className="container mx-auto px-4 text-center">
+            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto"></div>
+          </div>
+        </div>
         
-        {/* PRIORITY 3: APP USERS - Web and mobile apps for end users */}
+        {/* PRIORITY 3: APP USERS */}
         <WebAppsSection />
         
-        {/* Spacer */}
-        <div className="py-12"></div>
+        {/* Spacer with background transition */}
+        <div className="py-20 bg-gradient-to-b from-slate-950 to-slate-900">
+          <div className="container mx-auto px-4 text-center">
+            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto"></div>
+          </div>
+        </div>
         
-        {/* PRIORITY 4: DEVELOPERS - Dev tools and resources moved to bottom, more compact */}
+        {/* PRIORITY 4: DEVELOPERS */}
         <DeveloperTools />
         
         {/* Final spacer before contact */}
-        <div className="py-8"></div>
+        <div className="py-16 bg-gradient-to-b from-black to-slate-950">
+          <div className="container mx-auto px-4 text-center">
+            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-slate-600 to-transparent mx-auto"></div>
+          </div>
+        </div>
         
         <Contact />
       </main>
