@@ -1,22 +1,29 @@
 
 import React from 'react';
 import { Github, Linkedin, Twitter, Mail, Heart, Phone, MapPin, Code, Zap, Trophy } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const services = [
-    "Game Development", "Web Applications", "Mobile Development", "Backend Systems",
-    "Cloud Services", "Cybersecurity", "Digital Publishing", "Content Creation"
+    { name: "Game Development", href: "/game-development" },
+    { name: "Web Applications", href: "/web-applications" },
+    { name: "Mobile Development", href: "/support" },
+    { name: "Backend Systems", href: "/support" },
+    { name: "Cloud Services", href: "/support" },
+    { name: "Cybersecurity", href: "/support" },
+    { name: "Digital Publishing", href: "/blog" },
+    { name: "Content Creation", href: "/blog" }
   ];
 
   const quickLinks = [
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Portfolio", href: "#portfolio" },
-    { name: "Blog", href: "#blog" },
-    { name: "Contact", href: "#contact" },
-    { name: "Careers", href: "#" },
-    { name: "Support", href: "#" },
-    { name: "Privacy", href: "#" }
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/#services" },
+    { name: "Portfolio", href: "/#portfolio" },
+    { name: "Blog", href: "/blog" },
+    { name: "Contact", href: "/#contact" },
+    { name: "Careers", href: "/support" },
+    { name: "Support", href: "/support" },
+    { name: "Privacy", href: "/privacy" }
   ];
 
   const achievements = [
@@ -26,6 +33,37 @@ const Footer = () => {
     { icon: Zap, value: "99.9%", label: "Uptime", color: "text-green-400" }
   ];
 
+  const CodeHoverLink = ({ href, children, external = false }: { href: string; children: string; external?: boolean }) => {
+    const linkContent = (
+      <span className="code-hover">
+        <span className="normal-text">{children}</span>
+        <span className="hover-text">&gt;_ {children}</span>
+      </span>
+    );
+
+    if (external) {
+      return (
+        <a 
+          href={href} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform"
+        >
+          {linkContent}
+        </a>
+      );
+    }
+
+    return (
+      <Link 
+        to={href}
+        className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform"
+      >
+        {linkContent}
+      </Link>
+    );
+  };
+
   return (
     <footer className="bg-black text-white border-t border-slate-800">
       {/* Main Footer - Compact */}
@@ -33,10 +71,10 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Company Info */}
           <div>
-            <div className="text-2xl font-black mb-4 font-mono tracking-wider hover:scale-105 transition-transform duration-300 cursor-pointer">
+            <Link to="/" className="text-2xl font-black mb-4 font-mono tracking-wider hover:scale-105 transition-transform duration-300 cursor-pointer block">
               <span className="text-emerald-400">JBLINX</span>
               <span className="text-white">STUDIO</span>
-            </div>
+            </Link>
             
             <div className="w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 mb-4"></div>
             
@@ -48,23 +86,29 @@ const Footer = () => {
             <div className="space-y-2 mb-4">
               <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
                 <Phone size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
-                <span>+1 (555) 123-4567</span>
+                <span className="code-hover">
+                  <span className="normal-text">+1 (555) 123-4567</span>
+                  <span className="hover-text">&gt;_ +1 (555) 123-4567</span>
+                </span>
               </div>
               <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
                 <Mail size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
-                <span>hello@jblinxstudio.com</span>
+                <a href="mailto:hello@jblinxstudio.com" className="code-hover">
+                  <span className="normal-text">hello@jblinxstudio.com</span>
+                  <span className="hover-text">&gt;_ hello@jblinxstudio.com</span>
+                </a>
               </div>
             </div>
 
             {/* Social Links - Compact */}
             <div className="flex space-x-2">
-              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
+              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110 code-hover">
                 <Github size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="#" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
+              <a href="https://linkedin.com/company/jblinx-studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
                 <Linkedin size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="#" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
+              <a href="https://twitter.com/jblinxstudio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
                 <Twitter size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
               <a href="mailto:hello@jblinxstudio.com" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
@@ -82,9 +126,9 @@ const Footer = () => {
             <ul className="space-y-1">
               {services.map((service, index) => (
                 <li key={index}>
-                  <a href="#services" className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform">
-                    {service}
-                  </a>
+                  <CodeHoverLink href={service.href}>
+                    {service.name}
+                  </CodeHoverLink>
                 </li>
               ))}
             </ul>
@@ -99,9 +143,9 @@ const Footer = () => {
             <ul className="space-y-1">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform">
+                  <CodeHoverLink href={link.href}>
                     {link.name}
-                  </a>
+                  </CodeHoverLink>
                 </li>
               ))}
             </ul>

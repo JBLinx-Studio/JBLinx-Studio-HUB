@@ -8,6 +8,13 @@ import NavigationItem from './navigation/NavigationItem';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const CodeHoverSpan = ({ children }: { children: string }) => (
+    <span className="code-hover">
+      <span className="normal-text">{children}</span>
+      <span className="hover-text">&gt;_ {children}</span>
+    </span>
+  );
+
   return (
     <>
       {/* Top bar with contact info - Gaming Style */}
@@ -54,7 +61,9 @@ const Header = () => {
             {/* Desktop Navigation - Gaming Style */}
             <nav className="hidden lg:flex items-center space-x-6">
               <Link to="/" className="relative group">
-                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">HOME</span>
+                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">
+                  <CodeHoverSpan>HOME</CodeHoverSpan>
+                </span>
                 <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
               </Link>
               {navigationItems.map((item, index) => (
@@ -67,15 +76,20 @@ const Header = () => {
                 />
               ))}
               <Link to="/blog" className="relative group">
-                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">BLOG</span>
+                <span className="text-slate-300 hover:text-emerald-400 font-bold text-sm font-mono tracking-wider transition-all duration-300">
+                  <CodeHoverSpan>BLOG</CodeHoverSpan>
+                </span>
                 <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
               </Link>
             </nav>
 
             {/* CTA Button - Gaming Style */}
             <div className="hidden lg:flex items-center space-x-4">
-              <a href="#contact" className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-black px-4 py-2 font-black text-sm hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 shadow-lg border border-emerald-400/30 font-mono">
-                <span>GET STARTED</span>
+              <a href="#contact" className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-black px-4 py-2 font-black text-sm hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-2 shadow-lg border border-emerald-400/30 font-mono group">
+                <span className="group-hover:opacity-0 transition-opacity">GET STARTED</span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute text-black font-black">
+                  &gt;_ GET STARTED
+                </span>
                 <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
               </a>
             </div>
@@ -98,19 +112,19 @@ const Header = () => {
                   className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  HOME
+                  <CodeHoverSpan>HOME</CodeHoverSpan>
                 </Link>
                 
                 {navigationItems.map((item, index) => (
                   <div key={index}>
                     {item.type === 'link' ? (
-                      <a 
-                        href={item.href} 
+                      <Link 
+                        to={item.href} 
                         className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        {item.name.toUpperCase()}
-                      </a>
+                        <CodeHoverSpan>{item.name.toUpperCase()}</CodeHoverSpan>
+                      </Link>
                     ) : (
                       <div className="border-b border-slate-800">
                         <div className="py-2 text-emerald-400 font-bold text-sm font-mono tracking-wider">{item.name.toUpperCase()}</div>
@@ -125,7 +139,9 @@ const Header = () => {
                                   className="block py-1 px-2 text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50 transition-colors text-xs border border-slate-700/50 hover:border-emerald-400/30"
                                   onClick={() => setIsMenuOpen(false)}
                                 >
-                                  <div className="font-medium font-mono">{subItem.name}</div>
+                                  <div className="font-medium font-mono">
+                                    <CodeHoverSpan>{subItem.name}</CodeHoverSpan>
+                                  </div>
                                   <div className="text-xs text-slate-500">{subItem.description}</div>
                                 </Link>
                               ))}
@@ -142,13 +158,16 @@ const Header = () => {
                   className="block py-2 text-slate-300 hover:text-emerald-400 transition-colors font-bold text-sm font-mono tracking-wider border-b border-slate-800"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  BLOG
+                  <CodeHoverSpan>BLOG</CodeHoverSpan>
                 </Link>
                 
                 {/* Mobile CTA */}
                 <div className="pt-3">
-                  <a href="#contact" className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-black px-4 py-3 font-black shadow-lg block text-center hover:shadow-xl transition-all text-sm font-mono">
-                    GET STARTED TODAY
+                  <a href="#contact" className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-black px-4 py-3 font-black shadow-lg block text-center hover:shadow-xl transition-all text-sm font-mono group">
+                    <span className="group-hover:opacity-0 transition-opacity">GET STARTED TODAY</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute text-black font-black">
+                      &gt;_ GET STARTED TODAY
+                    </span>
                   </a>
                 </div>
 

@@ -62,3 +62,32 @@ html {
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
+
+/* Code-style hover effect for links */
+.code-hover {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.code-hover .normal-text {
+  transition: opacity 0.3s ease;
+}
+
+.code-hover .hover-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #10b981;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+.code-hover:hover .normal-text {
+  opacity: 0;
+}
+
+.code-hover:hover .hover-text {
+  opacity: 1;
+}
