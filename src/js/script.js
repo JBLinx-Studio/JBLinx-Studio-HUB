@@ -205,8 +205,3 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
   }
 });
-
-// Load interactive neural network script
-const script = document.createElement('script');
-script.src = './src/js/interactive-neural.js';
-document.head.appendChild(script);
