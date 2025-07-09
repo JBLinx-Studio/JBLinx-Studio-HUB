@@ -6,8 +6,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Set base path for GitHub Pages deployment - use environment variable or default based on mode
-  base: mode === 'production' ? (process.env.VITE_BASE_URL || '/JBLinx-Studio-HUB/') : '/',
+  // Set base path for GitHub Pages deployment
+  base: mode === 'production' ? '/JBLinx-Studio-HUB/' : '/',
   server: {
     host: "::",
     port: 8080,

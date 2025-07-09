@@ -45,7 +45,7 @@ jobs:
       - name: Build with Vite
         run: npm run build
         env:
-          # Set base URL for GitHub Pages
+          # Set base URL for GitHub Pages - this is crucial
           VITE_BASE_URL: /JBLinx-Studio-HUB/
           NODE_ENV: production
       
