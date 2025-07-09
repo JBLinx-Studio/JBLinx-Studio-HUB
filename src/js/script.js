@@ -207,11 +207,19 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Load interactive neural network script
-const script = document.createElement('script');
-script.src = './src/js/interactive-neural.js';
-document.head.appendChild(script);
+const neuralScript = document.createElement('script');
+neuralScript.src = './src/js/interactive-neural.js';
+neuralScript.async = true;
+document.head.appendChild(neuralScript);
 
 // Load terminal sounds and effects
 const terminalScript = document.createElement('script');
 terminalScript.src = './src/js/terminal-sounds.js';
+terminalScript.async = true;
+terminalScript.onload = () => {
+  console.log('Terminal sounds loaded successfully!');
+};
+terminalScript.onerror = () => {
+  console.error('Failed to load terminal sounds');
+};
 document.head.appendChild(terminalScript);

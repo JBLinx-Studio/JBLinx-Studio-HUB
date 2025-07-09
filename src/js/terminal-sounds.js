@@ -1,72 +1,64 @@
 
-// Professional Terminal Sound Effects System
+// Professional Terminal Sound Effects System with Real Audio Files
 class TerminalSounds {
   constructor() {
-    this.audioContext = null;
     this.sounds = {};
     this.isEnabled = true;
-    this.volume = 0.4;
+    this.volume = 0.7;
     this.isInitialized = false;
     this.pendingActions = [];
-    this.initializeAudioContext();
+    this.initializeSounds();
   }
 
-  async initializeAudioContext() {
+  // Sound mappings with the provided URLs
+  getSoundUrls() {
+    return {
+      hover: 'https://sounds.pond5.com/futuristic-button-click-09-sound-effect-168489137_nw_prev.m4a',
+      click: 'https://sounds.pond5.com/combination-8-sound-effect-296116064_nw_prev.m4a',
+      buttonPress: 'https://sounds.pond5.com/holo-popup-3-sound-effect-152796047_nw_prev.m4a',
+      select: 'https://sounds.pond5.com/monitor-02-samsung-syncmaster-763mb-sound-effect-076121079_nw_prev.m4a',
+      error: 'https://sounds.pond5.com/holo-denied-3-sound-effect-152796038_nw_prev.m4a',
+      success: 'https://sounds.pond5.com/combination-10-sound-effect-296116086_nw_prev.m4a',
+      type: 'https://sounds.pond5.com/loud-static-switch-02-sound-effect-060366462_nw_prev.m4a',
+      navigation: 'https://sounds.pond5.com/monitor-05-samsung-syncmaster-765mb-sound-effect-076121073_nw_prev.m4a',
+      focus: 'https://sounds.pond5.com/monitor-08-daewoo-cmc-1427x-sound-effect-076120985_nw_prev.m4a',
+      power: 'https://sounds.pond5.com/household-plug-socket-electric-socket-sound-effect-267839074_nw_prev.m4a'
+    };
+  }
+
+  async initializeSounds() {
     try {
-      this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const soundUrls = this.getSoundUrls();
       
-      // Handle suspended context
-      if (this.audioContext.state === 'suspended') {
-        await this.resumeAudioContext();
+      // Preload all audio files
+      for (const [name, url] of Object.entries(soundUrls)) {
+        const audio = new Audio(url);
+        audio.volume = this.volume;
+        audio.preload = 'auto';
+        
+        // Handle audio loading
+        audio.addEventListener('canplaythrough', () => {
+          console.log(`✓ Loaded sound: ${name}`);
+        });
+        
+        audio.addEventListener('error', (e) => {
+          console.warn(`Failed to load sound: ${name}`, e);
+        });
+        
+        this.sounds[name] = audio;
       }
       
-      this.createSounds();
       this.isInitialized = true;
+      console.log('Terminal sounds system initialized');
       
       // Process any pending actions
       this.pendingActions.forEach(action => action());
       this.pendingActions = [];
       
     } catch (e) {
-      console.warn('Web Audio API not supported:', e);
+      console.warn('Failed to initialize terminal sounds:', e);
       this.isEnabled = false;
     }
-  }
-
-  async resumeAudioContext() {
-    if (this.audioContext && this.audioContext.state === 'suspended') {
-      try {
-        await this.audioContext.resume();
-      } catch (e) {
-        console.warn('Failed to resume audio context:', e);
-      }
-    }
-  }
-
-  // Create professional terminal sounds
-  createSounds() {
-    if (!this.audioContext) return;
-
-    // Hover sound - subtle electronic beep
-    this.sounds.hover = () => this.createBeep(1000, 0.08, 'sine', 0.3);
-    
-    // Click sound - satisfying confirmation
-    this.sounds.click = () => this.createBeep(1400, 0.12, 'square', 0.4);
-    
-    // Button press - deeper, more substantial
-    this.sounds.buttonPress = () => this.createMultiBeep([800, 1200], 0.15, 'sawtooth', 0.5);
-    
-    // Select sound - ascending tone
-    this.sounds.select = () => this.createSweep(600, 1000, 0.2, 'sine', 0.4);
-    
-    // Error sound - harsh warning
-    this.sounds.error = () => this.createBuzz(300, 0.3, 'sawtooth', 0.6);
-    
-    // Success sound - pleasant chime
-    this.sounds.success = () => this.createChime([800, 1000, 1200], 0.15, 'sine', 0.4);
-    
-    // Typing sound - mechanical keyboard
-    this.sounds.type = () => this.createBeep(1200 + Math.random() * 200, 0.05, 'square', 0.2);
   }
 
   async playSound(soundName) {
@@ -77,100 +69,24 @@ class TerminalSounds {
       return;
     }
 
-    await this.resumeAudioContext();
-    
-    if (this.sounds[soundName]) {
-      this.sounds[soundName]();
+    const audio = this.sounds[soundName];
+    if (audio) {
+      try {
+        // Reset audio to beginning
+        audio.currentTime = 0;
+        audio.volume = this.volume;
+        
+        // Play the sound
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.warn(`Error playing sound ${soundName}:`, error);
+          });
+        }
+      } catch (error) {
+        console.warn(`Error playing sound ${soundName}:`, error);
+      }
     }
-  }
-
-  createBeep(frequency, duration, waveType = 'sine', volume = 0.3) {
-    if (!this.audioContext) return;
-    
-    const oscillator = this.audioContext.createOscillator();
-    const gainNode = this.audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(this.audioContext.destination);
-    
-    oscillator.frequency.value = frequency;
-    oscillator.type = waveType;
-    
-    const startTime = this.audioContext.currentTime;
-    gainNode.gain.setValueAtTime(0, startTime);
-    gainNode.gain.linearRampToValueAtTime(this.volume * volume, startTime + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-    
-    oscillator.start(startTime);
-    oscillator.stop(startTime + duration);
-  }
-
-  createMultiBeep(frequencies, duration, waveType = 'sine', volume = 0.3) {
-    if (!this.audioContext) return;
-    
-    frequencies.forEach((freq, index) => {
-      setTimeout(() => {
-        this.createBeep(freq, duration * 0.6, waveType, volume * 0.8);
-      }, index * 30);
-    });
-  }
-
-  createSweep(startFreq, endFreq, duration, waveType = 'sine', volume = 0.3) {
-    if (!this.audioContext) return;
-    
-    const oscillator = this.audioContext.createOscillator();
-    const gainNode = this.audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(this.audioContext.destination);
-    
-    oscillator.type = waveType;
-    
-    const startTime = this.audioContext.currentTime;
-    oscillator.frequency.setValueAtTime(startFreq, startTime);
-    oscillator.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
-    
-    gainNode.gain.setValueAtTime(0, startTime);
-    gainNode.gain.linearRampToValueAtTime(this.volume * volume, startTime + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-    
-    oscillator.start(startTime);
-    oscillator.stop(startTime + duration);
-  }
-
-  createBuzz(frequency, duration, waveType = 'sawtooth', volume = 0.3) {
-    if (!this.audioContext) return;
-    
-    const oscillator = this.audioContext.createOscillator();
-    const gainNode = this.audioContext.createGain();
-    const filter = this.audioContext.createBiquadFilter();
-    
-    oscillator.connect(filter);
-    filter.connect(gainNode);
-    gainNode.connect(this.audioContext.destination);
-    
-    oscillator.frequency.value = frequency;
-    oscillator.type = waveType;
-    filter.type = 'lowpass';
-    filter.frequency.value = frequency * 2;
-    
-    const startTime = this.audioContext.currentTime;
-    gainNode.gain.setValueAtTime(0, startTime);
-    gainNode.gain.linearRampToValueAtTime(this.volume * volume, startTime + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-    
-    oscillator.start(startTime);
-    oscillator.stop(startTime + duration);
-  }
-
-  createChime(frequencies, duration, waveType = 'sine', volume = 0.3) {
-    if (!this.audioContext) return;
-    
-    frequencies.forEach((freq, index) => {
-      setTimeout(() => {
-        this.createBeep(freq, duration, waveType, volume * (1 - index * 0.1));
-      }, index * 80);
-    });
   }
 
   // Visual effects
@@ -192,12 +108,16 @@ class TerminalSounds {
     `;
     
     const parent = element.closest('div, span, a, button') || element;
+    const originalPosition = parent.style.position;
     parent.style.position = 'relative';
     parent.appendChild(scanline);
     
     setTimeout(() => {
       if (scanline.parentNode) {
         scanline.parentNode.removeChild(scanline);
+        if (!originalPosition) {
+          parent.style.position = '';
+        }
       }
     }, 400);
   }
@@ -206,11 +126,13 @@ class TerminalSounds {
     if (!element) return;
     
     const originalText = element.textContent;
+    const originalColor = element.style.color;
     const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
     let glitchInterval;
     let iterations = 0;
     
     element.style.color = '#10b981';
+    element.style.textShadow = '0 0 5px #10b981';
     
     glitchInterval = setInterval(() => {
       let glitchedText = '';
@@ -229,7 +151,8 @@ class TerminalSounds {
         clearInterval(glitchInterval);
         element.textContent = originalText;
         setTimeout(() => {
-          element.style.color = '';
+          element.style.color = originalColor;
+          element.style.textShadow = '';
         }, 100);
       }
     }, 40);
@@ -238,78 +161,118 @@ class TerminalSounds {
   createGlowEffect(element) {
     if (!element) return;
     
+    const originalColor = element.style.color;
+    const originalShadow = element.style.textShadow;
+    
     element.style.textShadow = '0 0 10px #10b981, 0 0 20px #10b981';
     element.style.color = '#10b981';
     
     setTimeout(() => {
-      element.style.textShadow = '';
-      element.style.color = '';
+      element.style.textShadow = originalShadow;
+      element.style.color = originalColor;
     }, 300);
   }
 
-  attachEventListeners() {
+  setupEventListeners() {
     // Initialize audio context on first user interaction
-    const initAudio = async () => {
+    const initAudio = () => {
       if (!this.isInitialized) {
-        await this.initializeAudioContext();
+        this.initializeSounds();
       }
-      await this.resumeAudioContext();
     };
-
-    // Set up event listeners when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.setupEventListeners());
-    } else {
-      this.setupEventListeners();
-    }
 
     // Initialize on first interaction
     document.addEventListener('click', initAudio, { once: true });
     document.addEventListener('keydown', initAudio, { once: true });
-  }
+    document.addEventListener('touchstart', initAudio, { once: true });
 
-  setupEventListeners() {
     // Hyperlink hover effects
     document.addEventListener('mouseover', (e) => {
-      if (e.target.tagName === 'A' || e.target.closest('a')) {
+      const link = e.target.closest('a');
+      if (link && !link.hasAttribute('data-sound-disabled')) {
         this.playSound('hover');
-        this.createScanlineEffect(e.target.closest('a') || e.target);
+        this.createScanlineEffect(link);
       }
     });
 
     // Button interactions
     document.addEventListener('click', (e) => {
-      if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+      const button = e.target.closest('button');
+      const link = e.target.closest('a');
+      
+      if (button && !button.hasAttribute('data-sound-disabled')) {
         this.playSound('buttonPress');
-        this.createGlitchEffect(e.target.closest('button') || e.target);
-      } else if (e.target.tagName === 'A' || e.target.closest('a')) {
+        this.createGlitchEffect(button);
+      } else if (link && !link.hasAttribute('data-sound-disabled')) {
         this.playSound('click');
-        this.createGlowEffect(e.target.closest('a') || e.target);
+        this.createGlowEffect(link);
       }
     });
 
     // Form input focus
     document.addEventListener('focus', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-        this.playSound('select');
+      if ((e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') && 
+          !e.target.hasAttribute('data-sound-disabled')) {
+        this.playSound('focus');
       }
     });
 
     // Navigation items
     document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('.nav-item') || 
-          e.target.closest('[role="menuitem"]') || 
-          e.target.closest('nav a')) {
-        this.playSound('hover');
+      const navItem = e.target.closest('.nav-item, [role="menuitem"], nav a, .navigation-item');
+      if (navItem && !navItem.hasAttribute('data-sound-disabled')) {
+        this.playSound('navigation');
       }
     });
 
     // Typing simulation for inputs
+    let lastInputTime = 0;
     document.addEventListener('input', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-        this.playSound('type');
+      if ((e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') && 
+          !e.target.hasAttribute('data-sound-disabled')) {
+        const now = Date.now();
+        if (now - lastInputTime > 100) { // Throttle typing sounds
+          this.playSound('type');
+          lastInputTime = now;
+        }
       }
     });
+
+    // Success/Error sounds for form submissions
+    document.addEventListener('submit', (e) => {
+      if (!e.target.hasAttribute('data-sound-disabled')) {
+        this.playSound('success');
+      }
+    });
+
+    // Error sounds for invalid inputs
+    document.addEventListener('invalid', (e) => {
+      if (!e.target.hasAttribute('data-sound-disabled')) {
+        this.playSound('error');
+      }
+    });
+  }
+
+  // Volume control
+  setVolume(volume) {
+    this.volume = Math.max(0, Math.min(1, volume));
+    Object.values(this.sounds).forEach(audio => {
+      if (audio instanceof Audio) {
+        audio.volume = this.volume;
+      }
+    });
+  }
+
+  // Enable/disable sounds
+  toggle() {
+    this.isEnabled = !this.isEnabled;
+    return this.isEnabled;
+  }
+
+  // Test function
+  testSound(soundName) {
+    console.log('Testing sound:', soundName);
+    this.playSound(soundName);
   }
 }
 
@@ -350,6 +313,12 @@ const terminalStyles = `
   .terminal-scanline {
     box-shadow: 0 0 10px #10b981;
   }
+
+  /* Disable selection on terminal effects */
+  .terminal-scanline {
+    user-select: none;
+    pointer-events: none;
+  }
 `;
 
 // Inject styles
@@ -360,15 +329,34 @@ if (!document.querySelector('#terminal-styles')) {
   document.head.appendChild(styleSheet);
 }
 
-// Initialize terminal sounds
-const terminalSounds = new TerminalSounds();
-terminalSounds.attachEventListeners();
+// Initialize terminal sounds when DOM is ready
+const initializeTerminalSounds = () => {
+  if (typeof window !== 'undefined') {
+    const terminalSounds = new TerminalSounds();
+    
+    // Set up event listeners when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        terminalSounds.setupEventListeners();
+      });
+    } else {
+      terminalSounds.setupEventListeners();
+    }
 
-// Export for global use
-window.terminalSounds = terminalSounds;
+    // Export for global use
+    window.terminalSounds = terminalSounds;
 
-// Test sound function for debugging
-window.testTerminalSound = (soundName) => {
-  console.log('Testing sound:', soundName);
-  terminalSounds.playSound(soundName);
+    // Test sound function for debugging
+    window.testTerminalSound = (soundName) => {
+      console.log('Testing sound:', soundName);
+      terminalSounds.testSound(soundName);
+    };
+
+    console.log('Terminal sounds system ready!');
+    console.log('Available sounds:', Object.keys(terminalSounds.getSoundUrls()));
+    console.log('Test with: window.testTerminalSound("hover")');
+  }
 };
+
+// Initialize immediately
+initializeTerminalSounds();
