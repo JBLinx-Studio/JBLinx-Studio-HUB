@@ -20,441 +20,434 @@ const Index = () => {
         {/* Enhanced Services Overview */}
         <Services />
         
-        {/* Premium Visual Break Section with Animated Elements */}
-        <div className="py-32 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-y border-slate-700/50 relative overflow-hidden">
-          {/* Animated Background Elements */}
+        {/* PREMIUM VISUAL BREAK SECTION 1 - Quantum Field Effect */}
+        <div className="py-40 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-y border-slate-700/30 relative overflow-hidden">
+          {/* Quantum Field Background */}
+          <div className="absolute inset-0 pointer-events-none">
+            <svg className="w-full h-full opacity-15" viewBox="0 0 1200 800">
+              <defs>
+                <radialGradient id="quantumGlow1" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="quantumGlow2" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
+                </radialGradient>
+                <filter id="quantumBlur">
+                  <feGaussianBlur stdDeviation="2" />
+                </filter>
+              </defs>
+              
+              {/* Quantum Particles */}
+              {Array.from({ length: 50 }).map((_, i) => (
+                <circle
+                  key={i}
+                  cx={Math.random() * 1200}
+                  cy={Math.random() * 800}
+                  r={Math.random() * 3 + 1}
+                  fill={i % 3 === 0 ? "url(#quantumGlow1)" : "url(#quantumGlow2)"}
+                  className="animate-pulse"
+                  style={{ 
+                    animationDelay: `${Math.random() * 3}s`,
+                    animationDuration: `${Math.random() * 2 + 2}s`
+                  }}
+                />
+              ))}
+              
+              {/* Quantum Field Lines */}
+              <g stroke="url(#quantumGlow1)" strokeWidth="0.5" fill="none" opacity="0.4">
+                <path d="M0,200 Q300,100 600,200 T1200,200" className="animate-pulse" />
+                <path d="M0,400 Q300,300 600,400 T1200,400" className="animate-pulse" style={{animationDelay: '1s'}} />
+                <path d="M0,600 Q300,500 600,600 T1200,600" className="animate-pulse" style={{animationDelay: '2s'}} />
+              </g>
+            </svg>
+          </div>
+          
+          {/* Floating Orbs */}
           <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/5 blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/5 blur-3xl animate-pulse delay-1000"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/3 blur-3xl animate-pulse delay-500"></div>
+            <div className="absolute top-1/4 left-1/6 w-96 h-96 bg-purple-500/8 blur-3xl rounded-full animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-1/6 w-80 h-80 bg-cyan-500/8 blur-3xl rounded-full animate-pulse delay-1000"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 blur-3xl rounded-full animate-pulse delay-500"></div>
           </div>
           
           <div className="container mx-auto px-4 text-center relative z-10">
-            {/* Enhanced Visual Elements */}
-            <div className="flex justify-center items-center space-x-8 mb-12">
-              <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-slate-400 to-transparent animate-pulse"></div>
-              <div className="px-4 py-2 bg-slate-800/95 border border-slate-600 backdrop-blur-sm">
-                <div className="text-slate-500 font-mono text-xs font-black tracking-widest">
-                  PREMIUM CONTENT SECTORS
+            {/* Enhanced Header */}
+            <div className="flex justify-center items-center space-x-12 mb-16">
+              <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-purple-400/60 to-transparent animate-pulse"></div>
+              <div className="px-6 py-3 bg-slate-800/95 border border-purple-500/30 backdrop-blur-sm rounded-lg shadow-2xl">
+                <div className="text-purple-400 font-mono text-sm font-black tracking-widest">
+                  QUANTUM FIELD MATRIX
                 </div>
               </div>
-              <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-slate-400 to-transparent animate-pulse delay-500"></div>
+              <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-purple-400/60 to-transparent animate-pulse delay-500"></div>
             </div>
             
-            {/* Animated Dots Pattern */}
-            <div className="grid grid-cols-5 gap-4 max-w-sm mx-auto mb-8">
-              {Array.from({ length: 15 }).map((_, index) => (
+            {/* Quantum Pattern Grid */}
+            <div className="grid grid-cols-8 gap-4 max-w-2xl mx-auto mb-12">
+              {Array.from({ length: 32 }).map((_, index) => (
                 <div 
                   key={index} 
-                  className="w-2 h-2 bg-slate-600/50 animate-pulse"
+                  className={`${
+                    index % 4 === 0 ? 'w-3 h-3 bg-purple-400/40 rounded-full' : 
+                    index % 4 === 1 ? 'w-2 h-2 bg-cyan-400/40 rounded-sm' : 
+                    index % 4 === 2 ? 'w-4 h-1 bg-emerald-400/40' : 'w-1 h-4 bg-pink-400/40'
+                  } animate-pulse mx-auto`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 ></div>
               ))}
             </div>
-            
-            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-slate-500 to-transparent mx-auto"></div>
           </div>
         </div>
         
-        {/* PRIORITY 1: GAMERS - Enhanced Entry Animation */}
+        {/* PRIORITY 1: GAMERS */}
         <div className="animate-fade-in">
           <GamesSection />
         </div>
         
-        {/* Enhanced Transition Zone with Connected Vertices Background */}
-        <div className="py-40 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 relative overflow-hidden">
-          {/* Connected Vertices Background */}
+        {/* NEURAL NETWORK TRANSITION - Enhanced Vertices */}
+        <div className="py-48 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 relative overflow-hidden">
+          {/* Advanced Neural Network */}
           <div className="absolute inset-0 pointer-events-none">
-            <svg className="w-full h-full opacity-10" viewBox="0 0 800 400">
+            <svg className="w-full h-full opacity-20" viewBox="0 0 1000 600">
               <defs>
-                <linearGradient id="vertexGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.3" />
+                <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="#10b981" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.8" />
                 </linearGradient>
+                <filter id="neuralGlow">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge> 
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
               </defs>
               
-              {/* Animated connecting lines */}
-              <g stroke="url(#vertexGradient1)" strokeWidth="1" fill="none">
-                <line x1="100" y1="80" x2="200" y2="150" className="animate-pulse" />
-                <line x1="200" y1="150" x2="350" y2="120" className="animate-pulse" style={{animationDelay: '300ms'}} />
-                <line x1="350" y1="120" x2="500" y2="200" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                <line x1="500" y1="200" x2="650" y2="140" className="animate-pulse" style={{animationDelay: '900ms'}} />
-                <line x1="150" y1="250" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                <line x1="300" y1="280" x2="450" y2="250" className="animate-pulse" style={{animationDelay: '1500ms'}} />
-                <line x1="450" y1="250" x2="600" y2="320" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+              {/* Neural Connections */}
+              <g stroke="url(#neuralGradient)" strokeWidth="2" fill="none" filter="url(#neuralGlow)">
+                <line x1="100" y1="100" x2="300" y2="150" className="animate-pulse" />
+                <line x1="300" y1="150" x2="500" y2="120" className="animate-pulse" style={{animationDelay: '300ms'}} />
+                <line x1="500" y1="120" x2="700" y2="200" className="animate-pulse" style={{animationDelay: '600ms'}} />
+                <line x1="700" y1="200" x2="850" y2="140" className="animate-pulse" style={{animationDelay: '900ms'}} />
+                <line x1="200" y1="300" x2="400" y2="280" className="animate-pulse" style={{animationDelay: '1200ms'}} />
+                <line x1="400" y1="280" x2="600" y2="350" className="animate-pulse" style={{animationDelay: '1500ms'}} />
+                <line x1="600" y1="350" x2="800" y2="320" className="animate-pulse" style={{animationDelay: '1800ms'}} />
                 
                 {/* Cross connections */}
-                <line x1="200" y1="150" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                <line x1="350" y1="120" x2="450" y2="250" className="animate-pulse" style={{animationDelay: '700ms'}} />
-                <line x1="500" y1="200" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                <line x1="300" y1="150" x2="400" y2="280" className="animate-pulse" style={{animationDelay: '400ms'}} />
+                <line x1="500" y1="120" x2="600" y2="350" className="animate-pulse" style={{animationDelay: '700ms'}} />
+                <line x1="700" y1="200" x2="400" y2="280" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                
+                {/* Secondary layer */}
+                <line x1="150" y1="450" x2="350" y2="420" className="animate-pulse" style={{animationDelay: '200ms'}} />
+                <line x1="350" y1="420" x2="550" y2="480" className="animate-pulse" style={{animationDelay: '500ms'}} />
+                <line x1="550" y1="480" x2="750" y2="450" className="animate-pulse" style={{animationDelay: '800ms'}} />
               </g>
               
-              {/* Animated vertices */}
-              <g fill="url(#vertexGradient1)">
-                <circle cx="100" cy="80" r="3" className="animate-pulse" />
-                <circle cx="200" cy="150" r="4" className="animate-pulse" style={{animationDelay: '200ms'}} />
-                <circle cx="350" cy="120" r="3" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                <circle cx="500" cy="200" r="5" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                <circle cx="650" cy="140" r="3" className="animate-pulse" style={{animationDelay: '800ms'}} />
-                <circle cx="150" cy="250" r="4" className="animate-pulse" style={{animationDelay: '1000ms'}} />
-                <circle cx="300" cy="280" r="6" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                <circle cx="450" cy="250" r="3" className="animate-pulse" style={{animationDelay: '1400ms'}} />
-                <circle cx="600" cy="320" r="4" className="animate-pulse" style={{animationDelay: '1600ms'}} />
+              {/* Neural Nodes */}
+              <g fill="url(#neuralGradient)" filter="url(#neuralGlow)">
+                <circle cx="100" cy="100" r="6" className="animate-pulse" />
+                <circle cx="300" cy="150" r="8" className="animate-pulse" style={{animationDelay: '200ms'}} />
+                <circle cx="500" cy="120" r="6" className="animate-pulse" style={{animationDelay: '400ms'}} />
+                <circle cx="700" cy="200" r="10" className="animate-pulse" style={{animationDelay: '600ms'}} />
+                <circle cx="850" cy="140" r="6" className="animate-pulse" style={{animationDelay: '800ms'}} />
+                <circle cx="200" cy="300" r="8" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                <circle cx="400" cy="280" r="12" className="animate-pulse" style={{animationDelay: '1200ms'}} />
+                <circle cx="600" cy="350" r="6" className="animate-pulse" style={{animationDelay: '1400ms'}} />
+                <circle cx="800" cy="320" r="8" className="animate-pulse" style={{animationDelay: '1600ms'}} />
+                <circle cx="150" cy="450" r="7" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+                <circle cx="350" cy="420" r="9" className="animate-pulse" style={{animationDelay: '2000ms'}} />
+                <circle cx="550" cy="480" r="6" className="animate-pulse" style={{animationDelay: '2200ms'}} />
+                <circle cx="750" cy="450" r="8" className="animate-pulse" style={{animationDelay: '2400ms'}} />
+              </g>
+              
+              {/* Data packets */}
+              <g fill="#3b82f6" opacity="0.6">
+                <circle cx="200" cy="125" r="2" className="animate-pulse" style={{animationDelay: '100ms'}} />
+                <circle cx="400" cy="135" r="2" className="animate-pulse" style={{animationDelay: '300ms'}} />
+                <circle cx="600" cy="160" r="2" className="animate-pulse" style={{animationDelay: '500ms'}} />
+                <circle cx="300" cy="290" r="2" className="animate-pulse" style={{animationDelay: '700ms'}} />
+                <circle cx="500" cy="315" r="2" className="animate-pulse" style={{animationDelay: '900ms'}} />
+                <circle cx="700" cy="385" r="2" className="animate-pulse" style={{animationDelay: '1100ms'}} />
               </g>
             </svg>
           </div>
           
-          {/* Multi-layer Background Effects */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/6 w-72 h-72 bg-purple-500/4 blur-3xl animate-pulse"></div>
-            <div className="absolute top-1/2 right-1/6 w-80 h-80 bg-blue-500/4 blur-3xl animate-pulse delay-700"></div>
-            <div className="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-cyan-500/3 blur-3xl animate-pulse delay-300"></div>
-          </div>
-          
           <div className="container mx-auto px-4 text-center relative z-10">
-            {/* Enhanced Visual Break */}
-            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-purple-400/60 to-transparent mx-auto mb-16 animate-pulse"></div>
-            
-            {/* Interactive Transition Elements */}
-            <div className="flex justify-center items-center space-x-12 mb-12">
-              <div className="flex flex-col items-center space-y-2">
-                <div className="w-3 h-3 bg-purple-400/60 animate-pulse"></div>
-                <div className="w-16 h-0.5 bg-gradient-to-r from-purple-400/30 to-transparent"></div>
-              </div>
-              
-              <div className="px-4 py-2 bg-slate-800/95 border border-slate-600 backdrop-blur-sm">
-                <div className="text-slate-600 font-mono text-xs font-black tracking-widest">
-                  NEURAL NETWORK TRANSITION
+            <div className="flex justify-center items-center space-x-16 mb-16">
+              <div className="w-40 h-0.5 bg-gradient-to-r from-transparent via-blue-400/60 to-transparent animate-pulse"></div>
+              <div className="px-8 py-4 bg-slate-800/95 border border-blue-500/30 backdrop-blur-sm rounded-lg shadow-2xl">
+                <div className="text-blue-400 font-mono text-sm font-black tracking-widest">
+                  NEURAL NETWORK BRIDGE
                 </div>
               </div>
-              
-              <div className="flex flex-col items-center space-y-2">
-                <div className="w-3 h-3 bg-blue-400/60 animate-pulse delay-500"></div>
-                <div className="w-16 h-0.5 bg-gradient-to-l from-blue-400/30 to-transparent"></div>
-              </div>
+              <div className="w-40 h-0.5 bg-gradient-to-r from-transparent via-blue-400/60 to-transparent animate-pulse delay-500"></div>
             </div>
-            
-            {/* Enhanced Pattern Grid */}
-            <div className="grid grid-cols-7 gap-3 max-w-lg mx-auto mb-16">
-              {Array.from({ length: 21 }).map((_, index) => (
-                <div 
-                  key={index} 
-                  className={`w-2 h-2 ${
-                    index % 3 === 0 ? 'bg-purple-400/40' : 
-                    index % 3 === 1 ? 'bg-blue-400/40' : 'bg-cyan-400/40'
-                  } animate-pulse`}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                ></div>
-              ))}
-            </div>
-            
-            <div className="w-28 h-0.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mx-auto"></div>
           </div>
         </div>
         
-        {/* PRIORITY 2: GENERAL PRODUCTS - Enhanced */}
+        {/* PRIORITY 2: GENERAL PRODUCTS */}
         <div className="animate-fade-in">
           <ProductsShowcase />
         </div>
         
-        {/* Premium Breathing Space with Geometric Patterns */}
-        <div className="py-44 bg-gradient-to-b from-slate-950 via-black to-slate-950 relative overflow-hidden">
-          {/* Geometric Grid Background */}
+        {/* HOLOGRAPHIC MATRIX SPACE */}
+        <div className="py-52 bg-gradient-to-b from-slate-950 via-black to-slate-950 relative overflow-hidden">
+          {/* Holographic Grid */}
           <div className="absolute inset-0 pointer-events-none">
-            <svg className="w-full h-full opacity-5" viewBox="0 0 400 400">
+            <svg className="w-full h-full opacity-12" viewBox="0 0 800 600">
               <defs>
-                <pattern id="geometricGrid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <rect width="40" height="40" fill="none" stroke="#10b981" strokeWidth="0.5" opacity="0.3" />
-                  <circle cx="20" cy="20" r="2" fill="#06b6d4" opacity="0.4" />
+                <pattern id="holographicGrid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                  <rect width="60" height="60" fill="none" stroke="#10b981" strokeWidth="0.5" opacity="0.4" />
+                  <circle cx="30" cy="30" r="3" fill="#06b6d4" opacity="0.6" />
+                  <circle cx="30" cy="30" r="8" fill="none" stroke="#8b5cf6" strokeWidth="0.5" opacity="0.3" />
                 </pattern>
-                <linearGradient id="geometricGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.2" />
-                  <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.1" />
+                <linearGradient id="holographicShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
+                  <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.3" />
                 </linearGradient>
+                <filter id="holographicGlow">
+                  <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
               </defs>
               
-              <rect width="100%" height="100%" fill="url(#geometricGrid)" />
+              <rect width="100%" height="100%" fill="url(#holographicGrid)" />
               
-              {/* Animated geometric shapes */}
-              <g fill="url(#geometricGradient)" stroke="#10b981" strokeWidth="1" opacity="0.3">
-                <polygon points="100,50 150,100 100,150 50,100" className="animate-pulse" />
-                <polygon points="300,80 340,120 300,160 260,120" className="animate-pulse" style={{animationDelay: '500ms'}} />
-                <polygon points="180,250 220,290 180,330 140,290" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+              {/* Holographic shapes */}
+              <g fill="url(#holographicShine)" stroke="#10b981" strokeWidth="2" opacity="0.4" filter="url(#holographicGlow)">
+                <polygon points="150,100 200,150 150,200 100,150" className="animate-pulse" />
+                <polygon points="550,120 600,170 550,220 500,170" className="animate-pulse" style={{animationDelay: '700ms'}} />
+                <polygon points="300,350 350,400 300,450 250,400" className="animate-pulse" style={{animationDelay: '1400ms'}} />
+                
+                {/* Floating hexagons */}
+                <polygon points="400,80 430,95 430,125 400,140 370,125 370,95" className="animate-pulse" style={{animationDelay: '300ms'}} />
+                <polygon points="200,300 230,315 230,345 200,360 170,345 170,315" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                <polygon points="600,380 630,395 630,425 600,440 570,425 570,395" className="animate-pulse" style={{animationDelay: '1700ms'}} />
+              </g>
+              
+              {/* Scanning lines */}
+              <g stroke="url(#holographicShine)" strokeWidth="1" opacity="0.3">
+                <line x1="0" y1="150" x2="800" y2="150" className="animate-pulse" style={{animationDelay: '200ms'}} />
+                <line x1="0" y1="300" x2="800" y2="300" className="animate-pulse" style={{animationDelay: '800ms'}} />
+                <line x1="0" y1="450" x2="800" y2="450" className="animate-pulse" style={{animationDelay: '1400ms'}} />
               </g>
             </svg>
           </div>
           
-          {/* Dynamic Background Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/5 left-1/4 w-64 h-64 bg-green-500/3 blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/5 right-1/4 w-88 h-88 bg-cyan-500/3 blur-3xl animate-pulse delay-1000"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/2 blur-3xl animate-pulse delay-500"></div>
-          </div>
-          
           <div className="container mx-auto px-4 text-center relative z-10">
-            {/* Enhanced Visual Header */}
-            <div className="w-48 h-1 bg-gradient-to-r from-transparent via-slate-500/60 to-transparent mx-auto mb-20 animate-pulse"></div>
-            
-            {/* Advanced Visual Break Elements */}
-            <div className="flex justify-center items-center space-x-16 mb-20">
-              <div className="flex flex-col items-center space-y-3">
-                <div className="w-4 h-4 bg-green-400/60 animate-pulse"></div>
-                <div className="w-20 h-0.5 bg-gradient-to-r from-green-400/30 to-transparent"></div>
-                <div className="w-2 h-2 bg-green-400/40 animate-pulse delay-300"></div>
-              </div>
-              
-              <div className="px-6 py-3 bg-slate-800/95 border border-slate-600 backdrop-blur-sm">
-                <div className="text-slate-600 font-mono text-xs font-black tracking-widest">
-                  GEOMETRIC MATRIX SPACE
+            <div className="flex justify-center items-center space-x-20 mb-20">
+              <div className="w-48 h-0.5 bg-gradient-to-r from-transparent via-green-400/70 to-transparent animate-pulse"></div>
+              <div className="px-8 py-4 bg-slate-800/95 border border-green-500/30 backdrop-blur-sm rounded-lg shadow-2xl">
+                <div className="text-green-400 font-mono text-sm font-black tracking-widest">
+                  HOLOGRAPHIC MATRIX SPACE
                 </div>
               </div>
-              
-              <div className="flex flex-col items-center space-y-3">
-                <div className="w-4 h-4 bg-blue-400/60 animate-pulse delay-500"></div>
-                <div className="w-20 h-0.5 bg-gradient-to-l from-blue-400/30 to-transparent"></div>
-                <div className="w-2 h-2 bg-blue-400/40 animate-pulse delay-700"></div>
-              </div>
+              <div className="w-48 h-0.5 bg-gradient-to-r from-transparent via-green-400/70 to-transparent animate-pulse delay-500"></div>
             </div>
-            
-            {/* Enhanced Geometric Pattern */}
-            <div className="grid grid-cols-6 gap-4 max-w-md mx-auto mb-20">
-              {Array.from({ length: 18 }).map((_, index) => (
-                <div 
-                  key={index} 
-                  className={`${
-                    index % 4 === 0 ? 'w-3 h-3 bg-green-400/30' : 
-                    index % 4 === 1 ? 'w-2 h-2 bg-blue-400/30' : 
-                    index % 4 === 2 ? 'w-4 h-4 bg-cyan-400/30' : 'w-2 h-2 bg-purple-400/30'
-                  } animate-pulse`}
-                  style={{ animationDelay: `${index * 75}ms` }}
-                ></div>
-              ))}
-            </div>
-            
-            <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mx-auto"></div>
           </div>
         </div>
         
-        {/* PRIORITY 3: APP USERS - Enhanced */}
+        {/* PRIORITY 3: APP USERS */}
         <div className="animate-fade-in">
           <WebAppsSection />
         </div>
         
-        {/* Ultimate Breathing Space with Circuit Board Background */}
-        <div className="py-48 bg-gradient-to-b from-slate-950 via-slate-900 to-black relative overflow-hidden">
-          {/* Circuit Board Background */}
+        {/* CYBERPUNK CIRCUIT REALM */}
+        <div className="py-56 bg-gradient-to-b from-slate-950 via-slate-900 to-black relative overflow-hidden">
+          {/* Advanced Circuit Board */}
           <div className="absolute inset-0 pointer-events-none">
-            <svg className="w-full h-full opacity-8" viewBox="0 0 800 600">
+            <svg className="w-full h-full opacity-15" viewBox="0 0 1000 700">
               <defs>
-                <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
-                  <stop offset="50%" stopColor="#10b981" stopOpacity="0.2" />
-                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.3" />
+                <linearGradient id="cyberpunkCircuit" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                  <stop offset="30%" stopColor="#10b981" stopOpacity="0.6" />
+                  <stop offset="70%" stopColor="#8b5cf6" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.5" />
                 </linearGradient>
+                <filter id="cyberpunkGlow">
+                  <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+                <pattern id="circuitPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                  <rect width="100" height="100" fill="none" stroke="url(#cyberpunkCircuit)" strokeWidth="0.5" opacity="0.2" />
+                  <circle cx="50" cy="50" r="2" fill="url(#cyberpunkCircuit)" opacity="0.4" />
+                </pattern>
               </defs>
               
-              {/* Circuit pathways */}
-              <g stroke="url(#circuitGradient)" strokeWidth="2" fill="none">
-                {/* Horizontal lines */}
-                <line x1="50" y1="100" x2="300" y2="100" className="animate-pulse" />
-                <line x1="320" y1="100" x2="600" y2="100" className="animate-pulse" style={{animationDelay: '200ms'}} />
-                <line x1="100" y1="200" x2="400" y2="200" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                <line x1="420" y1="200" x2="700" y2="200" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                <line x1="80" y1="300" x2="350" y2="300" className="animate-pulse" style={{animationDelay: '800ms'}} />
-                <line x1="370" y1="300" x2="650" y2="300" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+              <rect width="100%" height="100%" fill="url(#circuitPattern)" />
+              
+              {/* Main circuit pathways */}
+              <g stroke="url(#cyberpunkCircuit)" strokeWidth="3" fill="none" filter="url(#cyberpunkGlow)">
+                <line x1="100" y1="150" x2="400" y2="150" className="animate-pulse" />
+                <line x1="420" y1="150" x2="700" y2="150" className="animate-pulse" style={{animationDelay: '300ms'}} />
+                <line x1="720" y1="150" x2="900" y2="150" className="animate-pulse" style={{animationDelay: '600ms'}} />
+                
+                <line x1="150" y1="300" x2="450" y2="300" className="animate-pulse" style={{animationDelay: '900ms'}} />
+                <line x1="470" y1="300" x2="750" y2="300" className="animate-pulse" style={{animationDelay: '1200ms'}} />
+                <line x1="770" y1="300" x2="950" y2="300" className="animate-pulse" style={{animationDelay: '1500ms'}} />
+                
+                <line x1="120" y1="450" x2="420" y2="450" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+                <line x1="440" y1="450" x2="720" y2="450" className="animate-pulse" style={{animationDelay: '2100ms'}} />
+                <line x1="740" y1="450" x2="920" y2="450" className="animate-pulse" style={{animationDelay: '2400ms'}} />
                 
                 {/* Vertical connections */}
-                <line x1="150" y1="80" x2="150" y2="320" className="animate-pulse" style={{animationDelay: '300ms'}} />
-                <line x1="300" y1="80" x2="300" y2="220" className="animate-pulse" style={{animationDelay: '500ms'}} />
-                <line x1="450" y1="90" x2="450" y2="320" className="animate-pulse" style={{animationDelay: '700ms'}} />
-                <line x1="600" y1="80" x2="600" y2="320" className="animate-pulse" style={{animationDelay: '900ms'}} />
+                <line x1="250" y1="130" x2="250" y2="470" className="animate-pulse" style={{animationDelay: '400ms'}} />
+                <line x1="500" y1="130" x2="500" y2="470" className="animate-pulse" style={{animationDelay: '800ms'}} />
+                <line x1="750" y1="130" x2="750" y2="470" className="animate-pulse" style={{animationDelay: '1200ms'}} />
               </g>
               
-              {/* Circuit nodes */}
-              <g fill="url(#circuitGradient)">
-                <rect x="145" y="95" width="10" height="10" rx="2" className="animate-pulse" />
-                <rect x="295" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '200ms'}} />
-                <rect x="445" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                <rect x="595" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                <rect x="145" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '800ms'}} />
-                <rect x="295" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1000ms'}} />
-                <rect x="445" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                <rect x="595" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1400ms'}} />
-                <rect x="145" y="295" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1600ms'}} />
-                <rect x="445" y="295" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+              {/* Circuit nodes and processors */}
+              <g fill="url(#cyberpunkCircuit)" filter="url(#cyberpunkGlow)">
+                <rect x="240" y="140" width="20" height="20" rx="4" className="animate-pulse" />
+                <rect x="490" y="140" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '300ms'}} />
+                <rect x="740" y="140" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '600ms'}} />
+                <rect x="240" y="290" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '900ms'}} />
+                <rect x="490" y="290" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '1200ms'}} />
+                <rect x="740" y="290" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '1500ms'}} />
+                <rect x="240" y="440" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+                <rect x="490" y="440" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '2100ms'}} />
+                <rect x="740" y="440" width="20" height="20" rx="4" className="animate-pulse" style={{animationDelay: '2400ms'}} />
                 
-                {/* Processor chips */}
-                <rect x="140" y="140" width="20" height="20" rx="3" className="animate-pulse" style={{animationDelay: '500ms'}} />
-                <rect x="440" y="240" width="20" height="20" rx="3" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                {/* Main processors */}
+                <rect x="200" y="200" width="40" height="40" rx="6" className="animate-pulse" style={{animationDelay: '500ms'}} />
+                <rect x="450" y="350" width="40" height="40" rx="6" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                <rect x="700" y="200" width="40" height="40" rx="6" className="animate-pulse" style={{animationDelay: '1500ms'}} />
+                
+                {/* Data flow indicators */}
+                <circle cx="150" cy="150" r="4" className="animate-pulse" style={{animationDelay: '200ms'}} />
+                <circle cx="350" cy="150" r="4" className="animate-pulse" style={{animationDelay: '700ms'}} />
+                <circle cx="550" cy="150" r="4" className="animate-pulse" style={{animationDelay: '1200ms'}} />
+                <circle cx="200" cy="300" r="4" className="animate-pulse" style={{animationDelay: '1700ms'}} />
+                <circle cx="400" cy="300" r="4" className="animate-pulse" style={{animationDelay: '2200ms'}} />
+                <circle cx="600" cy="300" r="4" className="animate-pulse" style={{animationDelay: '2700ms'}} />
               </g>
             </svg>
           </div>
           
-          {/* Complex Background Effects */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/6 left-1/5 w-72 h-72 bg-blue-500/3 blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-1/6 right-1/5 w-88 h-88 bg-green-500/3 blur-3xl animate-pulse delay-800"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/2 blur-3xl animate-pulse delay-400"></div>
-            <div className="absolute top-1/4 right-1/3 w-64 h-64 bg-cyan-500/3 blur-3xl animate-pulse delay-1200"></div>
-          </div>
-          
           <div className="container mx-auto px-4 text-center relative z-10">
-            {/* Enhanced Visual Header */}
-            <div className="w-56 h-1 bg-gradient-to-r from-transparent via-slate-400/60 to-transparent mx-auto mb-24 animate-pulse"></div>
-            
-            {/* Advanced Tech Grid Visual Break */}
-            <div className="grid grid-cols-5 gap-6 max-w-lg mx-auto mb-24">
-              {[
-                { color: "bg-blue-400/30", size: "w-4 h-4", delay: "0ms" },
-                { color: "bg-green-400/30", size: "w-3 h-3", delay: "100ms" },
-                { color: "bg-purple-400/30", size: "w-5 h-5", delay: "200ms" },
-                { color: "bg-cyan-400/30", size: "w-3 h-3", delay: "300ms" },
-                { color: "bg-pink-400/30", size: "w-4 h-4", delay: "400ms" },
-                { color: "bg-yellow-400/30", size: "w-2 h-2", delay: "500ms" },
-                { color: "bg-orange-400/30", size: "w-4 h-4", delay: "600ms" },
-                { color: "bg-red-400/30", size: "w-3 h-3", delay: "700ms" },
-                { color: "bg-indigo-400/30", size: "w-3 h-3", delay: "800ms" },
-                { color: "bg-teal-400/30", size: "w-4 h-4", delay: "900ms" },
-                { color: "bg-slate-400/40", size: "w-6 h-6", delay: "1000ms" },
-                { color: "bg-emerald-400/30", size: "w-3 h-3", delay: "1100ms" },
-                { color: "bg-violet-400/30", size: "w-4 h-4", delay: "1200ms" },
-                { color: "bg-rose-400/30", size: "w-3 h-3", delay: "1300ms" },
-                { color: "bg-sky-400/30", size: "w-2 h-2", delay: "1400ms" },
-                { color: "bg-amber-400/30", size: "w-4 h-4", delay: "1500ms" },
-                { color: "bg-lime-400/30", size: "w-3 h-3", delay: "1600ms" },
-                { color: "bg-fuchsia-400/30", size: "w-3 h-3", delay: "1700ms" },
-                { color: "bg-blue-500/30", size: "w-4 h-4", delay: "1800ms" },
-                { color: "bg-green-500/30", size: "w-3 h-3", delay: "1900ms" },
-                { color: "bg-purple-500/30", size: "w-2 h-2", delay: "2000ms" },
-                { color: "bg-cyan-500/30", size: "w-4 h-4", delay: "2100ms" },
-                { color: "bg-pink-500/30", size: "w-3 h-3", delay: "2200ms" },
-                { color: "bg-yellow-500/30", size: "w-3 h-3", delay: "2300ms" },
-                { color: "bg-orange-500/30", size: "w-2 h-2", delay: "2400ms" }
-              ].map((dot, index) => (
-                <div key={index} className="flex justify-center items-center">
-                  <div 
-                    className={`${dot.color} ${dot.size} animate-pulse`}
-                    style={{ animationDelay: dot.delay }}
-                  ></div>
+            <div className="flex justify-center items-center space-x-24 mb-24">
+              <div className="w-56 h-0.5 bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent animate-pulse"></div>
+              <div className="px-10 py-5 bg-slate-800/95 border border-cyan-500/30 backdrop-blur-sm rounded-lg shadow-2xl">
+                <div className="text-cyan-400 font-mono text-sm font-black tracking-widest">
+                  CYBERPUNK CIRCUIT REALM
                 </div>
-              ))}
-            </div>
-            
-            {/* Enhanced Zone Label */}
-            <div className="px-6 py-3 bg-slate-800/95 border border-slate-600 backdrop-blur-sm mb-12 inline-block">
-              <div className="text-slate-600 font-mono text-xs font-black tracking-widest">
-                ENTERING DEVELOPER MATRIX
               </div>
+              <div className="w-56 h-0.5 bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent animate-pulse delay-500"></div>
             </div>
-            
-            <div className="w-40 h-0.5 bg-gradient-to-r from-transparent via-green-400/60 to-transparent mx-auto"></div>
           </div>
         </div>
         
-        {/* PRIORITY 4: DEVELOPERS - Enhanced */}
+        {/* PRIORITY 4: DEVELOPERS */}
         <div className="animate-fade-in">
           <DeveloperTools />
         </div>
         
-        {/* Final Premium Breathing Space with Data Flow Background */}
-        <div className="py-36 bg-gradient-to-b from-black via-slate-950 to-slate-900 relative overflow-hidden">
-          {/* Data Flow Background */}
+        {/* FINAL DATA STREAM TERMINAL */}
+        <div className="py-44 bg-gradient-to-b from-black via-slate-950 to-slate-900 relative overflow-hidden">
+          {/* Advanced Data Flow */}
           <div className="absolute inset-0 pointer-events-none">
-            <svg className="w-full h-full opacity-6" viewBox="0 0 1000 400">
+            <svg className="w-full h-full opacity-10" viewBox="0 0 1200 500">
               <defs>
-                <linearGradient id="dataFlowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="dataStreamGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#64748b" stopOpacity="0" />
-                  <stop offset="50%" stopColor="#64748b" stopOpacity="0.4" />
+                  <stop offset="30%" stopColor="#64748b" stopOpacity="0.8" />
+                  <stop offset="70%" stopColor="#64748b" stopOpacity="0.8" />
                   <stop offset="100%" stopColor="#64748b" stopOpacity="0" />
                 </linearGradient>
+                <filter id="dataGlow">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
               </defs>
               
               {/* Data streams */}
-              <g stroke="url(#dataFlowGradient)" strokeWidth="1" fill="none">
-                {Array.from({ length: 8 }).map((_, i) => (
+              <g stroke="url(#dataStreamGradient)" strokeWidth="2" fill="none" filter="url(#dataGlow)">
+                {Array.from({ length: 12 }).map((_, i) => (
                   <g key={i}>
                     <line 
                       x1="0" 
-                      y1={50 + i * 40} 
-                      x2="1000" 
-                      y2={50 + i * 40} 
+                      y1={40 + i * 35} 
+                      x2="1200" 
+                      y2={40 + i * 35} 
                       className="animate-pulse" 
                       style={{animationDelay: `${i * 200}ms`}} 
                     />
-                    {/* Data packets */}
+                    {/* Enhanced data packets */}
                     <circle 
-                      cx={100 + (i * 120)} 
-                      cy={50 + i * 40} 
+                      cx={120 + (i * 100)} 
+                      cy={40 + i * 35} 
+                      r="3" 
+                      fill="#64748b" 
+                      opacity="0.8"
+                      className="animate-pulse" 
+                      style={{animationDelay: `${i * 250}ms`}} 
+                    />
+                    <circle 
+                      cx={280 + (i * 80)} 
+                      cy={40 + i * 35} 
                       r="2" 
                       fill="#64748b" 
                       opacity="0.6"
                       className="animate-pulse" 
-                      style={{animationDelay: `${i * 300}ms`}} 
+                      style={{animationDelay: `${i * 350}ms`}} 
                     />
                     <circle 
-                      cx={300 + (i * 80)} 
-                      cy={50 + i * 40} 
-                      r="1.5" 
+                      cx={450 + (i * 60)} 
+                      cy={40 + i * 35} 
+                      r="4" 
                       fill="#64748b" 
-                      opacity="0.4"
+                      opacity="0.7"
                       className="animate-pulse" 
-                      style={{animationDelay: `${i * 400}ms`}} 
+                      style={{animationDelay: `${i * 450}ms`}} 
+                    />
+                    <rect 
+                      x={600 + (i * 40)} 
+                      y={37 + i * 35} 
+                      width="6" 
+                      height="6" 
+                      fill="#64748b" 
+                      opacity="0.5"
+                      className="animate-pulse" 
+                      style={{animationDelay: `${i * 550}ms`}} 
                     />
                   </g>
                 ))}
               </g>
+              
+              {/* Data terminals */}
+              <g fill="#64748b" opacity="0.6">
+                <rect x="0" y="30" width="8" height="380" rx="2" className="animate-pulse" />
+                <rect x="1192" y="30" width="8" height="380" rx="2" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                <rect x="300" y="10" width="4" height="420" rx="1" className="animate-pulse" style={{animationDelay: '500ms'}} />
+                <rect x="600" y="10" width="4" height="420" rx="1" className="animate-pulse" style={{animationDelay: '1500ms'}} />
+                <rect x="900" y="10" width="4" height="420" rx="1" className="animate-pulse" style={{animationDelay: '2000ms'}} />
+              </g>
             </svg>
           </div>
           
-          {/* Sophisticated Background Effects */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-slate-500/1 blur-3xl animate-pulse"></div>
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-emerald-500/2 blur-3xl animate-pulse delay-600"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-blue-500/2 blur-3xl animate-pulse delay-1000"></div>
-          </div>
-          
           <div className="container mx-auto px-4 text-center relative z-10">
-            {/* Enhanced Visual Header */}
-            <div className="w-64 h-1 bg-gradient-to-r from-transparent via-slate-500/70 to-transparent mx-auto mb-20 animate-pulse"></div>
-            
-            {/* Advanced Contact Transition Elements */}
-            <div className="flex justify-center items-center space-x-16 mb-20">
-              <div className="flex flex-col items-center space-y-4">
-                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent to-slate-400/50 animate-pulse"></div>
-                <div className="w-3 h-3 bg-slate-400/50 animate-pulse delay-200"></div>
-                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-slate-400/40 animate-pulse delay-400"></div>
-              </div>
-              
-              <div className="px-8 py-4 bg-slate-800/95 border border-slate-600 backdrop-blur-sm">
-                <div className="text-slate-500 font-mono text-xs font-black tracking-widest">
+            <div className="flex justify-center items-center space-x-20 mb-20">
+              <div className="w-64 h-1 bg-gradient-to-r from-transparent via-slate-400/80 to-transparent animate-pulse"></div>
+              <div className="px-12 py-6 bg-slate-800/95 border border-slate-500/30 backdrop-blur-sm rounded-lg shadow-2xl">
+                <div className="text-slate-400 font-mono text-sm font-black tracking-widest">
                   DATA STREAM TERMINAL
                 </div>
               </div>
-              
-              <div className="flex flex-col items-center space-y-4">
-                <div className="w-16 h-0.5 bg-gradient-to-l from-transparent to-slate-400/50 animate-pulse delay-300"></div>
-                <div className="w-3 h-3 bg-slate-400/50 animate-pulse delay-500"></div>
-                <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-slate-400/40 animate-pulse delay-700"></div>
-              </div>
+              <div className="w-64 h-1 bg-gradient-to-r from-transparent via-slate-400/80 to-transparent animate-pulse delay-500"></div>
             </div>
-            
-            {/* Enhanced Final Pattern */}
-            <div className="grid grid-cols-8 gap-2 max-w-2xl mx-auto mb-20">
-              {Array.from({ length: 32 }).map((_, index) => (
-                <div 
-                  key={index} 
-                  className={`w-1 h-1 ${
-                    index % 5 === 0 ? 'bg-slate-400/40' : 
-                    index % 5 === 1 ? 'bg-slate-500/40' : 
-                    index % 5 === 2 ? 'bg-slate-600/40' : 
-                    index % 5 === 3 ? 'bg-slate-400/30' : 'bg-slate-500/30'
-                  } animate-pulse`}
-                  style={{ animationDelay: `${index * 25}ms` }}
-                ></div>
-              ))}
-            </div>
-            
-            <div className="w-48 h-1 bg-gradient-to-r from-transparent via-slate-600/60 to-transparent mx-auto"></div>
           </div>
         </div>
         
