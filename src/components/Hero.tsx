@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Terminal, Hexagon, Gamepad2, Code, Heart, Building2, Rocket, Users, Star, Award, CheckCircle, ExternalLink, Signal, Wifi, Battery, Power, Trophy } from 'lucide-react';
+import { ArrowRight, Github, Hexagon, Gamepad2, Code, Heart, Building2, Rocket, Users, Star, Award, CheckCircle, ExternalLink, Signal, Wifi, Battery, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ProfessionalTerminal from './terminal/ProfessionalTerminal';
 
 // Unified product interface
 interface ProductItem {
@@ -20,9 +20,6 @@ interface ProductItem {
 }
 
 const Hero = () => {
-  const [terminalText, setTerminalText] = useState('');
-  const [currentCommand, setCurrentCommand] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
   const [activeCategory, setActiveCategory] = useState(0);
   const [liveStats, setLiveStats] = useState({
     activeUsers: 2847,
@@ -31,66 +28,6 @@ const Hero = () => {
     satisfaction: 98.7,
     uptime: 99.9
   });
-
-  const terminalCommands = [
-    {
-      command: 'jblinx system --status',
-      output: [
-        '████████████████████████████████ 100%',
-        'JBLinx Studio Development Platform v2.1.7',
-        'Initializing flagship products...',
-        '',
-        '┌─ SYSTEM STATUS ─────────────────────────┐',
-        '│ ✓ CodeFusion Studio    [OPERATIONAL]   │',
-        '│ ✓ VitalitySync Pro     [OPERATIONAL]   │', 
-        '│ ✓ MindMate Gaming      [OPERATIONAL]   │',
-        '│ ✓ NestCore Platform    [OPERATIONAL]   │',
-        '│ ✓ CodeCraftAI Pro      [BETA-ACTIVE]   │',
-        '└─────────────────────────────────────────┘',
-        '',
-        'All systems: NOMINAL'
-      ]
-    },
-    {
-      command: 'query --analytics --live',
-      output: [
-        'Retrieving live analytics...',
-        '',
-        '╔══════════════════════════════════════╗',
-        '║           LIVE METRICS               ║',
-        '╠══════════════════════════════════════╣',
-        '║ Active Users     │ 2,847+    [▲]    ║',
-        '║ GitHub Stars     │ 1,623+    [▲]    ║',
-        '║ Projects Live    │ 47        [●]    ║',
-        '║ Satisfaction     │ 98.7%     [▲]    ║',
-        '║ System Uptime    │ 99.9%     [●]    ║',
-        '╚══════════════════════════════════════╝',
-        '',
-        'Status: All systems operational'
-      ]
-    },
-    {
-      command: 'ls /ecosystem --detailed',
-      output: [
-        '/jblinx/ecosystem/',
-        '├── development/',
-        '│   ├── codefusion-studio/    # Advanced IDE',
-        '│   └── codecraftai-pro/     # AI Assistant',
-        '├── health-tech/',
-        '│   └── vitalitysync/        # Wellness Platform',
-        '├── gaming/',
-        '│   └── mindmate-hub/        # Strategic Games',
-        '├── proptech/',
-        '│   └── nestcore/            # Real Estate Suite',
-        '└── resources/',
-        '    ├── documentation/',
-        '    ├── templates/',
-        '    └── tutorials/',
-        '',
-        '5 flagship products, infinite possibilities'
-      ]
-    }
-  ];
 
   const productCategories = [
     {
@@ -199,48 +136,7 @@ const Hero = () => {
     }
   ];
 
-  // Enhanced Terminal Animation with better performance
-  useEffect(() => {
-    const typeCommand = async () => {
-      if (currentCommand >= terminalCommands.length) {
-        setCurrentCommand(0);
-        setTerminalText('');
-        return;
-      }
-
-      setIsTyping(true);
-      const cmd = terminalCommands[currentCommand];
-      
-      // Clear and type command
-      setTerminalText('');
-      const commandText = `[jblinx@studio]$ ${cmd.command}`;
-      
-      // Type command character by character with reduced delay for better performance
-      for (let i = 0; i <= commandText.length; i++) {
-        setTerminalText(commandText.slice(0, i) + (i < commandText.length ? '█' : ''));
-        await new Promise(resolve => setTimeout(resolve, 30));
-      }
-      
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Show output line by line
-      setTerminalText(commandText);
-      for (let i = 0; i < cmd.output.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, 150));
-        setTerminalText(prev => prev + '\n' + cmd.output[i]);
-      }
-      
-      await new Promise(resolve => setTimeout(resolve, 2500));
-      setCurrentCommand(prev => prev + 1);
-      setIsTyping(false);
-    };
-
-    const interval = setInterval(typeCommand, 10000);
-    typeCommand();
-    return () => clearInterval(interval);
-  }, [currentCommand]);
-
-  // Auto-rotate categories
+  // Auto-rotate categories with improved performance
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveCategory(prev => (prev + 1) % productCategories.length);
@@ -248,17 +144,17 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Live stats animation
+  // Optimized live stats animation
   useEffect(() => {
     const interval = setInterval(() => {
       setLiveStats(prev => ({
-        activeUsers: prev.activeUsers + Math.floor(Math.random() * 2),
-        githubStars: prev.githubStars + Math.floor(Math.random() * 1),
+        activeUsers: prev.activeUsers + Math.floor(Math.random() * 3),
+        githubStars: prev.githubStars + (Math.random() > 0.7 ? 1 : 0),
         totalProjects: prev.totalProjects,
-        satisfaction: Math.min(99.9, prev.satisfaction + (Math.random() - 0.5) * 0.05),
-        uptime: Math.min(99.9, prev.uptime + (Math.random() - 0.5) * 0.02)
+        satisfaction: Math.min(99.9, prev.satisfaction + (Math.random() - 0.5) * 0.03),
+        uptime: Math.min(99.9, prev.uptime + (Math.random() - 0.5) * 0.01)
       }));
-    }, 8000);
+    }, 12000);
     return () => clearInterval(interval);
   }, []);
 
@@ -267,18 +163,18 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black overflow-hidden">
       {/* Enhanced Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 blur-3xl animate-pulse rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-orange-500/10 to-purple-500/10 blur-3xl animate-pulse rounded-full" style={{animationDelay: '3s'}}></div>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-emerald-500/8 to-blue-500/8 blur-3xl rounded-full opacity-60"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-orange-500/8 to-purple-500/8 blur-3xl rounded-full opacity-40"></div>
         
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Professional grid pattern */}
+        <div className="absolute inset-0 opacity-[0.02]">
           <div className="w-full h-full" style={{
             backgroundImage: `
-              linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px)
+              linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px)
             `,
-            backgroundSize: '40px 40px'
+            backgroundSize: '50px 50px'
           }}></div>
         </div>
       </div>
@@ -288,7 +184,7 @@ const Hero = () => {
           {/* Left Content */}
           <div className="lg:col-span-7 space-y-8">
             {/* Studio Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-slate-900/95 to-slate-800/95 border border-emerald-400/40 backdrop-blur-sm px-6 py-3 rounded-xl hover:border-emerald-300 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/20">
+            <div className="inline-flex items-center bg-gradient-to-r from-slate-900/95 to-slate-800/95 border border-emerald-400/40 backdrop-blur-sm px-6 py-3 rounded-xl transition-all duration-300 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-400/20">
               <div className="w-3 h-3 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
               <Hexagon className="w-5 h-5 text-emerald-400 mr-3" />
               <span className="text-emerald-400 font-bold text-sm font-mono tracking-wider">JBLINX DEVELOPMENT STUDIO</span>
@@ -375,50 +271,10 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Panel - Professional Terminal */}
+          {/* Right Panel - Optimized Terminal and Product Showcase */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Enhanced Terminal */}
-            <div className="bg-black/95 border-2 border-emerald-400/60 backdrop-blur-sm relative overflow-hidden group hover:border-emerald-300 transition-all duration-300 rounded-xl shadow-2xl shadow-emerald-400/20">
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between p-4 border-b-2 border-emerald-400/40 bg-emerald-400/5">
-                <div className="flex items-center space-x-3">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 bg-red-400 rounded-full border border-red-600"></div>
-                    <div className="w-3 h-3 bg-yellow-400 rounded-full border border-yellow-600"></div>
-                    <div className="w-3 h-3 bg-emerald-400 rounded-full border border-emerald-600"></div>
-                  </div>
-                  <div className="text-emerald-400 text-sm font-bold flex items-center space-x-2">
-                    <Terminal className="w-4 h-4" />
-                    <span>JBLINX TERMINAL</span>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="text-emerald-400 text-xs">
-                    {new Date().toLocaleTimeString()}
-                  </div>
-                </div>
-              </div>
-              
-              {/* Terminal Content */}
-              <div className="p-4 min-h-[280px] relative bg-black/90">
-                <div className="text-emerald-400 mb-2 text-xs opacity-70">
-                  JBLinx Studio Operating System v2.1.7
-                </div>
-                <pre className="text-emerald-400 whitespace-pre-wrap leading-relaxed text-sm">
-                  {terminalText}
-                </pre>
-                {isTyping && (
-                  <div className="inline-block w-2 h-5 bg-emerald-400 animate-pulse ml-1"></div>
-                )}
-                
-                {!isTyping && (
-                  <div className="text-emerald-400 mt-2 flex items-center">
-                    <span className="mr-2">[jblinx@studio]$</span>
-                    <div className="w-2 h-4 bg-emerald-400 animate-pulse"></div>
-                  </div>
-                )}
-              </div>
-            </div>
+            {/* Optimized Professional Terminal */}
+            <ProfessionalTerminal />
 
             {/* Enhanced Product Showcase */}
             <div className="bg-black/95 border-2 border-cyan-400/60 backdrop-blur-sm relative overflow-hidden rounded-xl shadow-2xl shadow-cyan-400/20">
