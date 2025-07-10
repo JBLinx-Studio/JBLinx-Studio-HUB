@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Code, Terminal, Users, Clock, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -77,13 +76,17 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Horizontal Drag Container */}
-        <HorizontalDragContainer className="mb-8">
+        {/* Enhanced Horizontal Drag Container with Auto-scroll */}
+        <HorizontalDragContainer 
+          className="mb-8" 
+          autoScrollSpeed={0.3}
+          autoScrollDirection="right"
+        >
           <div className="flex space-x-6 pb-4">
             {/* Original Layout */}
             <div className="grid lg:grid-cols-3 gap-3 min-w-full flex-shrink-0">
               {/* Left Panel: Featured Game Display */}
-              <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
+              <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4 drag-container-item">
                 <div className="flex items-center space-x-2 mb-4">
                   <Play className="w-4 h-4 text-purple-400" />
                   <span className="text-purple-400 font-black text-sm font-mono">FEATURED RELEASE</span>
@@ -138,7 +141,7 @@ const GamesSection = () => {
               {/* Right Panel: Game Selection + Dev Resources */}
               <div className="space-y-3">
                 {/* Game Selector */}
-                <div className="bg-slate-800/95 border border-slate-700 p-4">
+                <div className="bg-slate-800/95 border border-slate-700 p-4 drag-container-item">
                   <div className="flex items-center space-x-2 mb-3">
                     <Gamepad2 className="w-4 h-4 text-cyan-400" />
                     <span className="text-cyan-400 font-black text-sm font-mono">GAME LIBRARY</span>
@@ -175,7 +178,7 @@ const GamesSection = () => {
                 </div>
 
                 {/* Dev Resources */}
-                <div className="bg-slate-800/95 border border-slate-700 p-4">
+                <div className="bg-slate-800/95 border border-slate-700 p-4 drag-container-item">
                   <div className="flex items-center space-x-2 mb-3">
                     <Code className="w-4 h-4 text-green-400" />
                     <span className="text-green-400 font-black text-sm font-mono">DEV RESOURCES</span>
@@ -211,10 +214,10 @@ const GamesSection = () => {
           </div>
         </HorizontalDragContainer>
 
-        {/* Drag Hint */}
+        {/* Enhanced Drag Hint */}
         <div className="text-center mb-4">
-          <div className="text-slate-500 text-xs font-mono">
-            ← DRAG HORIZONTALLY TO EXPLORE MORE CONTENT →
+          <div className="text-slate-500 text-xs font-mono animate-pulse">
+            ← DRAG TO EXPLORE • AUTO-SCROLLING ENABLED →
           </div>
         </div>
 
