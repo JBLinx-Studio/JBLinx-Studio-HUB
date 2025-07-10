@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Set base path for GitHub Pages deployment - this must match your repo name
+  // Set base path for GitHub Pages deployment
   base: mode === 'production' ? '/JBLinx-Studio-HUB/' : '/',
   server: {
     host: "::",
@@ -33,7 +33,9 @@ export default defineConfig(({ mode }) => ({
         entryFileNames: "assets/[name]-[hash].js",
       },
     },
-    // Don't minify in development, use terser only in production
+    // Ensure source maps are generated for debugging
+    sourcemap: false,
+    // Optimize for production only
     minify: mode === 'production' ? 'terser' : false,
     target: 'es2015'
   },
