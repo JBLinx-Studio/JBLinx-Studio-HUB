@@ -1,69 +1,105 @@
 
 import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface HorizontalDragContainerProps {
   children: React.ReactNode;
   className?: string;
-  showNavigation?: boolean;
+  autoScrollSpeed?: number;
+  autoScrollDirection?: 'left' | 'right';
 }
 
 const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({ 
   children, 
   className = "",
-  showNavigation = true
+  autoScrollSpeed = 1,
+  autoScrollDirection = 'right'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentPanel, setCurrentPanel] = useState(0);
-  const [totalPanels, setTotalPanels] = useState(0);
+  const [velocity, setVelocity] = useState(0);
+  const [lastX, setLastX] = useState(0);
+  const [lastTime, setLastTime] = useState(0);
+  const [dragDistance, setDragDistance] = useState(0);
+  const autoScrollRef = useRef<number>();
+  const momentumRef = useRef<number>();
 
-  useEffect(() => {
-    if (containerRef.current) {
+  // Smooth auto-scroll with infinite loop
+  const startAutoScroll = useCallback(() => {
+    if (!containerRef.current || isDragging) return;
+
+    const scroll = () => {
+      if (!containerRef.current || isDragging) return;
+
       const container = containerRef.current;
-      const panels = container.children[0]?.children || [];
-      setTotalPanels(panels.length);
-    }
-  }, [children]);
+      const scrollIncrement = autoScrollSpeed;
+      
+      if (autoScrollDirection === 'right') {
+        container.scrollLeft += scrollIncrement;
+        
+        // Seamless loop - when we reach the end, jump to beginning
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollLeft = 0;
+        }
+      } else {
+        container.scrollLeft -= scrollIncrement;
+        
+        // Seamless loop - when we reach the beginning, jump to end
+        if (container.scrollLeft <= 0) {
+          const maxScroll = container.scrollWidth - container.clientWidth;
+          container.scrollLeft = maxScroll;
+        }
+      }
 
-  const snapToPanel = useCallback((panelIndex: number) => {
-    if (!containerRef.current) return;
-    
-    const container = containerRef.current;
-    const panelWidth = container.clientWidth;
-    const targetScroll = panelIndex * panelWidth;
-    
-    container.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
-    
-    setCurrentPanel(panelIndex);
-  }, []);
+      autoScrollRef.current = requestAnimationFrame(scroll);
+    };
 
-  const handlePrevious = useCallback(() => {
-    if (currentPanel > 0) {
-      snapToPanel(currentPanel - 1);
-    }
-  }, [currentPanel, snapToPanel]);
+    autoScrollRef.current = requestAnimationFrame(scroll);
+  }, [autoScrollSpeed, autoScrollDirection, isDragging]);
 
-  const handleNext = useCallback(() => {
-    if (currentPanel < totalPanels - 1) {
-      snapToPanel(currentPanel + 1);
+  // Start auto-scroll
+  useEffect(() => {
+    startAutoScroll();
+    return () => {
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+      }
+    };
+  }, [startAutoScroll]);
+
+  // Pause auto-scroll during drag
+  useEffect(() => {
+    if (isDragging) {
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+      }
+    } else {
+      // Resume auto-scroll immediately after drag ends
+      startAutoScroll();
     }
-  }, [currentPanel, totalPanels, snapToPanel]);
+  }, [isDragging, startAutoScroll]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('button, a, input, select, textarea, [role="button"]')) {
+      return;
+    }
+
     if (!containerRef.current) return;
     
     setIsDragging(true);
     setStartX(e.pageX - containerRef.current.offsetLeft);
     setScrollLeft(containerRef.current.scrollLeft);
+    setLastX(e.pageX);
+    setLastTime(Date.now());
+    setVelocity(0);
+    setDragDistance(0);
     
-    containerRef.current.style.cursor = 'grabbing';
-    e.preventDefault();
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'grabbing';
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -71,22 +107,74 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    containerRef.current.scrollLeft = scrollLeft - walk;
-  }, [isDragging, startX, scrollLeft]);
+    const walk = (x - startX) * 2; // Increased responsiveness
+    const newScrollLeft = scrollLeft - walk;
+    
+    containerRef.current.scrollLeft = newScrollLeft;
+    
+    // Calculate velocity for momentum
+    const currentTime = Date.now();
+    const deltaTime = currentTime - lastTime;
+    const deltaX = e.pageX - lastX;
+    
+    if (deltaTime > 0) {
+      const newVelocity = (deltaX / deltaTime) * 0.8 + velocity * 0.2;
+      setVelocity(newVelocity);
+    }
+    
+    setLastX(e.pageX);
+    setLastTime(currentTime);
+    setDragDistance(Math.abs(walk));
+
+    // Handle infinite loop during drag
+    const container = containerRef.current;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    
+    if (container.scrollLeft <= 0) {
+      container.scrollLeft = maxScroll;
+    } else if (container.scrollLeft >= maxScroll) {
+      container.scrollLeft = 0;
+    }
+  }, [isDragging, startX, scrollLeft, lastX, lastTime, velocity]);
 
   const handleMouseUp = useCallback(() => {
-    if (!containerRef.current || !isDragging) return;
+    if (!containerRef.current) return;
     
     setIsDragging(false);
-    containerRef.current.style.cursor = 'grab';
+    document.body.style.userSelect = 'auto';
+    document.body.style.cursor = 'auto';
     
-    // Snap to nearest panel
-    const container = containerRef.current;
-    const panelWidth = container.clientWidth;
-    const newPanel = Math.round(container.scrollLeft / panelWidth);
-    snapToPanel(Math.max(0, Math.min(newPanel, totalPanels - 1)));
-  }, [isDragging, snapToPanel, totalPanels]);
+    // Apply smooth momentum without snapping
+    if (Math.abs(velocity) > 0.1) {
+      const container = containerRef.current;
+      let currentVelocity = velocity * 15;
+      const friction = 0.96;
+      
+      const momentumScroll = () => {
+        if (Math.abs(currentVelocity) < 0.3) {
+          if (momentumRef.current) {
+            cancelAnimationFrame(momentumRef.current);
+          }
+          return;
+        }
+        
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        container.scrollLeft -= currentVelocity;
+        
+        // Handle infinite loop during momentum
+        if (container.scrollLeft <= 0) {
+          container.scrollLeft = maxScroll;
+        } else if (container.scrollLeft >= maxScroll) {
+          container.scrollLeft = 0;
+        }
+        
+        currentVelocity *= friction;
+        momentumRef.current = requestAnimationFrame(momentumScroll);
+      };
+      
+      momentumRef.current = requestAnimationFrame(momentumScroll);
+    }
+  }, [velocity]);
 
   const handleMouseLeave = useCallback(() => {
     if (isDragging) {
@@ -94,94 +182,147 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
   }, [isDragging, handleMouseUp]);
 
-  // Touch events for mobile
+  // Touch events
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('button, a, input, select, textarea, [role="button"]')) {
+      return;
+    }
+
     if (!containerRef.current) return;
     
     const touch = e.touches[0];
     setIsDragging(true);
     setStartX(touch.pageX - containerRef.current.offsetLeft);
     setScrollLeft(containerRef.current.scrollLeft);
+    setLastX(touch.pageX);
+    setLastTime(Date.now());
+    setVelocity(0);
+    setDragDistance(0);
   }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (!isDragging || !containerRef.current) return;
     
+    e.preventDefault();
     const touch = e.touches[0];
     const x = touch.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    containerRef.current.scrollLeft = scrollLeft - walk;
-  }, [isDragging, startX, scrollLeft]);
+    const walk = (x - startX) * 2;
+    const newScrollLeft = scrollLeft - walk;
+    
+    containerRef.current.scrollLeft = newScrollLeft;
+    
+    const currentTime = Date.now();
+    const deltaTime = currentTime - lastTime;
+    const deltaX = touch.pageX - lastX;
+    
+    if (deltaTime > 0) {
+      const newVelocity = (deltaX / deltaTime) * 0.8 + velocity * 0.2;
+      setVelocity(newVelocity);
+    }
+    
+    setLastX(touch.pageX);
+    setLastTime(currentTime);
+    setDragDistance(Math.abs(walk));
+
+    // Handle infinite loop
+    const container = containerRef.current;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    
+    if (container.scrollLeft <= 0) {
+      container.scrollLeft = maxScroll;
+    } else if (container.scrollLeft >= maxScroll) {
+      container.scrollLeft = 0;
+    }
+  }, [isDragging, startX, scrollLeft, lastX, lastTime, velocity]);
 
   const handleTouchEnd = useCallback(() => {
-    if (!containerRef.current || !isDragging) return;
+    if (!containerRef.current) return;
     
     setIsDragging(false);
     
-    // Snap to nearest panel
+    if (Math.abs(velocity) > 0.1) {
+      const container = containerRef.current;
+      let currentVelocity = velocity * 15;
+      const friction = 0.96;
+      
+      const momentumScroll = () => {
+        if (Math.abs(currentVelocity) < 0.3) {
+          if (momentumRef.current) {
+            cancelAnimationFrame(momentumRef.current);
+          }
+          return;
+        }
+        
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        container.scrollLeft -= currentVelocity;
+        
+        if (container.scrollLeft <= 0) {
+          container.scrollLeft = maxScroll;
+        } else if (container.scrollLeft >= maxScroll) {
+          container.scrollLeft = 0;
+        }
+        
+        currentVelocity *= friction;
+        momentumRef.current = requestAnimationFrame(momentumScroll);
+      };
+      
+      momentumRef.current = requestAnimationFrame(momentumScroll);
+    }
+  }, [velocity]);
+
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    if (dragDistance > 5) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, [dragDistance]);
+
+  // Cleanup
+  useEffect(() => {
     const container = containerRef.current;
-    const panelWidth = container.clientWidth;
-    const newPanel = Math.round(container.scrollLeft / panelWidth);
-    snapToPanel(Math.max(0, Math.min(newPanel, totalPanels - 1)));
-  }, [isDragging, snapToPanel, totalPanels]);
+    if (!container) return;
+
+    const preventDrag = (e: Event) => e.preventDefault();
+    
+    container.addEventListener('dragstart', preventDrag);
+    
+    return () => {
+      container.removeEventListener('dragstart', preventDrag);
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+      }
+      if (momentumRef.current) {
+        cancelAnimationFrame(momentumRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <div className="relative w-full">
-      <div
-        ref={containerRef}
-        className={`overflow-x-hidden scrollbar-hide cursor-grab select-none ${className}`}
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+    <div
+      ref={containerRef}
+      className={`overflow-x-auto scrollbar-hide cursor-auto select-none ${className}`}
+      style={{
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
+        WebkitOverflowScrolling: 'touch',
+        scrollBehavior: 'auto'
+      }}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onClick={handleClick}
+    >
+      <div 
+        ref={contentRef} 
+        className="flex"
       >
-        <div className="flex w-full">
-          {children}
-        </div>
+        {children}
       </div>
-
-      {/* Navigation Controls */}
-      {showNavigation && totalPanels > 1 && (
-        <>
-          <button
-            onClick={handlePrevious}
-            disabled={currentPanel === 0}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 rounded-md backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          
-          <button
-            onClick={handleNext}
-            disabled={currentPanel === totalPanels - 1}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 rounded-md backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-
-          {/* Panel Indicators */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
-            {Array.from({ length: totalPanels }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => snapToPanel(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentPanel 
-                    ? 'bg-purple-400 scale-125' 
-                    : 'bg-slate-600 hover:bg-purple-400/50'
-                }`}
-              />
-            ))}
-          </div>
-        </>
-      )}
     </div>
   );
 };

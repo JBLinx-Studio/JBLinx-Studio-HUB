@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -46,6 +45,111 @@ h1, h2, h3, h4, h5, h6 {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Enhanced smooth scrolling for drag containers */
+.horizontal-drag-container {
+  scroll-behavior: auto;
+  will-change: scroll-position;
+  scroll-snap-type: x mandatory;
+}
+
+/* Snap points for panels */
+.horizontal-drag-container > div > * {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Prevent text selection during drag */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Enhanced cursor styles */
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grab:active {
+  cursor: grabbing;
+}
+
+.cursor-grabbing {
+  cursor: grabbing !important;
+}
+
+/* Smooth transitions for interactive elements */
+.drag-container-item {
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+
+.drag-container-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Performance optimizations for drag container */
+.horizontal-drag-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.horizontal-drag-container * {
+  pointer-events: auto;
+}
+
+/* Ensure interactive elements maintain proper cursor */
+.horizontal-drag-container button,
+.horizontal-drag-container a,
+.horizontal-drag-container input,
+.horizontal-drag-container select,
+.horizontal-drag-container textarea,
+.horizontal-drag-container [role="button"] {
+  pointer-events: auto;
+  cursor: pointer !important;
+}
+
+.horizontal-drag-container button:hover,
+.horizontal-drag-container a:hover,
+.horizontal-drag-container [role="button"]:hover {
+  cursor: pointer !important;
+}
+
+/* Smooth panel transitions */
+.panel-container {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+/* Mobile responsive panels */
+@media (max-width: 768px) {
+  .panel-container {
+    min-width: 95vw;
+  }
+}
+
+@media (min-width: 769px) {
+  .panel-container {
+    min-width: 85vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .panel-container {
+    min-width: 75vw;
+  }
+}
+
+@media (min-width: 1280px) {
+  .panel-container {
+    min-width: 60vw;
+  }
 }
 
 /* Smooth scrolling */
@@ -132,29 +236,137 @@ html {
   transform: translateX(1em);
 }
 
-/* Horizontal drag container styles */
+/* Enhanced horizontal drag container styles */
 .horizontal-drag-container {
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .horizontal-drag-container > * {
   scroll-snap-align: start;
 }
 
-/* Prevent text selection during drag */
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+/* Cinematic hover effects */
+.cinematic-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Cursor styles for dragging */
-.cursor-grab {
-  cursor: grab;
+.cinematic-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.cursor-grabbing {
-  cursor: grabbing;
+/* Game showcase animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glowing effect for featured content */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+}
+
+/* Enhanced horizontal drag container styles */
+.horizontal-drag-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: auto;
+  will-change: scroll-position;
+}
+
+/* Responsive panel containers */
+.panel-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Mobile responsive panels - no gaps, full width utilization */
+@media (max-width: 640px) {
+  .panel-container {
+    min-width: 100vw;
+    padding: 0 1rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 0;
+  }
+}
+
+/* Tablet responsive panels */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .panel-container {
+    min-width: 85vw;
+    padding: 0 1.5rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 1rem;
+  }
+}
+
+/* Desktop responsive panels */
+@media (min-width: 1025px) {
+  .panel-container {
+    min-width: 75vw;
+    padding: 0 2rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 1.5rem;
+  }
+}
+
+/* Large desktop responsive panels */
+@media (min-width: 1280px) {
+  .panel-container {
+    min-width: 60vw;
+    padding: 0 2rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 2rem;
+  }
+}
+
+/* Ensure interactive elements maintain proper cursor */
+.horizontal-drag-container button,
+.horizontal-drag-container a,
+.horizontal-drag-container input,
+.horizontal-drag-container select,
+.horizontal-drag-container textarea,
+.horizontal-drag-container [role="button"] {
+  pointer-events: auto;
+  cursor: pointer !important;
+}
+
+/* Smooth transitions for interactive elements */
+.horizontal-drag-container button:hover,
+.horizontal-drag-container a:hover,
+.horizontal-drag-container [role="button"]:hover {
+  cursor: pointer !important;
+  transition: all 0.2s ease;
+}
+
+/* Performance optimizations */
+.horizontal-drag-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.horizontal-drag-container * {
+  pointer-events: auto;
 }
