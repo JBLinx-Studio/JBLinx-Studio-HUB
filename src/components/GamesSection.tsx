@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Code, Terminal, Users, Clock, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -80,142 +81,136 @@ const GamesSection = () => {
         {/* Enhanced Horizontal Drag Container */}
         <HorizontalDragContainer 
           className="mb-8" 
-          autoScrollSpeed={0.3}
+          autoScrollSpeed={0.4}
           autoScrollDirection="right"
         >
           <div className="flex space-x-6 pb-4">
             {/* Original Compact Layout */}
-            <div className="panel-container">
-              <div className="grid lg:grid-cols-3 gap-3 w-full">
-                {/* Left Panel: Featured Game Display */}
-                <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <Play className="w-4 h-4 text-purple-400" />
-                    <span className="text-purple-400 font-black text-sm font-mono">FEATURED RELEASE</span>
+            <div className="grid lg:grid-cols-3 gap-3 min-w-full flex-shrink-0">
+              {/* Left Panel: Featured Game Display */}
+              <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Play className="w-4 h-4 text-purple-400" />
+                  <span className="text-purple-400 font-black text-sm font-mono">FEATURED RELEASE</span>
+                </div>
+                
+                <div className="bg-slate-900/80 border border-purple-400/30 p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="text-white font-black text-lg font-mono">{games[activeGame].title}</h3>
+                      <div className="text-purple-400 font-bold text-sm">{games[activeGame].category}</div>
+                    </div>
+                    <div className="text-green-400 font-black text-lg">{games[activeGame].price}</div>
                   </div>
                   
-                  <div className="bg-slate-900/80 border border-purple-400/30 p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="text-white font-black text-lg font-mono">{games[activeGame].title}</h3>
-                        <div className="text-purple-400 font-bold text-sm">{games[activeGame].category}</div>
-                      </div>
-                      <div className="text-green-400 font-black text-lg">{games[activeGame].price}</div>
-                    </div>
-                    
-                    <p className="text-slate-300 text-sm mb-4">{games[activeGame].description}</p>
-                    
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {games[activeGame].tech.map((tech, index) => (
-                        <span key={index} className="bg-slate-700 text-cyan-400 px-2 py-1 text-xs font-bold">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    <div className="grid grid-cols-4 gap-2 mb-4">
-                      {[
-                        { icon: Users, value: games[activeGame].players, label: "PLAYERS" },
-                        { icon: Clock, value: games[activeGame].playtime, label: "TIME" },
-                        { icon: Shield, value: games[activeGame].difficulty, label: "LEVEL" },
-                        { icon: Star, value: games[activeGame].rating, label: "RATING" }
-                      ].map((stat, index) => {
-                        const IconComponent = stat.icon;
-                        return (
-                          <div key={index} className="bg-slate-800 border border-slate-600 p-2 text-center">
-                            <IconComponent className="w-3 h-3 mx-auto mb-1 text-purple-400" />
-                            <div className="text-xs font-black text-white">{stat.value}</div>
-                            <div className="text-xs font-bold text-slate-400">{stat.label}</div>
+                  <p className="text-slate-300 text-sm mb-4">{games[activeGame].description}</p>
+                  
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {games[activeGame].tech.map((tech, index) => (
+                      <span key={index} className="bg-slate-700 text-cyan-400 px-2 py-1 text-xs font-bold">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="grid grid-cols-4 gap-2 mb-4">
+                    {[
+                      { icon: Users, value: games[activeGame].players, label: "PLAYERS" },
+                      { icon: Clock, value: games[activeGame].playtime, label: "TIME" },
+                      { icon: Shield, value: games[activeGame].difficulty, label: "LEVEL" },
+                      { icon: Star, value: games[activeGame].rating, label: "RATING" }
+                    ].map((stat, index) => {
+                      const IconComponent = stat.icon;
+                      return (
+                        <div key={index} className="bg-slate-800 border border-slate-600 p-2 text-center">
+                          <IconComponent className="w-3 h-3 mx-auto mb-1 text-purple-400" />
+                          <div className="text-xs font-black text-white">{stat.value}</div>
+                          <div className="text-xs font-bold text-slate-400">{stat.label}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  <button className="w-full bg-purple-500 hover:bg-purple-600 text-black px-4 py-2 font-black transition-colors">
+                    ACCESS NOW
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Panel: Game Selection + Dev Resources */}
+              <div className="space-y-3">
+                <div className="bg-slate-800/95 border border-slate-700 p-4">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <Gamepad2 className="w-4 h-4 text-cyan-400" />
+                    <span className="text-cyan-400 font-black text-sm font-mono">GAME LIBRARY</span>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    {games.map((game, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setActiveGame(index)}
+                        className={`w-full text-left p-2 border transition-all duration-300 ${
+                          activeGame === index 
+                            ? 'border-purple-400 bg-purple-500/20' 
+                            : 'border-slate-600 bg-slate-900/50 hover:border-purple-400/50'
+                        }`}
+                      >
+                        <div className="text-white font-bold text-sm">{game.title}</div>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className={`px-2 py-1 text-xs font-bold ${
+                            game.status === 'RELEASED' ? 'bg-green-500 text-black' : 'bg-yellow-500 text-black'
+                          }`}>
+                            {game.status}
+                          </span>
+                          <div className="text-slate-400 text-xs flex items-center space-x-2">
+                            <div className="flex items-center space-x-1">
+                              <Download className="w-3 h-3" />
+                              <span>{game.downloads}</span>
+                            </div>
                           </div>
-                        );
-                      })}
-                    </div>
-                    
-                    <button className="w-full bg-purple-500 hover:bg-purple-600 text-black px-4 py-2 font-black transition-colors">
-                      ACCESS NOW
-                    </button>
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                {/* Right Panel: Game Selection + Dev Resources */}
-                <div className="space-y-3">
-                  <div className="bg-slate-800/95 border border-slate-700 p-4">
-                    <div className="flex items-center space-x-2 mb-3">
-                      <Gamepad2 className="w-4 h-4 text-cyan-400" />
-                      <span className="text-cyan-400 font-black text-sm font-mono">GAME LIBRARY</span>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      {games.map((game, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setActiveGame(index)}
-                          className={`w-full text-left p-2 border transition-all duration-300 ${
-                            activeGame === index 
-                              ? 'border-purple-400 bg-purple-500/20' 
-                              : 'border-slate-600 bg-slate-900/50 hover:border-purple-400/50'
-                          }`}
-                        >
-                          <div className="text-white font-bold text-sm">{game.title}</div>
-                          <div className="flex items-center justify-between mt-1">
-                            <span className={`px-2 py-1 text-xs font-bold ${
-                              game.status === 'RELEASED' ? 'bg-green-500 text-black' : 'bg-yellow-500 text-black'
-                            }`}>
-                              {game.status}
-                            </span>
-                            <div className="text-slate-400 text-xs flex items-center space-x-2">
-                              <div className="flex items-center space-x-1">
-                                <Download className="w-3 h-3" />
-                                <span>{game.downloads}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
+                <div className="bg-slate-800/95 border border-slate-700 p-4">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <Code className="w-4 h-4 text-green-400" />
+                    <span className="text-green-400 font-black text-sm font-mono">DEV RESOURCES</span>
                   </div>
-
-                  <div className="bg-slate-800/95 border border-slate-700 p-4">
-                    <div className="flex items-center space-x-2 mb-3">
-                      <Code className="w-4 h-4 text-green-400" />
-                      <span className="text-green-400 font-black text-sm font-mono">DEV RESOURCES</span>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      {devResources.map((resource, index) => (
-                        <div key={index} className="bg-slate-900/50 border border-slate-600 p-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1">
-                              <div className="text-white font-bold text-sm">{resource.title}</div>
-                              <div className="flex items-center space-x-2 mt-1">
-                                <span className="bg-green-500 text-black px-2 py-1 text-xs font-bold">
-                                  {resource.type}
-                                </span>
-                                <div className="text-slate-400 text-xs flex items-center space-x-1">
-                                  <Download className="w-3 h-3" />
-                                  <span>{resource.downloads}</span>
-                                </div>
+                  
+                  <div className="space-y-2">
+                    {devResources.map((resource, index) => (
+                      <div key={index} className="bg-slate-900/50 border border-slate-600 p-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="text-white font-bold text-sm">{resource.title}</div>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <span className="bg-green-500 text-black px-2 py-1 text-xs font-bold">
+                                {resource.type}
+                              </span>
+                              <div className="text-slate-400 text-xs flex items-center space-x-1">
+                                <Download className="w-3 h-3" />
+                                <span>{resource.downloads}</span>
                               </div>
                             </div>
-                            <div className="text-green-400 font-black text-sm">{resource.price}</div>
                           </div>
+                          <div className="text-green-400 font-black text-sm">{resource.price}</div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Cinematic Game Showcase */}
-            <div className="panel-container">
-              <CinematicGameShowcase />
-            </div>
+            <CinematicGameShowcase />
 
             {/* Additional Games Content */}
-            <div className="panel-container">
-              <AdditionalGamesContent />
-            </div>
+            <AdditionalGamesContent />
           </div>
         </HorizontalDragContainer>
 
