@@ -1,8 +1,7 @@
-
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 interface HorizontalDragContainerProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   autoScrollSpeed?: number;
   staticPanels?: React.ReactNode[];
@@ -29,7 +28,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   const autoScrollRef = useRef<number>();
   const momentumRef = useRef<number>();
 
-  // Smooth bidirectional auto-scroll with direction change at boundaries
   const startAutoScroll = useCallback(() => {
     if (!containerRef.current || isDragging) return;
 
@@ -42,7 +40,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       if (autoScrollDirection === 'right') {
         container.scrollLeft += scrollIncrement;
         
-        // Check if we've reached the end, then reverse direction
         const maxScroll = container.scrollWidth - container.clientWidth;
         if (container.scrollLeft >= maxScroll - 1) {
           setAutoScrollDirection('left');
@@ -50,7 +47,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       } else {
         container.scrollLeft -= scrollIncrement;
         
-        // Check if we've reached the beginning, then reverse direction
         if (container.scrollLeft <= 1) {
           setAutoScrollDirection('right');
         }
@@ -62,11 +58,10 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     autoScrollRef.current = requestAnimationFrame(scroll);
   }, [autoScrollSpeed, autoScrollDirection, isDragging]);
 
-  // Start auto-scroll
   useEffect(() => {
     const timer = setTimeout(() => {
       startAutoScroll();
-    }, 100); // Small delay to ensure content is loaded
+    }, 100);
 
     return () => {
       clearTimeout(timer);
@@ -76,14 +71,12 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     };
   }, [startAutoScroll]);
 
-  // Pause auto-scroll during drag
   useEffect(() => {
     if (isDragging) {
       if (autoScrollRef.current) {
         cancelAnimationFrame(autoScrollRef.current);
       }
     } else {
-      // Resume auto-scroll with a slight delay
       const timer = setTimeout(() => {
         startAutoScroll();
       }, 300);
@@ -116,18 +109,17 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Smooth responsiveness
+    const walk = (x - startX) * 1.8;
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
     
-    // Calculate smooth velocity for momentum
     const currentTime = Date.now();
     const deltaTime = currentTime - lastTime;
     const deltaX = e.pageX - lastX;
     
     if (deltaTime > 0) {
-      const newVelocity = (deltaX / deltaTime) * 0.9 + velocity * 0.1;
+      const newVelocity = (deltaX / deltaTime) * 0.95 + velocity * 0.05;
       setVelocity(newVelocity);
     }
     
@@ -143,11 +135,10 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     document.body.style.userSelect = 'auto';
     document.body.style.cursor = 'auto';
     
-    // Apply ultra-smooth momentum
     if (Math.abs(velocity) > 0.1) {
       const container = containerRef.current;
-      let currentVelocity = velocity * 20;
-      const friction = 0.98; // Higher friction for smoother deceleration
+      let currentVelocity = velocity * 25;
+      const friction = 0.985;
       
       const momentumScroll = () => {
         if (Math.abs(currentVelocity) < 0.2) {
@@ -159,7 +150,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         
         container.scrollLeft -= currentVelocity;
         
-        // Ensure we stay within bounds
         const maxScroll = container.scrollWidth - container.clientWidth;
         if (container.scrollLeft < 0) {
           container.scrollLeft = 0;
@@ -183,7 +173,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
   }, [isDragging, handleMouseUp]);
 
-  // Touch events for mobile
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest('button, a, input, select, textarea, [role="button"], .interactive-element')) {
@@ -208,7 +197,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     e.preventDefault();
     const touch = e.touches[0];
     const x = touch.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
+    const walk = (x - startX) * 1.8;
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
@@ -218,7 +207,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const deltaX = touch.pageX - lastX;
     
     if (deltaTime > 0) {
-      const newVelocity = (deltaX / deltaTime) * 0.9 + velocity * 0.1;
+      const newVelocity = (deltaX / deltaTime) * 0.95 + velocity * 0.05;
       setVelocity(newVelocity);
     }
     
@@ -234,8 +223,8 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     if (Math.abs(velocity) > 0.1) {
       const container = containerRef.current;
-      let currentVelocity = velocity * 20;
-      const friction = 0.98;
+      let currentVelocity = velocity * 25;
+      const friction = 0.985;
       
       const momentumScroll = () => {
         if (Math.abs(currentVelocity) < 0.2) {
@@ -271,7 +260,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
   }, [dragDistance]);
 
-  // Cleanup
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -292,13 +280,13 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   }, []);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full h-full">
       {/* Static Docked Panels */}
       {staticPanels.length > 0 && (
         <div className="hidden lg:block absolute left-0 top-0 z-10 h-full">
           <div className="flex h-full">
             {staticPanels.map((panel, index) => (
-              <div key={index} className="static-panel bg-slate-900/95 border border-slate-700/50 backdrop-blur-sm">
+              <div key={`static-${index}`} className="static-panel bg-slate-900/98 border-r border-slate-700/70 backdrop-blur-sm">
                 {panel}
               </div>
             ))}
@@ -309,7 +297,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       {/* Main Scrolling Container */}
       <div
         ref={containerRef}
-        className={`overflow-x-auto scrollbar-hide cursor-grab select-none transition-all duration-300 ${className}`}
+        className={`overflow-x-auto scrollbar-hide cursor-grab select-none transition-all duration-500 ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -328,13 +316,16 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       >
         <div 
           ref={contentRef} 
-          className="flex transition-transform duration-300 ease-out"
-          style={{ willChange: 'transform' }}
+          className="flex transition-transform duration-500 ease-out"
+          style={{ 
+            willChange: 'transform',
+            minWidth: 'max-content'
+          }}
         >
           {/* Moving Panels */}
           {movingPanels.length > 0 ? (
             movingPanels.map((panel, index) => (
-              <div key={index} className="moving-panel flex-shrink-0">
+              <div key={`moving-${index}`} className="moving-panel flex-shrink-0">
                 {panel}
               </div>
             ))
@@ -344,13 +335,13 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         </div>
       </div>
 
-      {/* Direction Indicator */}
+      {/* Enhanced Direction Indicator */}
       <div className="absolute bottom-4 right-4 hidden lg:flex items-center space-x-2 text-slate-500 text-xs font-mono z-20">
-        <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${
+        <div className={`w-2 h-2 rounded-full transition-colors duration-700 ${
           autoScrollDirection === 'right' ? 'bg-purple-400 animate-pulse' : 'bg-slate-600'
         }`}></div>
-        <span>BIDIRECTIONAL FLOW</span>
-        <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${
+        <span>ULTRA-SMOOTH FLOW</span>
+        <div className={`w-2 h-2 rounded-full transition-colors duration-700 ${
           autoScrollDirection === 'left' ? 'bg-purple-400 animate-pulse' : 'bg-slate-600'
         }`}></div>
       </div>
