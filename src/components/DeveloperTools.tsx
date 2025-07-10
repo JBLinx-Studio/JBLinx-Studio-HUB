@@ -1,6 +1,7 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Code, Terminal, Github, Database, Zap, Settings, Monitor, Activity, Cpu, Globe, Package } from 'lucide-react';
+import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
+import { DeveloperCarouselContent } from './developer/DeveloperCarouselContent';
 
 const DeveloperTools = () => {
   const [activeTab, setActiveTab] = useState('tools');
@@ -76,7 +77,7 @@ const DeveloperTools = () => {
           </p>
         </div>
 
-        {/* Unique Layout: Terminal-Style Interface with Tabs */}
+        {/* Terminal-Style Interface with Tabs */}
         <div className="bg-slate-800/95 border border-slate-700 mb-8">
           {/* Terminal Header */}
           <div className="flex items-center justify-between bg-slate-900/80 border-b border-slate-700 px-4 py-2">
@@ -265,6 +266,18 @@ const DeveloperTools = () => {
               </div>
             )}
           </div>
+        </div>
+
+        {/* NEW: Horizontal Carousel for Additional Content */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-2 mb-4">
+            <Terminal className="w-4 h-4 text-green-400" />
+            <span className="text-green-400 font-black text-sm font-mono">EXPLORE MORE DEVELOPER RESOURCES</span>
+          </div>
+          
+          <HorizontalCarousel className="h-96" itemClassName="min-w-full">
+            <DeveloperCarouselContent />
+          </HorizontalCarousel>
         </div>
 
         {/* CTA */}

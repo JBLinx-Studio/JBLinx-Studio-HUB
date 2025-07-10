@@ -1,7 +1,8 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, Code, Book, Zap, Download, Star, Users, TrendingUp, Smartphone, Database, Monitor, Globe, ShoppingCart, Package, Layers, FileCode, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
+import { ProductsCarouselContent } from './products/ProductsCarouselContent';
 
 const ProductsShowcase = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -407,6 +408,18 @@ const ProductsShowcase = () => {
         {/* Dynamic Category Content */}
         <div className="mb-6">
           {renderCategoryContent()}
+        </div>
+
+        {/* NEW: Horizontal Carousel for Additional Content */}
+        <div className="mb-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <Package className="w-4 h-4 text-cyan-400" />
+            <span className="text-cyan-400 font-black text-sm font-mono">EXPLORE MORE DEVELOPMENT PRODUCTS</span>
+          </div>
+          
+          <HorizontalCarousel className="h-96" itemClassName="min-w-full">
+            <ProductsCarouselContent />
+          </HorizontalCarousel>
         </div>
 
         {/* Ultra Compact CTA */}

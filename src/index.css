@@ -120,3 +120,12 @@ html {
   color: #10b981;
   transform: translateX(1em);
 }
+
+/* Custom scrollbar hiding */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

@@ -1,7 +1,8 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Monitor, BarChart3, Users, Zap, Settings, Database, Globe, Cpu, Terminal, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
+import { WebAppsCarouselContent } from './webapps/WebAppsCarouselContent';
 
 const WebAppsSection = () => {
   const [selectedApp, setSelectedApp] = useState(0);
@@ -69,7 +70,7 @@ const WebAppsSection = () => {
           </p>
         </div>
 
-        {/* Unique Layout: Dashboard-Style with Sidebar Navigation */}
+        {/* Main Content Layout - Keep Existing Structure */}
         <div className="flex gap-3 mb-8">
           {/* Left Sidebar: App Navigation */}
           <div className="w-64 bg-slate-800/95 border border-slate-700 p-4">
@@ -192,6 +193,18 @@ const WebAppsSection = () => {
               LAUNCH APPLICATION
             </button>
           </div>
+        </div>
+
+        {/* NEW: Horizontal Carousel for Additional Content */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-2 mb-4">
+            <Monitor className="w-4 h-4 text-blue-400" />
+            <span className="text-blue-400 font-black text-sm font-mono">DISCOVER MORE WEB APPLICATIONS</span>
+          </div>
+          
+          <HorizontalCarousel className="h-96" itemClassName="min-w-full">
+            <WebAppsCarouselContent />
+          </HorizontalCarousel>
         </div>
 
         {/* CTA */}

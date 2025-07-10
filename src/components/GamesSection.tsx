@@ -1,7 +1,8 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Code, Terminal, Users, Clock, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { HorizontalCarousel } from '@/components/ui/horizontal-carousel';
+import { GamesCarouselContent } from './games/GamesCarouselContent';
 
 const GamesSection = () => {
   const [activeGame, setActiveGame] = useState(0);
@@ -75,7 +76,7 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Unique Layout: Side-by-Side Featured Game + Game Grid */}
+        {/* Main Content Layout - Keep Existing Structure */}
         <div className="grid lg:grid-cols-3 gap-3 mb-8">
           {/* Left Panel: Featured Game Display */}
           <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
@@ -199,6 +200,18 @@ const GamesSection = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* NEW: Horizontal Carousel for Additional Content */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-2 mb-4">
+            <Gamepad2 className="w-4 h-4 text-purple-400" />
+            <span className="text-purple-400 font-black text-sm font-mono">DISCOVER MORE GAMING CONTENT</span>
+          </div>
+          
+          <HorizontalCarousel className="h-96" itemClassName="min-w-full">
+            <GamesCarouselContent />
+          </HorizontalCarousel>
         </div>
 
         {/* CTA */}
