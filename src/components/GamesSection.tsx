@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Code, Terminal, Users, Clock, Shield } from 'lucide-react';
+import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Code, Terminal, Users, Clock, Shield, Sword, Crown, Flame, Rocket, Headphones, Settings, Bell, Activity, TrendingUp, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HorizontalDragContainer from './ui/HorizontalDragContainer';
 import AdditionalGamesContent from './games/AdditionalGamesContent';
@@ -56,10 +56,23 @@ const GamesSection = () => {
     { title: "RTS Development Blog", type: "BLOG", downloads: "12.1k", price: "FREE" }
   ];
 
+  const liveUpdates = [
+    { text: "New horror update released for Chronicles", time: "2m ago", type: "update" },
+    { text: "Strategic Conquest tournament starting", time: "5m ago", type: "event" },
+    { text: "Adventure Quest beta patch deployed", time: "12m ago", type: "patch" }
+  ];
+
+  const stats = [
+    { label: "ACTIVE PLAYERS", value: "12.5k", icon: Users },
+    { label: "TOTAL DOWNLOADS", value: "250k+", icon: Download },
+    { label: "AVG RATING", value: "4.8★", icon: Star },
+    { label: "TOURNAMENTS", value: "8", icon: Trophy }
+  ];
+
   return (
     <section className="py-20 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Header - Matching Hero Style */}
+        {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
             <Trophy className="w-3 h-3 mr-1 text-purple-400" />
@@ -77,11 +90,11 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Horizontal Drag Container */}
+        {/* Horizontal Drag Container with Multiple Panels */}
         <HorizontalDragContainer className="mb-8">
-          <div className="flex space-x-6 pb-4">
-            {/* Original Layout */}
-            <div className="grid lg:grid-cols-3 gap-3 min-w-full flex-shrink-0">
+          {/* Panel 1: Main Gaming Hub (Static First Panel) */}
+          <div className="min-w-full snap-start flex-shrink-0">
+            <div className="grid lg:grid-cols-3 gap-3">
               {/* Left Panel: Featured Game Display */}
               <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
                 <div className="flex items-center space-x-2 mb-4">
@@ -135,7 +148,7 @@ const GamesSection = () => {
                 </div>
               </div>
 
-              {/* Right Panel: Game Selection + Dev Resources */}
+              {/* Right Panel: Game Selection + Live Activity */}
               <div className="space-y-3">
                 {/* Game Selector */}
                 <div className="bg-slate-800/95 border border-slate-700 p-4">
@@ -174,47 +187,181 @@ const GamesSection = () => {
                   </div>
                 </div>
 
-                {/* Dev Resources */}
+                {/* Live Updates */}
                 <div className="bg-slate-800/95 border border-slate-700 p-4">
                   <div className="flex items-center space-x-2 mb-3">
-                    <Code className="w-4 h-4 text-green-400" />
-                    <span className="text-green-400 font-black text-sm font-mono">DEV RESOURCES</span>
+                    <Activity className="w-4 h-4 text-green-400" />
+                    <span className="text-green-400 font-black text-sm font-mono">LIVE UPDATES</span>
                   </div>
                   
                   <div className="space-y-2">
-                    {devResources.map((resource, index) => (
+                    {liveUpdates.map((update, index) => (
                       <div key={index} className="bg-slate-900/50 border border-slate-600 p-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <div className="text-white font-bold text-sm">{resource.title}</div>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <span className="bg-green-500 text-black px-2 py-1 text-xs font-bold">
-                                {resource.type}
-                              </span>
-                              <div className="text-slate-400 text-xs flex items-center space-x-1">
-                                <Download className="w-3 h-3" />
-                                <span>{resource.downloads}</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-green-400 font-black text-sm">{resource.price}</div>
-                        </div>
+                        <div className="text-white text-xs font-bold">{update.text}</div>
+                        <div className="text-slate-400 text-xs mt-1">{update.time}</div>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Additional Content that slides in */}
+          {/* Panel 2: Developer Resources & Analytics */}
+          <div className="min-w-full snap-start flex-shrink-0">
+            <div className="grid lg:grid-cols-2 gap-6">
+              {/* Dev Resources Panel */}
+              <div className="bg-slate-800/95 border border-slate-700 p-6">
+                <div className="flex items-center space-x-2 mb-6">
+                  <Code className="w-5 h-5 text-green-400" />
+                  <span className="text-green-400 font-black text-lg font-mono">DEVELOPER HUB</span>
+                </div>
+                
+                <div className="space-y-4">
+                  {devResources.map((resource, index) => (
+                    <div key={index} className="bg-slate-900/50 border border-slate-600 p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="text-white font-bold text-sm">{resource.title}</div>
+                          <div className="flex items-center space-x-2 mt-2">
+                            <span className="bg-green-500 text-black px-2 py-1 text-xs font-bold">
+                              {resource.type}
+                            </span>
+                            <div className="text-slate-400 text-xs flex items-center space-x-1">
+                              <Download className="w-3 h-3" />
+                              <span>{resource.downloads}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-green-400 font-black text-sm">{resource.price}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button className="w-full bg-green-500 hover:bg-green-600 text-black px-4 py-2 font-black transition-colors mt-6">
+                  ACCESS DEVELOPER TOOLS
+                </button>
+              </div>
+
+              {/* Analytics Panel */}
+              <div className="bg-slate-800/95 border border-slate-700 p-6">
+                <div className="flex items-center space-x-2 mb-6">
+                  <TrendingUp className="w-5 h-5 text-cyan-400" />
+                  <span className="text-cyan-400 font-black text-lg font-mono">ANALYTICS DASHBOARD</span>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  {stats.map((stat, index) => {
+                    const IconComponent = stat.icon;
+                    return (
+                      <div key={index} className="bg-slate-900/50 border border-slate-600 p-4 text-center">
+                        <IconComponent className="w-6 h-6 mx-auto mb-2 text-cyan-400" />
+                        <div className="text-white font-black text-lg">{stat.value}</div>
+                        <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="bg-slate-900/50 border border-slate-600 p-4">
+                  <div className="text-white font-bold text-sm mb-2">MONTHLY REVENUE</div>
+                  <div className="text-green-400 font-black text-2xl">$45,230</div>
+                  <div className="text-green-400 text-xs">↗ +12.5% from last month</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Panel 3: Community & Events */}
+          <div className="min-w-full snap-start flex-shrink-0">
+            <div className="grid lg:grid-cols-3 gap-4">
+              {/* Tournament Panel */}
+              <div className="bg-slate-800/95 border border-slate-700 p-6">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Trophy className="w-5 h-5 text-yellow-400" />
+                  <span className="text-yellow-400 font-black text-sm font-mono">TOURNAMENTS</span>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="bg-slate-900/50 border border-yellow-400/30 p-3">
+                    <div className="text-white font-bold text-sm">Winter Championship</div>
+                    <div className="text-yellow-400 text-xs">Prize Pool: $10,000</div>
+                    <div className="text-slate-400 text-xs mt-1">Starts in 2 days</div>
+                  </div>
+                  <div className="bg-slate-900/50 border border-slate-600 p-3">
+                    <div className="text-white font-bold text-sm">Speed Run Event</div>
+                    <div className="text-green-400 text-xs">Prize Pool: $2,500</div>
+                    <div className="text-slate-400 text-xs mt-1">Registration open</div>
+                  </div>
+                </div>
+
+                <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 font-black transition-colors mt-4">
+                  JOIN TOURNAMENT
+                </button>
+              </div>
+
+              {/* Community Panel */}
+              <div className="bg-slate-800/95 border border-slate-700 p-6">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Users className="w-5 h-5 text-pink-400" />
+                  <span className="text-pink-400 font-black text-sm font-mono">COMMUNITY</span>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="bg-slate-900/50 border border-slate-600 p-3">
+                    <div className="text-white font-bold text-sm">Discord Server</div>
+                    <div className="text-pink-400 text-xs">8,432 members online</div>
+                  </div>
+                  <div className="bg-slate-900/50 border border-slate-600 p-3">
+                    <div className="text-white font-bold text-sm">Reddit Community</div>
+                    <div className="text-pink-400 text-xs">12k subscribers</div>
+                  </div>
+                  <div className="bg-slate-900/50 border border-slate-600 p-3">
+                    <div className="text-white font-bold text-sm">YouTube Channel</div>
+                    <div className="text-pink-400 text-xs">45k subscribers</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* News & Updates Panel */}
+              <div className="bg-slate-800/95 border border-slate-700 p-6">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Bell className="w-5 h-5 text-orange-400" />
+                  <span className="text-orange-400 font-black text-sm font-mono">LATEST NEWS</span>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="bg-slate-900/50 border border-slate-600 p-3">
+                    <div className="text-white font-bold text-sm">New Engine Update</div>
+                    <div className="text-orange-400 text-xs">Performance improvements</div>
+                    <div className="text-slate-400 text-xs mt-1">Today</div>
+                  </div>
+                  <div className="bg-slate-900/50 border border-slate-600 p-3">
+                    <div className="text-white font-bold text-sm">Beta Testing Phase</div>
+                    <div className="text-orange-400 text-xs">New features preview</div>
+                    <div className="text-slate-400 text-xs mt-1">2 days ago</div>
+                  </div>
+                  <div className="bg-slate-900/50 border border-slate-600 p-3">
+                    <div className="text-white font-bold text-sm">Developer Interview</div>
+                    <div className="text-orange-400 text-xs">Behind the scenes</div>
+                    <div className="text-slate-400 text-xs mt-1">1 week ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Panel 4: Extended Content from AdditionalGamesContent */}
+          <div className="min-w-full snap-start flex-shrink-0">
             <AdditionalGamesContent />
           </div>
         </HorizontalDragContainer>
 
-        {/* Drag Hint */}
+        {/* Navigation Hint */}
         <div className="text-center mb-4">
           <div className="text-slate-500 text-xs font-mono">
-            ← DRAG HORIZONTALLY TO EXPLORE MORE CONTENT →
+            ← DRAG OR USE NAVIGATION TO EXPLORE PANELS →
           </div>
         </div>
 
