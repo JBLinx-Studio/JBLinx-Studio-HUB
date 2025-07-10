@@ -80,13 +80,13 @@ const GamesSection = () => {
         {/* Enhanced Horizontal Drag Container */}
         <HorizontalDragContainer 
           className="mb-8" 
-          autoScrollSpeed={0.3}
+          autoScrollSpeed={0.5}
           autoScrollDirection="right"
         >
-          <div className="flex space-x-6 pb-4">
-            {/* Original Compact Layout */}
-            <div className="panel-container">
-              <div className="grid lg:grid-cols-3 gap-3 w-full">
+          {/* Original Compact Layout */}
+          <div className="panel-container">
+            <div className="w-full">
+              <div className="grid lg:grid-cols-3 gap-3 h-full">
                 {/* Left Panel: Featured Game Display */}
                 <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
                   <div className="flex items-center space-x-2 mb-4">
@@ -206,14 +206,18 @@ const GamesSection = () => {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Cinematic Game Showcase */}
-            <div className="panel-container">
+          {/* Cinematic Game Showcase */}
+          <div className="panel-container">
+            <div className="w-full">
               <CinematicGameShowcase />
             </div>
+          </div>
 
-            {/* Additional Games Content */}
-            <div className="panel-container">
+          {/* Additional Games Content */}
+          <div className="panel-container">
+            <div className="w-full">
               <AdditionalGamesContent />
             </div>
           </div>
@@ -224,11 +228,11 @@ const GamesSection = () => {
           <div className="flex items-center justify-center space-x-4 text-slate-500 text-xs font-mono">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-              <span>AUTO-SCROLLING</span>
+              <span>SMOOTH INFINITE SCROLL</span>
             </div>
             <div className="text-slate-600">•</div>
             <div className="flex items-center space-x-2">
-              <span>DRAG TO EXPLORE</span>
+              <span>DRAG TO CONTROL</span>
               <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
             </div>
           </div>

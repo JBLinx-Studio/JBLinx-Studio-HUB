@@ -11,7 +11,7 @@ interface HorizontalDragContainerProps {
 const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({ 
   children, 
   className = "",
-  autoScrollSpeed = 0.5,
+  autoScrollSpeed = 1,
   autoScrollDirection = 'right'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,85 +23,34 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   const [lastX, setLastX] = useState(0);
   const [lastTime, setLastTime] = useState(0);
   const [dragDistance, setDragDistance] = useState(0);
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const autoScrollRef = useRef<number>();
   const momentumRef = useRef<number>();
-  const snapTimeoutRef = useRef<number>();
 
-  // Get panel width for snapping
-  const getPanelWidth = useCallback(() => {
-    if (!contentRef.current) return 0;
-    const firstChild = contentRef.current.firstElementChild as HTMLElement;
-    return firstChild ? firstChild.offsetWidth + 24 : 0; // 24px for gap
-  }, []);
-
-  // Snap to nearest panel
-  const snapToPanel = useCallback(() => {
-    if (!containerRef.current) return;
-    
-    const container = containerRef.current;
-    const panelWidth = getPanelWidth();
-    if (panelWidth === 0) return;
-
-    const currentScroll = container.scrollLeft;
-    const nearestPanel = Math.round(currentScroll / panelWidth);
-    const targetScroll = nearestPanel * panelWidth;
-
-    // Smooth scroll to target
-    const startScroll = currentScroll;
-    const distance = targetScroll - startScroll;
-    const duration = 300;
-    const startTime = performance.now();
-
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Easing function for smooth animation
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      const newScroll = startScroll + (distance * easeOut);
-      
-      container.scrollLeft = newScroll;
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [getPanelWidth]);
-
-  // Enhanced auto-scroll with smooth panel transitions
+  // Smooth auto-scroll with infinite loop
   const startAutoScroll = useCallback(() => {
-    if (!containerRef.current || !isAutoScrolling || isDragging) return;
+    if (!containerRef.current || isDragging) return;
 
     const scroll = () => {
-      if (!containerRef.current || !isAutoScrolling || isDragging) return;
+      if (!containerRef.current || isDragging) return;
 
       const container = containerRef.current;
-      const panelWidth = getPanelWidth();
+      const scrollIncrement = autoScrollSpeed;
       
-      if (panelWidth > 0) {
-        // Move by small increments for smooth motion
-        const scrollIncrement = autoScrollSpeed;
+      if (autoScrollDirection === 'right') {
+        container.scrollLeft += scrollIncrement;
         
-        if (autoScrollDirection === 'right') {
-          container.scrollLeft += scrollIncrement;
-          
-          // Check if we need to loop back
+        // Seamless loop - when we reach the end, jump to beginning
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollLeft = 0;
+        }
+      } else {
+        container.scrollLeft -= scrollIncrement;
+        
+        // Seamless loop - when we reach the beginning, jump to end
+        if (container.scrollLeft <= 0) {
           const maxScroll = container.scrollWidth - container.clientWidth;
-          if (container.scrollLeft >= maxScroll - panelWidth) {
-            // Smoothly transition to beginning
-            container.scrollLeft = 0;
-          }
-        } else {
-          container.scrollLeft -= scrollIncrement;
-          
-          if (container.scrollLeft <= 0) {
-            // Smoothly transition to end
-            const maxScroll = container.scrollWidth - container.clientWidth;
-            container.scrollLeft = maxScroll - panelWidth;
-          }
+          container.scrollLeft = maxScroll;
         }
       }
 
@@ -109,25 +58,9 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     };
 
     autoScrollRef.current = requestAnimationFrame(scroll);
-  }, [autoScrollSpeed, autoScrollDirection, isAutoScrolling, isDragging, getPanelWidth]);
+  }, [autoScrollSpeed, autoScrollDirection, isDragging]);
 
-  // Setup single set of content (no duplicates)
-  useEffect(() => {
-    if (!containerRef.current || !contentRef.current) return;
-
-    const container = containerRef.current;
-    
-    // Remove any existing clones
-    const existingClones = container.querySelectorAll('[data-clone]');
-    existingClones.forEach(clone => clone.remove());
-
-    // Set initial scroll position
-    setTimeout(() => {
-      container.scrollLeft = 0;
-    }, 0);
-  }, [children]);
-
-  // Start auto-scroll when component mounts
+  // Start auto-scroll
   useEffect(() => {
     startAutoScroll();
     return () => {
@@ -137,21 +70,17 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     };
   }, [startAutoScroll]);
 
-  // Pause auto-scroll only when dragging
+  // Pause auto-scroll during drag
   useEffect(() => {
     if (isDragging) {
-      setIsAutoScrolling(false);
       if (autoScrollRef.current) {
         cancelAnimationFrame(autoScrollRef.current);
       }
     } else {
-      // Resume auto-scroll after a short delay
-      const timer = setTimeout(() => {
-        setIsAutoScrolling(true);
-      }, 500);
-      return () => clearTimeout(timer);
+      // Resume auto-scroll immediately after drag ends
+      startAutoScroll();
     }
-  }, [isDragging]);
+  }, [isDragging, startAutoScroll]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -169,11 +98,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     setVelocity(0);
     setDragDistance(0);
     
-    // Clear any pending snap
-    if (snapTimeoutRef.current) {
-      clearTimeout(snapTimeoutRef.current);
-    }
-    
     document.body.style.userSelect = 'none';
     document.body.style.cursor = 'grabbing';
   }, []);
@@ -183,7 +107,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
+    const walk = (x - startX) * 2; // Increased responsiveness
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
@@ -194,7 +118,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const deltaX = e.pageX - lastX;
     
     if (deltaTime > 0) {
-      const newVelocity = (deltaX / deltaTime) * 0.7 + velocity * 0.3;
+      const newVelocity = (deltaX / deltaTime) * 0.8 + velocity * 0.2;
       setVelocity(newVelocity);
     }
     
@@ -202,14 +126,14 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     setLastTime(currentTime);
     setDragDistance(Math.abs(walk));
 
-    // Handle looping during drag
+    // Handle infinite loop during drag
     const container = containerRef.current;
     const maxScroll = container.scrollWidth - container.clientWidth;
     
-    if (container.scrollLeft <= -100) {
-      container.scrollLeft = maxScroll - 100;
-    } else if (container.scrollLeft >= maxScroll + 100) {
-      container.scrollLeft = 100;
+    if (container.scrollLeft <= 0) {
+      container.scrollLeft = maxScroll;
+    } else if (container.scrollLeft >= maxScroll) {
+      container.scrollLeft = 0;
     }
   }, [isDragging, startX, scrollLeft, lastX, lastTime, velocity]);
 
@@ -220,26 +144,24 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     document.body.style.userSelect = 'auto';
     document.body.style.cursor = 'auto';
     
-    // Apply momentum with smooth deceleration
+    // Apply smooth momentum without snapping
     if (Math.abs(velocity) > 0.1) {
       const container = containerRef.current;
-      let currentVelocity = velocity * 20;
-      const friction = 0.95;
+      let currentVelocity = velocity * 15;
+      const friction = 0.96;
       
       const momentumScroll = () => {
-        if (Math.abs(currentVelocity) < 0.5) {
+        if (Math.abs(currentVelocity) < 0.3) {
           if (momentumRef.current) {
             cancelAnimationFrame(momentumRef.current);
           }
-          // Snap to nearest panel after momentum stops
-          snapTimeoutRef.current = window.setTimeout(snapToPanel, 100);
           return;
         }
         
         const maxScroll = container.scrollWidth - container.clientWidth;
         container.scrollLeft -= currentVelocity;
         
-        // Handle looping
+        // Handle infinite loop during momentum
         if (container.scrollLeft <= 0) {
           container.scrollLeft = maxScroll;
         } else if (container.scrollLeft >= maxScroll) {
@@ -251,11 +173,8 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       };
       
       momentumRef.current = requestAnimationFrame(momentumScroll);
-    } else {
-      // Snap immediately if no momentum
-      snapTimeoutRef.current = window.setTimeout(snapToPanel, 100);
     }
-  }, [velocity, snapToPanel]);
+  }, [velocity]);
 
   const handleMouseLeave = useCallback(() => {
     if (isDragging) {
@@ -263,7 +182,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
   }, [isDragging, handleMouseUp]);
 
-  // Touch events with same functionality
+  // Touch events
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest('button, a, input, select, textarea, [role="button"]')) {
@@ -280,10 +199,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     setLastTime(Date.now());
     setVelocity(0);
     setDragDistance(0);
-    
-    if (snapTimeoutRef.current) {
-      clearTimeout(snapTimeoutRef.current);
-    }
   }, []);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
@@ -292,7 +207,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     e.preventDefault();
     const touch = e.touches[0];
     const x = touch.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
+    const walk = (x - startX) * 2;
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
@@ -302,7 +217,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const deltaX = touch.pageX - lastX;
     
     if (deltaTime > 0) {
-      const newVelocity = (deltaX / deltaTime) * 0.7 + velocity * 0.3;
+      const newVelocity = (deltaX / deltaTime) * 0.8 + velocity * 0.2;
       setVelocity(newVelocity);
     }
     
@@ -310,14 +225,14 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     setLastTime(currentTime);
     setDragDistance(Math.abs(walk));
 
-    // Handle looping
+    // Handle infinite loop
     const container = containerRef.current;
     const maxScroll = container.scrollWidth - container.clientWidth;
     
-    if (container.scrollLeft <= -100) {
-      container.scrollLeft = maxScroll - 100;
-    } else if (container.scrollLeft >= maxScroll + 100) {
-      container.scrollLeft = 100;
+    if (container.scrollLeft <= 0) {
+      container.scrollLeft = maxScroll;
+    } else if (container.scrollLeft >= maxScroll) {
+      container.scrollLeft = 0;
     }
   }, [isDragging, startX, scrollLeft, lastX, lastTime, velocity]);
 
@@ -328,15 +243,14 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     if (Math.abs(velocity) > 0.1) {
       const container = containerRef.current;
-      let currentVelocity = velocity * 20;
-      const friction = 0.95;
+      let currentVelocity = velocity * 15;
+      const friction = 0.96;
       
       const momentumScroll = () => {
-        if (Math.abs(currentVelocity) < 0.5) {
+        if (Math.abs(currentVelocity) < 0.3) {
           if (momentumRef.current) {
             cancelAnimationFrame(momentumRef.current);
           }
-          snapTimeoutRef.current = window.setTimeout(snapToPanel, 100);
           return;
         }
         
@@ -354,10 +268,8 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       };
       
       momentumRef.current = requestAnimationFrame(momentumScroll);
-    } else {
-      snapTimeoutRef.current = window.setTimeout(snapToPanel, 100);
     }
-  }, [velocity, snapToPanel]);
+  }, [velocity]);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     if (dragDistance > 5) {
@@ -383,9 +295,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       if (momentumRef.current) {
         cancelAnimationFrame(momentumRef.current);
       }
-      if (snapTimeoutRef.current) {
-        clearTimeout(snapTimeoutRef.current);
-      }
     };
   }, []);
 
@@ -397,7 +306,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         scrollbarWidth: 'none',
         msOverflowStyle: 'none',
         WebkitOverflowScrolling: 'touch',
-        scrollSnapType: 'x mandatory'
+        scrollBehavior: 'auto'
       }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -410,8 +319,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     >
       <div 
         ref={contentRef} 
-        className="flex space-x-6"
-        style={{ scrollSnapAlign: 'start' }}
+        className="flex"
       >
         {children}
       </div>

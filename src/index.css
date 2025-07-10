@@ -277,3 +277,96 @@ html {
 .glow-effect:hover {
   box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
 }
+
+/* Enhanced horizontal drag container styles */
+.horizontal-drag-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: auto;
+  will-change: scroll-position;
+}
+
+/* Responsive panel containers */
+.panel-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Mobile responsive panels - no gaps, full width utilization */
+@media (max-width: 640px) {
+  .panel-container {
+    min-width: 100vw;
+    padding: 0 1rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 0;
+  }
+}
+
+/* Tablet responsive panels */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .panel-container {
+    min-width: 85vw;
+    padding: 0 1.5rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 1rem;
+  }
+}
+
+/* Desktop responsive panels */
+@media (min-width: 1025px) {
+  .panel-container {
+    min-width: 75vw;
+    padding: 0 2rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 1.5rem;
+  }
+}
+
+/* Large desktop responsive panels */
+@media (min-width: 1280px) {
+  .panel-container {
+    min-width: 60vw;
+    padding: 0 2rem;
+  }
+  
+  .horizontal-drag-container .flex {
+    gap: 2rem;
+  }
+}
+
+/* Ensure interactive elements maintain proper cursor */
+.horizontal-drag-container button,
+.horizontal-drag-container a,
+.horizontal-drag-container input,
+.horizontal-drag-container select,
+.horizontal-drag-container textarea,
+.horizontal-drag-container [role="button"] {
+  pointer-events: auto;
+  cursor: pointer !important;
+}
+
+/* Smooth transitions for interactive elements */
+.horizontal-drag-container button:hover,
+.horizontal-drag-container a:hover,
+.horizontal-drag-container [role="button"]:hover {
+  cursor: pointer !important;
+  transition: all 0.2s ease;
+}
+
+/* Performance optimizations */
+.horizontal-drag-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.horizontal-drag-container * {
+  pointer-events: auto;
+}
