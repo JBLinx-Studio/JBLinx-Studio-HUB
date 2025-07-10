@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -54,7 +55,7 @@ html {
 
 /* Enhanced smooth scrolling for drag containers */
 .horizontal-drag-container {
-  scroll-behavior: auto; /* Override for manual control */
+  scroll-behavior: auto;
   will-change: scroll-position;
 }
 
@@ -66,7 +67,7 @@ html {
   user-select: none;
 }
 
-/* Cursor styles for dragging */
+/* Enhanced cursor styles */
 .cursor-grab {
   cursor: grab;
 }
@@ -76,7 +77,7 @@ html {
 }
 
 .cursor-grabbing {
-  cursor: grabbing;
+  cursor: grabbing !important;
 }
 
 /* Smooth transitions for interactive elements */
@@ -89,18 +90,32 @@ html {
   transform: translateY(-2px);
 }
 
-/* Performance optimizations */
+/* Performance optimizations for drag container */
+.horizontal-drag-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
 .horizontal-drag-container * {
   pointer-events: auto;
 }
 
+/* Ensure interactive elements maintain proper cursor */
 .horizontal-drag-container button,
 .horizontal-drag-container a,
 .horizontal-drag-container input,
 .horizontal-drag-container select,
-.horizontal-drag-container textarea {
+.horizontal-drag-container textarea,
+.horizontal-drag-container [role="button"] {
   pointer-events: auto;
-  cursor: pointer;
+  cursor: pointer !important;
+}
+
+.horizontal-drag-container button:hover,
+.horizontal-drag-container a:hover,
+.horizontal-drag-container [role="button"]:hover {
+  cursor: pointer !important;
 }
 
 /* Loading animation */
@@ -182,29 +197,44 @@ html {
   transform: translateX(1em);
 }
 
-/* Horizontal drag container styles */
+/* Enhanced horizontal drag container styles */
 .horizontal-drag-container {
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .horizontal-drag-container > * {
   scroll-snap-align: start;
 }
 
-/* Prevent text selection during drag */
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+/* Cinematic hover effects */
+.cinematic-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Cursor styles for dragging */
-.cursor-grab {
-  cursor: grab;
+.cinematic-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.cursor-grabbing {
-  cursor: grabbing;
+/* Game showcase animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glowing effect for featured content */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
 }

@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Code, Terminal, Users, Clock, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HorizontalDragContainer from './ui/HorizontalDragContainer';
 import AdditionalGamesContent from './games/AdditionalGamesContent';
+import CinematicGameShowcase from './games/CinematicGameShowcase';
 
 const GamesSection = () => {
   const [activeGame, setActiveGame] = useState(0);
@@ -58,7 +60,7 @@ const GamesSection = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Header - Matching Hero Style */}
+        {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
             <Trophy className="w-3 h-3 mr-1 text-purple-400" />
@@ -76,23 +78,22 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Enhanced Horizontal Drag Container with Auto-scroll */}
+        {/* Enhanced Horizontal Drag Container */}
         <HorizontalDragContainer 
           className="mb-8" 
-          autoScrollSpeed={0.3}
+          autoScrollSpeed={0.4}
           autoScrollDirection="right"
         >
           <div className="flex space-x-6 pb-4">
-            {/* Original Layout */}
+            {/* Original Compact Layout */}
             <div className="grid lg:grid-cols-3 gap-3 min-w-full flex-shrink-0">
               {/* Left Panel: Featured Game Display */}
-              <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4 drag-container-item">
+              <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
                 <div className="flex items-center space-x-2 mb-4">
                   <Play className="w-4 h-4 text-purple-400" />
                   <span className="text-purple-400 font-black text-sm font-mono">FEATURED RELEASE</span>
                 </div>
                 
-                {/* Featured Game Card */}
                 <div className="bg-slate-900/80 border border-purple-400/30 p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -104,7 +105,6 @@ const GamesSection = () => {
                   
                   <p className="text-slate-300 text-sm mb-4">{games[activeGame].description}</p>
                   
-                  {/* Tech Stack */}
                   <div className="flex flex-wrap gap-1 mb-4">
                     {games[activeGame].tech.map((tech, index) => (
                       <span key={index} className="bg-slate-700 text-cyan-400 px-2 py-1 text-xs font-bold">
@@ -113,7 +113,6 @@ const GamesSection = () => {
                     ))}
                   </div>
                   
-                  {/* Game Stats Grid */}
                   <div className="grid grid-cols-4 gap-2 mb-4">
                     {[
                       { icon: Users, value: games[activeGame].players, label: "PLAYERS" },
@@ -140,8 +139,7 @@ const GamesSection = () => {
 
               {/* Right Panel: Game Selection + Dev Resources */}
               <div className="space-y-3">
-                {/* Game Selector */}
-                <div className="bg-slate-800/95 border border-slate-700 p-4 drag-container-item">
+                <div className="bg-slate-800/95 border border-slate-700 p-4">
                   <div className="flex items-center space-x-2 mb-3">
                     <Gamepad2 className="w-4 h-4 text-cyan-400" />
                     <span className="text-cyan-400 font-black text-sm font-mono">GAME LIBRARY</span>
@@ -177,8 +175,7 @@ const GamesSection = () => {
                   </div>
                 </div>
 
-                {/* Dev Resources */}
-                <div className="bg-slate-800/95 border border-slate-700 p-4 drag-container-item">
+                <div className="bg-slate-800/95 border border-slate-700 p-4">
                   <div className="flex items-center space-x-2 mb-3">
                     <Code className="w-4 h-4 text-green-400" />
                     <span className="text-green-400 font-black text-sm font-mono">DEV RESOURCES</span>
@@ -209,15 +206,26 @@ const GamesSection = () => {
               </div>
             </div>
 
-            {/* Additional Content that slides in */}
+            {/* Cinematic Game Showcase */}
+            <CinematicGameShowcase />
+
+            {/* Additional Games Content */}
             <AdditionalGamesContent />
           </div>
         </HorizontalDragContainer>
 
-        {/* Enhanced Drag Hint */}
-        <div className="text-center mb-4">
-          <div className="text-slate-500 text-xs font-mono animate-pulse">
-            ← DRAG TO EXPLORE • AUTO-SCROLLING ENABLED →
+        {/* Enhanced Status Indicator */}
+        <div className="text-center mb-6">
+          <div className="flex items-center justify-center space-x-4 text-slate-500 text-xs font-mono">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+              <span>AUTO-SCROLLING</span>
+            </div>
+            <div className="text-slate-600">•</div>
+            <div className="flex items-center space-x-2">
+              <span>DRAG TO EXPLORE</span>
+              <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            </div>
           </div>
         </div>
 
