@@ -1,6 +1,6 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, Download, Star, Code, Terminal, Github, Database, Zap, Settings, Monitor, Activity, Cpu, Globe, Package } from 'lucide-react';
-import DeveloperCarouselPanels from './developer/DeveloperCarouselPanels';
 
 const DeveloperTools = () => {
   const [activeTab, setActiveTab] = useState('tools');
@@ -8,7 +8,7 @@ const DeveloperTools = () => {
   const tools = [
     {
       title: "FastAPI MySQL Kit",
-      category: "Backend Framework", 
+      category: "Backend Framework",
       downloads: "12.0k",
       rating: "5.0",
       description: "Production-ready FastAPI with MySQL, JWT auth, Docker deployment",
@@ -20,7 +20,7 @@ const DeveloperTools = () => {
     {
       title: "React Component Library",
       category: "Frontend Components",
-      downloads: "9.3k", 
+      downloads: "9.3k",
       rating: "4.8",
       description: "Reusable TypeScript components with Storybook documentation",
       repo: "react-ui-components",
@@ -32,7 +32,7 @@ const DeveloperTools = () => {
       title: "Database Migration CLI",
       category: "DevOps Utilities",
       downloads: "5.1k",
-      rating: "4.9", 
+      rating: "4.9",
       description: "Multi-database migration tool with rollback safety mechanisms",
       repo: "db-migration-cli",
       highlights: ["Multi-DB Support", "Version Control", "Safe Rollback", "CLI Interface"],
@@ -56,7 +56,7 @@ const DeveloperTools = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black to-slate-950 border-t border-slate-800">
+    <section className="py-20 bg-gradient-to-b from-slate-900 to-black border-t border-slate-800">
       <div className="container mx-auto px-4">
         {/* Header - Matching Hero Style */}
         <div className="text-center mb-12">
