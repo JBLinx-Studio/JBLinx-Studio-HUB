@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -50,57 +51,6 @@ h1, h2, h3, h4, h5, h6 {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
-}
-
-/* Enhanced smooth scrolling for drag containers */
-.horizontal-drag-container {
-  scroll-behavior: auto; /* Override for manual control */
-  will-change: scroll-position;
-}
-
-/* Prevent text selection during drag */
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Cursor styles for dragging */
-.cursor-grab {
-  cursor: grab;
-}
-
-.cursor-grab:active {
-  cursor: grabbing;
-}
-
-.cursor-grabbing {
-  cursor: grabbing;
-}
-
-/* Smooth transitions for interactive elements */
-.drag-container-item {
-  transition: transform 0.2s ease-out;
-  will-change: transform;
-}
-
-.drag-container-item:hover {
-  transform: translateY(-2px);
-}
-
-/* Performance optimizations */
-.horizontal-drag-container * {
-  pointer-events: auto;
-}
-
-.horizontal-drag-container button,
-.horizontal-drag-container a,
-.horizontal-drag-container input,
-.horizontal-drag-container select,
-.horizontal-drag-container textarea {
-  pointer-events: auto;
-  cursor: pointer;
 }
 
 /* Loading animation */
