@@ -33,7 +33,7 @@ const ProfessionalLayout: React.FC<ProfessionalLayoutProps> = ({
 
   return (
     <section className={cn(
-      'relative min-h-screen overflow-hidden',
+      'relative min-h-screen overflow-hidden text-white',
       backgroundClasses[background],
       paddingClasses[padding],
       className
