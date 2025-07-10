@@ -2,11 +2,13 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 interface HorizontalDragContainerProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   autoScrollSpeed?: number;
   staticPanels?: React.ReactNode[];
   movingPanels?: React.ReactNode[];
+  currentPanel?: number;
+  onPanelChange?: (index: number) => void;
 }
 
 const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({ 
@@ -14,7 +16,9 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   className = "",
   autoScrollSpeed = 0.8,
   staticPanels = [],
-  movingPanels = []
+  movingPanels = [],
+  currentPanel = 0,
+  onPanelChange
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -25,72 +29,54 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   const [lastX, setLastX] = useState(0);
   const [lastTime, setLastTime] = useState(0);
   const [dragDistance, setDragDistance] = useState(0);
-  const [autoScrollDirection, setAutoScrollDirection] = useState<'left' | 'right'>('right');
-  const autoScrollRef = useRef<number>();
-  const momentumRef = useRef<number>();
 
-  // Smooth bidirectional auto-scroll with direction change at boundaries
-  const startAutoScroll = useCallback(() => {
-    if (!containerRef.current || isDragging) return;
-
-    const scroll = () => {
-      if (!containerRef.current || isDragging) return;
-
-      const container = containerRef.current;
-      const scrollIncrement = autoScrollSpeed;
+  // Smooth lerp to specific panel
+  const lerpToPanel = useCallback((panelIndex: number) => {
+    if (!containerRef.current || panelIndex < 0 || panelIndex >= movingPanels.length) return;
+    
+    const container = containerRef.current;
+    const targetScroll = panelIndex * container.clientWidth;
+    
+    const startScroll = container.scrollLeft;
+    const distance = targetScroll - startScroll;
+    const duration = 600; // Smooth 600ms transition
+    const startTime = performance.now();
+    
+    const animateScroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
       
-      if (autoScrollDirection === 'right') {
-        container.scrollLeft += scrollIncrement;
-        
-        // Check if we've reached the end, then reverse direction
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        if (container.scrollLeft >= maxScroll - 1) {
-          setAutoScrollDirection('left');
-        }
+      // Smooth easing function (ease-out-cubic)
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      
+      container.scrollLeft = startScroll + (distance * easeProgress);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
       } else {
-        container.scrollLeft -= scrollIncrement;
-        
-        // Check if we've reached the beginning, then reverse direction
-        if (container.scrollLeft <= 1) {
-          setAutoScrollDirection('right');
-        }
-      }
-
-      autoScrollRef.current = requestAnimationFrame(scroll);
-    };
-
-    autoScrollRef.current = requestAnimationFrame(scroll);
-  }, [autoScrollSpeed, autoScrollDirection, isDragging]);
-
-  // Start auto-scroll
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      startAutoScroll();
-    }, 100); // Small delay to ensure content is loaded
-
-    return () => {
-      clearTimeout(timer);
-      if (autoScrollRef.current) {
-        cancelAnimationFrame(autoScrollRef.current);
+        onPanelChange?.(panelIndex);
       }
     };
-  }, [startAutoScroll]);
+    
+    requestAnimationFrame(animateScroll);
+  }, [movingPanels.length, onPanelChange]);
 
-  // Pause auto-scroll during drag
-  useEffect(() => {
-    if (isDragging) {
-      if (autoScrollRef.current) {
-        cancelAnimationFrame(autoScrollRef.current);
-      }
-    } else {
-      // Resume auto-scroll with a slight delay
-      const timer = setTimeout(() => {
-        startAutoScroll();
-      }, 300);
-      return () => clearTimeout(timer);
+  // Navigation functions
+  const goToNextPanel = useCallback(() => {
+    const nextIndex = Math.min(currentPanel + 1, movingPanels.length - 1);
+    if (nextIndex !== currentPanel) {
+      lerpToPanel(nextIndex);
     }
-  }, [isDragging, startAutoScroll]);
+  }, [currentPanel, movingPanels.length, lerpToPanel]);
 
+  const goToPrevPanel = useCallback(() => {
+    const prevIndex = Math.max(currentPanel - 1, 0);
+    if (prevIndex !== currentPanel) {
+      lerpToPanel(prevIndex);
+    }
+  }, [currentPanel, lerpToPanel]);
+
+  // Drag handlers with snap-to-panel
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest('button, a, input, select, textarea, [role="button"], .interactive-element')) {
@@ -107,7 +93,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     setVelocity(0);
     setDragDistance(0);
     
-    document.body.style.userSelect = 'none';
     document.body.style.cursor = 'grabbing';
   }, []);
 
@@ -116,74 +101,40 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Smooth responsiveness
+    const walk = (x - startX) * 1.2;
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
     
-    // Calculate smooth velocity for momentum
     const currentTime = Date.now();
     const deltaTime = currentTime - lastTime;
     const deltaX = e.pageX - lastX;
     
     if (deltaTime > 0) {
-      const newVelocity = (deltaX / deltaTime) * 0.9 + velocity * 0.1;
-      setVelocity(newVelocity);
+      setVelocity((deltaX / deltaTime) * 0.8);
     }
     
     setLastX(e.pageX);
     setLastTime(currentTime);
     setDragDistance(Math.abs(walk));
-  }, [isDragging, startX, scrollLeft, lastX, lastTime, velocity]);
+  }, [isDragging, startX, scrollLeft, lastX, lastTime]);
 
   const handleMouseUp = useCallback(() => {
     if (!containerRef.current) return;
     
     setIsDragging(false);
-    document.body.style.userSelect = 'auto';
     document.body.style.cursor = 'auto';
     
-    // Apply ultra-smooth momentum
-    if (Math.abs(velocity) > 0.1) {
-      const container = containerRef.current;
-      let currentVelocity = velocity * 20;
-      const friction = 0.98; // Higher friction for smoother deceleration
-      
-      const momentumScroll = () => {
-        if (Math.abs(currentVelocity) < 0.2) {
-          if (momentumRef.current) {
-            cancelAnimationFrame(momentumRef.current);
-          }
-          return;
-        }
-        
-        container.scrollLeft -= currentVelocity;
-        
-        // Ensure we stay within bounds
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        if (container.scrollLeft < 0) {
-          container.scrollLeft = 0;
-          currentVelocity = 0;
-        } else if (container.scrollLeft > maxScroll) {
-          container.scrollLeft = maxScroll;
-          currentVelocity = 0;
-        }
-        
-        currentVelocity *= friction;
-        momentumRef.current = requestAnimationFrame(momentumScroll);
-      };
-      
-      momentumRef.current = requestAnimationFrame(momentumScroll);
-    }
-  }, [velocity]);
+    // Snap to nearest panel
+    const container = containerRef.current;
+    const panelWidth = container.clientWidth;
+    const nearestPanel = Math.round(container.scrollLeft / panelWidth);
+    const clampedPanel = Math.max(0, Math.min(nearestPanel, movingPanels.length - 1));
+    
+    lerpToPanel(clampedPanel);
+  }, [movingPanels.length, lerpToPanel]);
 
-  const handleMouseLeave = useCallback(() => {
-    if (isDragging) {
-      handleMouseUp();
-    }
-  }, [isDragging, handleMouseUp]);
-
-  // Touch events for mobile
+  // Touch handlers for mobile
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest('button, a, input, select, textarea, [role="button"], .interactive-element')) {
@@ -208,7 +159,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     e.preventDefault();
     const touch = e.touches[0];
     const x = touch.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
+    const walk = (x - startX) * 1.2;
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
@@ -218,87 +169,36 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const deltaX = touch.pageX - lastX;
     
     if (deltaTime > 0) {
-      const newVelocity = (deltaX / deltaTime) * 0.9 + velocity * 0.1;
-      setVelocity(newVelocity);
+      setVelocity((deltaX / deltaTime) * 0.8);
     }
     
     setLastX(touch.pageX);
     setLastTime(currentTime);
     setDragDistance(Math.abs(walk));
-  }, [isDragging, startX, scrollLeft, lastX, lastTime, velocity]);
+  }, [isDragging, startX, scrollLeft, lastX, lastTime]);
 
   const handleTouchEnd = useCallback(() => {
     if (!containerRef.current) return;
     
     setIsDragging(false);
     
-    if (Math.abs(velocity) > 0.1) {
-      const container = containerRef.current;
-      let currentVelocity = velocity * 20;
-      const friction = 0.98;
-      
-      const momentumScroll = () => {
-        if (Math.abs(currentVelocity) < 0.2) {
-          if (momentumRef.current) {
-            cancelAnimationFrame(momentumRef.current);
-          }
-          return;
-        }
-        
-        container.scrollLeft -= currentVelocity;
-        
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        if (container.scrollLeft < 0) {
-          container.scrollLeft = 0;
-          currentVelocity = 0;
-        } else if (container.scrollLeft > maxScroll) {
-          container.scrollLeft = maxScroll;
-          currentVelocity = 0;
-        }
-        
-        currentVelocity *= friction;
-        momentumRef.current = requestAnimationFrame(momentumScroll);
-      };
-      
-      momentumRef.current = requestAnimationFrame(momentumScroll);
-    }
-  }, [velocity]);
-
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    if (dragDistance > 3) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, [dragDistance]);
-
-  // Cleanup
-  useEffect(() => {
+    // Snap to nearest panel
     const container = containerRef.current;
-    if (!container) return;
-
-    const preventDrag = (e: Event) => e.preventDefault();
+    const panelWidth = container.clientWidth;
+    const nearestPanel = Math.round(container.scrollLeft / panelWidth);
+    const clampedPanel = Math.max(0, Math.min(nearestPanel, movingPanels.length - 1));
     
-    container.addEventListener('dragstart', preventDrag);
-    
-    return () => {
-      container.removeEventListener('dragstart', preventDrag);
-      if (autoScrollRef.current) {
-        cancelAnimationFrame(autoScrollRef.current);
-      }
-      if (momentumRef.current) {
-        cancelAnimationFrame(momentumRef.current);
-      }
-    };
-  }, []);
+    lerpToPanel(clampedPanel);
+  }, [movingPanels.length, lerpToPanel]);
 
   return (
-    <div className="relative w-full">
-      {/* Static Docked Panels */}
+    <div className="relative w-full h-full">
+      {/* Static L-shaped panels */}
       {staticPanels.length > 0 && (
-        <div className="hidden lg:block absolute left-0 top-0 z-10 h-full">
-          <div className="flex h-full">
+        <div className="hidden lg:block absolute left-0 top-0 z-20">
+          <div className="flex flex-col h-full">
             {staticPanels.map((panel, index) => (
-              <div key={index} className="static-panel bg-slate-900/95 border border-slate-700/50 backdrop-blur-sm">
+              <div key={index} className="static-panel bg-slate-900/98 border border-slate-700/50 backdrop-blur-sm">
                 {panel}
               </div>
             ))}
@@ -306,54 +206,95 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         </div>
       )}
 
-      {/* Main Scrolling Container */}
+      {/* Main scrolling container with perfect viewport fitting */}
       <div
         ref={containerRef}
-        className={`overflow-x-auto scrollbar-hide cursor-grab select-none transition-all duration-300 ${className}`}
+        className={`overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'auto',
-          paddingLeft: staticPanels.length > 0 ? `${staticPanels.length * 300}px` : '0'
+          paddingLeft: staticPanels.length > 0 ? 'min(320px, 25vw)' : '0'
         }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={handleMouseUp}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onClick={handleClick}
       >
         <div 
           ref={contentRef} 
-          className="flex transition-transform duration-300 ease-out"
+          className="flex h-full"
           style={{ willChange: 'transform' }}
         >
-          {/* Moving Panels */}
+          {/* Moving panels - each takes full viewport width */}
           {movingPanels.length > 0 ? (
             movingPanels.map((panel, index) => (
-              <div key={index} className="moving-panel flex-shrink-0">
+              <div 
+                key={index} 
+                className="moving-panel flex-shrink-0 w-full h-full flex items-center justify-center"
+                style={{ 
+                  minWidth: '100%',
+                  width: '100vw'
+                }}
+              >
                 {panel}
               </div>
             ))
           ) : (
-            children
+            children && (
+              <div className="w-full h-full flex items-center justify-center">
+                {children}
+              </div>
+            )
           )}
         </div>
       </div>
 
-      {/* Direction Indicator */}
-      <div className="absolute bottom-4 right-4 hidden lg:flex items-center space-x-2 text-slate-500 text-xs font-mono z-20">
-        <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${
-          autoScrollDirection === 'right' ? 'bg-purple-400 animate-pulse' : 'bg-slate-600'
-        }`}></div>
-        <span>BIDIRECTIONAL FLOW</span>
-        <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${
-          autoScrollDirection === 'left' ? 'bg-purple-400 animate-pulse' : 'bg-slate-600'
-        }`}></div>
-      </div>
+      {/* Navigation controls */}
+      {movingPanels.length > 1 && (
+        <>
+          <button
+            onClick={goToPrevPanel}
+            disabled={currentPanel === 0}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-700 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white p-3 transition-all duration-200 lg:left-[calc(min(320px,25vw)+1rem)]"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button
+            onClick={goToNextPanel}
+            disabled={currentPanel === movingPanels.length - 1}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-700 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white p-3 transition-all duration-200"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
+
+      {/* Panel indicators */}
+      {movingPanels.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
+          {movingPanels.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => lerpToPanel(index)}
+              className={`w-2 h-2 transition-all duration-300 ${
+                index === currentPanel 
+                  ? 'bg-purple-400 scale-125' 
+                  : 'bg-slate-600 hover:bg-slate-500'
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

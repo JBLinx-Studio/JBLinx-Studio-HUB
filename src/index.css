@@ -568,3 +568,116 @@ html {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
 }
+
+/* Enhanced responsive static panels */
+.static-panel {
+  flex-shrink: 0;
+  height: auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* Perfect viewport fitting for moving panels */
+.moving-panel {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 640px) {
+  .static-panel {
+    display: none; /* Hide static panels on mobile for full screen experience */
+  }
+  
+  .moving-panel {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    padding: 1rem;
+  }
+  
+  .horizontal-drag-container {
+    padding-left: 0 !important;
+  }
+}
+
+/* Tablet responsive design */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .static-panel {
+    width: 280px;
+    min-width: 280px;
+  }
+  
+  .moving-panel {
+    width: calc(100vw - 280px) !important;
+    min-width: calc(100vw - 280px) !important;
+    padding: 1.5rem;
+  }
+}
+
+/* Desktop responsive design */
+@media (min-width: 1024px) {
+  .static-panel {
+    width: 320px;
+    min-width: 320px;
+  }
+  
+  .moving-panel {
+    width: calc(100vw - 320px) !important;
+    min-width: calc(100vw - 320px) !important;
+    padding: 2rem;
+  }
+}
+
+/* Ultra-smooth transitions */
+.horizontal-drag-container {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
+  will-change: scroll-position;
+}
+
+.moving-panel {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced interactive elements */
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.interactive-element:hover {
+  transform: translateY(-2px);
+}
+
+.interactive-element:active {
+  transform: translateY(0);
+}
+
+/* Perfect scrollbar hiding */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Performance optimizations */
+.horizontal-drag-container,
+.static-panel,
+.moving-panel {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
