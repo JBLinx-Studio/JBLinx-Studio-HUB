@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface HorizontalCarouselProps {
-  children: React.ReactNode;
+  children: React.ReactNode[];
   className?: string;
   itemClassName?: string;
   showArrows?: boolean;
@@ -22,9 +22,6 @@ export const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-
-  // Convert children to array if it's not already
-  const childrenArray = React.Children.toArray(children);
 
   const checkScrollability = () => {
     if (scrollRef.current) {
@@ -121,7 +118,7 @@ export const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
           msOverflowStyle: 'none'
         }}
       >
-        {childrenArray.map((child, index) => (
+        {children.map((child, index) => (
           <div
             key={index}
             className={cn("flex-shrink-0 scroll-snap-align-start", itemClassName)}
