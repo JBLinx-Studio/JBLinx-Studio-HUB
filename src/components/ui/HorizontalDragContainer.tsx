@@ -52,21 +52,17 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     const startScroll = container.scrollLeft;
     const distance = targetScroll - startScroll;
-    const duration = customDuration || (Math.abs(distance) > containerWidth ? 800 : 500);
+    const duration = customDuration || (Math.abs(distance) > containerWidth ? 600 : 400);
     const startTime = performance.now();
     
     const animateScroll = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Advanced easing with bounce-out effect
-      let easeProgress;
-      if (progress < 0.7) {
-        easeProgress = 1 - Math.pow(1 - (progress / 0.7), 3);
-      } else {
-        const bounceProgress = (progress - 0.7) / 0.3;
-        easeProgress = 1 - (1 - bounceProgress) * Math.cos(bounceProgress * Math.PI * 2) * 0.1;
-      }
+      // Ultra-smooth easing with perfect curves
+      const easeProgress = progress < 0.5 
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
       
       container.scrollLeft = startScroll + (distance * easeProgress);
       
@@ -315,13 +311,14 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       >
         <div 
           ref={contentRef} 
-          className="flex h-full"
+          className="flex h-full will-change-scroll"
           style={{ 
-            willChange: 'transform',
-            width: 'max-content'
+            willChange: 'transform, scroll-position',
+            width: 'max-content',
+            scrollBehavior: 'auto'
           }}
         >
-          {/* Moving panels - Optimized sizing */}
+          {/* Enhanced moving panels with smooth transitions */}
           {movingPanels.length > 0 ? (
             movingPanels.map((panel, index) => (
               <div 
@@ -330,10 +327,12 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
                 style={{ 
                   width: 'calc(100vw - 280px)',
                   minWidth: 'calc(100vw - 280px)',
-                  maxWidth: 'calc(100vw - 280px)'
+                  maxWidth: 'calc(100vw - 280px)',
+                  transition: 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  opacity: Math.abs(index - currentPanel) <= 1 ? 1 : 0.7
                 }}
               >
-                <div className="w-full h-full p-4 overflow-hidden">
+                <div className="w-full h-full overflow-hidden">
                   {panel}
                 </div>
               </div>
