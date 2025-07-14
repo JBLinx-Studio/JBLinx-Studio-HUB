@@ -276,7 +276,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
               key={index} 
               className="static-panel bg-slate-900/98 border-r border-slate-700/50 backdrop-blur-sm"
               style={{
-                width: '280px',
+                width: '224px',
                 height: index === 0 ? '50%' : '50%',
                 position: 'relative'
               }}
@@ -296,8 +296,8 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
           msOverflowStyle: 'none',
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'auto',
-          marginLeft: staticPanels.length > 0 ? '280px' : '0',
-          width: staticPanels.length > 0 ? 'calc(100% - 280px)' : '100%',
+          marginLeft: staticPanels.length > 0 ? '224px' : '0',
+          width: staticPanels.length > 0 ? 'calc(100% - 224px)' : '100%',
           height: '100%',
           contain: 'layout style paint'
         }}
@@ -324,10 +324,10 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
               <div 
                 key={index} 
                 className="moving-panel flex-shrink-0 h-full flex items-stretch"
-                style={{ 
-                  width: 'calc(100vw - 280px)',
-                  minWidth: 'calc(100vw - 280px)',
-                  maxWidth: 'calc(100vw - 280px)',
+                 style={{ 
+                   width: 'calc(100vw - 224px)',
+                   minWidth: 'calc(100vw - 224px)',
+                   maxWidth: 'calc(100vw - 224px)',
                   transition: 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   opacity: Math.abs(index - currentPanel) <= 1 ? 1 : 0.7
                 }}
@@ -341,9 +341,9 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
             children && (
               <div 
                 className="w-full h-full flex items-center justify-center"
-                style={{ 
-                  width: 'calc(100vw - 280px)',
-                  minWidth: 'calc(100vw - 280px)'
+                 style={{ 
+                   width: 'calc(100vw - 224px)',
+                   minWidth: 'calc(100vw - 224px)'
                 }}
               >
                 {children}
@@ -359,7 +359,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
           <button
             onClick={goToPrevPanel}
             disabled={currentPanel === 0 || isAnimating}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-600 hover:border-purple-400 hover:bg-slate-800 disabled:opacity-20 disabled:cursor-not-allowed text-white p-3 transition-all duration-200 backdrop-blur-sm lg:left-[calc(280px+0.5rem)]"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-600 hover:border-purple-400 hover:bg-slate-800 disabled:opacity-20 disabled:cursor-not-allowed text-white p-3 transition-all duration-200 backdrop-blur-sm lg:left-[calc(224px+0.5rem)]"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
