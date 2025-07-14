@@ -158,3 +158,83 @@ html {
 .cursor-grabbing {
   cursor: grabbing;
 }
+
+/* Text clamp utilities for responsive text */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Hardware acceleration for better performance */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Responsive container utilities */
+.container-responsive {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Mobile-first responsive breakpoints */
+@media (min-width: 640px) {
+  .container-responsive {
+    max-width: 95vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    max-width: 90vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    max-width: 85vw;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-responsive {
+    max-width: 80vw;
+  }
+}
+
+/* Enhanced smooth scrolling for gaming section */
+.enhanced-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Performance optimization for panels */
+.panel-optimized {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Mobile touch optimization */
+@media (max-width: 768px) {
+  .touch-optimized {
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+}
