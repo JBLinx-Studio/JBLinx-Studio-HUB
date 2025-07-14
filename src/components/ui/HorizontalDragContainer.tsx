@@ -47,7 +47,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     setIsAnimating(true);
     const container = containerRef.current;
-    const containerWidth = container.clientWidth - (staticPanels.length > 0 ? Math.min(320, window.innerWidth * 0.25) : 0);
+    const containerWidth = container.clientWidth;
     const targetScroll = panelIndex * containerWidth;
     
     const startScroll = container.scrollLeft;
@@ -159,7 +159,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
     
     // Snap preview for next/previous panels
-    const containerWidth = containerRef.current.clientWidth - (staticPanels.length > 0 ? Math.min(320, window.innerWidth * 0.25) : 0);
+    const containerWidth = containerRef.current.clientWidth;
     const currentPanelOffset = currentPanel * containerWidth;
     const offset = newScrollLeft - currentPanelOffset;
     
@@ -187,7 +187,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     // Enhanced snap logic with momentum consideration
     const container = containerRef.current;
-    const containerWidth = container.clientWidth - (staticPanels.length > 0 ? Math.min(320, window.innerWidth * 0.25) : 0);
+    const containerWidth = container.clientWidth;
     const currentScroll = container.scrollLeft;
     
     // Calculate target panel based on velocity and current position
@@ -211,7 +211,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
     
     lerpToPanel(targetPanel);
-  }, [movingPanels.length, lerpToPanel, velocity, currentPanel, staticPanels.length]);
+  }, [movingPanels.length, lerpToPanel, velocity, currentPanel]);
 
   // Touch handlers for mobile
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -271,30 +271,39 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   }, [movingPanels.length, lerpToPanel]);
 
   return (
-    <div className="relative w-full h-full">
-      {/* Static L-shaped panels */}
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Static L-shaped panels - Fixed positioning */}
       {staticPanels.length > 0 && (
-        <div className="hidden lg:block absolute left-0 top-0 z-20">
-          <div className="flex flex-col h-full">
-            {staticPanels.map((panel, index) => (
-              <div key={index} className="static-panel bg-slate-900/98 border border-slate-700/50 backdrop-blur-sm">
-                {panel}
-              </div>
-            ))}
-          </div>
+        <div className="absolute left-0 top-0 z-20 h-full hidden lg:flex flex-col">
+          {staticPanels.map((panel, index) => (
+            <div 
+              key={index} 
+              className="static-panel bg-slate-900/98 border-r border-slate-700/50 backdrop-blur-sm"
+              style={{
+                width: '280px',
+                height: index === 0 ? '50%' : '50%',
+                position: 'relative'
+              }}
+            >
+              {panel}
+            </div>
+          ))}
         </div>
       )}
 
-      {/* Main scrolling container with perfect viewport fitting */}
+      {/* Main scrolling container - Optimized for performance */}
       <div
         ref={containerRef}
-        className={`overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none ${className}`}
+        className={`relative overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'auto',
-          paddingLeft: staticPanels.length > 0 ? 'min(320px, 25vw)' : '0'
+          marginLeft: staticPanels.length > 0 ? '280px' : '0',
+          width: staticPanels.length > 0 ? 'calc(100% - 280px)' : '100%',
+          height: '100%',
+          contain: 'layout style paint'
         }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -306,32 +315,38 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       >
         <div 
           ref={contentRef} 
-          className="flex h-full transition-transform duration-300 ease-out"
+          className="flex h-full"
           style={{ 
             willChange: 'transform',
-            transform: `translateX(${previewOffset * 0.1}px)`
+            width: 'max-content'
           }}
         >
-          {/* Moving panels with enhanced responsiveness */}
+          {/* Moving panels - Optimized sizing */}
           {movingPanels.length > 0 ? (
             movingPanels.map((panel, index) => (
               <div 
                 key={index} 
-                className={`moving-panel flex-shrink-0 h-full flex items-center justify-center transition-all duration-300 ${
-                  Math.abs(index - currentPanel) <= 1 ? 'opacity-100' : 'opacity-60'
-                }`}
+                className="moving-panel flex-shrink-0 h-full flex items-stretch"
                 style={{ 
-                  minWidth: `calc(100vw - ${staticPanels.length > 0 ? 'min(320px, 25vw)' : '0px'})`,
-                  width: `calc(100vw - ${staticPanels.length > 0 ? 'min(320px, 25vw)' : '0px'})`,
-                  transform: `scale(${index === currentPanel ? 1 : 0.98})`,
+                  width: 'calc(100vw - 280px)',
+                  minWidth: 'calc(100vw - 280px)',
+                  maxWidth: 'calc(100vw - 280px)'
                 }}
               >
-                {panel}
+                <div className="w-full h-full p-4 overflow-hidden">
+                  {panel}
+                </div>
               </div>
             ))
           ) : (
             children && (
-              <div className="w-full h-full flex items-center justify-center">
+              <div 
+                className="w-full h-full flex items-center justify-center"
+                style={{ 
+                  width: 'calc(100vw - 280px)',
+                  minWidth: 'calc(100vw - 280px)'
+                }}
+              >
                 {children}
               </div>
             )
@@ -339,67 +354,50 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         </div>
       </div>
 
-      {/* Enhanced navigation controls */}
+      {/* Simplified navigation controls */}
       {movingPanels.length > 1 && (
         <>
           <button
             onClick={goToPrevPanel}
             disabled={currentPanel === 0 || isAnimating}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/95 border border-slate-600/80 hover:border-purple-400/60 hover:bg-slate-800/95 disabled:opacity-20 disabled:cursor-not-allowed text-white p-4 transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-purple-500/20 lg:left-[calc(min(320px,25vw)+1rem)] group"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-600 hover:border-purple-400 hover:bg-slate-800 disabled:opacity-20 disabled:cursor-not-allowed text-white p-3 transition-all duration-200 backdrop-blur-sm lg:left-[calc(280px+0.5rem)]"
           >
-            <svg className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           
           <button
             onClick={goToNextPanel}
             disabled={currentPanel === movingPanels.length - 1 || isAnimating}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/95 border border-slate-600/80 hover:border-purple-400/60 hover:bg-slate-800/95 disabled:opacity-20 disabled:cursor-not-allowed text-white p-4 transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-purple-500/20 group"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-600 hover:border-purple-400 hover:bg-slate-800 disabled:opacity-20 disabled:cursor-not-allowed text-white p-3 transition-all duration-200 backdrop-blur-sm"
           >
-            <svg className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </>
       )}
 
-      {/* Enhanced panel indicators with progress */}
+      {/* Simplified panel indicators */}
       {movingPanels.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30">
-          <div className="flex items-center space-x-3 bg-slate-900/90 backdrop-blur-sm border border-slate-700/60 px-4 py-3 shadow-xl">
-            {movingPanels.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => !isAnimating && lerpToPanel(index)}
-                disabled={isAnimating}
-                className={`relative transition-all duration-400 ${
-                  index === currentPanel 
-                    ? 'w-8 h-3 bg-gradient-to-r from-purple-400 to-pink-400 shadow-lg shadow-purple-400/40' 
-                    : 'w-3 h-3 bg-slate-600 hover:bg-slate-500 hover:scale-125'
-                } disabled:cursor-not-allowed`}
-                style={{
-                  clipPath: index === currentPanel ? 'polygon(0 0, 100% 0, 90% 100%, 10% 100%)' : 'circle(50%)'
-                }}
-              >
-                {index === currentPanel && (
-                  <div 
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 opacity-60"
-                    style={{
-                      clipPath: 'polygon(0 0, 100% 0, 90% 100%, 10% 100%)',
-                      animation: enableAutoplay ? `pulse ${autoplayInterval}ms linear infinite` : 'none'
-                    }}
-                  />
-                )}
-              </button>
-            ))}
-            
-            {/* Panel counter */}
-            <div className="ml-3 pl-3 border-l border-slate-600">
-              <span className="text-slate-400 text-xs font-mono">
-                {String(currentPanel + 1).padStart(2, '0')} / {String(movingPanels.length).padStart(2, '0')}
-              </span>
-            </div>
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-2 bg-slate-900/90 backdrop-blur-sm border border-slate-700 px-3 py-2">
+          {movingPanels.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => !isAnimating && lerpToPanel(index)}
+              disabled={isAnimating}
+              className={`w-2 h-2 transition-all duration-300 ${
+                index === currentPanel 
+                  ? 'bg-purple-400 scale-150' 
+                  : 'bg-slate-600 hover:bg-slate-500'
+              } disabled:cursor-not-allowed`}
+            />
+          ))}
+          <div className="ml-2 pl-2 border-l border-slate-600">
+            <span className="text-slate-400 text-xs font-mono">
+              {currentPanel + 1}/{movingPanels.length}
+            </span>
           </div>
         </div>
       )}
