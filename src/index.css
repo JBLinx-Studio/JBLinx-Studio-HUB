@@ -371,15 +371,78 @@ html {
   pointer-events: auto;
 }
 
-/* Enhanced horizontal drag container styles */
+/* Enhanced horizontal drag container styles with advanced features */
 .horizontal-drag-container {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: auto;
-  will-change: scroll-position;
+  will-change: scroll-position, transform;
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+  scroll-snap-type: x mandatory;
+}
+
+/* Smooth cursor transitions */
+.horizontal-drag-container {
+  cursor: grab;
+  transition: cursor 0.1s ease;
+}
+
+.horizontal-drag-container:active,
+.horizontal-drag-container.dragging {
+  cursor: grabbing;
+}
+
+/* Custom scrollbar for panels */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(51, 65, 85, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.6);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.8);
+}
+
+/* Glowing text effect */
+.glow-text {
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+}
+
+/* Enhanced interactive element styles */
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-element:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Slow spin animation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Static docked panels */
