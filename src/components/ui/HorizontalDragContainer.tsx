@@ -1,299 +1,208 @@
 
 import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useIsMobile } from '../../hooks/use-mobile';
 
 interface HorizontalDragContainerProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   className?: string;
-  autoScrollSpeed?: number;
-  staticPanels?: React.ReactNode[];
-  movingPanels?: React.ReactNode[];
-  currentPanel?: number;
-  onPanelChange?: (index: number) => void;
+  showNavigation?: boolean;
+  staticFirstPanel?: boolean;
 }
 
 const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({ 
   children, 
   className = "",
-  autoScrollSpeed = 0.8,
-  staticPanels = [],
-  movingPanels = [],
-  currentPanel = 0,
-  onPanelChange
+  showNavigation = true,
+  staticFirstPanel = false
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [velocity, setVelocity] = useState(0);
-  const [lastX, setLastX] = useState(0);
-  const [lastTime, setLastTime] = useState(0);
-  const [dragDistance, setDragDistance] = useState(0);
+  const [currentPanel, setCurrentPanel] = useState(0);
+  const [totalPanels, setTotalPanels] = useState(0);
+  const isMobile = useIsMobile();
 
-  // Smooth lerp to specific panel
-  const lerpToPanel = useCallback((panelIndex: number) => {
-    if (!containerRef.current || panelIndex < 0 || panelIndex >= movingPanels.length) return;
-    
-    const container = containerRef.current;
-    const targetScroll = panelIndex * container.clientWidth;
-    
-    const startScroll = container.scrollLeft;
-    const distance = targetScroll - startScroll;
-    const duration = 600; // Smooth 600ms transition
-    const startTime = performance.now();
-    
-    const animateScroll = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Smooth easing function (ease-out-cubic)
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-      
-      container.scrollLeft = startScroll + (distance * easeProgress);
-      
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll);
-      } else {
-        onPanelChange?.(panelIndex);
+  useEffect(() => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const panelWidth = container.clientWidth;
+      const scrollWidth = container.scrollWidth;
+      setTotalPanels(Math.ceil(scrollWidth / panelWidth));
+    }
+
+    const handleResize = () => {
+      if (containerRef.current) {
+        const container = containerRef.current;
+        const panelWidth = container.clientWidth;
+        container.scrollTo({
+          left: currentPanel * panelWidth,
+          behavior: 'smooth'
+        });
       }
     };
-    
-    requestAnimationFrame(animateScroll);
-  }, [movingPanels.length, onPanelChange]);
 
-  // Navigation functions
-  const goToNextPanel = useCallback(() => {
-    const nextIndex = Math.min(currentPanel + 1, movingPanels.length - 1);
-    if (nextIndex !== currentPanel) {
-      lerpToPanel(nextIndex);
-    }
-  }, [currentPanel, movingPanels.length, lerpToPanel]);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [children, currentPanel]);
 
-  const goToPrevPanel = useCallback(() => {
-    const prevIndex = Math.max(currentPanel - 1, 0);
-    if (prevIndex !== currentPanel) {
-      lerpToPanel(prevIndex);
-    }
-  }, [currentPanel, lerpToPanel]);
-
-  // Drag handlers with snap-to-panel
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.closest('button, a, input, select, textarea, [role="button"], .interactive-element')) {
-      return;
-    }
-
+  const navigateToPanel = useCallback((panelIndex: number) => {
     if (!containerRef.current) return;
+    
+    const container = containerRef.current;
+    const panelWidth = container.clientWidth;
+    const targetScroll = panelIndex * panelWidth;
+    
+    container.scrollTo({
+      left: targetScroll,
+      behavior: 'smooth'
+    });
+    
+    setCurrentPanel(panelIndex);
+  }, []);
+
+  const handlePrevious = useCallback(() => {
+    const minPanel = staticFirstPanel ? 0 : 0;
+    if (currentPanel > minPanel) {
+      navigateToPanel(currentPanel - 1);
+    }
+  }, [currentPanel, navigateToPanel, staticFirstPanel]);
+
+  const handleNext = useCallback(() => {
+    if (currentPanel < totalPanels - 1) {
+      navigateToPanel(currentPanel + 1);
+    }
+  }, [currentPanel, totalPanels, navigateToPanel]);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (!containerRef.current || (staticFirstPanel && currentPanel === 0)) return;
     
     setIsDragging(true);
     setStartX(e.pageX - containerRef.current.offsetLeft);
     setScrollLeft(containerRef.current.scrollLeft);
-    setLastX(e.pageX);
-    setLastTime(Date.now());
-    setVelocity(0);
-    setDragDistance(0);
     
-    document.body.style.cursor = 'grabbing';
-  }, []);
+    containerRef.current.style.cursor = 'grabbing';
+    containerRef.current.style.userSelect = 'none';
+  }, [staticFirstPanel, currentPanel]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging || !containerRef.current) return;
     
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    const newScrollLeft = scrollLeft - walk;
-    
-    containerRef.current.scrollLeft = newScrollLeft;
-    
-    const currentTime = Date.now();
-    const deltaTime = currentTime - lastTime;
-    const deltaX = e.pageX - lastX;
-    
-    if (deltaTime > 0) {
-      setVelocity((deltaX / deltaTime) * 0.8);
-    }
-    
-    setLastX(e.pageX);
-    setLastTime(currentTime);
-    setDragDistance(Math.abs(walk));
-  }, [isDragging, startX, scrollLeft, lastX, lastTime]);
+    const walk = (x - startX) * 1.5;
+    containerRef.current.scrollLeft = scrollLeft - walk;
+  }, [isDragging, startX, scrollLeft]);
 
   const handleMouseUp = useCallback(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !isDragging) return;
     
     setIsDragging(false);
-    document.body.style.cursor = 'auto';
+    containerRef.current.style.cursor = 'grab';
+    containerRef.current.style.userSelect = 'auto';
     
-    // Snap to nearest panel
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
-    const nearestPanel = Math.round(container.scrollLeft / panelWidth);
-    const clampedPanel = Math.max(0, Math.min(nearestPanel, movingPanels.length - 1));
-    
-    lerpToPanel(clampedPanel);
-  }, [movingPanels.length, lerpToPanel]);
+    const newPanel = Math.round(container.scrollLeft / panelWidth);
+    const minPanel = staticFirstPanel ? 0 : 0;
+    navigateToPanel(Math.max(minPanel, Math.min(newPanel, totalPanels - 1)));
+  }, [isDragging, navigateToPanel, totalPanels, staticFirstPanel]);
 
-  // Touch handlers for mobile
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.closest('button, a, input, select, textarea, [role="button"], .interactive-element')) {
-      return;
+  const handleMouseLeave = useCallback(() => {
+    if (isDragging) {
+      handleMouseUp();
     }
+  }, [isDragging, handleMouseUp]);
 
-    if (!containerRef.current) return;
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (!containerRef.current || (staticFirstPanel && currentPanel === 0)) return;
     
     const touch = e.touches[0];
     setIsDragging(true);
     setStartX(touch.pageX - containerRef.current.offsetLeft);
     setScrollLeft(containerRef.current.scrollLeft);
-    setLastX(touch.pageX);
-    setLastTime(Date.now());
-    setVelocity(0);
-    setDragDistance(0);
-  }, []);
+  }, [staticFirstPanel, currentPanel]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (!isDragging || !containerRef.current) return;
     
-    e.preventDefault();
     const touch = e.touches[0];
     const x = touch.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
-    const newScrollLeft = scrollLeft - walk;
-    
-    containerRef.current.scrollLeft = newScrollLeft;
-    
-    const currentTime = Date.now();
-    const deltaTime = currentTime - lastTime;
-    const deltaX = touch.pageX - lastX;
-    
-    if (deltaTime > 0) {
-      setVelocity((deltaX / deltaTime) * 0.8);
-    }
-    
-    setLastX(touch.pageX);
-    setLastTime(currentTime);
-    setDragDistance(Math.abs(walk));
-  }, [isDragging, startX, scrollLeft, lastX, lastTime]);
+    const walk = (x - startX) * 1.5;
+    containerRef.current.scrollLeft = scrollLeft - walk;
+  }, [isDragging, startX, scrollLeft]);
 
   const handleTouchEnd = useCallback(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !isDragging) return;
     
     setIsDragging(false);
     
-    // Snap to nearest panel
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
-    const nearestPanel = Math.round(container.scrollLeft / panelWidth);
-    const clampedPanel = Math.max(0, Math.min(nearestPanel, movingPanels.length - 1));
-    
-    lerpToPanel(clampedPanel);
-  }, [movingPanels.length, lerpToPanel]);
+    const newPanel = Math.round(container.scrollLeft / panelWidth);
+    const minPanel = staticFirstPanel ? 0 : 0;
+    navigateToPanel(Math.max(minPanel, Math.min(newPanel, totalPanels - 1)));
+  }, [isDragging, navigateToPanel, totalPanels, staticFirstPanel]);
 
   return (
     <div className="relative w-full h-full">
-      {/* Static L-shaped panels */}
-      {staticPanels.length > 0 && (
-        <div className="hidden lg:block absolute left-0 top-0 z-20">
-          <div className="flex flex-col h-full">
-            {staticPanels.map((panel, index) => (
-              <div key={index} className="static-panel bg-slate-900/98 border border-slate-700/50 backdrop-blur-sm">
-                {panel}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Main scrolling container with perfect viewport fitting */}
       <div
         ref={containerRef}
-        className={`overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none ${className}`}
+        className={`overflow-x-auto scrollbar-hide cursor-grab select-none snap-x snap-mandatory h-full ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          WebkitOverflowScrolling: 'touch',
-          scrollBehavior: 'auto',
-          paddingLeft: staticPanels.length > 0 ? 'min(320px, 25vw)' : '0'
         }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div 
-          ref={contentRef} 
-          className="flex h-full"
-          style={{ willChange: 'transform' }}
-        >
-          {/* Moving panels - each takes full viewport width */}
-          {movingPanels.length > 0 ? (
-            movingPanels.map((panel, index) => (
-              <div 
-                key={index} 
-                className="moving-panel flex-shrink-0 w-full h-full flex items-center justify-center"
-                style={{ 
-                  minWidth: '100%',
-                  width: '100vw'
-                }}
-              >
-                {panel}
-              </div>
-            ))
-          ) : (
-            children && (
-              <div className="w-full h-full flex items-center justify-center">
-                {children}
-              </div>
-            )
-          )}
+        <div className="flex h-full">
+          {children}
         </div>
       </div>
 
-      {/* Navigation controls */}
-      {movingPanels.length > 1 && (
+      {showNavigation && totalPanels > 1 && (
         <>
           <button
-            onClick={goToPrevPanel}
+            onClick={handlePrevious}
             disabled={currentPanel === 0}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-700 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white p-3 transition-all duration-200 lg:left-[calc(min(320px,25vw)+1rem)]"
+            className={`absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10 ${
+              isMobile ? 'p-1' : 'p-2'
+            }`}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <ChevronLeft className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
           </button>
           
           <button
-            onClick={goToNextPanel}
-            disabled={currentPanel === movingPanels.length - 1}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-700 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white p-3 transition-all duration-200"
+            onClick={handleNext}
+            disabled={currentPanel === totalPanels - 1}
+            className={`absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10 ${
+              isMobile ? 'p-1' : 'p-2'
+            }`}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRight className={isMobile ? "w-4 h-4" : "w-5 h-5"} />
           </button>
-        </>
-      )}
 
-      {/* Panel indicators */}
-      {movingPanels.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
-          {movingPanels.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => lerpToPanel(index)}
-              className={`w-2 h-2 transition-all duration-300 ${
-                index === currentPanel 
-                  ? 'bg-purple-400 scale-125' 
-                  : 'bg-slate-600 hover:bg-slate-500'
-              }`}
-            />
-          ))}
-        </div>
+          <div className={`absolute ${isMobile ? 'bottom-2' : 'bottom-4'} left-1/2 -translate-x-1/2 flex space-x-2 z-10`}>
+            {Array.from({ length: totalPanels }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => navigateToPanel(index)}
+                className={`${isMobile ? 'w-1.5 h-1.5' : 'w-2 h-2'} rounded-full transition-all duration-300 ${
+                  index === currentPanel 
+                    ? 'bg-purple-400 scale-125' 
+                    : 'bg-slate-600 hover:bg-purple-400/50'
+                }`}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
