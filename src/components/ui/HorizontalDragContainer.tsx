@@ -23,18 +23,20 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   useEffect(() => {
     if (containerRef.current) {
       const container = containerRef.current;
-      const panels = container.children[0]?.children || [];
-      setTotalPanels(panels.length);
+      const panelWidth = container.clientWidth;
+      const scrollWidth = container.scrollWidth;
+      setTotalPanels(Math.ceil(scrollWidth / panelWidth));
     }
   }, [children]);
 
-  const snapToPanel = useCallback((panelIndex: number) => {
+  const navigateToPanel = useCallback((panelIndex: number) => {
     if (!containerRef.current) return;
     
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
     const targetScroll = panelIndex * panelWidth;
     
+    // Smooth scroll to target panel
     container.scrollTo({
       left: targetScroll,
       behavior: 'smooth'
@@ -45,15 +47,15 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
 
   const handlePrevious = useCallback(() => {
     if (currentPanel > 0) {
-      snapToPanel(currentPanel - 1);
+      navigateToPanel(currentPanel - 1);
     }
-  }, [currentPanel, snapToPanel]);
+  }, [currentPanel, navigateToPanel]);
 
   const handleNext = useCallback(() => {
     if (currentPanel < totalPanels - 1) {
-      snapToPanel(currentPanel + 1);
+      navigateToPanel(currentPanel + 1);
     }
-  }, [currentPanel, totalPanels, snapToPanel]);
+  }, [currentPanel, totalPanels, navigateToPanel]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (!containerRef.current) return;
@@ -63,7 +65,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     setScrollLeft(containerRef.current.scrollLeft);
     
     containerRef.current.style.cursor = 'grabbing';
-    e.preventDefault();
+    containerRef.current.style.userSelect = 'none';
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -71,7 +73,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
+    const walk = (x - startX) * 1.5;
     containerRef.current.scrollLeft = scrollLeft - walk;
   }, [isDragging, startX, scrollLeft]);
 
@@ -80,13 +82,14 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     setIsDragging(false);
     containerRef.current.style.cursor = 'grab';
+    containerRef.current.style.userSelect = 'auto';
     
     // Snap to nearest panel
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
     const newPanel = Math.round(container.scrollLeft / panelWidth);
-    snapToPanel(Math.max(0, Math.min(newPanel, totalPanels - 1)));
-  }, [isDragging, snapToPanel, totalPanels]);
+    navigateToPanel(Math.max(0, Math.min(newPanel, totalPanels - 1)));
+  }, [isDragging, navigateToPanel, totalPanels]);
 
   const handleMouseLeave = useCallback(() => {
     if (isDragging) {
@@ -94,7 +97,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
   }, [isDragging, handleMouseUp]);
 
-  // Touch events for mobile
+  // Touch events
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (!containerRef.current) return;
     
@@ -109,7 +112,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     const touch = e.touches[0];
     const x = touch.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
+    const walk = (x - startX) * 1.5;
     containerRef.current.scrollLeft = scrollLeft - walk;
   }, [isDragging, startX, scrollLeft]);
 
@@ -122,14 +125,14 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
     const newPanel = Math.round(container.scrollLeft / panelWidth);
-    snapToPanel(Math.max(0, Math.min(newPanel, totalPanels - 1)));
-  }, [isDragging, snapToPanel, totalPanels]);
+    navigateToPanel(Math.max(0, Math.min(newPanel, totalPanels - 1)));
+  }, [isDragging, navigateToPanel, totalPanels]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative">
       <div
         ref={containerRef}
-        className={`overflow-x-hidden scrollbar-hide cursor-grab select-none ${className}`}
+        className={`overflow-x-auto scrollbar-hide cursor-grab select-none snap-x snap-mandatory ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -142,7 +145,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex w-full">
+        <div className="flex">
           {children}
         </div>
       </div>
@@ -153,25 +156,25 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
           <button
             onClick={handlePrevious}
             disabled={currentPanel === 0}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 rounded-md backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
           
           <button
             onClick={handleNext}
             disabled={currentPanel === totalPanels - 1}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 rounded-md backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Panel Indicators */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
             {Array.from({ length: totalPanels }).map((_, index) => (
               <button
                 key={index}
-                onClick={() => snapToPanel(index)}
+                onClick={() => navigateToPanel(index)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   index === currentPanel 
                     ? 'bg-purple-400 scale-125' 
