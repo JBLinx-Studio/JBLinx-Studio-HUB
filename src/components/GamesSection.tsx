@@ -127,10 +127,10 @@ const GamesSection = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-pink-600/5" />
       
       <div className="relative z-10">
-        <div className="flex items-center space-x-2 mb-3 border-b border-purple-400/20 pb-2">
-          <Gamepad2 className="w-4 h-4 text-purple-400" />
-          <span className="text-purple-400 font-bold text-xs font-mono">GAME LIBRARY</span>
-          <div className="ml-auto bg-purple-500/20 px-1 py-0.5 text-xs font-bold text-purple-300">
+        <div className="flex items-center space-x-2 mb-4 border-b border-purple-400/20 pb-2">
+          <Gamepad2 className="w-5 h-5 text-purple-400" />
+          <span className="text-purple-400 font-bold text-sm font-mono">GAME LIBRARY</span>
+          <div className="ml-auto bg-purple-500/20 px-2 py-1 text-xs font-bold text-purple-300">
             {games.length}
           </div>
         </div>
@@ -140,7 +140,7 @@ const GamesSection = () => {
             <button
               key={game.id}
               onClick={() => setActiveGame(index)}
-              className={`w-full text-left p-2 border transition-all duration-300 interactive-element group relative overflow-hidden ${
+              className={`w-full text-left p-3 border transition-all duration-300 interactive-element group relative overflow-hidden ${
                 activeGame === index 
                   ? 'border-purple-400 bg-gradient-to-r from-purple-500/25 to-pink-500/20 scale-105 shadow-lg' 
                   : 'border-slate-600/60 bg-slate-900/60 hover:border-purple-400/60 hover:bg-gradient-to-r hover:from-purple-500/15 hover:to-pink-500/10'
