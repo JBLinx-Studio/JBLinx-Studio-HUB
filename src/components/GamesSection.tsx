@@ -83,39 +83,58 @@ const GamesSection = () => {
     }
   ];
 
-  // Compact L-shaped static panels
+  // Enhanced L-shaped static panels
   const gameLibraryPanel = (
-    <div className="w-full h-full p-4 flex flex-col bg-slate-900/95 border-b border-slate-700/50">
-      <div className="flex items-center space-x-2 mb-4 border-b border-purple-400/20 pb-2">
-        <Gamepad2 className="w-5 h-5 text-purple-400" />
-        <span className="text-purple-400 font-bold text-sm font-mono">LIBRARY</span>
+    <div className="w-80 h-96 p-6 flex flex-col bg-gradient-to-br from-slate-900/98 to-slate-800/95 border border-purple-400/30 backdrop-blur-lg shadow-2xl">
+      <div className="flex items-center space-x-2 mb-6 border-b border-purple-400/20 pb-3">
+        <Gamepad2 className="w-6 h-6 text-purple-400 animate-pulse" />
+        <span className="text-purple-400 font-black text-lg font-mono tracking-wide">GAME LIBRARY</span>
         <div className="ml-auto bg-purple-500/20 px-2 py-1 text-xs font-bold text-purple-300">
           {games.length}
         </div>
       </div>
       
-      <div className="space-y-2 flex-1 overflow-y-auto">
+      <div className="space-y-2 flex-1 overflow-y-auto custom-scrollbar">
         {games.map((game, index) => (
           <button
             key={game.id}
             onClick={() => setActiveGame(index)}
-            className={`w-full text-left p-3 border transition-all duration-300 interactive-element ${
+            className={`w-full text-left p-4 border transition-all duration-400 interactive-element group relative overflow-hidden ${
               activeGame === index 
-                ? 'border-purple-400 bg-purple-500/20 scale-105' 
-                : 'border-slate-600/60 bg-slate-900/60 hover:border-purple-400/60 hover:bg-purple-500/10'
+                ? 'border-purple-400 bg-gradient-to-r from-purple-500/25 to-pink-500/20 transform scale-105 shadow-lg shadow-purple-500/30' 
+                : 'border-slate-600/60 bg-slate-900/60 hover:border-purple-400/60 hover:bg-gradient-to-r hover:from-purple-500/15 hover:to-pink-500/10 hover:scale-102'
             }`}
           >
-            <div>
-              <div className="text-white font-bold text-xs mb-1">{game.title}</div>
+            <div className="relative z-10">
+              <div className="text-white font-bold text-sm mb-2 group-hover:text-purple-200 transition-colors">
+                {game.title}
+              </div>
               <div className="flex items-center justify-between">
-                <span className={`px-2 py-1 text-xs font-bold ${
-                  game.status === 'RELEASED' ? 'bg-green-500 text-black' : 'bg-yellow-500 text-black'
+                <span className={`px-2 py-1 text-xs font-bold transition-all duration-300 ${
+                  game.status === 'RELEASED' 
+                    ? 'bg-green-500 text-black shadow-md shadow-green-500/40' 
+                    : 'bg-yellow-500 text-black shadow-md shadow-yellow-500/40'
                 }`}>
                   {game.status}
                 </span>
-                <div className="text-slate-400 text-xs">{game.category}</div>
+                <div className="text-slate-400 text-xs group-hover:text-slate-300 transition-colors">
+                  {game.category}
+                </div>
+              </div>
+              <div className="flex items-center justify-between mt-2 text-xs">
+                <div className="flex items-center space-x-1">
+                  <Star className="w-3 h-3 text-yellow-400" />
+                  <span className="text-yellow-400 font-bold">{game.rating}</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Download className="w-3 h-3 text-green-400" />
+                  <span className="text-green-400 font-bold">{game.downloads}</span>
+                </div>
               </div>
             </div>
+            {activeGame === index && (
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10 animate-pulse" />
+            )}
           </button>
         ))}
       </div>
@@ -123,91 +142,114 @@ const GamesSection = () => {
   );
 
   const gameDetailsPanel = (
-    <div className="w-full h-full p-4 bg-slate-900/95 border-b border-slate-700/50">
-      <div className="flex items-center space-x-2 mb-3 border-b border-green-400/20 pb-2">
-        <Target className="w-5 h-5 text-green-400" />
-        <span className="text-green-400 font-bold text-sm font-mono">DETAILS</span>
-      </div>
+    <div className="w-80 h-80 p-6 bg-gradient-to-br from-slate-900/98 to-slate-800/95 border border-green-400/40 backdrop-blur-lg shadow-2xl relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-cyan-500/5 animate-pulse" />
+      
+      <div className="relative z-10">
+        <div className="flex items-center space-x-2 mb-4 border-b border-green-400/20 pb-3">
+          <Target className="w-6 h-6 text-green-400 animate-spin-slow" />
+          <span className="text-green-400 font-black text-lg font-mono tracking-wide">GAME DETAILS</span>
+          <div className="ml-auto w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+        </div>
         
-        <div className="space-y-3">
-          <div className="bg-slate-800/60 border border-slate-600/40 p-2">
-            <h3 className="text-white font-bold text-sm mb-1">{games[activeGame].title}</h3>
-            <div className="text-purple-400 font-bold text-xs">{games[activeGame].category}</div>
+        <div className="space-y-4">
+          <div className="bg-slate-800/60 border border-slate-600/40 p-3 backdrop-blur-sm">
+            <h3 className="text-white font-black text-xl font-mono mb-1">{games[activeGame].title}</h3>
+            <div className="text-purple-400 font-bold text-sm">{games[activeGame].category}</div>
+            <div className="text-slate-400 text-xs mt-1 line-clamp-2">{games[activeGame].description}</div>
           </div>
           
           <div className="grid grid-cols-2 gap-2">
             {[
-              { icon: Star, value: games[activeGame].rating, label: "RATE" },
-              { icon: Download, value: games[activeGame].downloads, label: "DL" }
+              { icon: Star, value: games[activeGame].rating, label: "RATING", color: "text-yellow-400" },
+              { icon: Download, value: games[activeGame].downloads, label: "DOWNLOADS", color: "text-green-400" },
+              { icon: Heart, value: games[activeGame].likes, label: "LIKES", color: "text-red-400" },
+              { icon: Eye, value: games[activeGame].views, label: "VIEWS", color: "text-blue-400" }
             ].map((stat, index) => {
               const IconComponent = stat.icon;
               return (
-                <div key={index} className="bg-slate-800/80 border border-slate-600/60 p-2 text-center">
-                  <IconComponent className="w-3 h-3 mx-auto mb-1 text-purple-400" />
-                  <div className="text-xs font-bold text-white">{stat.value}</div>
-                  <div className="text-xs text-slate-400">{stat.label}</div>
+                <div key={index} className="bg-slate-800/80 border border-slate-600/60 p-3 text-center hover:border-purple-400/40 transition-all duration-300 group">
+                  <IconComponent className={`w-4 h-4 mx-auto mb-1 ${stat.color} group-hover:scale-110 transition-transform duration-200`} />
+                  <div className="text-xs font-black text-white">{stat.value}</div>
+                  <div className="text-xs font-bold text-slate-400">{stat.label}</div>
                 </div>
               );
             })}
           </div>
           
-          <div className="text-center">
-            <div className="text-green-400 font-bold text-lg">{games[activeGame].price}</div>
-            <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-3 py-2 font-bold transition-all duration-300 interactive-element text-xs">
-              <Play className="w-3 h-3 inline mr-1" />
-              PLAY
+          <div className="flex flex-wrap gap-1">
+            {games[activeGame].tags.slice(0, 4).map((tag, index) => (
+              <span key={index} className="bg-slate-700/80 border border-cyan-400/30 text-cyan-400 px-2 py-1 text-xs font-bold backdrop-blur-sm hover:bg-cyan-400/20 transition-all duration-200">
+                {tag}
+              </span>
+            ))}
+            {games[activeGame].tags.length > 4 && (
+              <span className="bg-slate-600/60 text-slate-400 px-2 py-1 text-xs font-bold">
+                +{games[activeGame].tags.length - 4}
+              </span>
+            )}
+          </div>
+          
+          <div className="text-center space-y-2">
+            <div className="text-green-400 font-black text-2xl glow-text">{games[activeGame].price}</div>
+            <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-3 font-black transition-all duration-300 interactive-element text-sm shadow-lg hover:shadow-purple-500/40 hover:scale-105">
+              <Play className="w-4 h-4 inline mr-2" />
+              PLAY NOW
             </button>
           </div>
         </div>
+      </div>
     </div>
   );
 
-  // Optimized moving panels
+  // Moving panels with different layouts
   const movingPanels = [
-    // Featured Game Panel - Simplified
-    <div key="featured" className="w-full h-full flex items-center justify-center bg-slate-800/50">
-      <div className="max-w-4xl w-full p-6">
-        <div className="bg-slate-900/80 border border-purple-400/30 p-6">
-          <div className="flex items-center space-x-2 mb-4">
-            <Play className="w-5 h-5 text-purple-400" />
-            <span className="text-purple-400 font-bold text-xl font-mono">FEATURED</span>
+    // Featured Game Panel
+    <div className="w-full h-full p-8 bg-slate-800/95 flex items-center justify-center">
+      <div className="max-w-4xl w-full">
+        <div className="bg-slate-900/80 border border-purple-400/30 p-8">
+          <div className="flex items-center space-x-2 mb-6">
+            <Play className="w-6 h-6 text-purple-400" />
+            <span className="text-purple-400 font-black text-2xl font-mono">FEATURED RELEASE</span>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-6">
+          <div className="grid lg:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-white font-bold text-2xl font-mono mb-2">{games[activeGame].title}</h3>
-              <div className="text-purple-400 font-bold text-lg mb-3">{games[activeGame].category}</div>
-              <p className="text-slate-300 text-sm mb-4">{games[activeGame].description}</p>
+              <h3 className="text-white font-black text-3xl font-mono mb-2">{games[activeGame].title}</h3>
+              <div className="text-purple-400 font-bold text-xl mb-4">{games[activeGame].category}</div>
+              <p className="text-slate-300 text-lg mb-6 leading-relaxed">{games[activeGame].description}</p>
               
-              <div className="flex flex-wrap gap-2 mb-4">
-                {games[activeGame].tech.slice(0, 3).map((tech, index) => (
-                  <span key={index} className="bg-slate-700 text-cyan-400 px-2 py-1 text-xs font-bold">
+              <div className="flex flex-wrap gap-2 mb-6">
+                {games[activeGame].tech.map((tech, index) => (
+                  <span key={index} className="bg-slate-700 text-cyan-400 px-3 py-2 text-sm font-bold">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
             
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 {[
                   { icon: Users, value: games[activeGame].players, label: "PLAYERS" },
-                  { icon: Clock, value: games[activeGame].playtime, label: "TIME" }
+                  { icon: Clock, value: games[activeGame].playtime, label: "TIME" },
+                  { icon: Shield, value: games[activeGame].difficulty, label: "LEVEL" },
+                  { icon: Calendar, value: games[activeGame].lastUpdate, label: "UPDATED" }
                 ].map((stat, index) => {
                   const IconComponent = stat.icon;
                   return (
-                    <div key={index} className="bg-slate-800 border border-slate-600 p-3 text-center">
-                      <IconComponent className="w-4 h-4 mx-auto mb-1 text-purple-400" />
-                      <div className="text-sm font-bold text-white">{stat.value}</div>
-                      <div className="text-xs text-slate-400">{stat.label}</div>
+                    <div key={index} className="bg-slate-800 border border-slate-600 p-4 text-center">
+                      <IconComponent className="w-5 h-5 mx-auto mb-2 text-purple-400" />
+                      <div className="text-sm font-black text-white">{stat.value}</div>
+                      <div className="text-xs font-bold text-slate-400">{stat.label}</div>
                     </div>
                   );
                 })}
               </div>
               
               <div className="text-center">
-                <div className="text-green-400 font-bold text-2xl mb-3">{games[activeGame].price}</div>
-                <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-bold transition-all duration-300 interactive-element text-lg">
+                <div className="text-green-400 font-black text-3xl mb-4">{games[activeGame].price}</div>
+                <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-8 py-4 font-black transition-all duration-300 interactive-element text-xl">
                   ACCESS NOW
                 </button>
               </div>
@@ -217,24 +259,28 @@ const GamesSection = () => {
       </div>
     </div>,
 
-    // Game Gallery Panel - Simplified
-    <div key="gallery" className="w-full h-full flex items-center justify-center bg-slate-900/50">
-      <div className="max-w-5xl w-full p-6">
-        <div className="flex items-center space-x-2 mb-6">
-          <Trophy className="w-5 h-5 text-yellow-400" />
-          <span className="text-yellow-400 font-bold text-xl font-mono">GALLERY</span>
+    // Game Gallery Panel
+    <div className="w-full h-full p-8 bg-slate-900/95 flex items-center justify-center">
+      <div className="max-w-6xl w-full">
+        <div className="flex items-center space-x-2 mb-8">
+          <Trophy className="w-6 h-6 text-yellow-400" />
+          <span className="text-yellow-400 font-black text-2xl font-mono">GAME GALLERY</span>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {games.map((game, index) => (
-            <div key={game.id} className="bg-slate-800/80 border border-slate-600 p-3 hover:border-purple-400/50 transition-all duration-300 interactive-element">
-              <div className="text-white font-bold text-sm mb-2">{game.title}</div>
-              <div className="text-purple-400 text-xs mb-3">{game.category}</div>
+            <div key={game.id} className="bg-slate-800/80 border border-slate-600 p-4 hover:border-purple-400/50 transition-all duration-300 interactive-element">
+              <div className="text-white font-bold text-lg mb-2">{game.title}</div>
+              <div className="text-purple-400 text-sm mb-3">{game.category}</div>
               
-              <div className="space-y-1 mb-3">
+              <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-xs">
                   <span className="text-slate-400">Rating:</span>
                   <span className="text-yellow-400 font-bold">{game.rating}</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-slate-400">Downloads:</span>
+                  <span className="text-green-400 font-bold">{game.downloads}</span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-slate-400">Price:</span>
@@ -242,8 +288,8 @@ const GamesSection = () => {
                 </div>
               </div>
               
-              <button className="w-full bg-slate-700 hover:bg-purple-600 text-white px-3 py-2 text-xs font-bold transition-all duration-300">
-                VIEW
+              <button className="w-full bg-slate-700 hover:bg-purple-600 text-white px-4 py-2 text-sm font-bold transition-all duration-300">
+                VIEW DETAILS
               </button>
             </div>
           ))}
@@ -252,7 +298,7 @@ const GamesSection = () => {
     </div>,
 
     // Development Stats Panel
-    <div key="stats" className="w-full h-full p-8 bg-slate-950/95 flex items-center justify-center">
+    <div className="w-full h-full p-8 bg-slate-950/95 flex items-center justify-center">
       <div className="max-w-5xl w-full">
         <div className="flex items-center space-x-2 mb-8">
           <Code className="w-6 h-6 text-green-400" />
@@ -349,16 +395,16 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Optimized Horizontal Container */}
+        {/* Advanced Horizontal Container with Enhanced Features */}
         <HorizontalDragContainer 
-          className="mb-8 h-[500px] bg-slate-950/50 border border-slate-700/30" 
+          className="mb-8 h-[600px] bg-gradient-to-r from-slate-950/50 to-slate-900/50 border border-slate-700/30 backdrop-blur-lg shadow-2xl" 
           staticPanels={[gameLibraryPanel, gameDetailsPanel]}
           movingPanels={movingPanels}
           currentPanel={currentPanel}
           onPanelChange={setCurrentPanel}
           enableAutoplay={false}
-          enableSnapPreview={false}
-          dampingFactor={0.9}
+          enableSnapPreview={true}
+          dampingFactor={0.92}
         />
 
         {/* CTA */}
