@@ -371,23 +371,22 @@ html {
   pointer-events: auto;
 }
 
-/* Enhanced horizontal drag container with ultra-smooth performance */
+/* Enhanced horizontal drag container styles with advanced features */
 .horizontal-drag-container {
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: auto;
-  will-change: scroll-position;
+  will-change: scroll-position, transform;
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
   scroll-snap-type: x mandatory;
-  isolation: isolate;
 }
 
-/* Ultra-smooth cursor transitions */
+/* Smooth cursor transitions */
 .horizontal-drag-container {
   cursor: grab;
-  transition: cursor 0.05s ease;
+  transition: cursor 0.1s ease;
 }
 
 .horizontal-drag-container:active,
@@ -395,12 +394,7 @@ html {
   cursor: grabbing;
 }
 
-/* Performance optimized will-change */
-.will-change-scroll {
-  will-change: scroll-position, transform;
-}
-
-/* Custom scrollbar for panels with gaming theme */
+/* Custom scrollbar for panels */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
@@ -410,39 +404,17 @@ html {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, rgba(168, 85, 247, 0.6), rgba(236, 72, 153, 0.6));
+  background: rgba(168, 85, 247, 0.6);
   border-radius: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, rgba(168, 85, 247, 0.8), rgba(236, 72, 153, 0.8));
+  background: rgba(168, 85, 247, 0.8);
 }
 
-/* Enhanced glowing text effect */
+/* Glowing text effect */
 .glow-text {
-  text-shadow: 
-    0 0 5px currentColor, 
-    0 0 10px currentColor, 
-    0 0 15px currentColor,
-    0 0 20px currentColor;
-  animation: glow-pulse 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow-pulse {
-  from { 
-    text-shadow: 
-      0 0 5px currentColor, 
-      0 0 10px currentColor, 
-      0 0 15px currentColor,
-      0 0 20px currentColor;
-  }
-  to { 
-    text-shadow: 
-      0 0 2px currentColor, 
-      0 0 5px currentColor, 
-      0 0 8px currentColor,
-      0 0 12px currentColor;
-  }
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
 }
 
 /* Enhanced interactive element styles */
