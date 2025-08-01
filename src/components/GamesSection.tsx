@@ -1,79 +1,97 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Code, Terminal, Users, Clock, Shield, Sword, Crown, Flame, Rocket, Headphones, Settings, Bell, Activity, TrendingUp, Calendar } from 'lucide-react';
+import { ArrowRight, Download, Star, Trophy, Play, Zap, Target, Gamepad2, Users, Clock, Shield, Sword, Crown, Flame, Rocket, Activity, TrendingUp, Calendar, Bell, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HorizontalDragContainer from './ui/HorizontalDragContainer';
-import AdditionalGamesContent from './games/AdditionalGamesContent';
 
 const GamesSection = () => {
   const [activeGame, setActiveGame] = useState(0);
 
   const games = [
     {
-      title: "Survival Horror Chronicles",
-      category: "Horror/Survival",
-      downloads: "5.2k",
-      rating: "4.8",
-      status: "RELEASED",
-      description: "Immersive horror with advanced AI-driven scares and atmospheric design",
-      tech: ["Unity", "C#", "Blender", "FMOD"],
-      price: "$19.99",
-      players: "1-4",
-      difficulty: "EXPERT",
-      playtime: "25+ hrs"
-    },
-    {
-      title: "Strategic Conquest RTS",
-      category: "Real-Time Strategy", 
-      downloads: "3.1k",
+      title: "Neon Racing Elite",
+      category: "Racing/Action",
+      downloads: "12.5k",
       rating: "4.9",
-      status: "RELEASED",
-      description: "Command armies in epic 32-player battles with advanced AI and physics",
-      tech: ["Unreal", "C++", "AWS", "Redis"],
-      price: "$24.99",
-      players: "1-32",
-      difficulty: "HARD",
-      playtime: "100+ hrs"
+      status: "FEATURED",
+      description: "High-octane cyberpunk racing with customizable vehicles",
+      price: "$29.99",
+      freeDemo: true,
+      imageUrl: "/images/neon-racing-hero.jpg",
+      tags: ["Multiplayer", "Customization", "Cyberpunk"],
+      releaseDate: "2024-03-15",
+      lastUpdate: "2 days ago"
     },
     {
-      title: "Adventure Quest RPG",
-      category: "Action/Adventure",
-      downloads: "2.8k",
+      title: "Mystic Realms MMORPG",
+      category: "MMORPG/Fantasy", 
+      downloads: "8.3k",
+      rating: "4.8",
+      status: "EARLY ACCESS",
+      description: "Massive fantasy world with 500+ quests and guild systems",
+      price: "$19.99",
+      freeDemo: false,
+      imageUrl: "/images/mystic-realms-hero.jpg",
+      tags: ["MMORPG", "Guilds", "PvP"],
+      releaseDate: "2024-01-20",
+      lastUpdate: "1 week ago"
+    },
+    {
+      title: "Pixel Craft Builder",
+      category: "Sandbox/Creative",
+      downloads: "15.7k",
       rating: "4.7",
-      status: "BETA",
-      description: "Epic quest through mystical realms with deep character progression",
-      tech: ["Unity", "Mirror", "MongoDB", "Node.js"],
-      price: "FREE BETA",
-      players: "1-8",
-      difficulty: "MEDIUM",
-      playtime: "80+ hrs"
+      status: "FREE TO PLAY",
+      description: "Ultimate creative sandbox with unlimited building",
+      price: "FREE",
+      freeDemo: true,
+      imageUrl: "/images/pixel-craft-hero.jpg",
+      tags: ["Creative", "Multiplayer", "Building"],
+      releaseDate: "2023-11-10",
+      lastUpdate: "3 days ago"
+    },
+    {
+      title: "Space Command Simulator",
+      category: "Strategy/Simulation",
+      downloads: "6.9k",
+      rating: "4.6",
+      status: "COMING SOON",
+      description: "Command your space fleet in realistic physics battles",
+      price: "$34.99",
+      freeDemo: true,
+      imageUrl: "/images/space-command-hero.jpg",
+      tags: ["Strategy", "Simulation", "Sci-Fi"],
+      releaseDate: "2024-06-15",
+      lastUpdate: "5 days ago"
     }
   ];
 
-  const devResources = [
-    { title: "Game Development Mastery", type: "E-BOOK", downloads: "8.5k", price: "$29" },
-    { title: "Horror Game Tutorial Series", type: "COURSE", downloads: "6.2k", price: "$49" },
-    { title: "RTS Development Blog", type: "BLOG", downloads: "12.1k", price: "FREE" }
+  const gameUpdates = [
+    { text: "Neon Racing: New cyberpunk tracks added", time: "2m ago", type: "update", game: "Neon Racing" },
+    { text: "Mystic Realms: Guild tournament starting", time: "5m ago", type: "event", game: "Mystic Realms" },
+    { text: "Pixel Craft: Community showcase live", time: "12m ago", type: "feature", game: "Pixel Craft" },
+    { text: "Space Command: Beta registration open", time: "1h ago", type: "announcement", game: "Space Command" }
   ];
 
-  const liveUpdates = [
-    { text: "New horror update released for Chronicles", time: "2m ago", type: "update" },
-    { text: "Strategic Conquest tournament starting", time: "5m ago", type: "event" },
-    { text: "Adventure Quest beta patch deployed", time: "12m ago", type: "patch" }
+  const gameCategories = [
+    { name: "Racing Games", count: 12, icon: Rocket },
+    { name: "RPG Collection", count: 8, icon: Sword },
+    { name: "Creative Sandbox", count: 15, icon: Target },
+    { name: "Strategy Games", count: 6, icon: Crown }
   ];
 
-  const stats = [
-    { label: "ACTIVE PLAYERS", value: "12.5k", icon: Users },
-    { label: "TOTAL DOWNLOADS", value: "250k+", icon: Download },
-    { label: "AVG RATING", value: "4.8★", icon: Star },
-    { label: "TOURNAMENTS", value: "8", icon: Trophy }
+  const devlogs = [
+    { title: "Physics Engine Overhaul", game: "Neon Racing", date: "2 days ago", type: "technical" },
+    { title: "Guild System Update", game: "Mystic Realms", date: "1 week ago", type: "feature" },
+    { title: "Building Tools Expansion", game: "Pixel Craft", date: "3 days ago", type: "content" },
+    { title: "AI Fleet Combat Preview", game: "Space Command", date: "5 days ago", type: "preview" }
   ];
 
   return (
     <section className="py-20 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
             <Trophy className="w-3 h-3 mr-1 text-purple-400" />
             <span className="text-purple-400 font-black text-xs font-mono tracking-widest">PRIORITY #1: GAMERS</span>
@@ -90,73 +108,97 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Horizontal Drag Container with Multiple Panels */}
-        <HorizontalDragContainer className="mb-8">
-          {/* Panel 1: Main Gaming Hub (Static First Panel) */}
-          <div className="min-w-full snap-start flex-shrink-0">
-            <div className="grid lg:grid-cols-3 gap-3">
-              {/* Left Panel: Featured Game Display */}
-              <div className="lg:col-span-2 bg-slate-800/95 border border-slate-700 p-4">
-                <div className="flex items-center space-x-2 mb-4">
-                  <Play className="w-4 h-4 text-purple-400" />
-                  <span className="text-purple-400 font-black text-sm font-mono">FEATURED RELEASE</span>
-                </div>
-                
-                {/* Featured Game Card */}
-                <div className="bg-slate-900/80 border border-purple-400/30 p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="text-white font-black text-lg font-mono">{games[activeGame].title}</h3>
-                      <div className="text-purple-400 font-bold text-sm">{games[activeGame].category}</div>
+        {/* Mobile-Optimized Gaming Panels */}
+        <div className="relative">
+          <HorizontalDragContainer className="mb-6" showNavigation={true}>
+            
+            {/* Panel 1: Featured Game Preview - Compact */}
+            <div className="w-[100vw] snap-start flex-shrink-0 px-3">
+              <div className="bg-slate-800/95 border border-slate-700 h-[55vh] flex flex-col">
+                {/* Featured Game Header */}
+                <div className="p-3 border-b border-slate-700">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Star className="w-4 h-4 text-yellow-400" />
+                      <span className="text-yellow-400 font-black text-sm font-mono">FEATURED GAME</span>
                     </div>
-                    <div className="text-green-400 font-black text-lg">{games[activeGame].price}</div>
+                    <span className="bg-purple-500 text-black px-2 py-1 text-xs font-black">
+                      {games[activeGame].status}
+                    </span>
                   </div>
-                  
-                  <p className="text-slate-300 text-sm mb-4">{games[activeGame].description}</p>
-                  
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {games[activeGame].tech.map((tech, index) => (
+                </div>
+
+                {/* Game Info */}
+                <div className="p-3 flex-1">
+                  <div className="flex space-x-3 mb-3">
+                    <div className="w-16 h-16 bg-slate-700 border border-slate-600 flex items-center justify-center flex-shrink-0">
+                      <Gamepad2 className="w-8 h-8 text-purple-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-white font-black text-base font-mono leading-tight truncate">
+                        {games[activeGame].title}
+                      </h3>
+                      <div className="text-purple-400 font-bold text-sm">{games[activeGame].category}</div>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <div className="text-green-400 font-black text-lg">{games[activeGame].price}</div>
+                        {games[activeGame].freeDemo && (
+                          <div className="text-cyan-400 text-xs font-bold">FREE DEMO</div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-slate-300 text-sm line-clamp-2 mb-3">{games[activeGame].description}</p>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {games[activeGame].tags?.map((tag, index) => (
                       <span key={index} className="bg-slate-700 text-cyan-400 px-2 py-1 text-xs font-bold">
-                        {tech}
+                        {tag}
                       </span>
                     ))}
                   </div>
-                  
-                  {/* Game Stats Grid */}
-                  <div className="grid grid-cols-4 gap-2 mb-4">
-                    {[
-                      { icon: Users, value: games[activeGame].players, label: "PLAYERS" },
-                      { icon: Clock, value: games[activeGame].playtime, label: "TIME" },
-                      { icon: Shield, value: games[activeGame].difficulty, label: "LEVEL" },
-                      { icon: Star, value: games[activeGame].rating, label: "RATING" }
-                    ].map((stat, index) => {
-                      const IconComponent = stat.icon;
-                      return (
-                        <div key={index} className="bg-slate-800 border border-slate-600 p-2 text-center">
-                          <IconComponent className="w-3 h-3 mx-auto mb-1 text-purple-400" />
-                          <div className="text-xs font-black text-white">{stat.value}</div>
-                          <div className="text-xs font-bold text-slate-400">{stat.label}</div>
-                        </div>
-                      );
-                    })}
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-2 mb-3 text-xs">
+                    <div className="text-center">
+                      <div className="text-slate-400">Downloads</div>
+                      <div className="text-white font-bold">{games[activeGame].downloads}</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-slate-400">Rating</div>
+                      <div className="text-yellow-400 font-bold">{games[activeGame].rating}★</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-slate-400">Updated</div>
+                      <div className="text-green-400 font-bold">{games[activeGame].lastUpdate}</div>
+                    </div>
                   </div>
-                  
-                  <button className="w-full bg-purple-500 hover:bg-purple-600 text-black px-4 py-2 font-black transition-colors">
-                    ACCESS NOW
-                  </button>
+
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <button className="bg-purple-500 hover:bg-purple-600 text-black px-3 py-2 font-black transition-colors text-sm">
+                      {games[activeGame].price === 'FREE' ? 'PLAY NOW' : 'BUY GAME'}
+                    </button>
+                    <button className="bg-slate-700 hover:bg-slate-600 text-white px-3 py-2 font-black transition-colors text-sm">
+                      VIEW DETAILS
+                    </button>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Right Panel: Game Selection + Live Activity */}
-              <div className="space-y-3">
-                {/* Game Selector */}
-                <div className="bg-slate-800/95 border border-slate-700 p-4">
-                  <div className="flex items-center space-x-2 mb-3">
+            {/* Panel 2: Game Library Browser */}
+            <div className="w-[100vw] snap-start flex-shrink-0 px-3">
+              <div className="bg-slate-800/95 border border-slate-700 h-[55vh] flex flex-col">
+                <div className="p-3 border-b border-slate-700">
+                  <div className="flex items-center space-x-2">
                     <Gamepad2 className="w-4 h-4 text-cyan-400" />
                     <span className="text-cyan-400 font-black text-sm font-mono">GAME LIBRARY</span>
                   </div>
-                  
+                </div>
+
+                <div className="flex-1 overflow-auto p-3">
                   <div className="space-y-2">
                     {games.map((game, index) => (
                       <button
@@ -168,17 +210,23 @@ const GamesSection = () => {
                             : 'border-slate-600 bg-slate-900/50 hover:border-purple-400/50'
                         }`}
                       >
-                        <div className="text-white font-bold text-sm">{game.title}</div>
-                        <div className="flex items-center justify-between mt-1">
-                          <span className={`px-2 py-1 text-xs font-bold ${
-                            game.status === 'RELEASED' ? 'bg-green-500 text-black' : 'bg-yellow-500 text-black'
-                          }`}>
-                            {game.status}
-                          </span>
-                          <div className="text-slate-400 text-xs flex items-center space-x-2">
-                            <div className="flex items-center space-x-1">
-                              <Download className="w-3 h-3" />
-                              <span>{game.downloads}</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-12 h-12 bg-slate-700 border border-slate-600 flex items-center justify-center flex-shrink-0">
+                            <Gamepad2 className="w-4 h-4 text-purple-400" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-white font-bold text-sm truncate">{game.title}</div>
+                            <div className="text-slate-400 text-xs truncate">{game.category}</div>
+                            <div className="flex items-center justify-between mt-1">
+                              <span className={`px-1 py-0.5 text-xs font-bold ${
+                                game.status === 'FEATURED' ? 'bg-purple-500 text-white' :
+                                game.status === 'FREE TO PLAY' ? 'bg-green-500 text-black' :
+                                game.status === 'EARLY ACCESS' ? 'bg-yellow-500 text-black' :
+                                'bg-orange-500 text-black'
+                              }`}>
+                                {game.status}
+                              </span>
+                              <div className="text-green-400 text-xs font-bold">{game.price}</div>
                             </div>
                           </div>
                         </div>
@@ -186,182 +234,161 @@ const GamesSection = () => {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Live Updates */}
-                <div className="bg-slate-800/95 border border-slate-700 p-4">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <Activity className="w-4 h-4 text-green-400" />
-                    <span className="text-green-400 font-black text-sm font-mono">LIVE UPDATES</span>
+            {/* Panel 3: Game Categories */}
+            <div className="w-[100vw] snap-start flex-shrink-0 px-3">
+              <div className="bg-slate-800/95 border border-slate-700 h-[55vh] flex flex-col">
+                <div className="p-3 border-b border-slate-700">
+                  <div className="flex items-center space-x-2">
+                    <Target className="w-4 h-4 text-green-400" />
+                    <span className="text-green-400 font-black text-sm font-mono">GAME CATEGORIES</span>
                   </div>
-                  
+                </div>
+
+                <div className="flex-1 overflow-auto p-3">
+                  <div className="space-y-3">
+                    {gameCategories.map((category, index) => {
+                      const IconComponent = category.icon;
+                      return (
+                        <div key={index} className="bg-slate-900/50 border border-slate-600 p-3">
+                          <div className="flex items-center space-x-3">
+                            <IconComponent className="w-5 h-5 text-purple-400" />
+                            <div className="flex-1">
+                              <div className="text-white font-bold text-sm">{category.name}</div>
+                              <div className="text-slate-400 text-xs">{category.count} games available</div>
+                            </div>
+                            <ArrowRight className="w-4 h-4 text-slate-400" />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Panel 4: Live Updates */}
+            <div className="w-[100vw] snap-start flex-shrink-0 px-3">
+              <div className="bg-slate-800/95 border border-slate-700 h-[55vh] flex flex-col">
+                <div className="p-3 border-b border-slate-700">
+                  <div className="flex items-center space-x-2">
+                    <Activity className="w-4 h-4 text-orange-400" />
+                    <span className="text-orange-400 font-black text-sm font-mono">LIVE UPDATES</span>
+                  </div>
+                </div>
+
+                <div className="flex-1 overflow-auto p-3">
                   <div className="space-y-2">
-                    {liveUpdates.map((update, index) => (
+                    {gameUpdates.map((update, index) => (
                       <div key={index} className="bg-slate-900/50 border border-slate-600 p-2">
-                        <div className="text-white text-xs font-bold">{update.text}</div>
-                        <div className="text-slate-400 text-xs mt-1">{update.time}</div>
+                        <div className="flex items-start space-x-2">
+                          <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
+                            update.type === 'update' ? 'bg-green-400' :
+                            update.type === 'event' ? 'bg-purple-400' :
+                            update.type === 'feature' ? 'bg-cyan-400' :
+                            'bg-orange-400'
+                          }`}></div>
+                          <div className="flex-1">
+                            <div className="text-white font-bold text-sm">{update.text}</div>
+                            <div className="text-slate-400 text-xs">
+                              {update.game} • {update.time}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Panel 2: Developer Resources & Analytics */}
-          <div className="min-w-full snap-start flex-shrink-0">
-            <div className="grid lg:grid-cols-2 gap-6">
-              {/* Dev Resources Panel */}
-              <div className="bg-slate-800/95 border border-slate-700 p-6">
-                <div className="flex items-center space-x-2 mb-6">
-                  <Code className="w-5 h-5 text-green-400" />
-                  <span className="text-green-400 font-black text-lg font-mono">DEVELOPER HUB</span>
+            {/* Panel 5: Developer Logs */}
+            <div className="w-[100vw] snap-start flex-shrink-0 px-3">
+              <div className="bg-slate-800/95 border border-slate-700 h-[55vh] flex flex-col">
+                <div className="p-3 border-b border-slate-700">
+                  <div className="flex items-center space-x-2">
+                    <Settings className="w-4 h-4 text-pink-400" />
+                    <span className="text-pink-400 font-black text-sm font-mono">DEVELOPER LOGS</span>
+                  </div>
                 </div>
-                
-                <div className="space-y-4">
-                  {devResources.map((resource, index) => (
-                    <div key={index} className="bg-slate-900/50 border border-slate-600 p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="text-white font-bold text-sm">{resource.title}</div>
-                          <div className="flex items-center space-x-2 mt-2">
-                            <span className="bg-green-500 text-black px-2 py-1 text-xs font-bold">
-                              {resource.type}
-                            </span>
-                            <div className="text-slate-400 text-xs flex items-center space-x-1">
-                              <Download className="w-3 h-3" />
-                              <span>{resource.downloads}</span>
-                            </div>
-                          </div>
+
+                <div className="flex-1 overflow-auto p-3">
+                  <div className="space-y-3">
+                    {devlogs.map((devlog, index) => (
+                      <div key={index} className="bg-slate-900/50 border border-slate-600 p-3">
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="text-white font-bold text-sm">{devlog.title}</div>
+                          <span className={`px-2 py-1 text-xs font-bold ${
+                            devlog.type === 'technical' ? 'bg-blue-500 text-white' :
+                            devlog.type === 'feature' ? 'bg-green-500 text-black' :
+                            devlog.type === 'content' ? 'bg-purple-500 text-white' :
+                            'bg-orange-500 text-black'
+                          }`}>
+                            {devlog.type.toUpperCase()}
+                          </span>
                         </div>
-                        <div className="text-green-400 font-black text-sm">{resource.price}</div>
+                        <div className="text-slate-400 text-xs">
+                          {devlog.game} • {devlog.date}
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Panel 6: Video Preview (Smaller) */}
+            <div className="w-[100vw] snap-start flex-shrink-0 px-3">
+              <div className="bg-slate-800/95 border border-slate-700 h-[55vh] flex flex-col">
+                <div className="p-3 border-b border-slate-700">
+                  <div className="flex items-center space-x-2">
+                    <Play className="w-4 h-4 text-pink-400" />
+                    <span className="text-pink-400 font-black text-sm font-mono">GAME PREVIEW</span>
+                  </div>
+                </div>
+
+                <div className="flex-1 p-3">
+                  {/* Small Video Preview */}
+                  <div className="relative bg-black h-32 mb-3 border border-slate-600">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                    <div className="absolute inset-0 flex items-center justify-center z-20">
+                      <button className="bg-purple-500/90 hover:bg-purple-400 backdrop-blur-sm border-2 border-white/30 rounded-full p-3 transition-all">
+                        <Play className="w-5 h-5 text-white fill-white" />
+                      </button>
                     </div>
-                  ))}
-                </div>
-
-                <button className="w-full bg-green-500 hover:bg-green-600 text-black px-4 py-2 font-black transition-colors mt-6">
-                  ACCESS DEVELOPER TOOLS
-                </button>
-              </div>
-
-              {/* Analytics Panel */}
-              <div className="bg-slate-800/95 border border-slate-700 p-6">
-                <div className="flex items-center space-x-2 mb-6">
-                  <TrendingUp className="w-5 h-5 text-cyan-400" />
-                  <span className="text-cyan-400 font-black text-lg font-mono">ANALYTICS DASHBOARD</span>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  {stats.map((stat, index) => {
-                    const IconComponent = stat.icon;
-                    return (
-                      <div key={index} className="bg-slate-900/50 border border-slate-600 p-4 text-center">
-                        <IconComponent className="w-6 h-6 mx-auto mb-2 text-cyan-400" />
-                        <div className="text-white font-black text-lg">{stat.value}</div>
-                        <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="bg-slate-900/50 border border-slate-600 p-4">
-                  <div className="text-white font-bold text-sm mb-2">MONTHLY REVENUE</div>
-                  <div className="text-green-400 font-black text-2xl">$45,230</div>
-                  <div className="text-green-400 text-xs">↗ +12.5% from last month</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Panel 3: Community & Events */}
-          <div className="min-w-full snap-start flex-shrink-0">
-            <div className="grid lg:grid-cols-3 gap-4">
-              {/* Tournament Panel */}
-              <div className="bg-slate-800/95 border border-slate-700 p-6">
-                <div className="flex items-center space-x-2 mb-4">
-                  <Trophy className="w-5 h-5 text-yellow-400" />
-                  <span className="text-yellow-400 font-black text-sm font-mono">TOURNAMENTS</span>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="bg-slate-900/50 border border-yellow-400/30 p-3">
-                    <div className="text-white font-bold text-sm">Winter Championship</div>
-                    <div className="text-yellow-400 text-xs">Prize Pool: $10,000</div>
-                    <div className="text-slate-400 text-xs mt-1">Starts in 2 days</div>
+                    <img 
+                      src={games[activeGame].imageUrl || "/api/placeholder/400/200"} 
+                      alt={games[activeGame].title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="bg-slate-900/50 border border-slate-600 p-3">
-                    <div className="text-white font-bold text-sm">Speed Run Event</div>
-                    <div className="text-green-400 text-xs">Prize Pool: $2,500</div>
-                    <div className="text-slate-400 text-xs mt-1">Registration open</div>
-                  </div>
-                </div>
 
-                <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 font-black transition-colors mt-4">
-                  JOIN TOURNAMENT
-                </button>
-              </div>
-
-              {/* Community Panel */}
-              <div className="bg-slate-800/95 border border-slate-700 p-6">
-                <div className="flex items-center space-x-2 mb-4">
-                  <Users className="w-5 h-5 text-pink-400" />
-                  <span className="text-pink-400 font-black text-sm font-mono">COMMUNITY</span>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="bg-slate-900/50 border border-slate-600 p-3">
-                    <div className="text-white font-bold text-sm">Discord Server</div>
-                    <div className="text-pink-400 text-xs">8,432 members online</div>
-                  </div>
-                  <div className="bg-slate-900/50 border border-slate-600 p-3">
-                    <div className="text-white font-bold text-sm">Reddit Community</div>
-                    <div className="text-pink-400 text-xs">12k subscribers</div>
-                  </div>
-                  <div className="bg-slate-900/50 border border-slate-600 p-3">
-                    <div className="text-white font-bold text-sm">YouTube Channel</div>
-                    <div className="text-pink-400 text-xs">45k subscribers</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* News & Updates Panel */}
-              <div className="bg-slate-800/95 border border-slate-700 p-6">
-                <div className="flex items-center space-x-2 mb-4">
-                  <Bell className="w-5 h-5 text-orange-400" />
-                  <span className="text-orange-400 font-black text-sm font-mono">LATEST NEWS</span>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="bg-slate-900/50 border border-slate-600 p-3">
-                    <div className="text-white font-bold text-sm">New Engine Update</div>
-                    <div className="text-orange-400 text-xs">Performance improvements</div>
-                    <div className="text-slate-400 text-xs mt-1">Today</div>
-                  </div>
-                  <div className="bg-slate-900/50 border border-slate-600 p-3">
-                    <div className="text-white font-bold text-sm">Beta Testing Phase</div>
-                    <div className="text-orange-400 text-xs">New features preview</div>
-                    <div className="text-slate-400 text-xs mt-1">2 days ago</div>
-                  </div>
-                  <div className="bg-slate-900/50 border border-slate-600 p-3">
-                    <div className="text-white font-bold text-sm">Developer Interview</div>
-                    <div className="text-orange-400 text-xs">Behind the scenes</div>
-                    <div className="text-slate-400 text-xs mt-1">1 week ago</div>
+                  {/* Video Info */}
+                  <div className="space-y-2">
+                    <div className="text-white font-bold text-sm">{games[activeGame].title} - Gameplay</div>
+                    <div className="text-slate-400 text-xs">Duration: 2:35 • 15k views</div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button className="bg-pink-500 hover:bg-pink-600 text-black px-3 py-2 font-black transition-colors text-sm">
+                        WATCH NOW
+                      </button>
+                      <button className="bg-slate-700 hover:bg-slate-600 text-white px-3 py-2 font-black transition-colors text-sm">
+                        MORE VIDEOS
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Panel 4: Extended Content from AdditionalGamesContent */}
-          <div className="min-w-full snap-start flex-shrink-0">
-            <AdditionalGamesContent />
-          </div>
-        </HorizontalDragContainer>
+          </HorizontalDragContainer>
+        </div>
 
         {/* Navigation Hint */}
         <div className="text-center mb-4">
           <div className="text-slate-500 text-xs font-mono">
-            ← DRAG OR USE NAVIGATION TO EXPLORE PANELS →
+            ← SWIPE OR USE ARROWS TO EXPLORE →
           </div>
         </div>
 
