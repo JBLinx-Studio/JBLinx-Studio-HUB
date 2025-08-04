@@ -33,7 +33,7 @@ const ProfessionalLayout: React.FC<ProfessionalLayoutProps> = ({
 
   return (
     <section className={cn(
-      'relative overflow-hidden full-width-cinematic',
+      'relative min-h-screen overflow-hidden',
       backgroundClasses[background],
       paddingClasses[padding],
       className
@@ -56,7 +56,7 @@ const ProfessionalLayout: React.FC<ProfessionalLayoutProps> = ({
       </div>
 
       <div className={cn(
-        'w-full max-w-none px-4 lg:px-8 relative z-10',
+        'container mx-auto px-4 relative z-10',
         containerClassName
       )}>
         {children}

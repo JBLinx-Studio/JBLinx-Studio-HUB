@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Github, Hexagon, Rocket, Users, Star, Award, Trophy, ExternalLink, Zap, Code, Heart, Building2, Gamepad2, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -32,8 +33,8 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="py-6 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800 full-width-cinematic">
-      <div className="w-full max-w-none px-4 lg:px-8">
+    <section className="py-6 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
+      <div className="container mx-auto px-4">
         {/* Compact Studio Header */}
         <div className="text-center mb-5">
           <div className="inline-flex items-center bg-slate-800/95 border border-emerald-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
@@ -47,7 +48,7 @@ const HeroSection = () => {
           
           <div className="w-16 h-0.5 bg-emerald-400 mx-auto mb-2"></div>
           
-          <p className="text-sm text-slate-400 max-w-4xl mx-auto mb-3">
+          <p className="text-sm text-slate-400 max-w-xl mx-auto mb-3">
             Elite development ecosystem creating flagship products across web, mobile, gaming, and enterprise solutions
           </p>
 
@@ -97,15 +98,15 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Main Content Grid - Full Width */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-5 w-full">
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-3 mb-5">
           {/* Left Panel - Terminal */}
-          <div className="bg-slate-800/95 border border-slate-700 p-4 w-full">
+          <div className="bg-slate-800/95 border border-slate-700 p-3">
             <ProfessionalTerminal />
           </div>
 
           {/* Right Panel - Action Center */}
-          <div className="bg-slate-800/95 border border-slate-700 p-4 space-y-3 w-full">
+          <div className="bg-slate-800/95 border border-slate-700 p-4 space-y-3">
             <div className="flex items-center space-x-2 mb-3">
               <Activity className="w-4 h-4 text-emerald-400" />
               <span className="text-emerald-400 font-black text-sm font-mono">MISSION CONTROL</span>
