@@ -66,219 +66,412 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+  
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-/* Enhanced Full-Width Cinematic Styles */
+/* Enhanced Professional Full-Width System */
 @layer utilities {
-  /* Perfect Full-Width Container - Less Stretched */
-  .full-width-cinematic {
+  /* Core Professional Container System */
+  .professional-section {
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    padding-left: clamp(1rem, 2vw, 2rem);
-    padding-right: clamp(1rem, 2vw, 2rem);
+    position: relative;
   }
   
-  /* Balanced Gaming Panel Heights */
-  .gaming-panel-height-balanced {
-    height: clamp(480px, 60vh, 580px);
+  .professional-full-width {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
   
-  /* Enhanced Horizontal Scroll Container */
-  .horizontal-container {
+  .professional-container {
+    width: 100%;
+    max-width: none;
+    position: relative;
+  }
+  
+  .professional-cinematic-padding {
+    padding-left: clamp(1rem, 2.5vw, 3rem);
+    padding-right: clamp(1rem, 2.5vw, 3rem);
+  }
+  
+  /* Enhanced Gaming Panel System */
+  .professional-gaming-height {
+    height: clamp(500px, 65vh, 650px);
+    min-height: 500px;
+  }
+  
+  /* Professional Horizontal Container System */
+  .professional-scroll-container {
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-behavior: smooth;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    will-change: scroll-position;
+    will-change: scroll-position, transform;
     width: 100%;
     position: relative;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   
-  .horizontal-container::-webkit-scrollbar {
+  .professional-scroll-container::-webkit-scrollbar {
     display: none;
   }
   
-  /* Better Full-Width Panel Sizing */
-  .full-width-game-panel {
-    width: calc(100vw - 4rem);
-    min-width: calc(100vw - 4rem);
+  /* Professional Panel System */
+  .professional-moving-panel {
     scroll-snap-align: center;
     scroll-snap-stop: always;
-  }
-  
-  /* Static Panel Optimization */
-  .static-panel {
-    width: 100%;
-    max-width: 280px;
-    min-width: 260px;
-    height: 100%;
-    position: relative;
-    flex-shrink: 0;
-  }
-  
-  /* Moving Panel Balanced Width */
-  .moving-panel {
     width: 100%;
     min-width: 100%;
     height: 100%;
     flex-shrink: 0;
-    scroll-snap-align: center;
+    transform: translateZ(0);
   }
   
-  /* Professional Layouts */
-  .gaming-content-grid {
-    display: grid;
-    grid-template-columns: minmax(260px, 280px) minmax(260px, 280px) 1fr;
-    gap: 1rem;
+  .professional-single-panel {
     width: 100%;
+    min-width: 100%;
     height: 100%;
+    transform: translateZ(0);
   }
   
-  /* Enhanced Mobile Responsiveness */
-  .mobile-gaming-stack {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-  }
-  
-  /* Vertical Tab Navigation */
-  .vertical-tab-nav {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-height: 45vh;
-    overflow-y: auto;
-  }
-  
-  .vertical-tab-nav::-webkit-scrollbar {
-    width: 3px;
-  }
-  
-  .vertical-tab-nav::-webkit-scrollbar-track {
-    background: rgba(71, 85, 105, 0.2);
-  }
-  
-  .vertical-tab-nav::-webkit-scrollbar-thumb {
-    background: rgba(147, 51, 234, 0.5);
-    border-radius: 2px;
-  }
-  
-  /* Enhanced Navigation Buttons */
-  .nav-button-left {
-    left: clamp(1rem, 2vw, 2rem);
-    z-index: 50;
-  }
-  
-  .nav-button-right {
-    right: clamp(1rem, 2vw, 2rem);
-    z-index: 50;
-  }
-  
-  /* Professional Content Spacing */
-  .cinematic-padding {
+  .professional-panel-content {
     padding-left: clamp(1rem, 2vw, 2rem);
     padding-right: clamp(1rem, 2vw, 2rem);
   }
   
-  /* Enhanced Responsive Grid */
-  .responsive-game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: clamp(1rem, 2vw, 1.5rem);
+  /* Professional Static Panel System */
+  .professional-static-panels {
+    height: 100%;
+    position: sticky;
+    top: 0;
+  }
+  
+  .professional-static-panel {
     width: 100%;
+    max-width: clamp(280px, 22vw, 320px);
+    min-width: 280px;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+    transform: translateZ(0);
   }
   
-  /* Better Text Sizing */
-  .responsive-text-sm {
-    font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+  /* Professional Navigation System */
+  .professional-nav-btn {
+    border-radius: clamp(8px, 1vw, 12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transform: translateZ(0);
   }
   
-  .responsive-text-base {
-    font-size: clamp(0.875rem, 1.4vw, 1rem);
+  .professional-nav-btn:hover {
+    transform: translateY(-2px) translateZ(0);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
   }
   
-  .responsive-text-lg {
+  .professional-nav-left {
+    left: clamp(1rem, 2vw, 2rem);
+  }
+  
+  .professional-nav-right {
+    right: clamp(1rem, 2vw, 2rem);
+  }
+  
+  /* Professional Indicators */
+  .professional-indicators {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+  }
+  
+  .professional-indicator {
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translateZ(0);
+  }
+  
+  /* Professional Content Grid System */
+  .professional-content-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 320px) minmax(280px, 320px) 1fr;
+    gap: clamp(1rem, 2vw, 2rem);
+    width: 100%;
+    height: 100%;
+    align-items: start;
+  }
+  
+  /* Professional Tab Navigation */
+  .professional-vertical-tabs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(147, 51, 234, 0.5) rgba(71, 85, 105, 0.2);
+  }
+  
+  .professional-vertical-tabs::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .professional-vertical-tabs::-webkit-scrollbar-track {
+    background: rgba(71, 85, 105, 0.2);
+    border-radius: 2px;
+  }
+  
+  .professional-vertical-tabs::-webkit-scrollbar-thumb {
+    background: rgba(147, 51, 234, 0.5);
+    border-radius: 2px;
+  }
+  
+  .professional-vertical-tabs::-webkit-scrollbar-thumb:hover {
+    background: rgba(147, 51, 234, 0.7);
+  }
+  
+  /* Professional Background Effects */
+  .professional-bg-effects {
+    z-index: 0;
+  }
+  
+  .professional-grid {
+    z-index: 1;
+  }
+  
+  /* Professional Responsive Grid */
+  .professional-responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 350px), 1fr));
+    gap: clamp(1rem, 2.5vw, 2rem);
+    width: 100%;
+    align-items: start;
+  }
+  
+  /* Professional Text Sizing */
+  .professional-text-xs {
+    font-size: clamp(0.7rem, 1vw, 0.75rem);
+    line-height: 1.4;
+  }
+  
+  .professional-text-sm {
+    font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+    line-height: 1.5;
+  }
+  
+  .professional-text-base {
+    font-size: clamp(0.9rem, 1.4vw, 1rem);
+    line-height: 1.6;
+  }
+  
+  .professional-text-lg {
     font-size: clamp(1rem, 1.6vw, 1.125rem);
+    line-height: 1.7;
   }
   
-  /* Performance Optimizations */
-  .gpu-accelerated {
+  .professional-text-xl {
+    font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+    line-height: 1.8;
+  }
+  
+  /* Professional Performance Optimizations */
+  .professional-gpu-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
     will-change: transform, opacity;
   }
   
-  /* Enhanced Transitions */
-  .smooth-transition {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Professional Enhanced Transitions */
+  .professional-smooth {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .professional-smooth-fast {
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  /* Professional Interactive Elements */
+  .professional-interactive {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateZ(0);
+  }
+  
+  .professional-interactive:hover {
+    transform: translateY(-2px) translateZ(0);
+  }
+  
+  /* Professional Backdrop Effects */
+  .professional-backdrop {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(71, 85, 105, 0.3);
   }
 }
 
-/* Better Mobile Queries */
+/* Enhanced Mobile Responsive System */
 @media (max-width: 640px) {
-  .gaming-content-grid {
+  .professional-content-grid {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
+    gap: 1rem;
   }
   
-  .static-panel {
+  .professional-static-panel {
     width: 100%;
     max-width: none;
     min-width: 100%;
     position: relative;
   }
   
-  .gaming-panel-height-balanced {
-    height: clamp(400px, 70vh, 500px);
+  .professional-gaming-height {
+    height: clamp(400px, 75vh, 500px);
+    min-height: 400px;
   }
   
-  .full-width-cinematic {
+  .professional-cinematic-padding {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  .professional-nav-left {
+    left: 0.5rem;
+  }
+  
+  .professional-nav-right {
+    right: 0.5rem;
+  }
+  
+  .professional-scroll-container {
+    padding-left: 0;
   }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
-  .gaming-content-grid {
-    grid-template-columns: minmax(240px, 280px) 1fr;
+  .professional-content-grid {
+    grid-template-columns: minmax(260px, 300px) 1fr;
     grid-template-rows: auto 1fr;
+    gap: 1.5rem;
   }
   
-  .gaming-panel-height-balanced {
-    height: clamp(450px, 65vh, 550px);
+  .professional-gaming-height {
+    height: clamp(450px, 70vh, 600px);
+  }
+  
+  .professional-static-panel {
+    max-width: 300px;
   }
 }
 
 @media (min-width: 1025px) {
-  .gaming-panel-height-balanced {
-    height: 580px;
+  .professional-gaming-height {
+    height: 650px;
   }
   
-  .full-width-cinematic {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  .professional-cinematic-padding {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }
 
-/* Enhanced Interactive Elements */
-@media (hover: hover) {
-  .interactive-element:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* Enhanced Interactive Elements for Touch and Hover */
+@media (hover: hover) and (pointer: fine) {
+  .professional-interactive:hover {
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .professional-nav-btn:hover {
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
   }
 }
 
-/* Border utilities */
-.border-l-3 {
+@media (hover: none) and (pointer: coarse) {
+  .professional-interactive:active {
+    transform: translateY(1px) translateZ(0);
+  }
+}
+
+/* Professional Border Utilities */
+.professional-border-l-3 {
   border-left-width: 3px;
 }
 
-.border-l-2 {
+.professional-border-l-2 {
   border-left-width: 2px;
+}
+
+.professional-border-gradient {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(59, 130, 246, 0.3));
+  border: 1px solid rgba(147, 51, 234, 0.5);
+}
+
+/* Professional Scrollbar Styling */
+.professional-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(147, 51, 234, 0.6) rgba(71, 85, 105, 0.2);
+}
+
+.professional-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.professional-scrollbar::-webkit-scrollbar-track {
+  background: rgba(71, 85, 105, 0.2);
+  border-radius: 3px;
+}
+
+.professional-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.6);
+  border-radius: 3px;
+}
+
+.professional-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 51, 234, 0.8);
+}
+
+/* Professional Animation System */
+@keyframes professional-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+@keyframes professional-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-30px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateZ(0);
+  }
+}
+
+.professional-animate-fade-in {
+  animation: professional-fade-in 0.6s ease-out;
+}
+
+.professional-animate-slide-in {
+  animation: professional-slide-in 0.5s ease-out;
 }
