@@ -69,145 +69,157 @@
   }
 }
 
-/* Enhanced Full-Width Gaming Section Styles */
+/* Enhanced Mobile-First Gaming Section Styles */
 @layer utilities {
-  /* Perfect Full-Width Container */
-  .full-width-cinematic {
+  /* Perfect Mobile Container Fitting */
+  .mobile-perfect-fit {
     width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding-left: max(16px, calc(50vw - 50%));
-    padding-right: max(16px, calc(50vw - 50%));
+    min-height: 100vh;
+    max-width: 100%;
+    overflow-x: hidden;
   }
   
-  /* Enhanced Horizontal Scroll Container for Full Width */
+  /* Enhanced Horizontal Scroll Container */
   .horizontal-container {
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-behavior: smooth;
     overscroll-behavior-x: contain;
+    /* Mobile optimization */
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     will-change: scroll-position;
-    width: 100%;
-    position: relative;
   }
   
   .horizontal-container::-webkit-scrollbar {
     display: none;
   }
   
-  /* Perfect Full-Width Panel Sizing */
-  .full-width-game-panel {
-    width: calc(100vw - 2rem);
-    min-width: calc(100vw - 2rem);
+  /* Perfect Panel Sizing for Mobile */
+  .mobile-game-panel {
+    width: 100vw;
+    min-width: 100vw;
     scroll-snap-align: center;
     scroll-snap-stop: always;
   }
   
-  /* Static Panel Optimization for Full Width */
-  .static-panel {
-    width: 100%;
-    max-width: 320px;
-    min-width: 280px;
-    height: 100%;
-    position: relative;
-    flex-shrink: 0;
+  /* Gaming Content Optimizations */
+  .game-image-optimize {
+    object-fit: cover;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    will-change: transform;
   }
   
-  /* Moving Panel Full Width */
-  .moving-panel {
-    width: 100%;
-    min-width: 100%;
-    height: 100%;
-    flex-shrink: 0;
-    scroll-snap-align: center;
+  .game-hover-effect {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  /* Professional Gaming Layouts */
-  .gaming-content-grid {
-    display: grid;
-    grid-template-columns: minmax(280px, 320px) minmax(280px, 320px) 1fr;
-    gap: 0;
-    width: 100%;
-    height: 100%;
+  .game-hover-effect:hover {
+    transform: scale(1.02) translateY(-2px);
   }
   
-  /* Enhanced Mobile Responsiveness */
-  .mobile-gaming-stack {
+  /* Enhanced Performance Optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    will-change: transform, opacity;
+  }
+  
+  /* Mobile-First Text Scaling */
+  .mobile-game-title {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+    line-height: 1.2;
+    font-weight: 900;
+  }
+  
+  .mobile-game-subtitle {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    line-height: 1.3;
+  }
+  
+  .mobile-game-description {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    line-height: 1.4;
+  }
+  
+  /* Perfect Mobile Button Sizing */
+  .mobile-game-button {
+    min-height: 44px;
+    min-width: 44px;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+  }
+  
+  /* Enhanced Grid Layouts for Mobile */
+  .mobile-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  /* Vertical Tab Optimization */
+  .vertical-tab-mobile {
+    min-height: 40px;
+    font-size: 0.75rem;
+    padding: 0.75rem;
+  }
+  
+  /* Gaming Panel Heights for Different Screen Sizes */
+  .gaming-panel-height {
+    height: clamp(600px, 90vh, 700px);
+  }
+  
+  .gaming-static-panel-height {
+    height: clamp(500px, 80vh, 600px);
+  }
+  
+  /* Enhanced Animation Performance */
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .ultra-smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Mobile Game Card Optimizations */
+  .mobile-game-card {
+    min-height: 280px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .mobile-game-card-image {
+    height: 120px;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .mobile-game-card-content {
+    padding: 0.75rem;
+    min-height: 160px;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: auto;
+    justify-content: space-between;
   }
   
-  /* Perfect Tab Navigation */
-  .vertical-tab-nav {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-height: 50vh;
-    overflow-y: auto;
+  /* Enhanced Mobile Touch Targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
   }
   
-  .vertical-tab-nav::-webkit-scrollbar {
-    width: 2px;
-  }
+  /* Mobile-First Typography Scale */
+  .mobile-h1 { font-size: clamp(1.875rem, 6vw, 3rem); }
+  .mobile-h2 { font-size: clamp(1.5rem, 5vw, 2.25rem); }
+  .mobile-h3 { font-size: clamp(1.25rem, 4vw, 1.875rem); }
+  .mobile-h4 { font-size: clamp(1.125rem, 3.5vw, 1.5rem); }
+  .mobile-h5 { font-size: clamp(1rem, 3vw, 1.25rem); }
+  .mobile-h6 { font-size: clamp(0.875rem, 2.5vw, 1.125rem); }
   
-  .vertical-tab-nav::-webkit-scrollbar-track {
-    background: rgba(71, 85, 105, 0.2);
-  }
-  
-  .vertical-tab-nav::-webkit-scrollbar-thumb {
-    background: rgba(147, 51, 234, 0.5);
-    border-radius: 1px;
-  }
-  
-  /* Gaming Panel Heights for Full Width */
-  .gaming-panel-height-full {
-    height: clamp(500px, 70vh, 700px);
-  }
-  
-  /* Enhanced Button Positioning for Full Width */
-  .nav-button-left {
-    left: clamp(1rem, 2vw, 2rem);
-    z-index: 50;
-  }
-  
-  .nav-button-right {
-    right: clamp(1rem, 2vw, 2rem);
-    z-index: 50;
-  }
-  
-  /* Static Panel Positioning for Full Width */
-  .static-panel-positioning {
-    left: 0;
-    top: 0;
-    position: absolute;
-    z-index: 30;
-  }
-  
-  /* Moving Content Positioning for Full Width */
-  .moving-content-positioning {
-    padding-left: 0;
-    width: 100%;
-  }
-  
-  /* Professional Cinematic Spacing */
-  .cinematic-padding {
-    padding-left: clamp(1rem, 3vw, 2rem);
-    padding-right: clamp(1rem, 3vw, 2rem);
-  }
-  
-  /* Enhanced Grid Responsiveness */
-  .responsive-game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: clamp(0.75rem, 2vw, 1.5rem);
-    width: 100%;
-  }
-  
-  /* Line Clamping for Better Content Display */
+  /* Line Clamping for Mobile */
   .line-clamp-1 {
     overflow: hidden;
     display: -webkit-box;
@@ -229,124 +241,58 @@
     -webkit-box-orient: vertical;
   }
   
-  /* Enhanced Scroll Performance */
-  .scrollbar-hide {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  /* Mobile Gaming Backgrounds */
+  .mobile-gaming-bg {
+    background: linear-gradient(135deg, rgb(15, 23, 42) 0%, rgb(30, 41, 59) 50%, rgb(15, 23, 42) 100%);
   }
   
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Professional Touch Targets */
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-    cursor: pointer;
-  }
-  
-  /* Enhanced Focus States */
-  .focus-enhanced:focus {
-    outline: 2px solid rgba(147, 51, 234, 0.6);
+  /* Enhanced Focus States for Mobile */
+  .mobile-focus:focus {
+    outline: 2px solid rgb(168, 85, 247);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.1);
   }
   
-  /* Performance Optimizations */
-  .gpu-accelerated {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-    will-change: transform, opacity;
+  /* Mobile-Optimized Shadows */
+  .mobile-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   
-  /* Enhanced Transitions */
-  .smooth-transition {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .ultra-smooth-transition {
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  .mobile-shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 }
 
-/* Full-Width Media Queries */
+/* Mobile-Specific Media Queries */
 @media (max-width: 640px) {
-  .gaming-content-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr;
-  }
-  
-  .static-panel {
-    width: 100%;
-    max-width: none;
-    min-width: 100%;
-    position: relative;
-  }
-  
-  .moving-panel {
-    width: 100vw;
-    min-width: 100vw;
-  }
-  
   .horizontal-container {
     padding-left: 0;
   }
   
-  .nav-button-left {
-    left: 0.5rem;
+  .gaming-static-panel {
+    width: 100%;
+    position: relative;
+    transform: none;
   }
   
-  .nav-button-right {
-    right: 0.5rem;
+  .mobile-stack-vertical {
+    flex-direction: column;
+    height: auto;
   }
   
-  .gaming-panel-height-full {
-    height: clamp(500px, 80vh, 600px);
+  .mobile-full-width {
+    width: 100% !important;
+    min-width: 100% !important;
   }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
-  .gaming-content-grid {
-    grid-template-columns: minmax(260px, 300px) 1fr;
-    grid-template-rows: auto 1fr;
-  }
-  
-  .gaming-panel-height-full {
-    height: clamp(550px, 75vh, 650px);
-  }
-  
-  .static-panel {
-    max-width: 300px;
-    min-width: 260px;
+  .gaming-panel-height {
+    height: clamp(650px, 85vh, 750px);
   }
 }
 
 @media (min-width: 1025px) {
-  .gaming-panel-height-full {
-    height: 600px;
+  .gaming-panel-height {
+    height: 700px;
   }
-  
-  .static-panel {
-    max-width: 320px;
-    min-width: 280px;
-  }
-}
-
-/* Enhanced Interactive Elements */
-@media (hover: hover) {
-  .interactive-element:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-}
-
-/* Ensure proper border utilities */
-.border-l-3 {
-  border-left-width: 3px;
-}
-
-.border-l-2 {
-  border-left-width: 2px;
 }
