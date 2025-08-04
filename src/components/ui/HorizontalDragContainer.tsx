@@ -30,7 +30,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   const [lastTime, setLastTime] = useState(0);
   const [dragDistance, setDragDistance] = useState(0);
 
-  // Enhanced smooth lerp to specific panel
+  // Smooth lerp to specific panel
   const lerpToPanel = useCallback((panelIndex: number) => {
     if (!containerRef.current || panelIndex < 0 || panelIndex >= movingPanels.length) return;
     
@@ -39,17 +39,15 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     const startScroll = container.scrollLeft;
     const distance = targetScroll - startScroll;
-    const duration = 500; // Smoother 500ms transition
+    const duration = 600; // Smooth 600ms transition
     const startTime = performance.now();
     
     const animateScroll = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Enhanced easing function (ease-in-out-cubic)
-      const easeProgress = progress < 0.5 
-        ? 4 * progress * progress * progress 
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      // Smooth easing function (ease-out-cubic)
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
       
       container.scrollLeft = startScroll + (distance * easeProgress);
       
@@ -78,7 +76,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
   }, [currentPanel, lerpToPanel]);
 
-  // Enhanced drag handlers
+  // Drag handlers with snap-to-panel
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest('button, a, input, select, textarea, [role="button"], .interactive-element')) {
@@ -96,7 +94,6 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     setDragDistance(0);
     
     document.body.style.cursor = 'grabbing';
-    document.body.style.userSelect = 'none';
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -104,7 +101,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Enhanced sensitivity
+    const walk = (x - startX) * 1.2;
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
@@ -114,7 +111,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const deltaX = e.pageX - lastX;
     
     if (deltaTime > 0) {
-      setVelocity((deltaX / deltaTime) * 1.2);
+      setVelocity((deltaX / deltaTime) * 0.8);
     }
     
     setLastX(e.pageX);
@@ -127,9 +124,8 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     setIsDragging(false);
     document.body.style.cursor = 'auto';
-    document.body.style.userSelect = 'auto';
     
-    // Enhanced snap to nearest panel
+    // Snap to nearest panel
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
     const nearestPanel = Math.round(container.scrollLeft / panelWidth);
@@ -138,7 +134,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     lerpToPanel(clampedPanel);
   }, [movingPanels.length, lerpToPanel]);
 
-  // Enhanced touch handlers for mobile
+  // Touch handlers for mobile
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest('button, a, input, select, textarea, [role="button"], .interactive-element')) {
@@ -163,7 +159,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     e.preventDefault();
     const touch = e.touches[0];
     const x = touch.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
+    const walk = (x - startX) * 1.2;
     const newScrollLeft = scrollLeft - walk;
     
     containerRef.current.scrollLeft = newScrollLeft;
@@ -173,7 +169,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const deltaX = touch.pageX - lastX;
     
     if (deltaTime > 0) {
-      setVelocity((deltaX / deltaTime) * 1.2);
+      setVelocity((deltaX / deltaTime) * 0.8);
     }
     
     setLastX(touch.pageX);
@@ -196,13 +192,13 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   }, [movingPanels.length, lerpToPanel]);
 
   return (
-    <div className="relative w-full h-full professional-container">
-      {/* Enhanced Static L-shaped panels */}
+    <div className="relative w-full h-full full-width-cinematic">
+      {/* Static L-shaped panels */}
       {staticPanels.length > 0 && (
-        <div className="hidden lg:block absolute left-0 top-0 z-30 professional-static-panels">
+        <div className="hidden lg:block absolute left-0 top-0 z-20">
           <div className="flex flex-col h-full">
             {staticPanels.map((panel, index) => (
-              <div key={index} className="professional-static-panel bg-slate-900/95 border border-slate-700/30 backdrop-blur-md w-full max-w-[320px]">
+              <div key={index} className="static-panel bg-slate-900/98 border border-slate-700/50 backdrop-blur-sm w-full max-w-[280px]">
                 {panel}
               </div>
             ))}
@@ -210,16 +206,16 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         </div>
       )}
 
-      {/* Enhanced Main scrolling container */}
+      {/* Main scrolling container - Full width with better proportions */}
       <div
         ref={containerRef}
-        className={`professional-scroll-container overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none w-full ${className}`}
+        className={`overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none w-full ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'auto',
-          paddingLeft: staticPanels.length > 0 ? 'clamp(300px, 25vw, 320px)' : '0'
+          paddingLeft: staticPanels.length > 0 ? '280px' : '0'
         }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -231,29 +227,29 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       >
         <div 
           ref={contentRef} 
-          className="flex h-full w-full professional-content-wrapper"
-          style={{ willChange: 'transform, scroll-position' }}
+          className="flex h-full w-full"
+          style={{ willChange: 'transform' }}
         >
-          {/* Enhanced Moving panels */}
+          {/* Moving panels - Better width control */}
           {movingPanels.length > 0 ? (
             movingPanels.map((panel, index) => (
               <div 
                 key={index} 
-                className="professional-moving-panel flex-shrink-0 w-full h-full flex items-center justify-center"
+                className="flex-shrink-0 w-full h-full flex items-center justify-center"
                 style={{ 
-                  minWidth: 'calc(100vw - clamp(2rem, 4vw, 4rem))',
-                  width: 'calc(100vw - clamp(2rem, 4vw, 4rem))'
+                  minWidth: 'calc(100vw - 2rem)',
+                  width: 'calc(100vw - 2rem)'
                 }}
               >
-                <div className="w-full max-w-none mx-auto professional-panel-content">
+                <div className="w-full max-w-7xl mx-auto px-4">
                   {panel}
                 </div>
               </div>
             ))
           ) : (
             children && (
-              <div className="professional-single-panel w-full h-full flex items-center justify-center">
-                <div className="w-full max-w-none mx-auto professional-panel-content">
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full max-w-7xl mx-auto px-4">
                   {children}
                 </div>
               </div>
@@ -262,42 +258,42 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         </div>
       </div>
 
-      {/* Enhanced Navigation controls */}
+      {/* Navigation controls */}
       {movingPanels.length > 1 && (
         <>
           <button
             onClick={goToPrevPanel}
             disabled={currentPanel === 0}
-            className="professional-nav-btn professional-nav-left absolute left-4 top-1/2 -translate-y-1/2 z-40 bg-slate-900/90 border border-slate-600 hover:bg-slate-800 hover:border-purple-500/50 disabled:opacity-20 disabled:cursor-not-allowed text-white p-4 transition-all duration-300 backdrop-blur-sm lg:left-[calc(clamp(320px,25vw,340px)+1rem)]"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-700 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white p-3 transition-all duration-200 lg:left-[calc(min(320px,25vw)+1rem)]"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           
           <button
             onClick={goToNextPanel}
             disabled={currentPanel === movingPanels.length - 1}
-            className="professional-nav-btn professional-nav-right absolute right-4 top-1/2 -translate-y-1/2 z-40 bg-slate-900/90 border border-slate-600 hover:bg-slate-800 hover:border-purple-500/50 disabled:opacity-20 disabled:cursor-not-allowed text-white p-4 transition-all duration-300 backdrop-blur-sm"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-slate-900/90 border border-slate-700 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white p-3 transition-all duration-200"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </>
       )}
 
-      {/* Enhanced Panel indicators */}
+      {/* Panel indicators */}
       {movingPanels.length > 1 && (
-        <div className="professional-indicators absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex space-x-3">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
           {movingPanels.map((_, index) => (
             <button
               key={index}
               onClick={() => lerpToPanel(index)}
-              className={`professional-indicator w-3 h-3 transition-all duration-400 backdrop-blur-sm border ${
+              className={`w-2 h-2 transition-all duration-300 ${
                 index === currentPanel 
-                  ? 'bg-purple-400 border-purple-300 scale-125 shadow-lg shadow-purple-400/50' 
-                  : 'bg-slate-700 border-slate-600 hover:bg-slate-600 hover:border-slate-500 hover:scale-110'
+                  ? 'bg-purple-400 scale-125' 
+                  : 'bg-slate-600 hover:bg-slate-500'
               }`}
             />
           ))}
