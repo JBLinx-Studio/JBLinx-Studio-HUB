@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Trophy, Play, Gamepad2, Calendar, Users, Download, MessageSquare } from 'lucide-react';
+import { ArrowRight, Trophy, Play, Gamepad2, TrendingUp, Bell, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HorizontalDragContainer from './ui/HorizontalDragContainer';
-import GameShowcase from './games/GameShowcase';
+import GameCard from './games/GameCard';
+import GameAnalytics from './games/GameAnalytics';
+import CommunityEngagement from './games/CommunityEngagement';
 import DLCUpdatesPanel from './games/DLCUpdatesPanel';
-import UserFeedback from './games/UserFeedback';
 
 const GamesSection = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -15,10 +16,10 @@ const GamesSection = () => {
       id: 1,
       title: "Survival Horror Chronicles",
       category: "Horror/Survival",
-      platform: "PC • Mobile",
+      platform: "PC • Mobile • VR",
       status: "RELEASED",
       releaseDate: "Dec 2024",
-      description: "Experience the ultimate psychological horror with cutting-edge AI that adapts to your playstyle. Every decision matters in this atmospheric survival experience.",
+      description: "Experience ultimate psychological horror with cutting-edge AI that adapts to your playstyle. Every decision matters in this atmospheric survival experience with immersive VR support.",
       trailer: "https://example.com/trailer1",
       images: [
         "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
@@ -26,28 +27,28 @@ const GamesSection = () => {
         "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop"
       ],
       rating: "4.8",
-      downloads: "5.2k",
-      reviews: 234,
+      downloads: "52.3k",
+      reviews: 2847,
       price: "$24.99",
       features: ["Advanced AI", "VR Ready", "Multiplayer Co-op", "Dynamic Weather"],
-      dlcs: [
-        { name: "Nightmare Expansion", price: "$9.99", releaseDate: "Jan 2025", status: "PRE-ORDER" },
-        { name: "Character Pack", price: "$4.99", releaseDate: "Available", status: "AVAILABLE" }
-      ],
-      updates: [
-        { version: "2.1.5", date: "1 week ago", notes: "Fixed lighting issues and improved performance" },
-        { version: "2.1.4", date: "2 weeks ago", notes: "Added new multiplayer modes and bug fixes" }
-      ],
+      analytics: {
+        dailyPlayers: "8.2k",
+        monthlyGrowth: "+34%",
+        avgSessionTime: "2.3h",
+        retention: "78%",
+        wishlistCount: "15.7k",
+        streamViews: "1.2M"
+      },
       blogPosts: [1, 3, 8]
     },
     {
       id: 2,
       title: "Strategic Conquest RTS",
       category: "Real-Time Strategy",
-      platform: "PC • Web",
+      platform: "PC • Mac • Linux",
       status: "RELEASED",
       releaseDate: "Nov 2024",
-      description: "Command vast armies in epic 32-player battles. Advanced AI opponents and complex resource management create the ultimate strategy experience.",
+      description: "Command vast armies in epic 64-player battles with advanced AI opponents, complex resource management, and tournament-grade competitive play.",
       trailer: "https://example.com/trailer2",
       images: [
         "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop",
@@ -55,28 +56,28 @@ const GamesSection = () => {
         "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop"
       ],
       rating: "4.9",
-      downloads: "3.1k",
-      reviews: 156,
-      price: "$29.99",
-      features: ["32 Player Battles", "Campaign Mode", "Mod Support", "Spectator Mode"],
-      dlcs: [
-        { name: "Ancient Civilizations", price: "$14.99", releaseDate: "Feb 2025", status: "COMING SOON" },
-        { name: "Map Pack Vol. 1", price: "$7.99", releaseDate: "Available", status: "AVAILABLE" }
-      ],
-      updates: [
-        { version: "1.8.2", date: "3 days ago", notes: "Balance updates for unit damage and new maps" },
-        { version: "1.8.1", date: "1 week ago", notes: "Performance optimizations and UI improvements" }
-      ],
+      downloads: "31.8k",
+      reviews: 1563,
+      price: "$39.99",
+      features: ["64 Player Battles", "Campaign Mode", "Mod Support", "Tournament Mode"],
+      analytics: {
+        dailyPlayers: "5.1k",
+        monthlyGrowth: "+28%",
+        avgSessionTime: "1.8h",
+        retention: "82%",
+        wishlistCount: "9.3k",
+        streamViews: "890k"
+      },
       blogPosts: [2, 6]
     },
     {
       id: 3,
       title: "Adventure Quest RPG",
-      category: "Action/Adventure",
-      platform: "Mobile • PC",
+      category: "Action/Adventure RPG",
+      platform: "Mobile • PC • Console",
       status: "BETA",
       releaseDate: "Q2 2025",
-      description: "Embark on an epic journey through mystical realms. Deep character progression and branching storylines create endless possibilities.",
+      description: "Embark on an epic cross-platform journey through mystical realms with deep character progression, branching storylines, and guild-based multiplayer adventures.",
       trailer: "https://example.com/trailer3",
       images: [
         "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
@@ -84,15 +85,18 @@ const GamesSection = () => {
         "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop"
       ],
       rating: "4.7",
-      downloads: "2.8k",
-      reviews: 89,
+      downloads: "28.5k",
+      reviews: 892,
       price: "FREE BETA",
-      features: ["Open World", "Character Customization", "Crafting System", "Guild Wars"],
-      dlcs: [],
-      updates: [
-        { version: "0.9.1", date: "5 days ago", notes: "Beta balance changes and new quest lines" },
-        { version: "0.9.0", date: "2 weeks ago", notes: "Major beta update with new regions" }
-      ],
+      features: ["Open World", "Cross Platform", "Guild Wars", "Crafting System"],
+      analytics: {
+        dailyPlayers: "12.7k",
+        monthlyGrowth: "+67%",
+        avgSessionTime: "3.1h",
+        retention: "71%",
+        wishlistCount: "47.2k",
+        streamViews: "2.8M"
+      },
       blogPosts: [5, 9]
     }
   ];
@@ -103,101 +107,110 @@ const GamesSection = () => {
     { id: 'strategy', name: 'Strategy', count: 1 },
     { id: 'rpg', name: 'RPG', count: 1 },
     { id: 'mobile', name: 'Mobile', count: 2 },
-    { id: 'web', name: 'Web Games', count: 1 }
+    { id: 'vr', name: 'VR Ready', count: 1 }
   ];
 
-  const upcomingReleases = [
-    { title: "Cyber Warfare Pro", date: "Jan 15, 2025", platform: "PC", type: "Full Release" },
-    { title: "Racing Legends Mobile", date: "Feb 2, 2025", platform: "Mobile", type: "Beta" },
-    { title: "Mystic Realms DLC", date: "Mar 10, 2025", platform: "All", type: "DLC" }
-  ];
+  const analyticsData = {
+    totalPlayers: "145.2k",
+    activeNow: "26.0k",
+    monthlyGrowth: "+43%",
+    totalDownloads: "1.2M",
+    averageRating: "4.8",
+    totalReviews: "5.3k",
+    streamingViews: "5.9M",
+    communitySize: "89.1k",
+    revenue: "$847k",
+    conversionRate: "12.4%"
+  };
 
-  const communityStats = [
-    { label: "ACTIVE PLAYERS", value: "45.2k", change: "+12%" },
-    { label: "TOTAL DOWNLOADS", value: "890k", change: "+25%" },
-    { label: "USER RATING", value: "4.8★", change: "+0.2" },
-    { label: "MONTHLY REVENUE", value: "$125k", change: "+18%" }
-  ];
-
-  const sampleReviews = [
+  const communityActivity = [
     {
-      id: 1,
-      username: "GamerPro2024",
-      rating: 5,
-      date: "2 days ago",
-      comment: "Absolutely incredible! The graphics and gameplay are top-notch. Best horror game I've played this year.",
-      helpful: 24,
-      platform: "PC",
-      verified: true
+      type: 'stream',
+      user: 'StreamerPro_2024',
+      content: 'Just hit a 15-kill streak in Survival Horror! This AI adaptation is insane! 🔥',
+      time: '2 mins ago',
+      engagement: 127
     },
     {
-      id: 2,
-      username: "StrategyMaster",
-      rating: 5,
-      date: "1 week ago",
-      comment: "The RTS game exceeded all expectations. Complex mechanics but very rewarding gameplay.",
-      helpful: 18,
-      platform: "PC",
-      verified: true
+      type: 'review',
+      user: 'RPGMaster_X',
+      content: 'Adventure Quest RPG beta exceeded all expectations. The guild system is revolutionary!',
+      time: '8 mins ago',
+      engagement: 89
     },
     {
-      id: 3,
-      username: "MobilePlayer",
-      rating: 4,
-      date: "3 days ago",
-      comment: "Great mobile port! Runs smoothly on my device. Looking forward to more updates.",
-      helpful: 12,
-      platform: "Mobile",
-      verified: false
+      type: 'achievement',
+      user: 'StrategyKing',
+      content: 'First player to complete Strategic Conquest campaign on Nightmare difficulty!',
+      time: '15 mins ago',
+      engagement: 203
     },
     {
-      id: 4,
-      username: "RPGFan",
-      rating: 4,
-      date: "5 days ago",
-      comment: "Beta is very promising. Love the character customization and story depth.",
-      helpful: 8,
-      platform: "PC",
-      verified: true
+      type: 'update',
+      user: 'JBLinx_DevTeam',
+      content: 'Patch 2.1.6 now live! New multiplayer maps and AI improvements based on your feedback.',
+      time: '1 hour ago',
+      engagement: 445
     }
   ];
 
-  const reviewStats = {
-    totalReviews: 1247,
-    averageRating: 4.8,
-    ratingBreakdown: { 5: 867, 4: 245, 3: 89, 2: 32, 1: 14 }
-  };
+  const upcomingEvents = [
+    {
+      title: 'Horror Chronicles Tournament',
+      date: 'Jan 20, 2025 - 8 PM EST',
+      type: 'tournament' as const,
+      participants: '2.4k'
+    },
+    {
+      title: 'RTS Strategy Stream with Devs',
+      date: 'Jan 18, 2025 - 3 PM EST', 
+      type: 'stream' as const,
+      participants: '890'
+    },
+    {
+      title: 'RPG Beta Update 0.9.5',
+      date: 'Jan 25, 2025',
+      type: 'update' as const
+    },
+    {
+      title: 'Cross-Platform Beta Launch',
+      date: 'Feb 1, 2025',
+      type: 'beta' as const,
+      participants: '15.2k'
+    }
+  ];
 
   return (
     <section className="py-16 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Header */}
+        {/* Enhanced Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
-            <Trophy className="w-4 h-4 mr-2 text-purple-400" />
-            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">PRIORITY #1: GAMERS</span>
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-6 py-3 mb-6 backdrop-blur-sm">
+            <Trophy className="w-5 h-5 mr-3 text-purple-400" />
+            <span className="text-purple-400 font-black text-lg font-mono tracking-widest">PRIORITY #1: GAMERS</span>
           </div>
           
-          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-2">
+          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight font-mono mb-4">
             PREMIUM <span className="text-purple-400">GAMING</span> + <span className="text-pink-400">DEV CONTENT</span>
           </h2>
           
-          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
+          <div className="w-24 h-0.5 bg-purple-400 mx-auto mb-6"></div>
           
-          <p className="text-slate-400 max-w-2xl mx-auto">
-            Professional game development, showcases, trailers, dev logs, DLC content, updates, and community feedback
+          <p className="text-slate-300 max-w-3xl mx-auto text-lg">
+            Professional game development showcasing our premium titles with real-time analytics, 
+            community engagement, dev logs, DLC content, and live player feedback
           </p>
         </div>
 
         {/* Game Categories */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           {gameCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-4 py-2 text-sm font-bold transition-all duration-300 ${
+              className={`px-4 py-2 text-sm font-black transition-all duration-300 ${
                 activeCategory === category.id
-                  ? 'bg-purple-500 text-white'
+                  ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/25'
                   : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
               }`}
             >
@@ -206,112 +219,100 @@ const GamesSection = () => {
           ))}
         </div>
 
-        {/* Community Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {communityStats.map((stat, index) => (
-            <div key={index} className="bg-slate-800/95 border border-slate-700 p-4 text-center">
-              <div className="text-xl font-black text-white font-mono">{stat.value}</div>
-              <div className="text-slate-400 text-sm mb-1">{stat.label}</div>
-              <div className="text-green-400 text-xs font-bold">{stat.change}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Main Gaming Content */}
+        {/* Enhanced Content Panels */}
         <HorizontalDragContainer className="mb-8" showNavigation={true}>
-          {/* Panel 1: Featured Games Showcase */}
+          {/* Panel 1: Featured Games with Analytics */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
               {featuredGames.map((game) => (
-                <GameShowcase key={game.id} game={game} />
+                <GameCard key={game.id} game={game} />
               ))}
             </div>
           </div>
 
-          {/* Panel 2: DLC & Updates */}
+          {/* Panel 2: Live Analytics Dashboard */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <DLCUpdatesPanel 
-              dlcs={featuredGames.flatMap(game => game.dlcs.map(dlc => ({ 
-                ...dlc, 
-                image: game.images[0],
-                description: `Expand your ${game.title} experience with new content and features.`
-              })))}
-              updates={featuredGames.flatMap(game => game.updates.map(update => ({ 
-                ...update, 
-                downloads: Math.floor(Math.random() * 1000 + 500) + "",
-                rating: (4.5 + Math.random() * 0.5).toFixed(1)
-              })))}
-            />
+            <GameAnalytics analytics={analyticsData} />
           </div>
 
-          {/* Panel 3: Community Feedback */}
+          {/* Panel 3: Community Hub & Engagement */}
           <div className="w-full snap-start flex-shrink-0 px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <UserFeedback reviews={sampleReviews} stats={reviewStats} />
+              <CommunityEngagement 
+                recentActivity={communityActivity}
+                upcomingEvents={upcomingEvents}
+              />
               
-              {/* Upcoming Releases */}
-              <div className="bg-slate-800/95 border border-slate-700 p-4">
-                <div className="flex items-center space-x-2 mb-4">
-                  <Calendar className="w-4 h-4 text-cyan-400" />
-                  <span className="text-cyan-400 font-black text-sm font-mono">UPCOMING RELEASES</span>
-                </div>
-                
-                <div className="space-y-3">
-                  {upcomingReleases.map((release, index) => (
-                    <div key={index} className="bg-slate-900/50 border border-cyan-400/30 p-3">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <div className="text-white font-bold text-sm">{release.title}</div>
-                          <div className="text-cyan-400 text-xs">{release.platform}</div>
-                        </div>
-                        <span className="bg-cyan-500 text-black px-2 py-1 text-xs font-bold">
-                          {release.type}
-                        </span>
-                      </div>
-                      <div className="text-slate-400 text-xs flex items-center space-x-1">
-                        <Calendar className="w-3 h-3" />
-                        <span>{release.date}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <button className="w-full bg-cyan-500 hover:bg-cyan-600 text-black px-4 py-2 font-black transition-colors mt-4">
-                  VIEW RELEASE CALENDAR
-                </button>
-              </div>
+              {/* DLC & Updates Panel */}
+              <DLCUpdatesPanel 
+                dlcs={featuredGames.flatMap(game => game.features.slice(0, 2).map(feature => ({ 
+                  name: `${feature} DLC Pack`,
+                  price: "$9.99",
+                  releaseDate: "Available Now",
+                  status: "AVAILABLE",
+                  image: game.images[0],
+                  description: `Enhanced ${feature.toLowerCase()} experience with new content and features.`
+                })))}
+                updates={featuredGames.map(game => ({ 
+                  version: "2.1.6",
+                  date: "3 days ago",
+                  notes: `Performance optimizations and ${game.features[0].toLowerCase()} improvements`,
+                  downloads: Math.floor(parseInt(game.downloads.replace('k', '')) * 0.8) + "k",
+                  rating: game.rating
+                }))}
+              />
             </div>
           </div>
 
-          {/* Panel 4: Dev Logs & Articles */}
+          {/* Panel 4: Dev Blog Integration */}
           <div className="w-full snap-start flex-shrink-0 px-4">
             <div className="bg-slate-800/95 border border-slate-700 p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-2">
                   <Gamepad2 className="w-5 h-5 text-orange-400" />
-                  <span className="text-orange-400 font-black text-lg font-mono">DEV LOGS & ARTICLES</span>
+                  <span className="text-orange-400 font-black text-lg font-mono">DEV CONTENT & UPDATES</span>
                 </div>
-                <Link to="/blog" className="text-orange-400 hover:text-orange-300 text-sm font-bold">
-                  View All →
+                <Link to="/blog" className="text-orange-400 hover:text-orange-300 font-bold flex items-center space-x-1">
+                  <span>View All</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((id) => (
+                {[
+                  { id: 1, title: "Horror AI Deep Dive", type: "DEV LOG", views: "12.3k", engagement: "89%" },
+                  { id: 2, title: "RTS Networking Architecture", type: "TECHNICAL", views: "8.7k", engagement: "92%" },
+                  { id: 3, title: "RPG Beta Feedback Analysis", type: "UPDATE", views: "15.1k", engagement: "87%" },
+                  { id: 4, title: "VR Implementation Guide", type: "TUTORIAL", views: "6.2k", engagement: "94%" },
+                  { id: 5, title: "Mobile Optimization Tips", type: "DEV LOG", views: "9.8k", engagement: "85%" },
+                  { id: 6, title: "Community Spotlight", type: "FEATURE", views: "11.4k", engagement: "91%" }
+                ].map((post) => (
                   <Link
-                    key={id}
-                    to={`/blog/${id}`}
+                    key={post.id}
+                    to={`/blog/${post.id}`}
                     className="bg-slate-900/50 border border-orange-400/30 p-4 hover:border-orange-400 transition-all duration-300 group"
                   >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`px-2 py-1 text-xs font-black ${
+                        post.type === 'DEV LOG' ? 'bg-orange-500 text-black' :
+                        post.type === 'TECHNICAL' ? 'bg-red-500 text-white' :
+                        post.type === 'UPDATE' ? 'bg-green-500 text-white' :
+                        post.type === 'TUTORIAL' ? 'bg-blue-500 text-white' :
+                        'bg-purple-500 text-white'
+                      }`}>
+                        {post.type}
+                      </span>
+                      <div className="text-xs text-slate-400 flex items-center space-x-2">
+                        <span>{post.views} views</span>
+                        <TrendingUp className="w-3 h-3 text-green-400" />
+                      </div>
+                    </div>
                     <div className="text-white font-bold text-sm mb-2 group-hover:text-orange-300 transition-colors">
-                      Game Development Blog #{id}
+                      {post.title}
                     </div>
-                    <div className="text-slate-400 text-xs mb-2 line-clamp-2">
-                      Behind the scenes development insights and technical deep-dives
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="bg-orange-500 text-black px-2 py-1 text-xs font-bold">DEV LOG</span>
-                      <div className="text-slate-400 text-xs">2 days ago</div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-400">2 days ago</span>
+                      <span className="text-green-400 font-bold">{post.engagement} engagement</span>
                     </div>
                   </Link>
                 ))}
@@ -320,22 +321,21 @@ const GamesSection = () => {
           </div>
         </HorizontalDragContainer>
 
-        {/* Navigation Hint */}
-        <div className="text-center mb-6">
-          <div className="text-slate-500 text-sm font-mono">
-            ← DRAG OR USE NAVIGATION TO EXPLORE GAMING CONTENT →
+        {/* Navigation & CTA */}
+        <div className="text-center mb-8">
+          <div className="text-slate-500 text-sm font-mono mb-4 flex items-center justify-center space-x-4">
+            <Bell className="w-4 h-4" />
+            <span>← DRAG OR USE NAVIGATION TO EXPLORE ALL GAMING CONTENT →</span>
+            <Users className="w-4 h-4" />
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
+          
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-8 py-4 font-black transition-all duration-300 space-x-3 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
-            <Play className="w-4 h-4" />
-            <span>EXPLORE ALL GAMING CONTENT</span>
-            <ArrowRight className="w-4 h-4" />
+            <Play className="w-5 h-5" />
+            <span>EXPLORE ALL PREMIUM GAMES</span>
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>
