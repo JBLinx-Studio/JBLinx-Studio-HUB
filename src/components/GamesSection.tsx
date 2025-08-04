@@ -13,159 +13,248 @@ const GamesSection = () => {
   const featuredGames = [
     {
       id: 1,
-      title: "Survival Horror Chronicles",
-      category: "Horror/Survival",
-      platform: "PC • Mobile",
+      title: "Tactical Strike Force",
+      category: "Multiplayer First-Person Shooter",
+      platform: "PC • Console",
       status: "RELEASED",
       releaseDate: "Dec 2024",
-      description: "Experience the ultimate psychological horror with cutting-edge AI that adapts to your playstyle. Every decision matters in this atmospheric survival experience.",
-      trailer: "https://example.com/trailer1",
+      description: "Competitive tactical FPS with team-based gameplay. Advanced weapon customization and strategic map control in intense 5v5 battles.",
+      trailer: "https://example.com/tactical-strike-trailer",
       images: [
-        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
         "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop"
+        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop"
       ],
       rating: "4.8",
-      downloads: "5.2k",
-      reviews: 234,
-      price: "$24.99",
-      features: ["Advanced AI", "VR Ready", "Multiplayer Co-op", "Dynamic Weather"],
+      downloads: "15.2k",
+      reviews: 892,
+      price: "$39.99",
+      features: ["Team-Based Combat", "Weapon Customization", "Ranked Matches", "Anti-Cheat"],
       dlcs: [
-        { name: "Nightmare Expansion", price: "$9.99", releaseDate: "Jan 2025", status: "PRE-ORDER" },
-        { name: "Character Pack", price: "$4.99", releaseDate: "Available", status: "AVAILABLE" }
+        { name: "Urban Warfare Pack", price: "$14.99", releaseDate: "Jan 2025", status: "PRE-ORDER" },
+        { name: "Elite Operator Skins", price: "$9.99", releaseDate: "Available", status: "AVAILABLE" }
       ],
       updates: [
-        { version: "2.1.5", date: "1 week ago", notes: "Fixed lighting issues and improved performance" },
-        { version: "2.1.4", date: "2 weeks ago", notes: "Added new multiplayer modes and bug fixes" }
+        { version: "3.2.1", date: "2 days ago", notes: "Weapon balance updates and new map rotation" },
+        { version: "3.2.0", date: "1 week ago", notes: "Added new competitive mode and performance improvements" }
       ],
       blogPosts: [1, 3, 8]
     },
     {
       id: 2,
-      title: "Strategic Conquest RTS",
+      title: "Empire Conquest RTS",
       category: "Real-Time Strategy",
-      platform: "PC • Web",
+      platform: "PC • Mac",
       status: "RELEASED",
       releaseDate: "Nov 2024",
-      description: "Command vast armies in epic 32-player battles. Advanced AI opponents and complex resource management create the ultimate strategy experience.",
-      trailer: "https://example.com/trailer2",
+      description: "Build massive civilizations and command epic battles across land, sea, and air. Advanced AI and complex resource management create deep strategic gameplay.",
+      trailer: "https://example.com/empire-conquest-trailer",
       images: [
         "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop",
         "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop",
         "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop"
       ],
       rating: "4.9",
-      downloads: "3.1k",
-      reviews: 156,
-      price: "$29.99",
-      features: ["32 Player Battles", "Campaign Mode", "Mod Support", "Spectator Mode"],
+      downloads: "8.7k",
+      reviews: 456,
+      price: "$49.99",
+      features: ["Base Building", "Epic Battles", "Campaign Mode", "Multiplayer"],
       dlcs: [
-        { name: "Ancient Civilizations", price: "$14.99", releaseDate: "Feb 2025", status: "COMING SOON" },
-        { name: "Map Pack Vol. 1", price: "$7.99", releaseDate: "Available", status: "AVAILABLE" }
+        { name: "Ancient Dynasties", price: "$19.99", releaseDate: "Feb 2025", status: "COMING SOON" },
+        { name: "Naval Warfare Expansion", price: "$12.99", releaseDate: "Available", status: "AVAILABLE" }
       ],
       updates: [
-        { version: "1.8.2", date: "3 days ago", notes: "Balance updates for unit damage and new maps" },
-        { version: "1.8.1", date: "1 week ago", notes: "Performance optimizations and UI improvements" }
+        { version: "2.4.3", date: "1 week ago", notes: "Balance changes and new units added" },
+        { version: "2.4.2", date: "2 weeks ago", notes: "UI improvements and bug fixes" }
       ],
       blogPosts: [2, 6]
     },
     {
       id: 3,
-      title: "Adventure Quest RPG",
-      category: "Action/Adventure",
-      platform: "Mobile • PC",
-      status: "BETA",
-      releaseDate: "Q2 2025",
-      description: "Embark on an epic journey through mystical realms. Deep character progression and branching storylines create endless possibilities.",
-      trailer: "https://example.com/trailer3",
+      title: "Last Haven Survival",
+      category: "Survival Horror",
+      platform: "PC • Console",
+      status: "EARLY ACCESS",
+      releaseDate: "Q1 2025",
+      description: "Survive in a post-apocalyptic world filled with dangers. Craft, build, and fight for resources while managing hunger, thirst, and sanity.",
+      trailer: "https://example.com/last-haven-trailer",
       images: [
-        "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
         "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop"
+        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=600&h=400&fit=crop"
       ],
-      rating: "4.7",
-      downloads: "2.8k",
-      reviews: 89,
-      price: "FREE BETA",
-      features: ["Open World", "Character Customization", "Crafting System", "Guild Wars"],
-      dlcs: [],
+      rating: "4.6",
+      downloads: "12.1k",
+      reviews: 723,
+      price: "$29.99",
+      features: ["Base Building", "Crafting System", "Day/Night Cycle", "Co-op Mode"],
+      dlcs: [
+        { name: "Winter Wasteland", price: "$15.99", releaseDate: "Mar 2025", status: "COMING SOON" }
+      ],
       updates: [
-        { version: "0.9.1", date: "5 days ago", notes: "Beta balance changes and new quest lines" },
-        { version: "0.9.0", date: "2 weeks ago", notes: "Major beta update with new regions" }
+        { version: "0.8.5", date: "3 days ago", notes: "New crafting recipes and performance optimization" },
+        { version: "0.8.4", date: "1 week ago", notes: "Added new enemy types and improved AI" }
       ],
       blogPosts: [5, 9]
+    },
+    {
+      id: 4,
+      title: "Stellar Frontier",
+      category: "Top-Down Space Exploration",
+      platform: "PC • Mobile",
+      status: "BETA",
+      releaseDate: "Q2 2025",
+      description: "Explore vast galaxies, trade with alien civilizations, and build your space empire. Procedurally generated worlds with endless possibilities.",
+      trailer: "https://example.com/stellar-frontier-trailer",
+      images: [
+        "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&h=400&fit=crop"
+      ],
+      rating: "4.7",
+      downloads: "6.3k",
+      reviews: 234,
+      price: "FREE BETA",
+      features: ["Procedural Worlds", "Space Trading", "Fleet Combat", "Planet Colonies"],
+      dlcs: [
+        { name: "Alien Races Pack", price: "$11.99", releaseDate: "Apr 2025", status: "COMING SOON" }
+      ],
+      updates: [
+        { version: "0.6.2", date: "4 days ago", notes: "New star systems and improved trading mechanics" },
+        { version: "0.6.1", date: "10 days ago", notes: "Beta optimization and UI improvements" }
+      ],
+      blogPosts: [4, 7]
+    },
+    {
+      id: 5,
+      title: "Pocket Heroes Quest",
+      category: "Mobile RPG Adventure",
+      platform: "Mobile • Tablet",
+      status: "RELEASED",
+      releaseDate: "Oct 2024",
+      description: "Epic mobile RPG with stunning visuals and deep character progression. Collect heroes, explore dungeons, and engage in strategic turn-based combat.",
+      trailer: "https://example.com/pocket-heroes-trailer",
+      images: [
+        "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop"
+      ],
+      rating: "4.5",
+      downloads: "45.7k",
+      reviews: 1203,
+      price: "FREE",
+      features: ["Hero Collection", "Turn-Based Combat", "Daily Quests", "PvP Arena"],
+      dlcs: [
+        { name: "Legendary Heroes Pack", price: "$7.99", releaseDate: "Available", status: "AVAILABLE" },
+        { name: "Premium Adventure Pass", price: "$4.99", releaseDate: "Available", status: "AVAILABLE" }
+      ],
+      updates: [
+        { version: "1.5.2", date: "1 day ago", notes: "New heroes added and balance improvements" },
+        { version: "1.5.1", date: "5 days ago", notes: "Bug fixes and performance optimization" }
+      ],
+      blogPosts: [8, 10]
+    },
+    {
+      id: 6,
+      title: "Web Warriors Arena",
+      category: "Browser-Based Strategy",
+      platform: "Web • Cross-Platform",
+      status: "RELEASED",
+      releaseDate: "Sep 2024",
+      description: "Fast-paced web-based strategy game playable directly in your browser. No downloads required. Build armies and conquer territories online.",
+      trailer: "https://example.com/web-warriors-trailer",
+      images: [
+        "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop"
+      ],
+      rating: "4.4",
+      downloads: "23.8k",
+      reviews: 567,
+      price: "FREE",
+      features: ["No Download Required", "Cross-Platform", "Real-time PvP", "Clan System"],
+      dlcs: [
+        { name: "Premium Commander Pack", price: "$9.99", releaseDate: "Available", status: "AVAILABLE" }
+      ],
+      updates: [
+        { version: "2.1.8", date: "6 days ago", notes: "New maps and improved matchmaking" },
+        { version: "2.1.7", date: "2 weeks ago", notes: "Performance improvements and new features" }
+      ],
+      blogPosts: [6, 9]
     }
   ];
 
   const gameCategories = [
     { id: 'all', name: 'All Games', count: featuredGames.length },
-    { id: 'horror', name: 'Horror', count: 1 },
-    { id: 'strategy', name: 'Strategy', count: 1 },
-    { id: 'rpg', name: 'RPG', count: 1 },
-    { id: 'mobile', name: 'Mobile', count: 2 },
+    { id: 'fps', name: 'FPS/Shooter', count: 1 },
+    { id: 'rts', name: 'RTS/Strategy', count: 2 },
+    { id: 'survival', name: 'Survival', count: 1 },
+    { id: 'space', name: 'Space/Sci-Fi', count: 1 },
+    { id: 'mobile', name: 'Mobile Games', count: 2 },
     { id: 'web', name: 'Web Games', count: 1 }
   ];
 
   const upcomingReleases = [
-    { title: "Cyber Warfare Pro", date: "Jan 15, 2025", platform: "PC", type: "Full Release" },
-    { title: "Racing Legends Mobile", date: "Feb 2, 2025", platform: "Mobile", type: "Beta" },
-    { title: "Mystic Realms DLC", date: "Mar 10, 2025", platform: "All", type: "DLC" }
+    { title: "Tactical Strike DLC", date: "Jan 15, 2025", platform: "PC", type: "DLC" },
+    { title: "Last Haven Full Release", date: "Mar 1, 2025", platform: "All", type: "Full Release" },
+    { title: "Stellar Frontier Beta 2", date: "Feb 15, 2025", platform: "Mobile", type: "Beta" },
+    { title: "Empire Conquest Expansion", date: "Apr 10, 2025", platform: "PC", type: "Expansion" }
   ];
 
   const communityStats = [
-    { label: "ACTIVE PLAYERS", value: "45.2k", change: "+12%" },
-    { label: "TOTAL DOWNLOADS", value: "890k", change: "+25%" },
-    { label: "USER RATING", value: "4.8★", change: "+0.2" },
-    { label: "MONTHLY REVENUE", value: "$125k", change: "+18%" }
+    { label: "ACTIVE PLAYERS", value: "127.3k", change: "+18%" },
+    { label: "TOTAL DOWNLOADS", value: "2.1M", change: "+32%" },
+    { label: "AVERAGE RATING", value: "4.7★", change: "+0.3" },
+    { label: "MONTHLY REVENUE", value: "$485k", change: "+24%" }
   ];
 
   const sampleReviews = [
     {
       id: 1,
-      username: "GamerPro2024",
+      username: "TacticalGamer99",
       rating: 5,
-      date: "2 days ago",
-      comment: "Absolutely incredible! The graphics and gameplay are top-notch. Best horror game I've played this year.",
-      helpful: 24,
+      date: "1 day ago",
+      comment: "Tactical Strike Force is incredible! The team coordination mechanics are perfectly balanced.",
+      helpful: 42,
       platform: "PC",
       verified: true
     },
     {
       id: 2,
-      username: "StrategyMaster",
+      username: "RTSMaster",
       rating: 5,
-      date: "1 week ago",
-      comment: "The RTS game exceeded all expectations. Complex mechanics but very rewarding gameplay.",
-      helpful: 18,
+      date: "2 days ago",
+      comment: "Empire Conquest brings back the golden age of RTS games with modern polish.",
+      helpful: 38,
       platform: "PC",
       verified: true
     },
     {
       id: 3,
-      username: "MobilePlayer",
+      username: "SurvivalFan",
       rating: 4,
       date: "3 days ago",
-      comment: "Great mobile port! Runs smoothly on my device. Looking forward to more updates.",
-      helpful: 12,
-      platform: "Mobile",
-      verified: false
+      comment: "Last Haven's atmosphere is amazing, can't wait for full release!",
+      helpful: 29,
+      platform: "Console",
+      verified: true
     },
     {
       id: 4,
-      username: "RPGFan",
-      rating: 4,
-      date: "5 days ago",
-      comment: "Beta is very promising. Love the character customization and story depth.",
-      helpful: 8,
-      platform: "PC",
-      verified: true
+      username: "SpaceExplorer",
+      rating: 5,
+      date: "1 week ago",
+      comment: "Stellar Frontier's procedural generation creates endless possibilities.",
+      helpful: 15,
+      platform: "Mobile",
+      verified: false
     }
   ];
 
   const reviewStats = {
-    totalReviews: 1247,
-    averageRating: 4.8,
-    ratingBreakdown: { 5: 867, 4: 245, 3: 89, 2: 32, 1: 14 }
+    totalReviews: 4075,
+    averageRating: 4.7,
+    ratingBreakdown: { 5: 2845, 4: 823, 3: 285, 2: 87, 1: 35 }
   };
 
   return (
@@ -185,7 +274,7 @@ const GamesSection = () => {
           <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
           
           <p className="text-slate-400 max-w-2xl mx-auto">
-            Professional game development, showcases, trailers, dev logs, DLC content, updates, and community feedback
+            Professional game library featuring FPS, RTS, Survival, Space Exploration, Mobile RPGs, and Web Games with dev insights
           </p>
         </div>
 
@@ -219,7 +308,7 @@ const GamesSection = () => {
 
         {/* Main Gaming Content */}
         <HorizontalDragContainer className="mb-8" showNavigation={true}>
-          {/* Panel 1: Featured Games Showcase */}
+          {/* Panel 1: Featured Games Library */}
           <div className="w-full snap-start flex-shrink-0 px-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {featuredGames.map((game) => (
@@ -297,20 +386,27 @@ const GamesSection = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((id) => (
+                {[
+                  { id: 1, title: "Tactical Strike: Weapon Balance Design", category: "FPS Development" },
+                  { id: 2, title: "Empire Conquest: AI Behavior Systems", category: "RTS Engineering" },
+                  { id: 3, title: "Last Haven: Procedural World Generation", category: "Survival Tech" },
+                  { id: 4, title: "Stellar Frontier: Galaxy Creation Pipeline", category: "Space Simulation" },
+                  { id: 5, title: "Mobile Optimization: Cross-Platform Performance", category: "Mobile Development" },
+                  { id: 6, title: "Web Warriors: Browser Engine Performance", category: "Web Technology" }
+                ].map((article) => (
                   <Link
-                    key={id}
-                    to={`/blog/${id}`}
+                    key={article.id}
+                    to={`/blog/${article.id}`}
                     className="bg-slate-900/50 border border-orange-400/30 p-4 hover:border-orange-400 transition-all duration-300 group"
                   >
                     <div className="text-white font-bold text-sm mb-2 group-hover:text-orange-300 transition-colors">
-                      Game Development Blog #{id}
+                      {article.title}
                     </div>
-                    <div className="text-slate-400 text-xs mb-2 line-clamp-2">
-                      Behind the scenes development insights and technical deep-dives
+                    <div className="text-slate-400 text-xs mb-2">
+                      Technical insights from our development team
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="bg-orange-500 text-black px-2 py-1 text-xs font-bold">DEV LOG</span>
+                      <span className="bg-orange-500 text-black px-2 py-1 text-xs font-bold">{article.category}</span>
                       <div className="text-slate-400 text-xs">2 days ago</div>
                     </div>
                   </Link>
