@@ -192,13 +192,13 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   }, [movingPanels.length, lerpToPanel]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full full-width-cinematic">
       {/* Static L-shaped panels */}
       {staticPanels.length > 0 && (
         <div className="hidden lg:block absolute left-0 top-0 z-20">
           <div className="flex flex-col h-full">
             {staticPanels.map((panel, index) => (
-              <div key={index} className="static-panel bg-slate-900/98 border border-slate-700/50 backdrop-blur-sm">
+              <div key={index} className="static-panel bg-slate-900/98 border border-slate-700/50 backdrop-blur-sm w-full max-w-[280px]">
                 {panel}
               </div>
             ))}
@@ -206,16 +206,16 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         </div>
       )}
 
-      {/* Main scrolling container with perfect viewport fitting */}
+      {/* Main scrolling container - Full width with better proportions */}
       <div
         ref={containerRef}
-        className={`overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none ${className}`}
+        className={`overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab select-none w-full ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'auto',
-          paddingLeft: staticPanels.length > 0 ? 'min(320px, 25vw)' : '0'
+          paddingLeft: staticPanels.length > 0 ? '280px' : '0'
         }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -227,27 +227,31 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
       >
         <div 
           ref={contentRef} 
-          className="flex h-full"
+          className="flex h-full w-full"
           style={{ willChange: 'transform' }}
         >
-          {/* Moving panels - each takes full viewport width */}
+          {/* Moving panels - Better width control */}
           {movingPanels.length > 0 ? (
             movingPanels.map((panel, index) => (
               <div 
                 key={index} 
-                className="moving-panel flex-shrink-0 w-full h-full flex items-center justify-center"
+                className="flex-shrink-0 w-full h-full flex items-center justify-center"
                 style={{ 
-                  minWidth: '100%',
-                  width: '100vw'
+                  minWidth: 'calc(100vw - 2rem)',
+                  width: 'calc(100vw - 2rem)'
                 }}
               >
-                {panel}
+                <div className="w-full max-w-7xl mx-auto px-4">
+                  {panel}
+                </div>
               </div>
             ))
           ) : (
             children && (
               <div className="w-full h-full flex items-center justify-center">
-                {children}
+                <div className="w-full max-w-7xl mx-auto px-4">
+                  {children}
+                </div>
               </div>
             )
           )}
