@@ -1,20 +1,20 @@
+
 import React, { useState, useMemo } from 'react';
-import { ArrowRight, Trophy, Play, Gamepad2, Filter, Search, Star, TrendingUp } from 'lucide-react';
+import { ArrowRight, Trophy, Play, Gamepad2, Filter, Search, Star, TrendingUp, Users, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HorizontalDragContainer from './ui/HorizontalDragContainer';
-import EnhancedGameCard from './games/EnhancedGameCard';
+import CompactGameCard from './games/CompactGameCard';
 import GameFilters from './games/GameFilters';
-import FeaturedGameHero from './games/FeaturedGameHero';
 import GameStats from './games/GameStats';
-import DevContentHub from './games/DevContentHub';
-import CommunityPanel from './games/CommunityPanel';
 
 const GamesSection = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular');
 
+  // Realistic game library with multiple genres
   const games = [
+    // FPS Games
     {
       id: 1,
       title: "Tactical Strike Force",
@@ -29,34 +29,40 @@ const GamesSection = () => {
       playerCount: "15.2K",
       reviewCount: 2847,
       images: {
-        hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop"
-        ]
+        hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=200&h=120&fit=crop"
       },
-      trailer: "https://example.com/tactical-strike-trailer",
-      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay across diverse battlegrounds.",
-      features: ["Anti-Cheat Protection", "Competitive Ranking", "Custom Loadouts", "Voice Chat", "Spectator Mode"],
-      systemReqs: { min: "GTX 1060, 8GB RAM", recommended: "RTX 3060, 16GB RAM" },
-      dlc: [
-        { name: "Urban Warfare Pack", price: 14.99, status: "available" },
-        { name: "Elite Operator Skins", price: 9.99, status: "available" }
-      ],
-      stats: {
-        peakPlayers: 45000,
-        averageSession: "45 min",
-        retention: "87%",
-        esportsReady: true
-      },
-      storeLinks: {
-        steam: "https://store.steampowered.com/",
-        epic: "https://store.epicgames.com/",
-        direct: "/buy/tactical-strike"
-      }
+      description: "5v5 tactical combat with advanced weapon systems and destructible environments.",
+      features: ["Anti-Cheat", "Competitive Ranking", "Voice Chat"],
+      stats: { peakPlayers: 45000, averageSession: "45 min", retention: "87%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/tactical-strike" }
     },
     {
       id: 2,
+      title: "Urban Warfare",
+      tagline: "Modern Combat Redefined",
+      category: "fps",
+      genres: ["FPS", "Action", "PvP"],
+      platforms: ["PC", "Xbox"],
+      status: "BETA",
+      releaseDate: "2025-02-10",
+      price: { base: 49.99, sale: null, currency: "USD" },
+      rating: 4.6,
+      playerCount: "8.9K",
+      reviewCount: 1234,
+      images: {
+        hero: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200&h=120&fit=crop"
+      },
+      description: "Fast-paced urban combat with realistic ballistics and team-based gameplay.",
+      features: ["Realistic Physics", "Team Tactics", "Map Editor"],
+      stats: { peakPlayers: 28000, averageSession: "38 min", retention: "82%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/urban-warfare" }
+    },
+    
+    // RTS Games
+    {
+      id: 3,
       title: "Empire Conquest",
       tagline: "Build. Command. Conquer.",
       category: "rts",
@@ -64,39 +70,69 @@ const GamesSection = () => {
       platforms: ["PC", "Mac"],
       status: "LIVE",
       releaseDate: "2024-11-20",
-      price: { base: 49.99, sale: null, currency: "USD" },
+      price: { base: 59.99, sale: null, currency: "USD" },
       rating: 4.9,
-      playerCount: "8.7K",
-      reviewCount: 1456,
+      playerCount: "12.7K",
+      reviewCount: 3456,
       images: {
-        hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop"
-        ]
+        hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=200&h=120&fit=crop"
       },
-      trailer: "https://example.com/empire-conquest-trailer",
-      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems.",
-      features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode"],
-      systemReqs: { min: "GTX 1660, 12GB RAM", recommended: "RTX 4060, 32GB RAM" },
-      dlc: [
-        { name: "Ancient Dynasties", price: 19.99, status: "preorder" },
-        { name: "Naval Warfare", price: 12.99, status: "available" }
-      ],
-      stats: {
-        peakPlayers: 12000,
-        averageSession: "2.5 hours",
-        retention: "92%",
-        esportsReady: false
-      },
-      storeLinks: {
-        steam: "https://store.steampowered.com/",
-        gog: "https://www.gog.com/",
-        direct: "/buy/empire-conquest"
-      }
+      description: "Command massive armies with complex resource management and diplomacy.",
+      features: ["100v100 Battles", "Advanced AI", "Campaign Mode"],
+      stats: { peakPlayers: 35000, averageSession: "2.5 hours", retention: "92%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/empire-conquest" }
     },
     {
-      id: 3,
+      id: 4,
+      title: "Galactic Command",
+      tagline: "Space Strategy Evolved",
+      category: "rts",
+      genres: ["RTS", "Sci-Fi", "Space"],
+      platforms: ["PC"],
+      status: "EARLY_ACCESS",
+      releaseDate: "2025-04-15",
+      price: { base: 34.99, sale: 24.99, currency: "USD" },
+      rating: 4.5,
+      playerCount: "6.8K",
+      reviewCount: 892,
+      images: {
+        hero: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=120&fit=crop"
+      },
+      description: "Epic space battles with fleet management and planetary conquest.",
+      features: ["Fleet Combat", "Planet Management", "Tech Trees"],
+      stats: { peakPlayers: 18000, averageSession: "3.2 hours", retention: "88%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/galactic-command" }
+    },
+    
+    // RPG Games
+    {
+      id: 5,
+      title: "Legends of Aetheria",
+      tagline: "Epic Fantasy Adventures",
+      category: "rpg",
+      genres: ["RPG", "Fantasy", "Open World"],
+      platforms: ["PC", "PlayStation", "Xbox"],
+      status: "LIVE",
+      releaseDate: "2024-10-05",
+      price: { base: 69.99, sale: 54.99, currency: "USD" },
+      rating: 4.7,
+      playerCount: "45.2K",
+      reviewCount: 8934,
+      images: {
+        hero: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=120&fit=crop"
+      },
+      description: "Immersive fantasy RPG with deep character progression and epic quests.",
+      features: ["Open World", "Character Classes", "Co-op Campaign"],
+      stats: { peakPlayers: 125000, averageSession: "4.8 hours", retention: "91%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/legends-aetheria" }
+    },
+    
+    // Survival Games
+    {
+      id: 6,
       title: "Last Haven",
       tagline: "Survive the Apocalypse",
       category: "survival",
@@ -104,152 +140,114 @@ const GamesSection = () => {
       platforms: ["PC", "PlayStation", "Xbox"],
       status: "EARLY_ACCESS",
       releaseDate: "2025-03-15",
-      price: { base: 29.99, sale: 24.99, currency: "USD" },
+      price: { base: 29.99, sale: 19.99, currency: "USD" },
       rating: 4.6,
-      playerCount: "12.1K",
-      reviewCount: 723,
+      playerCount: "22.1K",
+      reviewCount: 2156,
       images: {
-        hero: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=600&h=400&fit=crop"
-        ]
+        hero: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=200&h=120&fit=crop"
       },
-      trailer: "https://example.com/last-haven-trailer",
-      description: "Survive in a haunting post-apocalyptic world. Craft weapons, build shelters, and maintain your sanity while facing undead and desperate survivors.",
-      features: ["4-Player Co-op", "Base Building", "Psychological Horror", "Day/Night Cycle", "Dynamic Weather"],
-      systemReqs: { min: "GTX 1050 Ti, 8GB RAM", recommended: "RTX 3070, 16GB RAM" },
-      dlc: [
-        { name: "Winter Wasteland", price: 15.99, status: "upcoming" }
-      ],
-      stats: {
-        peakPlayers: 25000,
-        averageSession: "3.2 hours",
-        retention: "78%",
-        esportsReady: false
-      },
-      storeLinks: {
-        steam: "https://store.steampowered.com/",
-        epic: "https://store.epicgames.com/",
-        direct: "/buy/last-haven"
-      }
+      description: "Post-apocalyptic survival with crafting, base building, and psychological horror.",
+      features: ["4-Player Co-op", "Base Building", "Dynamic Weather"],
+      stats: { peakPlayers: 58000, averageSession: "3.2 hours", retention: "78%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/last-haven" }
     },
+    
+    // Racing Games
     {
-      id: 4,
+      id: 7,
+      title: "Velocity Championship",
+      tagline: "High-Speed Racing Evolved",
+      category: "racing",
+      genres: ["Racing", "Sports", "Simulation"],
+      platforms: ["PC", "PlayStation", "Xbox"],
+      status: "LIVE",
+      releaseDate: "2024-09-12",
+      price: { base: 59.99, sale: 39.99, currency: "USD" },
+      rating: 4.4,
+      playerCount: "18.5K",
+      reviewCount: 3421,
+      images: {
+        hero: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=200&h=120&fit=crop"
+      },
+      description: "Realistic racing simulation with 200+ licensed vehicles and dynamic weather.",
+      features: ["Licensed Cars", "Weather System", "Career Mode"],
+      stats: { peakPlayers: 42000, averageSession: "1.8 hours", retention: "85%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/velocity-championship" }
+    },
+    
+    // Space Exploration
+    {
+      id: 8,
       title: "Stellar Frontier",
       tagline: "Explore the Unknown",
       category: "space",
       genres: ["Space Sim", "Exploration", "Trading"],
-      platforms: ["PC", "Mobile"],
+      platforms: ["PC", "Mac"],
       status: "BETA",
       releaseDate: "2025-06-01",
       price: { base: 0, sale: null, currency: "USD" },
       rating: 4.7,
-      playerCount: "6.3K",
-      reviewCount: 234,
+      playerCount: "14.3K",
+      reviewCount: 1876,
       images: {
-        hero: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&h=400&fit=crop"
-        ]
+        hero: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=200&h=120&fit=crop"
       },
-      trailer: "https://example.com/stellar-frontier-trailer",
-      description: "Command your starship and explore procedurally generated galaxies. Trade with alien civilizations, engage in epic space battles, and build your cosmic empire.",
-      features: ["Infinite Universe", "Ship Customization", "Alien Diplomacy", "Fleet Combat", "Cross-Platform"],
-      systemReqs: { min: "GTX 960, 6GB RAM", recommended: "RTX 2060, 12GB RAM" },
-      dlc: [
-        { name: "Alien Races Pack", price: 11.99, status: "upcoming" }
-      ],
-      stats: {
-        peakPlayers: 8500,
-        averageSession: "4.1 hours",
-        retention: "85%",
-        esportsReady: false
-      },
-      storeLinks: {
-        steam: "https://store.steampowered.com/",
-        mobile: "https://play.google.com/store/",
-        direct: "/buy/stellar-frontier"
-      }
+      description: "Infinite universe exploration with ship customization and alien diplomacy.",
+      features: ["Infinite Universe", "Ship Building", "Alien Races"],
+      stats: { peakPlayers: 28000, averageSession: "4.1 hours", retention: "89%" },
+      storeLinks: { steam: "https://store.steampowered.com/", direct: "/buy/stellar-frontier" }
     },
+    
+    // Mobile Games
     {
-      id: 5,
+      id: 9,
       title: "Pocket Heroes Quest",
       tagline: "Epic Adventures Anywhere",
       category: "mobile",
       genres: ["Mobile RPG", "Turn-Based", "Collection"],
       platforms: ["iOS", "Android"],
       status: "LIVE",
-      releaseDate: "2024-10-10",
+      releaseDate: "2024-08-10",
       price: { base: 0, sale: null, currency: "USD" },
       rating: 4.5,
-      playerCount: "45.7K",
-      reviewCount: 8203,
+      playerCount: "125.7K",
+      reviewCount: 15423,
       images: {
-        hero: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop"
-        ]
+        hero: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=200&h=120&fit=crop"
       },
-      trailer: "https://example.com/pocket-heroes-trailer",
-      description: "Collect legendary heroes and embark on epic quests. Strategic turn-based combat meets stunning mobile graphics in this award-winning RPG.",
-      features: ["200+ Heroes", "PvP Arena", "Guild System", "Daily Events", "Offline Play"],
-      systemReqs: { min: "iOS 12+ / Android 8+", recommended: "iOS 15+ / Android 11+" },
-      dlc: [
-        { name: "Legendary Pack", price: 7.99, status: "available" },
-        { name: "Premium Pass", price: 4.99, status: "available" }
-      ],
-      stats: {
-        peakPlayers: 125000,
-        averageSession: "25 min",
-        retention: "68%",
-        esportsReady: false
-      },
-      storeLinks: {
-        ios: "https://apps.apple.com/",
-        android: "https://play.google.com/store/",
-        direct: "/buy/pocket-heroes"
-      }
+      description: "Collect legendary heroes in strategic turn-based mobile RPG battles.",
+      features: ["200+ Heroes", "PvP Arena", "Guild Wars"],
+      stats: { peakPlayers: 285000, averageSession: "25 min", retention: "73%" },
+      storeLinks: { ios: "https://apps.apple.com/", android: "https://play.google.com/", direct: "/buy/pocket-heroes" }
     },
+    
+    // Web Games
     {
-      id: 6,
+      id: 10,
       title: "Web Warriors Arena",
-      tagline: "No Download. Pure Strategy.",
+      tagline: "No Download Required",
       category: "web",
       genres: ["Web Game", "Strategy", "PvP"],
       platforms: ["Web Browser"],
       status: "LIVE",
-      releaseDate: "2024-09-05",
+      releaseDate: "2024-07-05",
       price: { base: 0, sale: null, currency: "USD" },
       rating: 4.4,
-      playerCount: "23.8K",
-      reviewCount: 1567,
+      playerCount: "67.8K",
+      reviewCount: 4532,
       images: {
-        hero: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop"
-        ]
+        hero: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=200&h=120&fit=crop"
       },
-      trailer: "https://example.com/web-warriors-trailer",
-      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles.",
-      features: ["Instant Play", "Cross-Device", "Real-time PvP", "Clan Wars", "Tournament Mode"],
-      systemReqs: { min: "Modern Web Browser", recommended: "Chrome/Firefox Latest" },
-      dlc: [
-        { name: "Premium Commander", price: 9.99, status: "available" }
-      ],
-      stats: {
-        peakPlayers: 35000,
-        averageSession: "35 min",
-        retention: "71%",
-        esportsReady: true
-      },
-      storeLinks: {
-        web: "https://webwarriors.game/",
-        direct: "/play/web-warriors"
-      }
+      description: "Instant browser strategy with no downloads. Command armies in real-time PvP.",
+      features: ["Instant Play", "Cross-Device", "Clan Wars"],
+      stats: { peakPlayers: 95000, averageSession: "35 min", retention: "71%" },
+      storeLinks: { web: "https://webwarriors.game/", direct: "/play/web-warriors" }
     }
   ];
 
@@ -257,8 +255,10 @@ const GamesSection = () => {
     { id: 'all', name: 'All Games', icon: Gamepad2, count: games.length },
     { id: 'fps', name: 'FPS & Shooters', icon: Trophy, count: games.filter(g => g.category === 'fps').length },
     { id: 'rts', name: 'Strategy & RTS', icon: Star, count: games.filter(g => g.category === 'rts').length },
+    { id: 'rpg', name: 'RPG & Fantasy', icon: Users, count: games.filter(g => g.category === 'rpg').length },
     { id: 'survival', name: 'Survival & Horror', icon: Play, count: games.filter(g => g.category === 'survival').length },
-    { id: 'space', name: 'Space & Sci-Fi', icon: TrendingUp, count: games.filter(g => g.category === 'space').length },
+    { id: 'racing', name: 'Racing & Sports', icon: TrendingUp, count: games.filter(g => g.category === 'racing').length },
+    { id: 'space', name: 'Space & Sci-Fi', icon: Calendar, count: games.filter(g => g.category === 'space').length },
     { id: 'mobile', name: 'Mobile Games', icon: Gamepad2, count: games.filter(g => g.category === 'mobile').length },
     { id: 'web', name: 'Web Games', icon: Trophy, count: games.filter(g => g.category === 'web').length }
   ];
@@ -288,132 +288,109 @@ const GamesSection = () => {
     });
   }, [activeCategory, searchQuery, sortBy]);
 
-  const featuredGame = games[0];
-
   return (
-    <section className="py-16 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
+    <section className="py-20 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Enhanced Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-6 py-3 mb-6 backdrop-blur-sm">
-            <Trophy className="w-5 h-5 mr-3 text-purple-400" />
-            <span className="text-purple-400 font-black text-lg font-mono tracking-wider">JBLINX GAMING STUDIO</span>
+        {/* Compact Header - Matching SaaS Section Style */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center bg-slate-800/50 border border-slate-700 px-4 py-2 mb-4">
+            <Trophy className="w-4 h-4 mr-2 text-purple-400" />
+            <span className="text-purple-400 font-bold text-sm tracking-wider">PRIORITY #1: GAME USERS</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight font-mono mb-4">
-            PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
+          <h2 className="text-3xl font-black text-white mb-3 tracking-tight">
+            PREMIUM GAMING LIBRARY + DEVELOPMENT TOOLS
           </h2>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-6"></div>
-          
-          <p className="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed">
-            Discover our professionally crafted games with real-time analytics, developer insights, and community features. 
-            Experience next-generation gaming across all platforms.
+          <p className="text-slate-300 max-w-2xl mx-auto text-base leading-relaxed">
+            Professional game development studio with real-time analytics, cross-platform deployment, and community management tools.
           </p>
         </div>
 
-        {/* Enhanced Game Stats */}
-        <GameStats games={games} />
+        {/* Compact Stats Overview */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          <div className="bg-slate-800/50 border border-slate-700 p-4 text-center">
+            <div className="text-2xl font-black text-purple-400">{games.length}</div>
+            <div className="text-xs text-slate-400 uppercase tracking-wide">Total Games</div>
+          </div>
+          <div className="bg-slate-800/50 border border-slate-700 p-4 text-center">
+            <div className="text-2xl font-black text-green-400">9</div>
+            <div className="text-xs text-slate-400 uppercase tracking-wide">Genres</div>
+          </div>
+          <div className="bg-slate-800/50 border border-slate-700 p-4 text-center">
+            <div className="text-2xl font-black text-blue-400">425K+</div>
+            <div className="text-xs text-slate-400 uppercase tracking-wide">Active Players</div>
+          </div>
+          <div className="bg-slate-800/50 border border-slate-700 p-4 text-center">
+            <div className="text-2xl font-black text-orange-400">42K+</div>
+            <div className="text-xs text-slate-400 uppercase tracking-wide">Reviews</div>
+          </div>
+        </div>
 
-        {/* Enhanced Search & Filters */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-8">
+        {/* Search & Filter Bar */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search games, genres, platforms, developers..."
+              placeholder="Search games, genres, platforms..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 text-white pl-12 pr-6 py-4 text-lg focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 transition-all"
+              className="w-full bg-slate-800/50 border border-slate-700 text-white pl-10 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none transition-colors"
             />
           </div>
           
-          <GameFilters 
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            categories={gameCategories}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-          />
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="bg-slate-800/50 border border-slate-700 text-white px-4 py-2 text-sm focus:border-purple-400 focus:outline-none"
+          >
+            <option value="popular">Popular</option>
+            <option value="rating">Highest Rated</option>
+            <option value="players">Most Players</option>
+            <option value="newest">Newest</option>
+            <option value="price">Price</option>
+          </select>
         </div>
 
-        {/* Enhanced Horizontal Navigation Panels */}
-        <HorizontalDragContainer className="mb-12" showNavigation={true}>
-          {/* Panel 1: Featured Game Showcase */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <Trophy className="w-6 h-6 inline mr-2 text-yellow-400" />
-                FEATURED SHOWCASE
-              </h3>
-              <div className="w-16 h-0.5 bg-yellow-400 mx-auto"></div>
-            </div>
-            <FeaturedGameHero game={featuredGame} />
-          </div>
-
-          {/* Panel 2: Game Library Grid */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <Gamepad2 className="w-6 h-6 inline mr-2 text-purple-400" />
-                GAME LIBRARY
-              </h3>
-              <div className="w-16 h-0.5 bg-purple-400 mx-auto"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredGames.map((game) => (
-                <EnhancedGameCard key={game.id} game={game} />
-              ))}
-            </div>
-          </div>
-
-          {/* Panel 3: Developer Content Hub */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <TrendingUp className="w-6 h-6 inline mr-2 text-orange-400" />
-                DEVELOPER CONTENT
-              </h3>
-              <div className="w-16 h-0.5 bg-orange-400 mx-auto"></div>
-            </div>
-            <DevContentHub games={games} />
-          </div>
-
-          {/* Panel 4: Community Hub */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <Star className="w-6 h-6 inline mr-2 text-blue-400" />
-                COMMUNITY HUB
-              </h3>
-              <div className="w-16 h-0.5 bg-blue-400 mx-auto"></div>
-            </div>
-            <CommunityPanel games={games} />
-          </div>
-        </HorizontalDragContainer>
-
-        {/* Enhanced Navigation Hint */}
-        <div className="text-center mb-8">
-          <div className="text-slate-400 text-lg font-mono mb-4">
-            ← EXPLORE OUR COMPLETE GAMING ECOSYSTEM →
-          </div>
-          <div className="flex justify-center space-x-8 text-sm text-slate-500">
-            <span>📊 Real-time Analytics</span>
-            <span>🎮 6 Game Categories</span>
-            <span>📝 Developer Insights</span>
-            <span>👥 Community Features</span>
-          </div>
+        {/* Category Filter Tabs */}
+        <div className="flex flex-wrap gap-2 mb-12 justify-center">
+          {gameCategories.map((category) => {
+            const IconComponent = category.icon;
+            return (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`flex items-center space-x-2 px-4 py-2 text-sm font-bold transition-all ${
+                  activeCategory === category.id
+                    ? 'bg-purple-500 text-white'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700 border border-slate-700'
+                }`}
+              >
+                <IconComponent className="w-3 h-3" />
+                <span>{category.name}</span>
+                <span className="bg-slate-600 text-xs px-1.5 py-0.5 rounded-full">{category.count}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Enhanced Call to Action */}
-        <div className="text-center">
+        {/* Games Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          {filteredGames.map((game) => (
+            <CompactGameCard key={game.id} game={game} />
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center border-t border-slate-800 pt-12">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 hover:from-purple-600 hover:via-purple-700 hover:to-pink-600 text-white px-8 py-4 font-black text-lg transition-all duration-300 space-x-3 shadow-2xl hover:scale-105 hover:shadow-purple-500/25"
+            className="inline-flex items-center bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 font-bold transition-all duration-300 space-x-2"
           >
-            <Play className="w-5 h-5" />
-            <span>EXPLORE ALL GAMES & DEVELOPMENT</span>
-            <ArrowRight className="w-5 h-5" />
+            <Gamepad2 className="w-4 h-4" />
+            <span>EXPLORE DEVELOPMENT TOOLS</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
