@@ -1,424 +1,298 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap');
-
-@import './assets/css/template.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base styles to match template */
-body {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
-  color: #333;
-}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 700;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #667eea;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #5a67d8;
-}
-
-/* Hide scrollbars for horizontal drag containers */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Loading animation */
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-/* Animation delays */
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-
-/* Code-style hover effect for links */
-.code-hover {
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.code-hover .normal-text {
-  transition: opacity 0.3s ease;
-}
-
-.code-hover .hover-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  color: #10b981;
-  font-family: 'Courier New', monospace;
-  font-weight: bold;
-}
-
-.code-hover:hover .normal-text {
-  opacity: 0;
-}
-
-.code-hover:hover .hover-text {
-  opacity: 1;
-}
-
-/* Link hover effect with < prefix */
-.link-hover {
-  position: relative;
-  display: inline-block;
-  transition: all 0.3s ease;
-}
-
-.link-hover::before {
-  content: '<_ ';
-  position: absolute;
-  left: -1em;
-  opacity: 0;
-  color: #10b981;
-  font-family: 'Courier New', monospace;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  transform: translateX(-10px);
-}
-
-.link-hover:hover::before {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.link-hover:hover {
-  color: #10b981;
-  transform: translateX(1em);
-}
-
-/* Horizontal drag container styles */
-.horizontal-drag-container {
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-}
-
-.horizontal-drag-container > * {
-  scroll-snap-align: start;
-}
-
-/* Prevent text selection during drag */
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Cursor styles for dragging */
-.cursor-grab {
-  cursor: grab;
-}
-
-.cursor-grabbing {
-  cursor: grabbing;
-}
-
-/* Text clamp utilities for responsive text */
-.line-clamp-1 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-}
-
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.line-clamp-3 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-
-/* Hardware acceleration for better performance */
-.gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-/* Responsive container utilities */
-.container-responsive {
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-/* Mobile-first responsive breakpoints */
-@media (min-width: 640px) {
-  .container-responsive {
-    max-width: 95vw;
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
-@media (min-width: 768px) {
-  .container-responsive {
-    max-width: 90vw;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-@media (min-width: 1024px) {
-  .container-responsive {
-    max-width: 85vw;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container-responsive {
-    max-width: 80vw;
-  }
-}
-
-/* Enhanced smooth scrolling for gaming section */
-.enhanced-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Performance optimization for panels */
-.panel-optimized {
-  contain: layout style paint;
-  will-change: transform;
-}
-
-/* Mobile touch optimization */
-@media (max-width: 768px) {
-  .touch-optimized {
-    touch-action: pan-x;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-/* Mobile-first gaming panels optimization */
-.mobile-panel-height {
-  height: 55vh;
-  min-height: 400px;
-  max-height: 500px;
-}
-
-@media (max-width: 480px) {
-  .mobile-panel-height {
-    height: 55vh;
-    min-height: 380px;
-    max-height: 450px;
-  }
-}
-
-.enhanced-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-}
-
-.enhanced-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.gpu-accelerated {
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.touch-optimized {
-  touch-action: pan-x;
-}
-
-/* Perfect mobile text utilities */
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Android mobile specific optimizations */
-@media screen and (max-width: 414px) {
-  .container {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-  
-  /* Ensure panels fit perfectly */
-  .w-\[100vw\] {
+/* Enhanced Mobile-First Gaming Section Styles */
+@layer utilities {
+  /* Perfect Mobile Container Fitting */
+  .mobile-perfect-fit {
     width: 100vw;
-    max-width: 100vw;
-  }
-}
-
-/* Compact mobile layouts */
-@media (max-width: 768px) {
-  .mobile-compact {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    min-height: 100vh;
+    max-width: 100%;
+    overflow-x: hidden;
   }
   
-  .mobile-compact-sm {
+  /* Enhanced Horizontal Scroll Container */
+  .horizontal-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    /* Mobile optimization */
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    will-change: scroll-position;
+  }
+  
+  .horizontal-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Perfect Panel Sizing for Mobile */
+  .mobile-game-panel {
+    width: 100vw;
+    min-width: 100vw;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+  
+  /* Gaming Content Optimizations */
+  .game-image-optimize {
+    object-fit: cover;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    will-change: transform;
+  }
+  
+  .game-hover-effect {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .game-hover-effect:hover {
+    transform: scale(1.02) translateY(-2px);
+  }
+  
+  /* Enhanced Performance Optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    will-change: transform, opacity;
+  }
+  
+  /* Mobile-First Text Scaling */
+  .mobile-game-title {
+    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+    line-height: 1.2;
+    font-weight: 900;
+  }
+  
+  .mobile-game-subtitle {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    line-height: 1.3;
+  }
+  
+  .mobile-game-description {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    line-height: 1.4;
+  }
+  
+  /* Perfect Mobile Button Sizing */
+  .mobile-game-button {
+    min-height: 44px;
+    min-width: 44px;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+  }
+  
+  /* Enhanced Grid Layouts for Mobile */
+  .mobile-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  /* Vertical Tab Optimization */
+  .vertical-tab-mobile {
+    min-height: 40px;
     font-size: 0.75rem;
-    line-height: 1rem;
+    padding: 0.75rem;
   }
-}
-
-/* Hardware acceleration for better performance */
-.gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-/* Responsive container utilities */
-.container-responsive {
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-/* Mobile-first responsive breakpoints */
-@media (min-width: 640px) {
-  .container-responsive {
-    max-width: 95vw;
+  
+  /* Gaming Panel Heights for Different Screen Sizes */
+  .gaming-panel-height {
+    height: clamp(600px, 90vh, 700px);
   }
-}
-
-@media (min-width: 768px) {
-  .container-responsive {
-    max-width: 90vw;
+  
+  .gaming-static-panel-height {
+    height: clamp(500px, 80vh, 600px);
   }
-}
-
-@media (min-width: 1024px) {
-  .container-responsive {
-    max-width: 85vw;
+  
+  /* Enhanced Animation Performance */
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-}
-
-@media (min-width: 1280px) {
-  .container-responsive {
-    max-width: 80vw;
-  }
-}
-
-/* Enhanced smooth scrolling for gaming section */
-.enhanced-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Performance optimization for panels */
-.panel-optimized {
-  contain: layout style paint;
-  will-change: transform;
-}
-
-/* Mobile touch optimization */
-@media (max-width: 768px) {
-  .touch-optimized {
-    touch-action: pan-x;
+  
+  .ultra-smooth-scroll {
+    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
   }
+  
+  /* Mobile Game Card Optimizations */
+  .mobile-game-card {
+    min-height: 280px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .mobile-game-card-image {
+    height: 120px;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .mobile-game-card-content {
+    padding: 0.75rem;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Enhanced Mobile Touch Targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Mobile-First Typography Scale */
+  .mobile-h1 { font-size: clamp(1.875rem, 6vw, 3rem); }
+  .mobile-h2 { font-size: clamp(1.5rem, 5vw, 2.25rem); }
+  .mobile-h3 { font-size: clamp(1.25rem, 4vw, 1.875rem); }
+  .mobile-h4 { font-size: clamp(1.125rem, 3.5vw, 1.5rem); }
+  .mobile-h5 { font-size: clamp(1rem, 3vw, 1.25rem); }
+  .mobile-h6 { font-size: clamp(0.875rem, 2.5vw, 1.125rem); }
+  
+  /* Line Clamping for Mobile */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  
+  /* Mobile Gaming Backgrounds */
+  .mobile-gaming-bg {
+    background: linear-gradient(135deg, rgb(15, 23, 42) 0%, rgb(30, 41, 59) 50%, rgb(15, 23, 42) 100%);
+  }
+  
+  /* Enhanced Focus States for Mobile */
+  .mobile-focus:focus {
+    outline: 2px solid rgb(168, 85, 247);
+    outline-offset: 2px;
+  }
+  
+  /* Mobile-Optimized Shadows */
+  .mobile-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .mobile-shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
 }
 
-/* Mobile-first gaming panels optimization */
-.mobile-panel-height {
-  height: 70vh;
-  min-height: 500px;
-  max-height: 700px;
+/* Mobile-Specific Media Queries */
+@media (max-width: 640px) {
+  .horizontal-container {
+    padding-left: 0;
+  }
+  
+  .gaming-static-panel {
+    width: 100%;
+    position: relative;
+    transform: none;
+  }
+  
+  .mobile-stack-vertical {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .mobile-full-width {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
 }
 
-.enhanced-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
+@media (min-width: 641px) and (max-width: 1024px) {
+  .gaming-panel-height {
+    height: clamp(650px, 85vh, 750px);
+  }
 }
 
-.enhanced-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.gpu-accelerated {
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.touch-optimized {
-  touch-action: pan-x;
-}
-
-/* Perfect mobile text utilities */
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+@media (min-width: 1025px) {
+  .gaming-panel-height {
+    height: 700px;
+  }
 }
