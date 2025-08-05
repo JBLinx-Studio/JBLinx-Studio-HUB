@@ -13,6 +13,15 @@ interface CommunityPanelProps {
 }
 
 const CommunityPanel: React.FC<CommunityPanelProps> = ({ game }) => {
+  // Add null check to prevent undefined errors
+  if (!game) {
+    return (
+      <div className="bg-slate-800/95 border border-slate-700 h-full flex items-center justify-center">
+        <div className="text-slate-400">Select a game to view community activity</div>
+      </div>
+    );
+  }
+
   // Generate game-specific community activity
   const getGameActivity = (gameId: number, gameTitle: string) => [
     {

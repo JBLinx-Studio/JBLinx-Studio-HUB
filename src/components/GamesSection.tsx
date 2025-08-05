@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { ArrowRight, Trophy, Play, Gamepad2, Users, Download, Star, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,6 +6,7 @@ import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
 import DeveloperInsights from './games/DeveloperInsights';
+import HorizontalDragContainer from './ui/HorizontalDragContainer';
 
 const GamesSection = () => {
   const [selectedGameId, setSelectedGameId] = useState(1);
@@ -292,8 +292,8 @@ const GamesSection = () => {
           })}
         </div>
 
-        {/* Main Content Layout */}
-        <div className="flex gap-6 h-[800px]">
+        {/* Main Content Layout - Enhanced with better vertical space and dragging */}
+        <div className="flex gap-6 h-[1000px]">
           {/* Left Sidebar - Games Library */}
           <div className="w-80 flex-shrink-0">
             <GameLibrarySidebar 
@@ -303,23 +303,27 @@ const GamesSection = () => {
             />
           </div>
 
-          {/* Right Content - Dynamic Panels */}
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
-            {/* Game Details Panel */}
-            <div className="lg:col-span-2">
-              <GameDetailsPanel game={selectedGame} />
-            </div>
+          {/* Right Content - Enhanced with HorizontalDragContainer for vertical panels */}
+          <div className="flex-1 h-full">
+            <HorizontalDragContainer className="h-full" showNavigation={true}>
+              {/* Panel 1: Game Details */}
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
+                <GameDetailsPanel game={selectedGame} />
+              </div>
 
-            {/* Updates Panel */}
-            <GameUpdatesPanel game={selectedGame} />
+              {/* Panel 2: Updates & Community */}
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
+                <div className="grid grid-rows-2 gap-6 h-full">
+                  <GameUpdatesPanel game={selectedGame} />
+                  <CommunityPanel game={selectedGame} />
+                </div>
+              </div>
 
-            {/* Community Panel */}
-            <CommunityPanel game={selectedGame} />
-
-            {/* Developer Insights */}
-            <div className="lg:col-span-2">
-              <DeveloperInsights game={selectedGame} />
-            </div>
+              {/* Panel 3: Developer Insights */}
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
+                <DeveloperInsights game={selectedGame} />
+              </div>
+            </HorizontalDragContainer>
           </div>
         </div>
 
