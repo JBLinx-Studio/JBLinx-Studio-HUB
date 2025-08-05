@@ -1,241 +1,281 @@
 
 import React from 'react';
-import { Code, FileText, Users, Lightbulb, Calendar, TrendingUp, MessageSquare } from 'lucide-react';
+import { Code, FileText, Users, Lightbulb, Calendar, TrendingUp, MessageSquare, Bookmark, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface DeveloperInsightsProps {
-  games: Array<{
+  game: {
     id: number;
     title: string;
     category: string;
-  }>;
+  };
 }
 
-const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
-  const devBlogs = [
+const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ game }) => {
+  // Generate game-specific developer content
+  const getGameDevBlogs = (gameId: number, gameTitle: string, category: string) => [
     {
       id: 1,
-      title: 'Building Realistic Weapon Physics in Tactical Strike',
-      game: games[0],
-      category: 'Technical Deep Dive',
-      author: 'Lead Physics Developer',
+      title: `Building ${gameTitle}: Technical Deep Dive`,
+      category: 'Technical Development',
+      author: 'Lead Developer',
       date: '3 days ago',
       readTime: '8 min read',
       views: '2.4K',
       comments: 47,
-      excerpt: 'Exploring our custom physics engine and how we achieved realistic ballistics and weapon behavior.',
-      tags: ['Physics', 'C++', 'Game Engine']
+      excerpt: `Exploring the technical challenges and solutions behind ${gameTitle}'s core systems and architecture.`,
+      tags: [category.toUpperCase(), 'Development', 'Engineering']
     },
     {
       id: 2,
-      title: 'AI Behavior Trees in Empire Conquest RTS',
-      game: games[1],
-      category: 'AI Development',
-      author: 'AI Systems Lead',
+      title: `${gameTitle} Design Philosophy`,
+      category: 'Game Design',
+      author: 'Creative Director',
       date: '1 week ago',
       readTime: '12 min read',
       views: '1.8K',
       comments: 32,
-      excerpt: 'How we designed sophisticated AI opponents that adapt to player strategies using behavior trees.',
-      tags: ['AI', 'Behavior Trees', 'Strategy']
+      excerpt: `How we approached the core design principles and player experience in ${gameTitle}.`,
+      tags: ['Design', 'UX', 'Player Experience']
     },
     {
       id: 3,
-      title: 'Procedural Horror: Creating Fear in Last Haven',
-      game: games[2],
-      category: 'Game Design',
-      author: 'Creative Director',
+      title: `Community-Driven Development in ${gameTitle}`,
+      category: 'Community',
+      author: 'Community Manager',
       date: '2 weeks ago',
       readTime: '6 min read',
       views: '3.1K',
       comments: 68,
-      excerpt: 'The psychology and technical implementation behind our dynamic horror generation system.',
-      tags: ['Horror Design', 'Psychology', 'Procedural']
+      excerpt: `How player feedback shapes the ongoing development and evolution of ${gameTitle}.`,
+      tags: ['Community', 'Feedback', 'Development']
     },
     {
       id: 4,
-      title: 'Cross-Platform Architecture for Stellar Frontier',
-      game: games[3],
-      category: 'Technical Architecture',
-      author: 'Platform Engineer',
+      title: `Performance Optimization for ${gameTitle}`,
+      category: 'Technical',
+      author: 'Performance Engineer',
       date: '3 weeks ago',
       readTime: '10 min read',
       views: '1.5K',
       comments: 23,
-      excerpt: 'Building a unified codebase that runs seamlessly across PC and mobile platforms.',
-      tags: ['Cross-Platform', 'Architecture', 'Mobile']
+      excerpt: `Deep dive into the performance optimizations that keep ${gameTitle} running smoothly.`,
+      tags: ['Performance', 'Optimization', 'Technical']
     }
   ];
+
+  const devBlogs = getGameDevBlogs(game.id, game.title, game.category);
 
   const developmentStats = [
     {
       label: 'DEV ARTICLES',
-      value: '47',
+      value: '12',
       icon: FileText,
       color: 'text-orange-400',
-      change: '+5 this month'
+      change: '+3 this month'
     },
     {
-      label: 'CODE SAMPLES',
-      value: '128',
+      label: 'CODE INSIGHTS',
+      value: '28',
       icon: Code,
       color: 'text-green-400',
-      change: '+12 new'
+      change: '+7 new'
     },
     {
-      label: 'COMMUNITY DISCUSSIONS',
-      value: '892',
+      label: 'DEV DISCUSSIONS',
+      value: '156',
       icon: MessageSquare,
       color: 'text-blue-400',
-      change: '+47 active'
+      change: '+12 active'
     }
   ];
 
   const upcomingContent = [
     {
-      title: 'Behind the Scenes: Motion Capture Session',
+      title: `Behind the Scenes: ${game.title} Development`,
       type: 'Video Dev Log',
       date: 'Jan 20, 2025',
-      game: games[0]
+      description: 'Exclusive look at our development process and team insights'
     },
     {
-      title: 'Advanced Pathfinding Algorithms',
+      title: `${game.title} Architecture Breakdown`,
       type: 'Technical Article',
       date: 'Jan 25, 2025',
-      game: games[1]
+      description: 'In-depth technical analysis of our game systems'
     },
     {
-      title: 'Sound Design Philosophy',
+      title: `Sound Design in ${game.title}`,
       type: 'Audio Dev Log',
       date: 'Feb 1, 2025',
-      game: games[2]
+      description: 'How we create immersive audio experiences'
     }
   ];
 
   return (
-    <div className="bg-slate-800/95 border border-slate-700 p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-2">
-          <Code className="w-5 h-5 text-orange-400" />
-          <span className="text-orange-400 font-black text-lg font-mono">DEVELOPER INSIGHTS</span>
+    <div className="bg-slate-800/95 border border-slate-700 h-full flex flex-col">
+      {/* Header */}
+      <div className="p-4 border-b border-slate-700">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center space-x-2">
+            <Code className="w-5 h-5 text-orange-400" />
+            <span className="text-orange-400 font-black font-mono">DEVELOPER INSIGHTS</span>
+          </div>
+          <Link to="/blog" className="text-orange-400 hover:text-orange-300 text-xs font-bold">
+            View All →
+          </Link>
         </div>
-        <Link to="/blog" className="text-orange-400 hover:text-orange-300 text-sm font-bold">
-          View All Articles →
-        </Link>
+        <div className="text-slate-400 text-xs">
+          {game.title} Development Blog
+        </div>
       </div>
 
-      {/* Development Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        {developmentStats.map((stat, index) => {
-          const IconComponent = stat.icon;
-          return (
-            <div key={index} className="bg-slate-900/50 border border-slate-600 p-4 text-center">
-              <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
-              <div className="text-lg font-black text-white">{stat.value}</div>
-              <div className="text-slate-400 text-xs mb-1">{stat.label}</div>
-              <div className="text-green-400 text-xs">{stat.change}</div>
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto custom-scrollbar">
+        <div className="p-4 space-y-6">
+          {/* Development Stats */}
+          <div className="grid grid-cols-3 gap-3">
+            {developmentStats.map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={index} className="bg-slate-900/50 border border-slate-600 p-3 text-center">
+                  <IconComponent className={`w-4 h-4 mx-auto mb-2 ${stat.color}`} />
+                  <div className="text-sm font-black text-white">{stat.value}</div>
+                  <div className="text-slate-400 text-xs mb-1">{stat.label}</div>
+                  <div className="text-green-400 text-xs">{stat.change}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Recent Dev Blogs */}
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <FileText className="w-4 h-4 text-purple-400" />
+              <span className="text-purple-400 font-bold text-sm">RECENT ARTICLES</span>
             </div>
-          );
-        })}
-      </div>
 
-      {/* Recent Dev Blogs */}
-      <div className="mb-6">
-        <div className="flex items-center space-x-2 mb-4">
-          <FileText className="w-4 h-4 text-purple-400" />
-          <span className="text-purple-400 font-bold text-sm">RECENT ARTICLES</span>
-        </div>
-
-        <div className="space-y-4">
-          {devBlogs.map((blog) => (
-            <Link
-              key={blog.id}
-              to={`/blog/${blog.id}`}
-              className="block bg-slate-900/50 border border-orange-400/30 p-4 hover:border-orange-400 transition-colors group"
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="bg-orange-500 text-black px-2 py-1 text-xs font-bold">
-                      {blog.category}
-                    </span>
-                    <span className="text-slate-400 text-xs">{blog.game.title}</span>
+            <div className="space-y-3">
+              {devBlogs.map((blog) => (
+                <Link
+                  key={blog.id}
+                  to={`/blog/${blog.id}`}
+                  className="block bg-slate-900/50 border border-orange-400/30 p-4 hover:border-orange-400 transition-colors group"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="bg-orange-500 text-black px-2 py-1 text-xs font-bold rounded">
+                          {blog.category}
+                        </span>
+                        <span className="text-slate-400 text-xs">{game.title}</span>
+                      </div>
+                      <h3 className="text-white font-bold text-sm mb-1 group-hover:text-orange-300 transition-colors line-clamp-2">
+                        {blog.title}
+                      </h3>
+                      <div className="text-slate-400 text-xs mb-2">
+                        By {blog.author} • {blog.date}
+                      </div>
+                    </div>
+                    <Bookmark className="w-4 h-4 text-slate-500 hover:text-orange-400 transition-colors" />
                   </div>
-                  <h3 className="text-white font-bold text-sm mb-1 group-hover:text-orange-300 transition-colors">
-                    {blog.title}
-                  </h3>
-                  <div className="text-slate-400 text-xs mb-2">
-                    By {blog.author} • {blog.date}
+                  
+                  <p className="text-slate-300 text-xs mb-3 line-clamp-2">{blog.excerpt}</p>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap gap-1">
+                      {blog.tags.slice(0, 2).map((tag, index) => (
+                        <span key={index} className="bg-slate-700 text-slate-300 px-2 py-1 text-xs rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center space-x-3 text-xs text-slate-400">
+                      <div className="flex items-center space-x-1">
+                        <Eye className="w-3 h-3" />
+                        <span>{blog.views}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <MessageSquare className="w-3 h-3" />
+                        <span>{blog.comments}</span>
+                      </div>
+                      <span>{blog.readTime}</span>
+                    </div>
                   </div>
-                </div>
-              </div>
-              
-              <p className="text-slate-300 text-xs mb-3 line-clamp-2">{blog.excerpt}</p>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex flex-wrap gap-1">
-                  {blog.tags.map((tag, index) => (
-                    <span key={index} className="bg-slate-700 text-slate-300 px-2 py-1 text-xs">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex items-center space-x-4 text-xs text-slate-400">
-                  <div className="flex items-center space-x-1">
-                    <TrendingUp className="w-3 h-3" />
-                    <span>{blog.views}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <MessageSquare className="w-3 h-3" />
-                    <span>{blog.comments}</span>
-                  </div>
-                  <span>{blog.readTime}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* Upcoming Content */}
-      <div className="border-t border-slate-700 pt-6">
-        <div className="flex items-center space-x-2 mb-4">
-          <Calendar className="w-4 h-4 text-cyan-400" />
-          <span className="text-cyan-400 font-bold text-sm">UPCOMING CONTENT</span>
-        </div>
-
-        <div className="space-y-3">
-          {upcomingContent.map((content, index) => (
-            <div key={index} className="bg-slate-900/50 border border-cyan-400/30 p-3">
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <div className="text-white font-bold text-sm">{content.title}</div>
-                  <div className="text-cyan-400 text-xs">{content.game.title}</div>
-                </div>
-                <span className="bg-cyan-500 text-black px-2 py-1 text-xs font-bold">
-                  {content.type}
-                </span>
-              </div>
-              <div className="text-slate-400 text-xs flex items-center">
-                <Calendar className="w-3 h-3 mr-1" />
-                <span>{content.date}</span>
-              </div>
+                </Link>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="grid grid-cols-2 gap-2 mt-6">
+          {/* Upcoming Content */}
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <Calendar className="w-4 h-4 text-cyan-400" />
+              <span className="text-cyan-400 font-bold text-sm">UPCOMING CONTENT</span>
+            </div>
+
+            <div className="space-y-3">
+              {upcomingContent.map((content, index) => (
+                <div key={index} className="bg-slate-900/50 border border-cyan-400/30 p-3">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="text-white font-bold text-sm">{content.title}</div>
+                      <p className="text-slate-400 text-xs mt-1">{content.description}</p>
+                    </div>
+                    <span className="bg-cyan-500 text-black px-2 py-1 text-xs font-bold rounded ml-3">
+                      {content.type}
+                    </span>
+                  </div>
+                  <div className="text-slate-400 text-xs flex items-center">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    <span>{content.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Development Highlights */}
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <Lightbulb className="w-4 h-4 text-yellow-400" />
+              <span className="text-yellow-400 font-bold text-sm">DEV HIGHLIGHTS</span>
+            </div>
+
+            <div className="bg-slate-900/50 border border-yellow-400/30 p-4">
+              <h4 className="text-white font-bold text-sm mb-2">This Month's Focus</h4>
+              <ul className="text-slate-300 text-xs space-y-1">
+                <li className="flex items-start space-x-1">
+                  <span className="text-yellow-400">•</span>
+                  <span>Performance optimization for {game.title}</span>
+                </li>
+                <li className="flex items-start space-x-1">
+                  <span className="text-yellow-400">•</span>
+                  <span>Community feedback integration</span>
+                </li>
+                <li className="flex items-start space-x-1">
+                  <span className="text-yellow-400">•</span>
+                  <span>Next major update planning</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="p-4 border-t border-slate-700">
+        <div className="grid grid-cols-2 gap-2">
           <Link
             to="/blog"
-            className="bg-orange-500 hover:bg-orange-600 text-black px-4 py-2 font-black transition-colors text-center"
+            className="bg-orange-500 hover:bg-orange-600 text-black px-4 py-2 font-black transition-colors text-center text-xs"
           >
             READ DEV BLOG
           </Link>
           <Link
             to="/contact"
-            className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 font-black transition-colors text-center"
+            className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 font-black transition-colors text-center text-xs"
           >
-            DEVELOPER Q&A
+            ASK DEVELOPERS
           </Link>
         </div>
       </div>

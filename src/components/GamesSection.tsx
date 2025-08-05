@@ -1,19 +1,15 @@
+
 import React, { useState, useMemo } from 'react';
-import { ArrowRight, Trophy, Play, Gamepad2, Filter, Search, Star, TrendingUp, Users, Download } from 'lucide-react';
+import { ArrowRight, Trophy, Play, Gamepad2, Users, Download, Star, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import HorizontalDragContainer from './ui/HorizontalDragContainer';
-import GameCard from './games/GameCard';
-import GameFilters from './games/GameFilters';
-import FeaturedGameHero from './games/FeaturedGameHero';
-import GameStats from './games/GameStats';
+import GameLibrarySidebar from './games/GameLibrarySidebar';
+import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
 import DeveloperInsights from './games/DeveloperInsights';
 
 const GamesSection = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('popular');
+  const [selectedGameId, setSelectedGameId] = useState(1);
 
   const games = [
     {
@@ -254,47 +250,12 @@ const GamesSection = () => {
     }
   ];
 
-  const gameCategories = [
-    { id: 'all', name: 'All Games', icon: Gamepad2, count: games.length },
-    { id: 'fps', name: 'FPS & Shooters', icon: Trophy, count: games.filter(g => g.category === 'fps').length },
-    { id: 'rts', name: 'Strategy & RTS', icon: Star, count: games.filter(g => g.category === 'rts').length },
-    { id: 'survival', name: 'Survival & Horror', icon: Play, count: games.filter(g => g.category === 'survival').length },
-    { id: 'space', name: 'Space & Sci-Fi', icon: TrendingUp, count: games.filter(g => g.category === 'space').length },
-    { id: 'mobile', name: 'Mobile Games', icon: Gamepad2, count: games.filter(g => g.category === 'mobile').length },
-    { id: 'web', name: 'Web Games', icon: Trophy, count: games.filter(g => g.category === 'web').length }
-  ];
-
-  const filteredGames = useMemo(() => {
-    let filtered = games;
-    
-    if (activeCategory !== 'all') {
-      filtered = filtered.filter(game => game.category === activeCategory);
-    }
-    
-    if (searchQuery) {
-      filtered = filtered.filter(game => 
-        game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        game.genres.some(genre => genre.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
-    }
-    
-    return filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'rating': return b.rating - a.rating;
-        case 'players': return parseInt(b.playerCount.replace('K', '000').replace('.', '')) - parseInt(a.playerCount.replace('K', '000').replace('.', ''));
-        case 'newest': return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
-        case 'price': return (a.price.sale || a.price.base) - (b.price.sale || b.price.base);
-        default: return b.rating * parseInt(b.playerCount.replace('K', '000').replace('.', '')) - a.rating * parseInt(a.playerCount.replace('K', '000').replace('.', ''));
-      }
-    });
-  }, [activeCategory, searchQuery, sortBy]);
-
-  const featuredGame = games[0];
+  const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-12 bg-slate-950 border-t border-slate-800">
+    <section className="py-12 bg-slate-950 border-t border-slate-800 min-h-screen">
       <div className="container mx-auto px-4">
-        {/* Compact Header - matching other sections */}
+        {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
@@ -312,8 +273,8 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Compact Game Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        {/* Game Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
           {[
             { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
             { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
@@ -331,74 +292,46 @@ const GamesSection = () => {
           })}
         </div>
 
-        {/* Compact Search & Filters */}
-        <div className="flex flex-col lg:flex-row gap-3 mb-6">
-          <div className="flex-1 relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search games, genres..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 text-white pl-10 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none"
+        {/* Main Content Layout */}
+        <div className="flex gap-6 h-[800px]">
+          {/* Left Sidebar - Games Library */}
+          <div className="w-80 flex-shrink-0">
+            <GameLibrarySidebar 
+              games={games} 
+              selectedGameId={selectedGameId}
+              onSelectGame={setSelectedGameId}
             />
           </div>
-          
-          <GameFilters 
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            categories={gameCategories}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-          />
-        </div>
 
-        {/* Main Gaming Content - Compact Horizontal Navigation */}
-        <HorizontalDragContainer className="mb-6" showNavigation={true}>
-          {/* Panel 1: Featured Game */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <FeaturedGameHero game={featuredGame} />
-          </div>
-
-          {/* Panel 2: Games Grid */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredGames.map((game) => (
-                <GameCard key={game.id} game={game} />
-              ))}
+          {/* Right Content - Dynamic Panels */}
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+            {/* Game Details Panel */}
+            <div className="lg:col-span-2">
+              <GameDetailsPanel game={selectedGame} />
             </div>
-          </div>
 
-          {/* Panel 3: Updates & Community */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <GameUpdatesPanel games={games} />
-              <CommunityPanel games={games} />
+            {/* Updates Panel */}
+            <GameUpdatesPanel game={selectedGame} />
+
+            {/* Community Panel */}
+            <CommunityPanel game={selectedGame} />
+
+            {/* Developer Insights */}
+            <div className="lg:col-span-2">
+              <DeveloperInsights game={selectedGame} />
             </div>
-          </div>
-
-          {/* Panel 4: Developer Content */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <DeveloperInsights games={games} />
-          </div>
-        </HorizontalDragContainer>
-
-        {/* Navigation Hint - Compact */}
-        <div className="text-center mb-4">
-          <div className="text-slate-500 text-xs font-mono">
-            ← EXPLORE COMPLETE GAMING PORTFOLIO →
           </div>
         </div>
 
-        {/* Compact CTA */}
-        <div className="text-center">
+        {/* CTA */}
+        <div className="text-center mt-8">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 text-sm font-black transition-all duration-300 space-x-2 shadow-lg"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg"
           >
-            <Play className="w-4 h-4" />
-            <span>VIEW ALL GAMES</span>
-            <ArrowRight className="w-4 h-4" />
+            <Play className="w-5 h-5" />
+            <span>EXPLORE ALL GAMES</span>
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>
