@@ -1,6 +1,5 @@
-
 import React, { useState, useMemo } from 'react';
-import { ArrowRight, Trophy, Play, Gamepad2, Filter, Search, Star, TrendingUp } from 'lucide-react';
+import { ArrowRight, Trophy, Play, Gamepad2, Filter, Search, Star, TrendingUp, Users, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HorizontalDragContainer from './ui/HorizontalDragContainer';
 import GameCard from './games/GameCard';
@@ -293,39 +292,55 @@ const GamesSection = () => {
   const featuredGame = games[0];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
+    <section className="py-12 bg-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
+        {/* Compact Header - matching other sections */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-2">
+          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-2">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
+          <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-3"></div>
           
-          <p className="text-slate-400 max-w-2xl mx-auto">
-            Discover our collection of professionally crafted games across all platforms and genres
+          <p className="text-slate-400 max-w-xl mx-auto text-sm">
+            Professional games across all platforms and genres
           </p>
         </div>
 
-        {/* Game Stats Overview */}
-        <GameStats games={games} />
+        {/* Compact Game Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+          {[
+            { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
+            { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
+            { icon: Download, label: 'TOTAL DOWNLOADS', value: '45K+', color: 'text-blue-400' },
+            { icon: Trophy, label: 'LIVE GAMES', value: '6', color: 'text-purple-400' }
+          ].map((stat, index) => {
+            const IconComponent = stat.icon;
+            return (
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-3 text-center hover:border-purple-400/50 transition-colors">
+                <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
+                <div className="text-lg font-black text-white font-mono mb-1">{stat.value}</div>
+                <div className="text-slate-400 text-xs">{stat.label}</div>
+              </div>
+            );
+          })}
+        </div>
 
-        {/* Search & Filters */}
-        <div className="flex flex-col lg:flex-row gap-4 mb-8">
+        {/* Compact Search & Filters */}
+        <div className="flex flex-col lg:flex-row gap-3 mb-6">
           <div className="flex-1 relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search games, genres, platforms..."
+              placeholder="Search games, genres..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 text-white pl-10 pr-4 py-3 focus:border-purple-400 focus:outline-none"
+              className="w-full bg-slate-800 border border-slate-700 text-white pl-10 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none"
             />
           </div>
           
@@ -338,16 +353,16 @@ const GamesSection = () => {
           />
         </div>
 
-        {/* Main Gaming Content */}
-        <HorizontalDragContainer className="mb-8" showNavigation={true}>
-          {/* Panel 1: Featured Game Hero */}
+        {/* Main Gaming Content - Compact Horizontal Navigation */}
+        <HorizontalDragContainer className="mb-6" showNavigation={true}>
+          {/* Panel 1: Featured Game */}
           <div className="w-full snap-start flex-shrink-0 px-4">
             <FeaturedGameHero game={featuredGame} />
           </div>
 
-          {/* Panel 2: Games Library */}
+          {/* Panel 2: Games Grid */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredGames.map((game) => (
                 <GameCard key={game.id} game={game} />
               ))}
@@ -356,33 +371,33 @@ const GamesSection = () => {
 
           {/* Panel 3: Updates & Community */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <GameUpdatesPanel games={games} />
               <CommunityPanel games={games} />
             </div>
           </div>
 
-          {/* Panel 4: Developer Insights */}
+          {/* Panel 4: Developer Content */}
           <div className="w-full snap-start flex-shrink-0 px-4">
             <DeveloperInsights games={games} />
           </div>
         </HorizontalDragContainer>
 
-        {/* Navigation Hint */}
-        <div className="text-center mb-6">
-          <div className="text-slate-500 text-sm font-mono">
-            ← EXPLORE OUR COMPLETE GAMING PORTFOLIO →
+        {/* Navigation Hint - Compact */}
+        <div className="text-center mb-4">
+          <div className="text-slate-500 text-xs font-mono">
+            ← EXPLORE COMPLETE GAMING PORTFOLIO →
           </div>
         </div>
 
-        {/* CTA */}
+        {/* Compact CTA */}
         <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 text-sm font-black transition-all duration-300 space-x-2 shadow-lg"
           >
             <Play className="w-4 h-4" />
-            <span>VIEW ALL GAMES & DEVELOPMENT</span>
+            <span>VIEW ALL GAMES</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
