@@ -271,16 +271,16 @@ const GamesSection = () => {
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-8 bg-slate-950 border-t border-slate-800">
+    <section className="py-12 bg-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Compact Header - matching other sections */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm">
+        {/* Compact Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-2xl font-black text-white leading-tight font-mono mb-2">
+          <h2 className="text-2xl font-black text-white leading-tight font-mono mb-3">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
@@ -291,8 +291,8 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Compact Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {[
             { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
             { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
@@ -301,34 +301,34 @@ const GamesSection = () => {
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/95 border border-slate-700 p-3 text-center hover:border-purple-400/50 transition-colors">
-                <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
-                <div className="text-lg font-black text-white font-mono mb-1">{stat.value}</div>
-                <div className="text-slate-400 text-xs">{stat.label}</div>
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-4 text-center hover:border-purple-400/50 transition-colors backdrop-blur-sm">
+                <IconComponent className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
+                <div className="text-xl font-black text-white font-mono mb-1">{stat.value}</div>
+                <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
         {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative max-w-md mx-auto">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        <div className="mb-8">
+          <div className="relative max-w-lg mx-auto">
+            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Search games, genres..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 text-white pl-10 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none"
+              className="w-full bg-slate-800/90 border-2 border-slate-700 text-white pl-12 pr-4 py-3 text-sm focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
             />
           </div>
         </div>
 
-        {/* Resizable Panel Layout */}
-        <div className="h-[600px] bg-slate-900/50 border border-slate-700">
+        {/* Enhanced Resizable Panel Layout - Made Much Larger */}
+        <div className="h-[800px] bg-slate-900/50 border-2 border-slate-700 backdrop-blur-sm shadow-2xl shadow-purple-500/10">
           <ResizablePanelGroup direction="horizontal">
             {/* Games Library Panel */}
-            <ResizablePanel defaultSize={30} minSize={25} maxSize={50}>
+            <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
               <GameLibraryPanel 
                 games={filteredGames}
                 selectedGameId={selectedGameId}
@@ -341,17 +341,17 @@ const GamesSection = () => {
             <ResizableHandle withHandle />
 
             {/* Right Content Panels */}
-            <ResizablePanel defaultSize={70}>
+            <ResizablePanel defaultSize={75}>
               <ResizablePanelGroup direction="vertical">
                 {/* Game Details Panel */}
-                <ResizablePanel defaultSize={60} minSize={40}>
+                <ResizablePanel defaultSize={55} minSize={40}>
                   <GameDetailsPanel game={selectedGame} />
                 </ResizablePanel>
 
                 <ResizableHandle withHandle />
 
                 {/* Bottom Panels */}
-                <ResizablePanel defaultSize={40}>
+                <ResizablePanel defaultSize={45}>
                   <ResizablePanelGroup direction="horizontal">
                     {/* Updates Panel */}
                     <ResizablePanel defaultSize={50}>
@@ -371,13 +371,13 @@ const GamesSection = () => {
           </ResizablePanelGroup>
         </div>
 
-        {/* Compact CTA */}
-        <div className="text-center mt-6">
+        {/* Enhanced CTA */}
+        <div className="text-center mt-8">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 text-sm font-black transition-all duration-300 space-x-2 shadow-lg"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 text-sm font-black transition-all duration-300 space-x-2 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
           >
-            <Trophy className="w-4 h-4" />
+            <Trophy className="w-5 h-5" />
             <span>EXPLORE ALL GAMES</span>
           </Link>
         </div>
