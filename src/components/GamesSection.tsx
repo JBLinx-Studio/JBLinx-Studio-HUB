@@ -329,10 +329,10 @@ const GamesSection = () => {
           })}
         </div>
 
-        {/* Enhanced Main Content Layout - Improved vertical space and navigation */}
-        <div className="flex gap-6 h-[1400px]">
-          {/* Left Sidebar - Compact Games Library */}
-          <div className="w-72 flex-shrink-0">
+        {/* Main Content Layout - Enhanced with better vertical space and dragging */}
+        <div className="flex gap-6 h-[1200px]">
+          {/* Left Sidebar - Games Library */}
+          <div className="w-80 flex-shrink-0">
             <GameLibrarySidebar 
               games={games} 
               selectedGameId={selectedGameId}
@@ -340,51 +340,25 @@ const GamesSection = () => {
             />
           </div>
 
-          {/* Right Content - Enhanced with smoother HorizontalDragContainer */}
+          {/* Right Content - Enhanced with HorizontalDragContainer for vertical panels */}
           <div className="flex-1 h-full">
             <HorizontalDragContainer className="h-full" showNavigation={true}>
-              {/* Panel 1: Enhanced Game Details */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-2">
+              {/* Panel 1: Game Details */}
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
                 <GameDetailsPanel game={selectedGame} />
               </div>
 
-              {/* Panel 2: Updates & Community Split */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-2">
-                <div className="grid grid-rows-2 gap-4 h-full">
+              {/* Panel 2: Updates & Community */}
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
+                <div className="grid grid-rows-2 gap-6 h-full">
                   <GameUpdatesPanel game={selectedGame} />
                   <CommunityPanel game={selectedGame} />
                 </div>
               </div>
 
-              {/* Panel 3: Developer Insights & Analytics */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-2">
+              {/* Panel 3: Developer Insights */}
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
                 <DeveloperInsights game={selectedGame} />
-              </div>
-
-              {/* Panel 4: Extended Media Gallery */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-2">
-                <div className="bg-slate-800/95 border border-slate-700 h-full flex flex-col overflow-hidden">
-                  <div className="p-4 border-b border-slate-700">
-                    <h3 className="text-white font-black text-lg font-mono mb-2">
-                      📸 MEDIA GALLERY
-                    </h3>
-                    <p className="text-slate-400 text-sm">Screenshots, Concept Art & Behind the Scenes</p>
-                  </div>
-                  
-                  <div className="flex-1 overflow-y-auto p-4">
-                    <div className="grid grid-cols-2 gap-3">
-                      {selectedGame.images.gallery.map((image, index) => (
-                        <div key={index} className="aspect-video rounded overflow-hidden border border-slate-600 hover:border-purple-400/50 transition-colors group">
-                          <img 
-                            src={image} 
-                            alt={`${selectedGame.title} Screenshot ${index + 1}`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </div>
             </HorizontalDragContainer>
           </div>
