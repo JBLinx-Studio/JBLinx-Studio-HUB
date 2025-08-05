@@ -1,13 +1,15 @@
+
 import React, { useState, useMemo } from 'react';
 import { ArrowRight, Trophy, Play, Gamepad2, Filter, Search, Star, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HorizontalDragContainer from './ui/HorizontalDragContainer';
-import EnhancedGameCard from './games/EnhancedGameCard';
+import GameCard from './games/GameCard';
 import GameFilters from './games/GameFilters';
 import FeaturedGameHero from './games/FeaturedGameHero';
 import GameStats from './games/GameStats';
-import DevContentHub from './games/DevContentHub';
+import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
+import DeveloperInsights from './games/DeveloperInsights';
 
 const GamesSection = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -36,7 +38,7 @@ const GamesSection = () => {
         ]
       },
       trailer: "https://example.com/tactical-strike-trailer",
-      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay across diverse battlegrounds.",
+      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay. Master multiple game modes across diverse battlegrounds.",
       features: ["Anti-Cheat Protection", "Competitive Ranking", "Custom Loadouts", "Voice Chat", "Spectator Mode"],
       systemReqs: { min: "GTX 1060, 8GB RAM", recommended: "RTX 3060, 16GB RAM" },
       dlc: [
@@ -76,7 +78,7 @@ const GamesSection = () => {
         ]
       },
       trailer: "https://example.com/empire-conquest-trailer",
-      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems.",
+      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems in this next-gen RTS experience.",
       features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode"],
       systemReqs: { min: "GTX 1660, 12GB RAM", recommended: "RTX 4060, 32GB RAM" },
       dlc: [
@@ -116,7 +118,7 @@ const GamesSection = () => {
         ]
       },
       trailer: "https://example.com/last-haven-trailer",
-      description: "Survive in a haunting post-apocalyptic world. Craft weapons, build shelters, and maintain your sanity while facing undead and desperate survivors.",
+      description: "Survive in a haunting post-apocalyptic world. Craft weapons, build shelters, and maintain your sanity while facing both the undead and other desperate survivors.",
       features: ["4-Player Co-op", "Base Building", "Psychological Horror", "Day/Night Cycle", "Dynamic Weather"],
       systemReqs: { min: "GTX 1050 Ti, 8GB RAM", recommended: "RTX 3070, 16GB RAM" },
       dlc: [
@@ -155,7 +157,7 @@ const GamesSection = () => {
         ]
       },
       trailer: "https://example.com/stellar-frontier-trailer",
-      description: "Command your starship and explore procedurally generated galaxies. Trade with alien civilizations, engage in epic space battles, and build your cosmic empire.",
+      description: "Command your own starship and explore procedurally generated galaxies. Trade with alien civilizations, engage in epic space battles, and build your cosmic empire.",
       features: ["Infinite Universe", "Ship Customization", "Alien Diplomacy", "Fleet Combat", "Cross-Platform"],
       systemReqs: { min: "GTX 960, 6GB RAM", recommended: "RTX 2060, 12GB RAM" },
       dlc: [
@@ -194,7 +196,7 @@ const GamesSection = () => {
         ]
       },
       trailer: "https://example.com/pocket-heroes-trailer",
-      description: "Collect legendary heroes and embark on epic quests. Strategic turn-based combat meets stunning mobile graphics in this award-winning RPG.",
+      description: "Collect legendary heroes and embark on epic quests. Strategic turn-based combat meets stunning mobile graphics in this award-winning mobile RPG.",
       features: ["200+ Heroes", "PvP Arena", "Guild System", "Daily Events", "Offline Play"],
       systemReqs: { min: "iOS 12+ / Android 8+", recommended: "iOS 15+ / Android 11+" },
       dlc: [
@@ -234,7 +236,7 @@ const GamesSection = () => {
         ]
       },
       trailer: "https://example.com/web-warriors-trailer",
-      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles.",
+      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles from any device.",
       features: ["Instant Play", "Cross-Device", "Real-time PvP", "Clan Wars", "Tournament Mode"],
       systemReqs: { min: "Modern Web Browser", recommended: "Chrome/Firefox Latest" },
       dlc: [
@@ -293,38 +295,37 @@ const GamesSection = () => {
   return (
     <section className="py-16 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
       <div className="container mx-auto px-4">
-        {/* Enhanced Header */}
+        {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-6 py-3 mb-6 backdrop-blur-sm">
-            <Trophy className="w-5 h-5 mr-3 text-purple-400" />
-            <span className="text-purple-400 font-black text-lg font-mono tracking-wider">JBLINX GAMING STUDIO</span>
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
+            <Trophy className="w-4 h-4 mr-2 text-purple-400" />
+            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight font-mono mb-4">
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-2">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-6"></div>
+          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
           
-          <p className="text-slate-300 max-w-3xl mx-auto text-lg leading-relaxed">
-            Discover our professionally crafted games with real-time analytics, developer insights, and community features. 
-            Experience next-generation gaming across all platforms.
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            Discover our collection of professionally crafted games across all platforms and genres
           </p>
         </div>
 
-        {/* Enhanced Game Stats */}
+        {/* Game Stats Overview */}
         <GameStats games={games} />
 
-        {/* Enhanced Search & Filters */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-8">
+        {/* Search & Filters */}
+        <div className="flex flex-col lg:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search games, genres, platforms, developers..."
+              placeholder="Search games, genres, platforms..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 text-white pl-12 pr-6 py-4 text-lg focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 transition-all"
+              className="w-full bg-slate-800 border border-slate-700 text-white pl-10 pr-4 py-3 focus:border-purple-400 focus:outline-none"
             />
           </div>
           
@@ -337,83 +338,52 @@ const GamesSection = () => {
           />
         </div>
 
-        {/* Enhanced Horizontal Navigation Panels */}
-        <HorizontalDragContainer className="mb-12" showNavigation={true}>
-          {/* Panel 1: Featured Game Showcase */}
+        {/* Main Gaming Content */}
+        <HorizontalDragContainer className="mb-8" showNavigation={true}>
+          {/* Panel 1: Featured Game Hero */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <Trophy className="w-6 h-6 inline mr-2 text-yellow-400" />
-                FEATURED SHOWCASE
-              </h3>
-              <div className="w-16 h-0.5 bg-yellow-400 mx-auto"></div>
-            </div>
             <FeaturedGameHero game={featuredGame} />
           </div>
 
-          {/* Panel 2: Game Library Grid */}
+          {/* Panel 2: Games Library */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <Gamepad2 className="w-6 h-6 inline mr-2 text-purple-400" />
-                GAME LIBRARY
-              </h3>
-              <div className="w-16 h-0.5 bg-purple-400 mx-auto"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredGames.map((game) => (
-                <EnhancedGameCard key={game.id} game={game} />
+                <GameCard key={game.id} game={game} />
               ))}
             </div>
           </div>
 
-          {/* Panel 3: Developer Content Hub */}
+          {/* Panel 3: Updates & Community */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <TrendingUp className="w-6 h-6 inline mr-2 text-orange-400" />
-                DEVELOPER CONTENT
-              </h3>
-              <div className="w-16 h-0.5 bg-orange-400 mx-auto"></div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <GameUpdatesPanel games={games} />
+              <CommunityPanel games={games} />
             </div>
-            <DevContentHub games={games} />
           </div>
 
-          {/* Panel 4: Community Hub */}
+          {/* Panel 4: Developer Insights */}
           <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-black text-white font-mono mb-2">
-                <Star className="w-6 h-6 inline mr-2 text-blue-400" />
-                COMMUNITY HUB
-              </h3>
-              <div className="w-16 h-0.5 bg-blue-400 mx-auto"></div>
-            </div>
-            <CommunityPanel games={games} />
+            <DeveloperInsights games={games} />
           </div>
         </HorizontalDragContainer>
 
-        {/* Enhanced Navigation Hint */}
-        <div className="text-center mb-8">
-          <div className="text-slate-400 text-lg font-mono mb-4">
-            ← EXPLORE OUR COMPLETE GAMING ECOSYSTEM →
-          </div>
-          <div className="flex justify-center space-x-8 text-sm text-slate-500">
-            <span>📊 Real-time Analytics</span>
-            <span>🎮 6 Game Categories</span>
-            <span>📝 Developer Insights</span>
-            <span>👥 Community Features</span>
+        {/* Navigation Hint */}
+        <div className="text-center mb-6">
+          <div className="text-slate-500 text-sm font-mono">
+            ← EXPLORE OUR COMPLETE GAMING PORTFOLIO →
           </div>
         </div>
 
-        {/* Enhanced Call to Action */}
+        {/* CTA */}
         <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 hover:from-purple-600 hover:via-purple-700 hover:to-pink-600 text-white px-8 py-4 font-black text-lg transition-all duration-300 space-x-3 shadow-2xl hover:scale-105 hover:shadow-purple-500/25"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg"
           >
-            <Play className="w-5 h-5" />
-            <span>EXPLORE ALL GAMES & DEVELOPMENT</span>
-            <ArrowRight className="w-5 h-5" />
+            <Play className="w-4 h-4" />
+            <span>VIEW ALL GAMES & DEVELOPMENT</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
