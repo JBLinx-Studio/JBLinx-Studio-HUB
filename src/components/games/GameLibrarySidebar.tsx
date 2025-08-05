@@ -4,16 +4,11 @@ import {
   Play, 
   Star, 
   Users, 
-  Calendar, 
   TrendingUp, 
   Trophy, 
   Zap,
   Shield,
   Target,
-  Gamepad2,
-  Download,
-  Eye,
-  MessageCircle,
   Clock
 } from 'lucide-react';
 
@@ -84,101 +79,91 @@ const GameLibrarySidebar: React.FC<GameLibrarySidebarProps> = ({
   };
 
   return (
-    <div className="bg-slate-900/95 backdrop-blur-sm border border-purple-500/20 h-full flex flex-col overflow-hidden shadow-xl rounded">
-      {/* Header */}
-      <div className="p-4 border-b border-purple-500/30 bg-gradient-to-r from-purple-900/20 to-slate-900/20">
-        <div className="flex items-center space-x-2 mb-2">
-          <div className="flex items-center space-x-1">
-            <Trophy className="w-4 h-4 text-purple-400" />
-            <Gamepad2 className="w-4 h-4 text-cyan-400" />
-          </div>
+    <div className="bg-slate-900/95 backdrop-blur-sm border border-purple-500/20 h-full max-h-[800px] flex flex-col overflow-hidden shadow-2xl shadow-purple-500/10">
+      {/* Compact Header */}
+      <div className="p-3 border-b border-purple-500/30 bg-gradient-to-r from-purple-900/20 to-slate-900/20">
+        <div className="flex items-center space-x-2 mb-1">
+          <Trophy className="w-4 h-4 text-purple-400" />
           <span className="text-purple-400 font-black font-mono tracking-wide text-xs">GAME LIBRARY</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-transparent"></div>
         </div>
         <div className="flex items-center justify-between text-xs">
           <span className="text-slate-400">{games.length} Games</span>
           <div className="flex items-center space-x-1 text-green-400">
             <TrendingUp className="w-3 h-3" />
-            <span className="font-mono">ACTIVE</span>
+            <span className="font-mono text-xs">LIVE</span>
           </div>
         </div>
       </div>
 
-      {/* Games List - Compact Version */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar">
+      {/* Compact Games List */}
+      <div className="flex-1 overflow-y-auto">
         <div className="p-2 space-y-1">
           {games.map((game) => (
             <button
               key={game.id}
               onClick={() => onSelectGame(game.id)}
-              className={`w-full text-left p-3 border transition-all duration-200 hover:scale-[1.01] group rounded ${
+              className={`w-full text-left p-2 border transition-all duration-200 hover:scale-[1.01] group ${
                 selectedGameId === game.id
                   ? 'bg-purple-500/20 border-purple-400 shadow-md shadow-purple-500/20'
                   : 'bg-slate-900/50 border-slate-700/50 hover:border-purple-500/30 hover:bg-slate-800/70'
               }`}
             >
-              {/* Compact Game Info */}
-              <div className="flex items-center space-x-3">
-                {/* Mini Hero Image */}
-                <div className="w-12 h-12 rounded overflow-hidden border border-slate-600 flex-shrink-0 relative">
+              <div className="flex items-center space-x-2">
+                {/* Compact Game Thumbnail */}
+                <div className="w-12 h-8 overflow-hidden border border-slate-700/50 relative group-hover:border-purple-500/30 transition-colors flex-shrink-0">
                   <img
                     src={game.images.hero}
                     alt={game.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   
-                  {/* Status Badge */}
-                  <div className="absolute top-0 right-0">
-                    <div className={`px-1 py-0.5 text-xs font-bold border backdrop-blur-sm rounded-bl ${getStatusColor(game.status)}`}>
-                      {getStatusIcon(game.status)}
+                  {/* Mini Play Icon */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="bg-purple-500/90 p-1 backdrop-blur-sm">
+                      <Play className="w-2 h-2 text-white" />
                     </div>
                   </div>
                 </div>
 
-                {/* Game Details */}
+                {/* Game Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <h3 className="text-white font-bold text-sm truncate font-mono">
+                    <h3 className="text-white font-black text-xs truncate font-mono">
                       {game.title}
                     </h3>
                     <div className="flex items-center space-x-1">
-                      {game.stats.esportsReady && (
-                        <Trophy className="w-3 h-3 text-yellow-400" />
-                      )}
+                      <Star className="w-2.5 h-2.5 text-yellow-400 fill-current" />
+                      <span className="text-white font-bold text-xs font-mono">{game.rating}</span>
                     </div>
                   </div>
                   
-                  <p className="text-purple-400 text-xs truncate font-medium mb-1">
-                    {game.tagline}
-                  </p>
-
-                  {/* Compact Stats Row */}
-                  <div className="flex items-center justify-between text-xs">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex items-center space-x-1">
-                        <Star className="w-3 h-3 text-yellow-400" />
-                        <span className="text-white font-bold">{game.rating}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Users className="w-3 h-3 text-green-400" />
-                        <span className="text-white font-bold">{game.playerCount}</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-1">
+                      {/* Category */}
+                      <span className="text-xs">{getCategoryIcon(game.category)}</span>
+                      
+                      {/* Status */}
+                      <div className={`flex items-center space-x-0.5 px-1 py-0.5 text-xs font-bold border backdrop-blur-sm ${getStatusColor(game.status)}`}>
+                        {getStatusIcon(game.status)}
+                        <span className="font-mono text-xs">{game.status === 'EARLY_ACCESS' ? 'EA' : game.status}</span>
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-1">
-                      <span className="text-green-400 font-bold font-mono">
-                        {formatPrice(game)}
-                      </span>
-                    </div>
+                    {/* Price */}
+                    <span className="text-green-400 font-black text-xs font-mono">
+                      {formatPrice(game)}
+                    </span>
                   </div>
-
-                  {/* Category Badge */}
-                  <div className="mt-2">
-                    <div className="inline-flex items-center bg-slate-800/50 text-cyan-400 px-2 py-0.5 rounded text-xs font-bold border border-cyan-500/30">
-                      <span className="mr-1">{getCategoryIcon(game.category)}</span>
-                      <span className="font-mono">{game.category.toUpperCase()}</span>
+                  
+                  {/* Players */}
+                  <div className="flex items-center justify-between mt-1">
+                    <div className="flex items-center space-x-1">
+                      <Users className="w-2.5 h-2.5 text-blue-400" />
+                      <span className="text-slate-300 font-bold text-xs font-mono">{game.playerCount}</span>
                     </div>
+                    {game.stats.esportsReady && (
+                      <Trophy className="w-2.5 h-2.5 text-yellow-400" />
+                    )}
                   </div>
                 </div>
               </div>
@@ -187,16 +172,16 @@ const GameLibrarySidebar: React.FC<GameLibrarySidebarProps> = ({
         </div>
       </div>
 
-      {/* Footer Stats */}
-      <div className="p-3 border-t border-purple-500/30 bg-gradient-to-r from-slate-900/20 to-purple-900/20">
-        <div className="grid grid-cols-2 gap-2 text-xs">
+      {/* Compact Footer */}
+      <div className="p-2 border-t border-purple-500/30 bg-gradient-to-r from-slate-900/20 to-purple-900/20">
+        <div className="flex justify-center space-x-4 text-xs">
           <div className="text-center">
-            <div className="text-green-400 font-black font-mono">$2.4M+</div>
-            <div className="text-slate-400">Revenue</div>
+            <div className="text-green-400 font-black font-mono text-sm">2.4M+</div>
+            <div className="text-slate-400 text-xs">Revenue</div>
           </div>
           <div className="text-center">
-            <div className="text-purple-400 font-black font-mono">500K+</div>
-            <div className="text-slate-400">Players</div>
+            <div className="text-purple-400 font-black font-mono text-sm">500K+</div>
+            <div className="text-slate-400 text-xs">Players</div>
           </div>
         </div>
       </div>
