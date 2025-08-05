@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { ArrowRight, Trophy, Play, Gamepad2, Users, Download, Star, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -30,26 +29,20 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/tactical-strike-trailer",
-      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay. Master multiple game modes across diverse battlegrounds with realistic physics and cutting-edge graphics.",
-      features: ["Anti-Cheat Protection", "Competitive Ranking", "Custom Loadouts", "Voice Chat", "Spectator Mode", "Replay System"],
-      systemReqs: { min: "GTX 1060, 8GB RAM, DirectX 11", recommended: "RTX 3060, 16GB RAM, DirectX 12" },
+      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay. Master multiple game modes across diverse battlegrounds.",
+      features: ["Anti-Cheat Protection", "Competitive Ranking", "Custom Loadouts", "Voice Chat", "Spectator Mode"],
+      systemReqs: { min: "GTX 1060, 8GB RAM", recommended: "RTX 3060, 16GB RAM" },
       dlc: [
         { name: "Urban Warfare Pack", price: 14.99, status: "available" },
         { name: "Elite Operator Skins", price: 9.99, status: "available" }
       ],
       stats: {
         peakPlayers: 45000,
-        averageSession: "45min",
+        averageSession: "45 min",
         retention: "87%",
         esportsReady: true
       },
@@ -76,26 +69,20 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1438565434616-3ef039228b15?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/empire-conquest-trailer",
-      description: "Command massive armies across land, sea, and air in this next-generation real-time strategy experience. Build civilizations from the ground up with complex resource management, diplomatic systems, and epic battles featuring thousands of units.",
-      features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode", "Mod Support"],
-      systemReqs: { min: "GTX 1660, 12GB RAM, DirectX 11", recommended: "RTX 4060, 32GB RAM, DirectX 12" },
+      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems in this next-gen RTS experience.",
+      features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode"],
+      systemReqs: { min: "GTX 1660, 12GB RAM", recommended: "RTX 4060, 32GB RAM" },
       dlc: [
         { name: "Ancient Dynasties", price: 19.99, status: "preorder" },
         { name: "Naval Warfare", price: 12.99, status: "available" }
       ],
       stats: {
         peakPlayers: 12000,
-        averageSession: "2.5hrs",
+        averageSession: "2.5 hours",
         retention: "92%",
         esportsReady: false
       },
@@ -122,25 +109,19 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1485833077593-4278bba3f11f?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1438565434616-3ef039228b15?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/last-haven-trailer",
-      description: "Survive in a haunting post-apocalyptic world where humanity's last remnants fight for survival. Craft weapons, build shelters, and maintain your sanity while facing both the undead hordes and other desperate survivors in this intense co-op experience.",
-      features: ["4-Player Co-op", "Base Building", "Psychological Horror", "Day/Night Cycle", "Dynamic Weather", "Crafting System"],
-      systemReqs: { min: "GTX 1050 Ti, 8GB RAM, DirectX 11", recommended: "RTX 3070, 16GB RAM, DirectX 12" },
+      description: "Survive in a haunting post-apocalyptic world. Craft weapons, build shelters, and maintain your sanity while facing both the undead and other desperate survivors.",
+      features: ["4-Player Co-op", "Base Building", "Psychological Horror", "Day/Night Cycle", "Dynamic Weather"],
+      systemReqs: { min: "GTX 1050 Ti, 8GB RAM", recommended: "RTX 3070, 16GB RAM" },
       dlc: [
         { name: "Winter Wasteland", price: 15.99, status: "upcoming" }
       ],
       stats: {
         peakPlayers: 25000,
-        averageSession: "3.2hrs",
+        averageSession: "3.2 hours",
         retention: "78%",
         esportsReady: false
       },
@@ -167,25 +148,19 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/stellar-frontier-trailer",
-      description: "Command your own starship and explore procedurally generated galaxies filled with mysteries, alien civilizations, and cosmic phenomena. Trade with exotic species, engage in epic space battles, and build your interstellar empire.",
-      features: ["Infinite Universe", "Ship Customization", "Alien Diplomacy", "Fleet Combat", "Cross-Platform", "Procedural Generation"],
-      systemReqs: { min: "GTX 960, 6GB RAM, DirectX 11", recommended: "RTX 2060, 12GB RAM, DirectX 12" },
+      description: "Command your own starship and explore procedurally generated galaxies. Trade with alien civilizations, engage in epic space battles, and build your cosmic empire.",
+      features: ["Infinite Universe", "Ship Customization", "Alien Diplomacy", "Fleet Combat", "Cross-Platform"],
+      systemReqs: { min: "GTX 960, 6GB RAM", recommended: "RTX 2060, 12GB RAM" },
       dlc: [
         { name: "Alien Races Pack", price: 11.99, status: "upcoming" }
       ],
       stats: {
         peakPlayers: 8500,
-        averageSession: "4.1hrs",
+        averageSession: "4.1 hours",
         retention: "85%",
         esportsReady: false
       },
@@ -212,18 +187,12 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/pocket-heroes-trailer",
-      description: "Collect legendary heroes and embark on epic quests in this award-winning mobile RPG. Strategic turn-based combat meets stunning mobile graphics with deep character customization and engaging storylines.",
-      features: ["200+ Heroes", "PvP Arena", "Guild System", "Daily Events", "Offline Play", "Cross-Save"],
+      description: "Collect legendary heroes and embark on epic quests. Strategic turn-based combat meets stunning mobile graphics in this award-winning mobile RPG.",
+      features: ["200+ Heroes", "PvP Arena", "Guild System", "Daily Events", "Offline Play"],
       systemReqs: { min: "iOS 12+ / Android 8+", recommended: "iOS 15+ / Android 11+" },
       dlc: [
         { name: "Legendary Pack", price: 7.99, status: "available" },
@@ -231,7 +200,7 @@ const GamesSection = () => {
       ],
       stats: {
         peakPlayers: 125000,
-        averageSession: "25min",
+        averageSession: "25 min",
         retention: "68%",
         esportsReady: false
       },
@@ -258,25 +227,19 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/web-warriors-trailer",
-      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles from any device with cutting-edge WebGL technology.",
-      features: ["Instant Play", "Cross-Device", "Real-time PvP", "Clan Wars", "Tournament Mode", "WebGL Graphics"],
+      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles from any device.",
+      features: ["Instant Play", "Cross-Device", "Real-time PvP", "Clan Wars", "Tournament Mode"],
       systemReqs: { min: "Modern Web Browser", recommended: "Chrome/Firefox Latest" },
       dlc: [
         { name: "Premium Commander", price: 9.99, status: "available" }
       ],
       stats: {
         peakPlayers: 35000,
-        averageSession: "35min",
+        averageSession: "35 min",
         retention: "71%",
         esportsReady: true
       },
@@ -330,7 +293,7 @@ const GamesSection = () => {
         </div>
 
         {/* Main Content Layout - Enhanced with better vertical space and dragging */}
-        <div className="flex gap-6 h-[1200px]">
+        <div className="flex gap-6 h-[1000px]">
           {/* Left Sidebar - Games Library */}
           <div className="w-80 flex-shrink-0">
             <GameLibrarySidebar 
