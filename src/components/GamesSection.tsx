@@ -1,19 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowRight, Trophy, Play, Gamepad2, Filter, Search, Star, TrendingUp, Users, Download } from 'lucide-react';
+import { Trophy, Search, Users, Star, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import HorizontalDragContainer from './ui/HorizontalDragContainer';
-import GameCard from './games/GameCard';
-import GameFilters from './games/GameFilters';
-import FeaturedGameHero from './games/FeaturedGameHero';
-import GameStats from './games/GameStats';
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './ui/resizable';
+import GameLibraryPanel from './games/GameLibraryPanel';
+import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
-import DeveloperInsights from './games/DeveloperInsights';
 
 const GamesSection = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedGameId, setSelectedGameId] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('popular');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const games = [
     {
@@ -254,16 +251,6 @@ const GamesSection = () => {
     }
   ];
 
-  const gameCategories = [
-    { id: 'all', name: 'All Games', icon: Gamepad2, count: games.length },
-    { id: 'fps', name: 'FPS & Shooters', icon: Trophy, count: games.filter(g => g.category === 'fps').length },
-    { id: 'rts', name: 'Strategy & RTS', icon: Star, count: games.filter(g => g.category === 'rts').length },
-    { id: 'survival', name: 'Survival & Horror', icon: Play, count: games.filter(g => g.category === 'survival').length },
-    { id: 'space', name: 'Space & Sci-Fi', icon: TrendingUp, count: games.filter(g => g.category === 'space').length },
-    { id: 'mobile', name: 'Mobile Games', icon: Gamepad2, count: games.filter(g => g.category === 'mobile').length },
-    { id: 'web', name: 'Web Games', icon: Trophy, count: games.filter(g => g.category === 'web').length }
-  ];
-
   const filteredGames = useMemo(() => {
     let filtered = games;
     
@@ -278,30 +265,22 @@ const GamesSection = () => {
       );
     }
     
-    return filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'rating': return b.rating - a.rating;
-        case 'players': return parseInt(b.playerCount.replace('K', '000').replace('.', '')) - parseInt(a.playerCount.replace('K', '000').replace('.', ''));
-        case 'newest': return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
-        case 'price': return (a.price.sale || a.price.base) - (b.price.sale || b.price.base);
-        default: return b.rating * parseInt(b.playerCount.replace('K', '000').replace('.', '')) - a.rating * parseInt(a.playerCount.replace('K', '000').replace('.', ''));
-      }
-    });
-  }, [activeCategory, searchQuery, sortBy]);
+    return filtered;
+  }, [activeCategory, searchQuery]);
 
-  const featuredGame = games[0];
+  const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-12 bg-slate-950 border-t border-slate-800">
+    <section className="py-8 bg-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-4">
         {/* Compact Header - matching other sections */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-2">
+          <h2 className="text-2xl font-black text-white leading-tight font-mono mb-2">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
@@ -312,7 +291,7 @@ const GamesSection = () => {
           </p>
         </div>
 
-        {/* Compact Game Stats */}
+        {/* Compact Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           {[
             { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
@@ -331,9 +310,9 @@ const GamesSection = () => {
           })}
         </div>
 
-        {/* Compact Search & Filters */}
-        <div className="flex flex-col lg:flex-row gap-3 mb-6">
-          <div className="flex-1 relative">
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative max-w-md mx-auto">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
@@ -343,62 +322,63 @@ const GamesSection = () => {
               className="w-full bg-slate-800 border border-slate-700 text-white pl-10 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none"
             />
           </div>
-          
-          <GameFilters 
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            categories={gameCategories}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-          />
         </div>
 
-        {/* Main Gaming Content - Compact Horizontal Navigation */}
-        <HorizontalDragContainer className="mb-6" showNavigation={true}>
-          {/* Panel 1: Featured Game */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <FeaturedGameHero game={featuredGame} />
-          </div>
+        {/* Resizable Panel Layout */}
+        <div className="h-[600px] bg-slate-900/50 border border-slate-700">
+          <ResizablePanelGroup direction="horizontal">
+            {/* Games Library Panel */}
+            <ResizablePanel defaultSize={30} minSize={25} maxSize={50}>
+              <GameLibraryPanel 
+                games={filteredGames}
+                selectedGameId={selectedGameId}
+                onSelectGame={setSelectedGameId}
+                activeCategory={activeCategory}
+                onCategoryChange={setActiveCategory}
+              />
+            </ResizablePanel>
 
-          {/* Panel 2: Games Grid */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredGames.map((game) => (
-                <GameCard key={game.id} game={game} />
-              ))}
-            </div>
-          </div>
+            <ResizableHandle withHandle />
 
-          {/* Panel 3: Updates & Community */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <GameUpdatesPanel games={games} />
-              <CommunityPanel games={games} />
-            </div>
-          </div>
+            {/* Right Content Panels */}
+            <ResizablePanel defaultSize={70}>
+              <ResizablePanelGroup direction="vertical">
+                {/* Game Details Panel */}
+                <ResizablePanel defaultSize={60} minSize={40}>
+                  <GameDetailsPanel game={selectedGame} />
+                </ResizablePanel>
 
-          {/* Panel 4: Developer Content */}
-          <div className="w-full snap-start flex-shrink-0 px-4">
-            <DeveloperInsights games={games} />
-          </div>
-        </HorizontalDragContainer>
+                <ResizableHandle withHandle />
 
-        {/* Navigation Hint - Compact */}
-        <div className="text-center mb-4">
-          <div className="text-slate-500 text-xs font-mono">
-            ← EXPLORE COMPLETE GAMING PORTFOLIO →
-          </div>
+                {/* Bottom Panels */}
+                <ResizablePanel defaultSize={40}>
+                  <ResizablePanelGroup direction="horizontal">
+                    {/* Updates Panel */}
+                    <ResizablePanel defaultSize={50}>
+                      <GameUpdatesPanel game={selectedGame} />
+                    </ResizablePanel>
+
+                    <ResizableHandle withHandle />
+
+                    {/* Community Panel */}
+                    <ResizablePanel defaultSize={50}>
+                      <CommunityPanel game={selectedGame} />
+                    </ResizablePanel>
+                  </ResizablePanelGroup>
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </ResizablePanel>
+          </ResizablePanelGroup>
         </div>
 
         {/* Compact CTA */}
-        <div className="text-center">
+        <div className="text-center mt-6">
           <Link 
             to="/game-development" 
             className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 text-sm font-black transition-all duration-300 space-x-2 shadow-lg"
           >
-            <Play className="w-4 h-4" />
-            <span>VIEW ALL GAMES</span>
-            <ArrowRight className="w-4 h-4" />
+            <Trophy className="w-4 h-4" />
+            <span>EXPLORE ALL GAMES</span>
           </Link>
         </div>
       </div>
