@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { ArrowRight, Trophy, Play, Gamepad2, Users, Download, Star, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -290,28 +289,28 @@ const GamesSection = () => {
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-12 bg-slate-950 border-t border-slate-800 min-h-screen">
-      <div className="container mx-auto px-4">
+    <section className="py-8 bg-slate-950 border-t border-slate-800">
+      <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm rounded-md">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
-            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
+            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">INTERACTIVE GAMING</span>
           </div>
           
           <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-2">
-            PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
+            PROFESSIONAL <span className="text-purple-400">GAME</span> PORTFOLIO
           </h2>
           
           <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-3"></div>
           
           <p className="text-slate-400 max-w-xl mx-auto text-sm">
-            Professional games across all platforms and genres
+            Cross-platform games across all genres and platforms
           </p>
         </div>
 
         {/* Game Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           {[
             { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
             { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
@@ -320,7 +319,7 @@ const GamesSection = () => {
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/95 border border-slate-700 p-3 text-center hover:border-purple-400/50 transition-colors">
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-3 text-center hover:border-purple-400/50 transition-colors rounded-md">
                 <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
                 <div className="text-lg font-black text-white font-mono mb-1">{stat.value}</div>
                 <div className="text-slate-400 text-xs">{stat.label}</div>
@@ -329,10 +328,10 @@ const GamesSection = () => {
           })}
         </div>
 
-        {/* Main Content Layout - Enhanced with better vertical space and dragging */}
-        <div className="flex gap-6 h-[1200px]">
+        {/* Main Content Layout - Fixed height to prevent overlap */}
+        <div className="flex gap-4 h-[500px] rounded-lg overflow-hidden border border-slate-700/50 bg-slate-900/30">
           {/* Left Sidebar - Games Library */}
-          <div className="w-80 flex-shrink-0">
+          <div className="w-72 flex-shrink-0 border-r border-slate-700/50">
             <GameLibrarySidebar 
               games={games} 
               selectedGameId={selectedGameId}
@@ -340,24 +339,24 @@ const GamesSection = () => {
             />
           </div>
 
-          {/* Right Content - Enhanced with HorizontalDragContainer for vertical panels */}
-          <div className="flex-1 h-full">
+          {/* Right Content - Horizontal scrollable panels */}
+          <div className="flex-1 h-full min-w-0">
             <HorizontalDragContainer className="h-full" showNavigation={true}>
               {/* Panel 1: Game Details */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-3">
+              <div className="w-full h-full flex-shrink-0 snap-start">
                 <GameDetailsPanel game={selectedGame} />
               </div>
 
               {/* Panel 2: Updates & Community */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-3">
-                <div className="grid grid-rows-2 gap-6 h-full">
+              <div className="w-full h-full flex-shrink-0 snap-start">
+                <div className="grid grid-rows-2 gap-3 h-full p-2">
                   <GameUpdatesPanel game={selectedGame} />
                   <CommunityPanel game={selectedGame} />
                 </div>
               </div>
 
               {/* Panel 3: Developer Insights */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-3">
+              <div className="w-full h-full flex-shrink-0 snap-start">
                 <DeveloperInsights game={selectedGame} />
               </div>
             </HorizontalDragContainer>
@@ -365,10 +364,10 @@ const GamesSection = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-6">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg rounded-md"
           >
             <Play className="w-5 h-5" />
             <span>EXPLORE ALL GAMES</span>
