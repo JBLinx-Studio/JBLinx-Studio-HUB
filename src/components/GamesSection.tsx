@@ -290,28 +290,28 @@ const GamesSection = () => {
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-8 bg-slate-950 border-t border-slate-800">
+    <section className="py-16 bg-slate-950 border-t border-slate-800 min-h-[1400px]">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1.5 mb-2 backdrop-blur-sm">
-            <Trophy className="w-4 h-4 mr-2 text-purple-400" />
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm rounded-lg">
+            <Trophy className="w-5 h-5 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-xl lg:text-2xl font-black text-white leading-tight font-mono mb-2">
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-4">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-12 h-0.5 bg-purple-400 mx-auto mb-2"></div>
+          <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-4"></div>
           
-          <p className="text-slate-400 max-w-xl mx-auto text-sm">
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
             Professional games across all platforms and genres
           </p>
         </div>
 
         {/* Game Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
             { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
             { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
@@ -320,19 +320,19 @@ const GamesSection = () => {
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/95 border border-slate-700 p-2 text-center hover:border-purple-400/50 transition-colors">
-                <IconComponent className={`w-4 h-4 mx-auto mb-1 ${stat.color}`} />
-                <div className="text-sm font-black text-white font-mono mb-0.5">{stat.value}</div>
-                <div className="text-slate-400 text-xs">{stat.label}</div>
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-4 text-center hover:border-purple-400/50 transition-colors rounded-lg backdrop-blur-sm">
+                <IconComponent className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
+                <div className="text-lg font-black text-white font-mono mb-1">{stat.value}</div>
+                <div className="text-slate-400 text-sm">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
-        {/* Main Content Layout - Constrained height */}
-        <div className="flex gap-4 h-[600px] max-h-[600px]">
+        {/* Main Content Layout - Increased height significantly */}
+        <div className="flex gap-6 h-[1000px] max-h-[1000px] mb-16">
           {/* Left Sidebar - Games Library */}
-          <div className="w-64 flex-shrink-0">
+          <div className="w-72 flex-shrink-0">
             <GameLibrarySidebar 
               games={games} 
               selectedGameId={selectedGameId}
@@ -344,35 +344,35 @@ const GamesSection = () => {
           <div className="flex-1 h-full">
             <HorizontalDragContainer className="h-full" showNavigation={true}>
               {/* Panel 1: Game Details */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-2">
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
                 <GameDetailsPanel game={selectedGame} />
               </div>
 
               {/* Panel 2: Updates & Community */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-2">
-                <div className="grid grid-rows-2 gap-4 h-full">
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
+                <div className="grid grid-rows-2 gap-6 h-full">
                   <GameUpdatesPanel game={selectedGame} />
                   <CommunityPanel game={selectedGame} />
                 </div>
               </div>
 
               {/* Panel 3: Developer Insights */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-2">
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
                 <DeveloperInsights game={selectedGame} />
               </div>
             </HorizontalDragContainer>
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-6">
+        {/* CTA - Added proper spacing */}
+        <div className="text-center mt-12 pt-8">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 font-black transition-all duration-300 space-x-2 shadow-lg text-sm"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 font-black transition-all duration-300 space-x-3 shadow-lg text-lg rounded-lg hover:scale-105"
           >
-            <Play className="w-4 h-4" />
+            <Play className="w-5 h-5" />
             <span>EXPLORE ALL GAMES</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>
