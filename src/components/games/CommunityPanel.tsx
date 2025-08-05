@@ -3,22 +3,22 @@ import React from 'react';
 import { MessageSquare, Users, ThumbsUp, Star, Clock, Trophy, TrendingUp } from 'lucide-react';
 
 interface CommunityPanelProps {
-  games: Array<{
+  game: {
     id: number;
     title: string;
     rating: number;
     reviewCount: number;
     playerCount: string;
-  }>;
+  };
 }
 
-const CommunityPanel: React.FC<CommunityPanelProps> = ({ games }) => {
+const CommunityPanel: React.FC<CommunityPanelProps> = ({ game }) => {
   const recentActivity = [
     {
       id: 1,
       type: 'review',
       user: 'TacticalPro99',
-      game: games[0],
+      game: game,
       rating: 5,
       comment: 'The new weapon balance changes are perfect! Combat feels much more strategic now.',
       time: '2 hours ago',
@@ -29,7 +29,7 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ games }) => {
       id: 2,
       type: 'achievement',
       user: 'RTSMaster',
-      game: games[1],
+      game: game,
       achievement: 'Empire Builder',
       description: 'Built 100 cities across different campaigns',
       time: '4 hours ago',
@@ -39,7 +39,7 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ games }) => {
       id: 3,
       type: 'review',
       user: 'SurvivalGamer',
-      game: games[2],
+      game: game,
       rating: 4,
       comment: 'Early access is promising! The atmosphere is incredible and co-op works great.',
       time: '6 hours ago',
@@ -50,7 +50,7 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ games }) => {
       id: 4,
       type: 'tournament',
       event: 'Weekly Championship',
-      game: games[0],
+      game: game,
       participants: 2847,
       prize: '$5,000',
       time: 'Starting in 2 days'
@@ -58,9 +58,9 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ games }) => {
   ];
 
   const topPlayers = [
-    { name: 'EliteSoldier', game: games[0], rank: '#1', score: '2,847 MMR', streak: '12 wins' },
-    { name: 'CommanderX', game: games[1], rank: '#1', score: '98% WR', streak: '25 wins' },
-    { name: 'Survivor', game: games[2], rank: '#1', score: '247 days', streak: '15 days' }
+    { name: 'EliteSoldier', game: game, rank: '#1', score: '2,847 MMR', streak: '12 wins' },
+    { name: 'CommanderX', game: game, rank: '#2', score: '98% WR', streak: '25 wins' },
+    { name: 'Survivor', game: game, rank: '#3', score: '247 days', streak: '15 days' }
   ];
 
   const communityStats = [
