@@ -188,38 +188,38 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         </div>
       </div>
 
-      {/* Navigation Controls - Updated theme */}
+      {/* Navigation Controls */}
       {showNavigation && totalPanels > 1 && (
         <>
           <button
             onClick={handlePrevious}
             disabled={currentPanel === 0 || isAnimating}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm border border-white/20 text-purple-400 p-3 hover:bg-white/20 hover:border-purple-400/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-xl shadow-lg hover:scale-110"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 hover:border-purple-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-md shadow-lg"
             aria-label="Previous panel"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4" />
           </button>
           
           <button
             onClick={handleNext}
             disabled={currentPanel === totalPanels - 1 || isAnimating}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm border border-white/20 text-purple-400 p-3 hover:bg-white/20 hover:border-purple-400/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-xl shadow-lg hover:scale-110"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 hover:border-purple-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-md shadow-lg"
             aria-label="Next panel"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4" />
           </button>
 
           {/* Panel Indicators */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-1 z-20 bg-slate-800/80 backdrop-blur-sm rounded-full px-3 py-1 border border-purple-500/30">
             {Array.from({ length: totalPanels }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => navigateToPanel(index)}
                 disabled={isAnimating}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                   index === currentPanel 
-                    ? 'bg-gradient-to-r from-purple-400 to-pink-400 scale-125' 
-                    : 'bg-white/40 hover:bg-white/60'
+                    ? 'bg-purple-400 scale-125' 
+                    : 'bg-slate-600 hover:bg-purple-400/50'
                 } disabled:cursor-not-allowed`}
                 aria-label={`Go to panel ${index + 1}`}
               />
@@ -227,7 +227,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
           </div>
 
           {/* Panel Counter */}
-          <div className="absolute top-6 right-6 bg-white/10 backdrop-blur-sm text-purple-400 px-3 py-2 rounded-full text-sm font-medium border border-white/20 z-20">
+          <div className="absolute top-3 right-3 bg-slate-800/80 backdrop-blur-sm text-purple-400 px-2 py-1 rounded text-xs font-mono border border-purple-500/30 z-20">
             {currentPanel + 1} / {totalPanels}
           </div>
         </>
