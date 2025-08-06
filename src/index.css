@@ -1,6 +1,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap");
+@import "./components/effects/parallax-animations.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -47,6 +48,13 @@
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
+}
+
+/* Enhanced parallax performance */
+.parallax-element {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Gaming-specific enhancements */
