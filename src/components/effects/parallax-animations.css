@@ -1,0 +1,118 @@
+
+/* Parallax base styles */
+.parallax-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  will-change: transform;
+}
+
+/* Smooth transforms for better performance */
+.parallax-smooth {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Enhanced animations for parallax elements */
+@keyframes parallax-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-0.5deg);
+  }
+}
+
+@keyframes parallax-glow {
+  0%, 100% {
+    opacity: 0.3;
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(15px);
+  }
+}
+
+@keyframes parallax-pulse-slow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Apply animations to parallax elements */
+.parallax-float {
+  animation: parallax-float 6s ease-in-out infinite;
+}
+
+.parallax-glow {
+  animation: parallax-glow 4s ease-in-out infinite;
+}
+
+.parallax-pulse-slow {
+  animation: parallax-pulse-slow 3s ease-in-out infinite;
+}
+
+/* Stagger animations */
+.parallax-stagger-1 { animation-delay: 0s; }
+.parallax-stagger-2 { animation-delay: 0.5s; }
+.parallax-stagger-3 { animation-delay: 1s; }
+.parallax-stagger-4 { animation-delay: 1.5s; }
+.parallax-stagger-5 { animation-delay: 2s; }
+
+/* Enhanced blur effects */
+.parallax-blur-sm { filter: blur(2px); }
+.parallax-blur-md { filter: blur(4px); }
+.parallax-blur-lg { filter: blur(8px); }
+.parallax-blur-xl { filter: blur(16px); }
+
+/* Depth layers */
+.parallax-depth-1 { z-index: 10; }
+.parallax-depth-2 { z-index: 20; }
+.parallax-depth-3 { z-index: 30; }
+.parallax-depth-4 { z-index: 40; }
+
+/* Performance optimizations */
+.parallax-optimized {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Responsive parallax adjustments */
+@media (max-width: 768px) {
+  .parallax-layer {
+    /* Reduce parallax effects on mobile for better performance */
+    transform: none !important;
+  }
+  
+  .parallax-mobile-reduce {
+    animation-duration: 8s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-layer,
+  .parallax-float,
+  .parallax-glow,
+  .parallax-pulse-slow {
+    animation: none !important;
+    transform: none !important;
+  }
+}
