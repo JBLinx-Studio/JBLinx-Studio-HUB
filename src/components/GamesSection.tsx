@@ -290,20 +290,20 @@ const GamesSection = () => {
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-8 bg-slate-950 border-t border-slate-800">
+    <section className="py-12 bg-slate-950 border-t border-slate-800 min-h-screen">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1.5 mb-2 backdrop-blur-sm">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-xl lg:text-2xl font-black text-white leading-tight font-mono mb-2">
+          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-2">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-12 h-0.5 bg-purple-400 mx-auto mb-2"></div>
+          <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-3"></div>
           
           <p className="text-slate-400 max-w-xl mx-auto text-sm">
             Professional games across all platforms and genres
@@ -311,7 +311,7 @@ const GamesSection = () => {
         </div>
 
         {/* Game Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
           {[
             { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
             { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
@@ -320,19 +320,19 @@ const GamesSection = () => {
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/95 border border-slate-700 p-2 text-center hover:border-purple-400/50 transition-colors">
-                <IconComponent className={`w-4 h-4 mx-auto mb-1 ${stat.color}`} />
-                <div className="text-sm font-black text-white font-mono mb-0.5">{stat.value}</div>
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-3 text-center hover:border-purple-400/50 transition-colors">
+                <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
+                <div className="text-lg font-black text-white font-mono mb-1">{stat.value}</div>
                 <div className="text-slate-400 text-xs">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
-        {/* Main Content Layout - Constrained height */}
-        <div className="flex gap-4 h-[600px] max-h-[600px]">
-          {/* Left Sidebar - Games Library */}
-          <div className="w-64 flex-shrink-0">
+        {/* Enhanced Main Content Layout - Improved vertical space and navigation */}
+        <div className="flex gap-6 h-[1400px]">
+          {/* Left Sidebar - Compact Games Library */}
+          <div className="w-72 flex-shrink-0">
             <GameLibrarySidebar 
               games={games} 
               selectedGameId={selectedGameId}
@@ -340,15 +340,15 @@ const GamesSection = () => {
             />
           </div>
 
-          {/* Right Content - Horizontal panels */}
+          {/* Right Content - Enhanced with smoother HorizontalDragContainer */}
           <div className="flex-1 h-full">
             <HorizontalDragContainer className="h-full" showNavigation={true}>
-              {/* Panel 1: Game Details */}
+              {/* Panel 1: Enhanced Game Details */}
               <div className="w-full h-full flex-shrink-0 snap-start px-2">
                 <GameDetailsPanel game={selectedGame} />
               </div>
 
-              {/* Panel 2: Updates & Community */}
+              {/* Panel 2: Updates & Community Split */}
               <div className="w-full h-full flex-shrink-0 snap-start px-2">
                 <div className="grid grid-rows-2 gap-4 h-full">
                   <GameUpdatesPanel game={selectedGame} />
@@ -356,23 +356,49 @@ const GamesSection = () => {
                 </div>
               </div>
 
-              {/* Panel 3: Developer Insights */}
+              {/* Panel 3: Developer Insights & Analytics */}
               <div className="w-full h-full flex-shrink-0 snap-start px-2">
                 <DeveloperInsights game={selectedGame} />
+              </div>
+
+              {/* Panel 4: Extended Media Gallery */}
+              <div className="w-full h-full flex-shrink-0 snap-start px-2">
+                <div className="bg-slate-800/95 border border-slate-700 h-full flex flex-col overflow-hidden">
+                  <div className="p-4 border-b border-slate-700">
+                    <h3 className="text-white font-black text-lg font-mono mb-2">
+                      📸 MEDIA GALLERY
+                    </h3>
+                    <p className="text-slate-400 text-sm">Screenshots, Concept Art & Behind the Scenes</p>
+                  </div>
+                  
+                  <div className="flex-1 overflow-y-auto p-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      {selectedGame.images.gallery.map((image, index) => (
+                        <div key={index} className="aspect-video rounded overflow-hidden border border-slate-600 hover:border-purple-400/50 transition-colors group">
+                          <img 
+                            src={image} 
+                            alt={`${selectedGame.title} Screenshot ${index + 1}`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </HorizontalDragContainer>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-8">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 font-black transition-all duration-300 space-x-2 shadow-lg text-sm"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg"
           >
-            <Play className="w-4 h-4" />
+            <Play className="w-5 h-5" />
             <span>EXPLORE ALL GAMES</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>
