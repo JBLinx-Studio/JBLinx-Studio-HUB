@@ -1,3 +1,4 @@
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap");
 @import "./components/effects/parallax-animations.css";
@@ -189,62 +190,4 @@
 
 .status-early-access {
   @apply bg-orange-500 text-white;
-}
-
-/* Enhanced parallax scrolling effects */
-.parallax-section {
-  position: relative;
-  overflow: hidden;
-  transform-style: preserve-3d;
-}
-
-.parallax-bg {
-  position: absolute;
-  top: -20%;
-  left: -20%;
-  width: 140%;
-  height: 140%;
-  will-change: transform;
-  z-index: -1;
-}
-
-.parallax-mid {
-  position: relative;
-  z-index: 1;
-  will-change: transform;
-}
-
-.parallax-fg {
-  position: relative;
-  z-index: 2;
-  will-change: transform;
-}
-
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  
-  .parallax-bg,
-  .parallax-mid,
-  .parallax-fg {
-    transform: none !important;
-  }
-}
-
-/* Enhanced performance for parallax */
-.parallax-container {
-  contain: layout style paint;
-  overflow: hidden;
-}
-
-.parallax-optimized {
-  backface-visibility: hidden;
-  perspective: 1000px;
-  transform: translate3d(0, 0, 0);
 }

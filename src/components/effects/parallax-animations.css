@@ -1,155 +1,53 @@
 
-/* Parallax base styles */
+/* Parallax Performance Optimizations */
 .parallax-container {
-  overflow: hidden;
-  position: relative;
-  contain: layout style paint;
-}
-
-.parallax-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
-}
-
-/* Enhanced performance optimizations */
-.parallax-optimized {
-  backface-visibility: hidden;
-  perspective: 1000px;
-  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
   will-change: transform;
-  contain: layout style paint;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* Enhanced animations for parallax elements */
+/* Smooth parallax transitions */
+.parallax-background {
+  transition: opacity 0.1s ease-out;
+}
+
+.parallax-foreground {
+  transition: transform 0.05s ease-out;
+}
+
+/* Enhanced blur effects for parallax depth */
+.parallax-blur-enhanced {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+
+/* Optimized animations for parallax elements */
 @keyframes parallax-float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-15px) rotate(2deg);
-  }
-  66% {
-    transform: translateY(8px) rotate(-1deg);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
-@keyframes parallax-glow {
-  0%, 100% {
-    opacity: 0.4;
-    filter: blur(25px);
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    filter: blur(15px);
-    transform: scale(1.1);
-  }
-}
-
-@keyframes parallax-pulse-slow {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.15);
-  }
-}
-
-@keyframes parallax-drift {
-  0% {
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateX(10px) translateY(-5px) rotate(1deg);
-  }
-  50% {
-    transform: translateX(0) translateY(-10px) rotate(0deg);
-  }
-  75% {
-    transform: translateX(-10px) translateY(-5px) rotate(-1deg);
-  }
-  100% {
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-}
-
-/* Apply animations to parallax elements */
 .parallax-float {
-  animation: parallax-float 8s ease-in-out infinite;
+  animation: parallax-float 6s ease-in-out infinite;
 }
 
-.parallax-glow {
-  animation: parallax-glow 6s ease-in-out infinite;
-}
-
-.parallax-pulse-slow {
-  animation: parallax-pulse-slow 4s ease-in-out infinite;
-}
-
-.parallax-drift {
-  animation: parallax-drift 12s ease-in-out infinite;
-}
-
-/* Stagger animations */
-.parallax-stagger-1 { animation-delay: 0s; }
-.parallax-stagger-2 { animation-delay: 0.3s; }
-.parallax-stagger-3 { animation-delay: 0.6s; }
-.parallax-stagger-4 { animation-delay: 0.9s; }
-.parallax-stagger-5 { animation-delay: 1.2s; }
-.parallax-stagger-6 { animation-delay: 1.5s; }
-
-/* Enhanced blur effects */
-.parallax-blur-sm { filter: blur(3px); }
-.parallax-blur-md { filter: blur(6px); }
-.parallax-blur-lg { filter: blur(12px); }
-.parallax-blur-xl { filter: blur(24px); }
-
-/* Depth layers with enhanced z-index */
-.parallax-depth-1 { z-index: 1; }
-.parallax-depth-2 { z-index: 2; }
-.parallax-depth-3 { z-index: 3; }
-.parallax-depth-4 { z-index: 4; }
-.parallax-depth-5 { z-index: 5; }
-
-/* Responsive parallax adjustments */
-@media (max-width: 768px) {
-  .parallax-layer {
-    /* Reduce but don't eliminate parallax effects on mobile */
-    transform: scale(0.8) !important;
-  }
-  
-  .parallax-mobile-reduce {
-    animation-duration: 10s;
-  }
+/* Performance optimized pulse for parallax */
+.parallax-pulse {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .parallax-layer,
-  .parallax-float,
-  .parallax-glow,
-  .parallax-pulse-slow,
-  .parallax-drift {
-    animation: none !important;
+  .parallax-container,
+  .parallax-background,
+  .parallax-foreground {
     transform: none !important;
+    transition: none !important;
   }
-}
-
-/* Smooth scrolling enhancements */
-.parallax-smooth-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* GPU acceleration for better performance */
-.parallax-gpu-accelerated {
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
+  
+  .parallax-float,
+  .parallax-pulse {
+    animation: none !important;
+  }
 }
