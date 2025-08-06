@@ -6,6 +6,7 @@ import GameLibraryPanel from './games/GameLibraryPanel';
 import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
+import HorizontalDragContainer from './ui/HorizontalDragContainer';
 
 const GamesSection = () => {
   const [selectedGameId, setSelectedGameId] = useState(1);
@@ -270,29 +271,117 @@ const GamesSection = () => {
 
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
+  const gamePanels = [
+    // Main Game Overview Panel
+    <div key="overview" className="w-full flex-shrink-0 h-full">
+      <ResizablePanelGroup direction="horizontal" className="h-full">
+        <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
+          <GameLibraryPanel 
+            games={filteredGames}
+            selectedGameId={selectedGameId}
+            onSelectGame={setSelectedGameId}
+            activeCategory={activeCategory}
+            onCategoryChange={setActiveCategory}
+          />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={75}>
+          <GameDetailsPanel game={selectedGame} />
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>,
+
+    // Community & Updates Panel
+    <div key="community" className="w-full flex-shrink-0 h-full">
+      <ResizablePanelGroup direction="vertical" className="h-full">
+        <ResizablePanel defaultSize={60}>
+          <CommunityPanel game={selectedGame} />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={40}>
+          <GameUpdatesPanel game={selectedGame} />
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>,
+
+    // Extended Stats & Analytics Panel
+    <div key="analytics" className="w-full flex-shrink-0 h-full bg-slate-900/95 p-8">
+      <div className="h-full overflow-y-auto">
+        <h3 className="text-2xl font-black text-white mb-6 font-mono">GAME ANALYTICS</h3>
+        <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className="bg-slate-800 border border-slate-700 p-6">
+            <h4 className="text-purple-400 font-bold mb-4">PLAYER METRICS</h4>
+            <div className="space-y-4">
+              <div className="flex justify-between">
+                <span className="text-slate-300">Peak Players</span>
+                <span className="text-white font-bold">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-300">Avg Session</span>
+                <span className="text-white font-bold">{selectedGame.stats.averageSession}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-300">Retention</span>
+                <span className="text-green-400 font-bold">{selectedGame.stats.retention}</span>
+              </div>
+            </div>
+          </div>
+          <div className="bg-slate-800 border border-slate-700 p-6">
+            <h4 className="text-cyan-400 font-bold mb-4">PLATFORM DATA</h4>
+            <div className="space-y-4">
+              {selectedGame.platforms.map((platform, index) => (
+                <div key={index} className="flex justify-between">
+                  <span className="text-slate-300">{platform}</span>
+                  <span className="text-white font-bold">{Math.floor(Math.random() * 40 + 10)}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="bg-slate-800 border border-slate-700 p-6">
+          <h4 className="text-yellow-400 font-bold mb-4">REVENUE INSIGHTS</h4>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-black text-white">${(selectedGame.price.base * 1000).toLocaleString()}</div>
+              <div className="text-slate-400 text-sm">Monthly Revenue</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-black text-white">{selectedGame.reviewCount}</div>
+              <div className="text-slate-400 text-sm">Total Reviews</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-black text-white">{selectedGame.rating}/5</div>
+              <div className="text-slate-400 text-sm">Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ];
+
   return (
-    <section className="py-12 bg-slate-950 border-t border-slate-800">
+    <section className="py-16 min-h-[1400px] bg-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-4">
         {/* Compact Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-12">
           <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-2xl font-black text-white leading-tight font-mono mb-3">
+          <h2 className="text-3xl font-black text-white leading-tight font-mono mb-4">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-3"></div>
+          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
           
-          <p className="text-slate-400 max-w-xl mx-auto text-sm">
-            Professional games across all platforms and genres
+          <p className="text-slate-400 max-w-2xl mx-auto text-base leading-relaxed">
+            Professional games across all platforms and genres with cutting-edge graphics and immersive gameplay
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {[
             { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
             { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
@@ -301,83 +390,46 @@ const GamesSection = () => {
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/95 border border-slate-700 p-4 text-center hover:border-purple-400/50 transition-colors backdrop-blur-sm">
-                <IconComponent className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
-                <div className="text-xl font-black text-white font-mono mb-1">{stat.value}</div>
-                <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-6 text-center hover:border-purple-400/50 transition-colors backdrop-blur-sm">
+                <IconComponent className={`w-8 h-8 mx-auto mb-3 ${stat.color}`} />
+                <div className="text-2xl font-black text-white font-mono mb-2">{stat.value}</div>
+                <div className="text-slate-400 text-sm font-bold">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
         {/* Search Bar */}
-        <div className="mb-8">
-          <div className="relative max-w-lg mx-auto">
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+        <div className="mb-12">
+          <div className="relative max-w-2xl mx-auto">
+            <Search className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search games, genres..."
+              placeholder="Search games, genres, platforms..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800/90 border-2 border-slate-700 text-white pl-12 pr-4 py-3 text-sm focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
+              className="w-full bg-slate-800/90 border-2 border-slate-700 text-white pl-14 pr-6 py-4 text-base focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
             />
           </div>
         </div>
 
-        {/* Enhanced Resizable Panel Layout - Made Much Larger */}
-        <div className="h-[800px] bg-slate-900/50 border-2 border-slate-700 backdrop-blur-sm shadow-2xl shadow-purple-500/10">
-          <ResizablePanelGroup direction="horizontal">
-            {/* Games Library Panel */}
-            <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
-              <GameLibraryPanel 
-                games={filteredGames}
-                selectedGameId={selectedGameId}
-                onSelectGame={setSelectedGameId}
-                activeCategory={activeCategory}
-                onCategoryChange={setActiveCategory}
-              />
-            </ResizablePanel>
-
-            <ResizableHandle withHandle />
-
-            {/* Right Content Panels */}
-            <ResizablePanel defaultSize={75}>
-              <ResizablePanelGroup direction="vertical">
-                {/* Game Details Panel */}
-                <ResizablePanel defaultSize={55} minSize={40}>
-                  <GameDetailsPanel game={selectedGame} />
-                </ResizablePanel>
-
-                <ResizableHandle withHandle />
-
-                {/* Bottom Panels */}
-                <ResizablePanel defaultSize={45}>
-                  <ResizablePanelGroup direction="horizontal">
-                    {/* Updates Panel */}
-                    <ResizablePanel defaultSize={50}>
-                      <GameUpdatesPanel game={selectedGame} />
-                    </ResizablePanel>
-
-                    <ResizableHandle withHandle />
-
-                    {/* Community Panel */}
-                    <ResizablePanel defaultSize={50}>
-                      <CommunityPanel game={selectedGame} />
-                    </ResizablePanel>
-                  </ResizablePanelGroup>
-                </ResizablePanel>
-              </ResizablePanelGroup>
-            </ResizablePanel>
-          </ResizablePanelGroup>
+        {/* Enhanced Horizontal Drag Container - Much Taller */}
+        <div className="h-[1000px] bg-slate-900/50 border-2 border-slate-700 backdrop-blur-sm shadow-2xl shadow-purple-500/10 mb-12">
+          <HorizontalDragContainer 
+            className="h-full"
+            showNavigation={true}
+          >
+            {gamePanels}
+          </HorizontalDragContainer>
         </div>
 
         {/* Enhanced CTA */}
-        <div className="text-center mt-8">
+        <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 text-sm font-black transition-all duration-300 space-x-2 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-8 py-4 text-base font-black transition-all duration-300 space-x-3 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
           >
-            <Trophy className="w-5 h-5" />
+            <Trophy className="w-6 h-6" />
             <span>EXPLORE ALL GAMES</span>
           </Link>
         </div>
