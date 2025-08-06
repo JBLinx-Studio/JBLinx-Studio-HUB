@@ -1,0 +1,53 @@
+
+/* Parallax Performance Optimizations */
+.parallax-container {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Smooth parallax transitions */
+.parallax-background {
+  transition: opacity 0.1s ease-out;
+}
+
+.parallax-foreground {
+  transition: transform 0.05s ease-out;
+}
+
+/* Enhanced blur effects for parallax depth */
+.parallax-blur-enhanced {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+
+/* Optimized animations for parallax elements */
+@keyframes parallax-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.parallax-float {
+  animation: parallax-float 6s ease-in-out infinite;
+}
+
+/* Performance optimized pulse for parallax */
+.parallax-pulse {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-container,
+  .parallax-background,
+  .parallax-foreground {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .parallax-float,
+  .parallax-pulse {
+    animation: none !important;
+  }
+}
