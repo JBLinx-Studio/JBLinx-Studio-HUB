@@ -21,12 +21,7 @@ import ParallaxDivider from '@/components/effects/ParallaxDivider';
 const Index = () => {
   return (
     <div className="min-h-screen bg-slate-950">
-      <ProfessionalHeader 
-        badge="Professional Studio"
-        title="JBLinx Studio"
-        subtitle="Premium Development Solutions"
-        description="Creating exceptional digital experiences with cutting-edge technology and innovative design."
-      />
+      <ProfessionalHeader />
       <HeroSection />
       
       <ProfessionalLayout background="gradient" padding="xl">
