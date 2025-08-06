@@ -25,7 +25,7 @@ const Index = () => {
         <ParallaxDivider 
           theme="premium" 
           title="PREMIUM CONTENT SECTORS" 
-          height="lg"
+          height="xl"
         />
         
         {/* PRIORITY 1: GAMERS - Enhanced Entry Animation */}
@@ -73,7 +73,7 @@ const Index = () => {
         <ParallaxDivider 
           theme="terminal" 
           title="DATA STREAM TERMINAL" 
-          height="lg"
+          height="xl"
         />
         
         {/* Contact Section */}

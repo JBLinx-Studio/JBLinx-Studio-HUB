@@ -13,7 +13,7 @@ export const useParallax = (options: ParallaxOptions = {}) => {
     speed = 0.5,
     direction = 'up',
     threshold = 0.1,
-    easing = 0.1
+    easing = 0.15
   } = options;
 
   const [offset, setOffset] = useState(0);
@@ -39,23 +39,23 @@ export const useParallax = (options: ParallaxOptions = {}) => {
       setIsVisible(inViewport);
 
       if (inViewport) {
-        // Calculate parallax offset based on scroll position
+        // More dramatic parallax calculation
         const scrollProgress = (windowHeight - elementTop) / (windowHeight + elementHeight);
         const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
         
         let newOffset = 0;
         switch (direction) {
           case 'up':
-            newOffset = (clampedProgress - 0.5) * speed * 100;
+            newOffset = (clampedProgress - 0.5) * speed * 200; // Doubled the effect
             break;
           case 'down':
-            newOffset = -(clampedProgress - 0.5) * speed * 100;
+            newOffset = -(clampedProgress - 0.5) * speed * 200; // Doubled the effect
             break;
           case 'left':
-            newOffset = (clampedProgress - 0.5) * speed * 100;
+            newOffset = (clampedProgress - 0.5) * speed * 200;
             break;
           case 'right':
-            newOffset = -(clampedProgress - 0.5) * speed * 100;
+            newOffset = -(clampedProgress - 0.5) * speed * 200;
             break;
         }
         
@@ -68,7 +68,7 @@ export const useParallax = (options: ParallaxOptions = {}) => {
       const diff = targetOffset.current - currentOffset.current;
       currentOffset.current += diff * easing;
       
-      if (Math.abs(diff) > 0.01) {
+      if (Math.abs(diff) > 0.1) { // More sensitive threshold
         setOffset(currentOffset.current);
         rafRef.current = requestAnimationFrame(animate);
       }
@@ -96,9 +96,9 @@ export const useParallax = (options: ParallaxOptions = {}) => {
 };
 
 export const useMultiLayerParallax = () => {
-  const background = useParallax({ speed: 0.3, direction: 'up' });
-  const midground = useParallax({ speed: 0.6, direction: 'down' });
-  const foreground = useParallax({ speed: 0.1, direction: 'up' });
+  const background = useParallax({ speed: 1.5, direction: 'up' }); // More dramatic
+  const midground = useParallax({ speed: 0.8, direction: 'down' });
+  const foreground = useParallax({ speed: 0.3, direction: 'up' });
   
   return { background, midground, foreground };
 };
