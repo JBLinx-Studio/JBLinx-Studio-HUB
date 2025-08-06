@@ -5,23 +5,18 @@ interface ParallaxOptions {
   speed?: number;
   direction?: 'up' | 'down' | 'left' | 'right';
   threshold?: number;
-  easing?: number;
 }
 
 export const useParallax = (options: ParallaxOptions = {}) => {
   const {
     speed = 0.5,
     direction = 'up',
-    threshold = 0.1,
-    easing = 0.15
+    threshold = 0.1
   } = options;
 
   const [offset, setOffset] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>();
-  const targetOffset = useRef(0);
-  const currentOffset = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,73 +27,54 @@ export const useParallax = (options: ParallaxOptions = {}) => {
       const elementTop = rect.top;
       const elementHeight = rect.height;
 
-      // Check if element is in viewport with threshold
+      // Check if element is in viewport
       const inViewport = elementTop < windowHeight * (1 + threshold) && 
                         elementTop + elementHeight > -windowHeight * threshold;
       
       setIsVisible(inViewport);
 
       if (inViewport) {
-        // More dramatic parallax calculation
+        // Calculate parallax offset based on scroll position
         const scrollProgress = (windowHeight - elementTop) / (windowHeight + elementHeight);
         const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
         
         let newOffset = 0;
+        const parallaxAmount = (clampedProgress - 0.5) * speed * 100;
+        
         switch (direction) {
           case 'up':
-            newOffset = (clampedProgress - 0.5) * speed * 200; // Doubled the effect
+            newOffset = parallaxAmount;
             break;
           case 'down':
-            newOffset = -(clampedProgress - 0.5) * speed * 200; // Doubled the effect
+            newOffset = -parallaxAmount;
             break;
           case 'left':
-            newOffset = (clampedProgress - 0.5) * speed * 200;
+            newOffset = parallaxAmount;
             break;
           case 'right':
-            newOffset = -(clampedProgress - 0.5) * speed * 200;
+            newOffset = -parallaxAmount;
             break;
         }
         
-        targetOffset.current = newOffset;
+        setOffset(newOffset);
       }
     };
 
-    const animate = () => {
-      // Smooth interpolation using easing
-      const diff = targetOffset.current - currentOffset.current;
-      currentOffset.current += diff * easing;
-      
-      if (Math.abs(diff) > 0.1) { // More sensitive threshold
-        setOffset(currentOffset.current);
-        rafRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    const handleScrollThrottled = () => {
-      handleScroll();
-      if (!rafRef.current) {
-        rafRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    window.addEventListener('scroll', handleScrollThrottled, { passive: true });
-    handleScrollThrottled(); // Initial call
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
 
     return () => {
-      window.removeEventListener('scroll', handleScrollThrottled);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [speed, direction, threshold, easing]);
+  }, [speed, direction, threshold]);
 
   return { elementRef, offset, isVisible };
 };
 
 export const useMultiLayerParallax = () => {
-  const background = useParallax({ speed: 1.5, direction: 'up' }); // More dramatic
-  const midground = useParallax({ speed: 0.8, direction: 'down' });
-  const foreground = useParallax({ speed: 0.3, direction: 'up' });
+  const background = useParallax({ speed: 0.8, direction: 'up' });
+  const midground = useParallax({ speed: 0.4, direction: 'down' });
+  const foreground = useParallax({ speed: 0.2, direction: 'up' });
   
   return { background, midground, foreground };
 };
