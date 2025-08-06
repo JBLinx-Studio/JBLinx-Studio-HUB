@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { ArrowRight, Trophy, Play, Gamepad2, Users, Download, Star, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -289,51 +290,47 @@ const GamesSection = () => {
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950 border-t border-slate-800/50 min-h-[1200px] relative">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-transparent to-pink-900/10"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.1),transparent)]"></div>
-      
-      <div className="container mx-auto px-6 relative">
-        {/* Header with Contact Section Style */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-purple-500/30 px-6 py-3 rounded-full mb-6">
+    <section className="py-16 bg-slate-950 border-t border-slate-800 min-h-screen">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-3 backdrop-blur-sm rounded-lg">
             <Trophy className="w-5 h-5 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-            PREMIUM <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GAME</span> LIBRARY
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
+            PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mb-6"></div>
+          <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-4"></div>
           
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-slate-400 max-w-2xl mx-auto text-base leading-relaxed">
             Professional games across all platforms and genres - Experience cutting-edge gaming entertainment
           </p>
         </div>
 
-        {/* Game Stats with Contact Section Theme */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {/* Game Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
-            { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400', gradient: 'from-green-500/20 to-emerald-500/20' },
-            { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400', gradient: 'from-yellow-500/20 to-orange-500/20' },
-            { icon: Download, label: 'TOTAL DOWNLOADS', value: '45K+', color: 'text-blue-400', gradient: 'from-blue-500/20 to-cyan-500/20' },
-            { icon: Trophy, label: 'LIVE GAMES', value: '6', color: 'text-purple-400', gradient: 'from-purple-500/20 to-pink-500/20' }
+            { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
+            { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
+            { icon: Download, label: 'TOTAL DOWNLOADS', value: '45K+', color: 'text-blue-400' },
+            { icon: Trophy, label: 'LIVE GAMES', value: '6', color: 'text-purple-400' }
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className={`bg-gradient-to-br ${stat.gradient} backdrop-blur-sm border border-slate-700/50 p-6 text-center hover:border-purple-400/50 transition-all duration-300 rounded-xl group hover:scale-105`}>
-                <IconComponent className={`w-8 h-8 mx-auto mb-3 ${stat.color} transition-transform duration-300 group-hover:scale-110`} />
-                <div className="text-xl font-black text-white font-mono mb-1">{stat.value}</div>
-                <div className="text-slate-400 text-sm font-medium">{stat.label}</div>
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-4 text-center hover:border-purple-400/50 transition-colors rounded-lg backdrop-blur-sm">
+                <IconComponent className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
+                <div className="text-lg font-black text-white font-mono mb-1">{stat.value}</div>
+                <div className="text-slate-400 text-sm">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
-        {/* Main Content Layout - Much Taller (1000px) */}
-        <div className="flex gap-8 h-[1000px] max-h-[1000px] mb-16">
+        {/* Main Content Layout - Much taller to fit all panels */}
+        <div className="flex gap-6 h-[900px] max-h-[900px] mb-8">
           {/* Left Sidebar - Games Library */}
           <div className="w-80 flex-shrink-0">
             <GameLibrarySidebar 
@@ -343,16 +340,16 @@ const GamesSection = () => {
             />
           </div>
 
-          {/* Right Content - Horizontal panels with proper spacing */}
+          {/* Right Content - Horizontal panels with better spacing */}
           <div className="flex-1 h-full">
-            <HorizontalDragContainer className="h-full rounded-xl overflow-hidden" showNavigation={true}>
+            <HorizontalDragContainer className="h-full" showNavigation={true}>
               {/* Panel 1: Game Details */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-4">
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
                 <GameDetailsPanel game={selectedGame} />
               </div>
 
               {/* Panel 2: Updates & Community */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-4">
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
                 <div className="grid grid-rows-2 gap-6 h-full">
                   <GameUpdatesPanel game={selectedGame} />
                   <CommunityPanel game={selectedGame} />
@@ -360,31 +357,23 @@ const GamesSection = () => {
               </div>
 
               {/* Panel 3: Developer Insights */}
-              <div className="w-full h-full flex-shrink-0 snap-start px-4">
+              <div className="w-full h-full flex-shrink-0 snap-start px-3">
                 <DeveloperInsights game={selectedGame} />
               </div>
             </HorizontalDragContainer>
           </div>
         </div>
 
-        {/* CTA with Contact Section Theme */}
-        <div className="text-center">
-          <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-500/30 rounded-2xl p-8 mb-8">
-            <h3 className="text-2xl font-black text-white mb-4">
-              READY TO <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">LEVEL UP?</span>
-            </h3>
-            <p className="text-slate-400 mb-6 max-w-md mx-auto">
-              Join thousands of players in our premium gaming ecosystem
-            </p>
-            <Link 
-              to="/game-development" 
-              className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 font-black transition-all duration-300 space-x-3 shadow-lg rounded-xl hover:scale-105 hover:shadow-purple-500/25"
-            >
-              <Play className="w-5 h-5" />
-              <span>EXPLORE ALL GAMES</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
+        {/* CTA */}
+        <div className="text-center mt-12">
+          <Link 
+            to="/game-development" 
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg text-base rounded-lg"
+          >
+            <Play className="w-5 h-5" />
+            <span>EXPLORE ALL GAMES</span>
+            <ArrowRight className="w-5 h-5" />
+          </Link>
         </div>
       </div>
     </section>
