@@ -6,7 +6,7 @@ import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
 import DeveloperInsights from './games/DeveloperInsights';
-import HorizontalDragContainer from './ui/HorizontalDragContainer';
+import VerticalPanelContainer from './ui/VerticalPanelContainer';
 
 const GamesSection = () => {
   const [selectedGameId, setSelectedGameId] = useState(1);
@@ -289,103 +289,108 @@ const GamesSection = () => {
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
   return (
-    <section className="py-20 bg-slate-950 relative min-h-[1200px]">
-      {/* Background effects matching the contact section */}
+    <section className="py-12 bg-slate-950 relative min-h-[1200px]">
+      {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-950 to-slate-900/50"></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent"></div>
       
       <div className="container mx-auto px-6 relative z-10">
-        {/* Header - matching contact section style */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-gradient-to-r from-slate-800/90 to-slate-700/90 backdrop-blur-sm border border-purple-500/30 px-6 py-3 rounded-lg mb-6 shadow-lg">
-            <Trophy className="w-5 h-5 mr-3 text-purple-400" />
-            <span className="text-purple-300 font-bold text-sm tracking-wider uppercase">Interactive Gaming Portfolio</span>
+        {/* Compact Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800/90 border border-purple-500/30 px-4 py-2 mb-4">
+            <Trophy className="w-4 h-4 mr-2 text-purple-400" />
+            <span className="text-purple-300 font-bold text-sm tracking-wider uppercase">Gaming Portfolio</span>
           </div>
           
-          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-6 font-mono tracking-tight">
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight mb-4 font-mono tracking-tight">
             PROFESSIONAL <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-6 rounded-full"></div>
+          <div className="w-16 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-4"></div>
           
-          <p className="text-slate-300 max-w-2xl mx-auto text-lg leading-relaxed">
-            Cross-platform gaming experiences spanning multiple genres and platforms with professional-grade development
+          <p className="text-slate-300 max-w-xl mx-auto text-sm leading-relaxed">
+            Interactive gaming experiences across multiple platforms and genres
           </p>
         </div>
 
-        {/* Game Stats - matching contact section cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {/* Compact Stats Grid */}
+        <div className="grid grid-cols-4 gap-3 mb-8">
           {[
-            { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400', bgColor: 'from-green-500/10 to-green-400/5' },
-            { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400', bgColor: 'from-yellow-500/10 to-yellow-400/5' },
-            { icon: Download, label: 'TOTAL DOWNLOADS', value: '45K+', color: 'text-blue-400', bgColor: 'from-blue-500/10 to-blue-400/5' },
-            { icon: Trophy, label: 'LIVE GAMES', value: '6', color: 'text-purple-400', bgColor: 'from-purple-500/10 to-purple-400/5' }
+            { icon: Users, label: 'PLAYERS', value: '112K+', color: 'text-green-400' },
+            { icon: Star, label: 'RATING', value: '4.7★', color: 'text-yellow-400' },
+            { icon: Download, label: 'DOWNLOADS', value: '45K+', color: 'text-blue-400' },
+            { icon: Trophy, label: 'GAMES', value: '6', color: 'text-purple-400' }
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className={`bg-gradient-to-br ${stat.bgColor} backdrop-blur-sm border border-slate-700/50 p-6 text-center hover:border-purple-400/50 transition-all duration-300 rounded-lg shadow-lg group`}>
-                <div className="bg-slate-800/50 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <IconComponent className={`w-6 h-6 ${stat.color}`} />
+              <div key={index} className="bg-slate-800/40 border border-slate-700/50 p-3 text-center hover:border-purple-400/50 transition-colors">
+                <div className="w-8 h-8 bg-slate-700/50 flex items-center justify-center mx-auto mb-2">
+                  <IconComponent className={`w-4 h-4 ${stat.color}`} />
                 </div>
-                <div className={`text-2xl font-black ${stat.color} font-mono mb-2`}>{stat.value}</div>
-                <div className="text-slate-400 text-sm font-medium tracking-wide">{stat.label}</div>
+                <div className={`text-sm font-black ${stat.color} font-mono`}>{stat.value}</div>
+                <div className="text-slate-400 text-xs font-medium">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
-        {/* Main Content Layout - Increased height and better spacing */}
-        <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/60 backdrop-blur-sm rounded-2xl border border-slate-700/50 shadow-2xl overflow-hidden">
-          <div className="flex gap-0 h-[800px]">
-            {/* Left Sidebar - Games Library */}
-            <div className="w-80 flex-shrink-0 border-r border-slate-700/50 bg-slate-900/50">
+        {/* Main Content Grid - Separate Panels */}
+        <div className="grid grid-cols-12 gap-4 mb-8">
+          {/* Game Library Sidebar */}
+          <div className="col-span-12 lg:col-span-4">
+            <div className="bg-slate-800/40 border border-slate-700/50 h-[600px] overflow-hidden">
               <GameLibrarySidebar 
                 games={games} 
                 selectedGameId={selectedGameId}
                 onSelectGame={setSelectedGameId}
               />
             </div>
+          </div>
 
-            {/* Right Content - Horizontal scrollable panels */}
-            <div className="flex-1 h-full min-w-0 bg-slate-800/20">
-              <HorizontalDragContainer className="h-full" showNavigation={true}>
-                {/* Panel 1: Game Details */}
-                <div className="w-full h-full flex-shrink-0 snap-start">
-                  <GameDetailsPanel game={selectedGame} />
-                </div>
+          {/* Main Game Details Panel */}
+          <div className="col-span-12 lg:col-span-5">
+            <div className="bg-slate-800/40 border border-slate-700/50 h-[600px] overflow-hidden">
+              <GameDetailsPanel game={selectedGame} />
+            </div>
+          </div>
 
-                {/* Panel 2: Updates & Community */}
-                <div className="w-full h-full flex-shrink-0 snap-start">
-                  <div className="grid grid-rows-2 gap-4 h-full p-4">
-                    <GameUpdatesPanel game={selectedGame} />
-                    <CommunityPanel game={selectedGame} />
-                  </div>
-                </div>
+          {/* Right Side Panels - Stackable */}
+          <div className="col-span-12 lg:col-span-3 space-y-4">
+            {/* Updates Panel */}
+            <div className="bg-slate-800/40 border border-slate-700/50 h-[190px]">
+              <VerticalPanelContainer panelHeight={190} showNavigation={true} className="h-full">
+                <GameUpdatesPanel game={selectedGame} />
+              </VerticalPanelContainer>
+            </div>
 
-                {/* Panel 3: Developer Insights */}
-                <div className="w-full h-full flex-shrink-0 snap-start">
-                  <DeveloperInsights game={selectedGame} />
-                </div>
-              </HorizontalDragContainer>
+            {/* Community Panel */}
+            <div className="bg-slate-800/40 border border-slate-700/50 h-[200px]">
+              <VerticalPanelContainer panelHeight={200} showNavigation={true} className="h-full">
+                <CommunityPanel game={selectedGame} />
+              </VerticalPanelContainer>
+            </div>
+
+            {/* Developer Insights Panel */}
+            <div className="bg-slate-800/40 border border-slate-700/50 h-[200px]">
+              <VerticalPanelContainer panelHeight={200} showNavigation={true} className="h-full">
+                <DeveloperInsights game={selectedGame} />
+              </VerticalPanelContainer>
             </div>
           </div>
         </div>
 
-        {/* CTA - matching contact section button style */}
-        <div className="text-center mt-16">
+        {/* Compact CTA */}
+        <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500 hover:from-purple-600 hover:via-purple-700 hover:to-pink-600 text-white px-8 py-4 font-bold transition-all duration-300 space-x-3 shadow-lg hover:shadow-xl transform hover:scale-105 rounded-lg group"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 font-bold transition-all duration-300 space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
-            <Play className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-            <span className="text-lg tracking-wide">EXPLORE ALL GAMES</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            <Play className="w-4 h-4" />
+            <span className="tracking-wide">EXPLORE ALL GAMES</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
-      
-      {/* Bottom spacing to prevent overlap */}
-      <div className="h-20"></div>
     </section>
   );
 };
