@@ -398,7 +398,7 @@ const GamesSection = () => {
       title: 'Game Overview',
       component: (
         <div className="flex h-full">
-          <div className="w-80 border-r border-slate-700/50">
+          <div className="w-72">
             <GameLibraryPanel 
               games={filteredGames}
               selectedGameId={selectedGameId}
@@ -415,13 +415,22 @@ const GamesSection = () => {
     },
     {
       id: 'community',
-      title: 'Community & Updates',
+      title: 'Community Hub',
       component: (
         <div className="flex h-full">
+          <div className="w-72">
+            <GameLibraryPanel 
+              games={filteredGames}
+              selectedGameId={selectedGameId}
+              onSelectGame={setSelectedGameId}
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+            />
+          </div>
           <div className="flex-1">
             <CommunityPanel game={selectedGame} />
           </div>
-          <div className="w-80 border-l border-slate-700/50">
+          <div className="w-64">
             <GameUpdatesPanel game={selectedGame} />
           </div>
         </div>
@@ -429,58 +438,69 @@ const GamesSection = () => {
     },
     {
       id: 'analytics',
-      title: 'Game Analytics',
+      title: 'Performance Analytics',
       component: (
-        <div className="h-full bg-slate-900/95 p-6 overflow-y-auto">
-          <div className="max-w-4xl mx-auto">
-            <h3 className="text-xl font-black text-white mb-6 font-mono">PERFORMANCE ANALYTICS</h3>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-              <div className="bg-slate-800/50 border border-slate-700/50 p-4">
-                <h4 className="text-purple-400 font-bold mb-4 text-sm">PLAYER METRICS</h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 text-sm">Peak Players</span>
-                    <span className="text-white font-bold">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 text-sm">Avg Session</span>
-                    <span className="text-white font-bold">{selectedGame.stats.averageSession}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 text-sm">Retention Rate</span>
-                    <span className="text-green-400 font-bold">{selectedGame.stats.retention}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-slate-800/50 border border-slate-700/50 p-4">
-                <h4 className="text-cyan-400 font-bold mb-4 text-sm">PLATFORM BREAKDOWN</h4>
-                <div className="space-y-3">
-                  {selectedGame.platforms.map((platform, index) => (
-                    <div key={index} className="flex justify-between items-center">
-                      <span className="text-slate-300 text-sm">{platform}</span>
-                      <span className="text-white font-bold">{Math.floor(Math.random() * 40 + 20)}%</span>
+        <div className="flex h-full">
+          <div className="w-72">
+            <GameLibraryPanel 
+              games={filteredGames}
+              selectedGameId={selectedGameId}
+              onSelectGame={setSelectedGameId}
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+            />
+          </div>
+          <div className="flex-1 bg-slate-900/95 p-4 overflow-y-auto">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-lg font-black text-white mb-4 font-mono">PERFORMANCE ANALYTICS</h3>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+                <div className="bg-slate-800/50 border border-slate-700/50 p-3">
+                  <h4 className="text-purple-400 font-bold mb-3 text-sm">PLAYER METRICS</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">Peak Players</span>
+                      <span className="text-white font-bold text-sm">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
                     </div>
-                  ))}
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">Avg Session</span>
+                      <span className="text-white font-bold text-sm">{selectedGame.stats.averageSession}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">Retention Rate</span>
+                      <span className="text-green-400 font-bold text-sm">{selectedGame.stats.retention}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-800/50 border border-slate-700/50 p-3">
+                  <h4 className="text-cyan-400 font-bold mb-3 text-sm">PLATFORM BREAKDOWN</h4>
+                  <div className="space-y-2">
+                    {selectedGame.platforms.map((platform, index) => (
+                      <div key={index} className="flex justify-between items-center">
+                        <span className="text-slate-300 text-sm">{platform}</span>
+                        <span className="text-white font-bold text-sm">{Math.floor(Math.random() * 40 + 20)}%</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="bg-slate-800/50 border border-slate-700/50 p-4">
-              <h4 className="text-yellow-400 font-bold mb-4 text-sm">REVENUE INSIGHTS</h4>
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-lg font-black text-white">${(selectedGame.price.base * 1500).toLocaleString()}</div>
-                  <div className="text-slate-400 text-xs">Monthly Revenue</div>
-                </div>
-                <div>
-                  <div className="text-lg font-black text-white">{selectedGame.reviewCount}</div>
-                  <div className="text-slate-400 text-xs">Total Reviews</div>
-                </div>
-                <div>
-                  <div className="text-lg font-black text-white">{selectedGame.rating}/5</div>
-                  <div className="text-slate-400 text-xs">Rating</div>
+              <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                <h4 className="text-yellow-400 font-bold mb-3 text-sm">REVENUE INSIGHTS</h4>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <div className="text-base font-black text-white">${(selectedGame.price.base * 1500).toLocaleString()}</div>
+                    <div className="text-slate-400 text-xs">Monthly Revenue</div>
+                  </div>
+                  <div>
+                    <div className="text-base font-black text-white">{selectedGame.reviewCount}</div>
+                    <div className="text-slate-400 text-xs">Total Reviews</div>
+                  </div>
+                  <div>
+                    <div className="text-base font-black text-white">{selectedGame.rating}/5</div>
+                    <div className="text-slate-400 text-xs">Rating</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -509,64 +529,65 @@ const GamesSection = () => {
   };
 
   return (
-    <section className="py-12 min-h-[1000px] bg-slate-950 border-t border-slate-800">
+    <section className="py-8 min-h-[900px] bg-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-4">
         {/* Compact Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1 mb-3 backdrop-blur-sm">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-xs font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-2xl font-black text-white leading-tight font-mono mb-3">
+          <h2 className="text-xl font-black text-white leading-tight font-mono mb-2">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-3"></div>
+          <div className="w-12 h-0.5 bg-purple-400 mx-auto mb-2"></div>
           
-          <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-            Professional games across all platforms with cutting-edge graphics and immersive gameplay
+          <p className="text-slate-400 max-w-lg mx-auto text-sm">
+            Professional games across all platforms with cutting-edge graphics
           </p>
         </div>
 
-        {/* Compact Stats Grid */}
-        <div className="grid grid-cols-4 gap-4 mb-8">
+        {/* Compact Stats - Single Row */}
+        <div className="flex justify-center gap-6 mb-6">
           {[
             { icon: Users, label: 'PLAYERS', value: '112K+', color: 'text-green-400' },
             { icon: Star, label: 'RATING', value: '4.7★', color: 'text-yellow-400' },
-            { icon: Download, label: 'DOWNLOADS', value: '45K+', color: 'text-blue-400' },
-            { icon: Trophy, label: 'GAMES', value: '6', color: 'text-purple-400' }
+            { icon: Download, label: 'GAMES', value: '6', color: 'text-purple-400' }
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/50 border border-slate-700/50 p-3 text-center hover:border-purple-400/50 transition-colors">
-                <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
-                <div className="text-lg font-black text-white font-mono">{stat.value}</div>
-                <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
+              <div key={index} className="flex items-center space-x-2 text-center">
+                <IconComponent className={`w-4 h-4 ${stat.color}`} />
+                <div>
+                  <div className="text-sm font-black text-white font-mono">{stat.value}</div>
+                  <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
+                </div>
               </div>
             );
           })}
         </div>
 
         {/* Search Bar */}
-        <div className="mb-8">
-          <div className="relative max-w-xl mx-auto">
-            <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        <div className="mb-6">
+          <div className="relative max-w-md mx-auto">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search games, genres, platforms..."
+              placeholder="Search games..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800/50 border border-slate-700 text-white pl-10 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
+              className="w-full bg-slate-800/50 border border-slate-700 text-white pl-9 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
             />
           </div>
         </div>
 
-        {/* Main Panel Container */}
-        <div className="relative h-[650px] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm">
+        {/* Main Panel Container - Much Taller */}
+        <div className="relative h-[750px] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm overflow-hidden">
           {/* Panel Content */}
           <div 
-            className="flex h-full transition-transform duration-300 ease-out"
+            className="flex h-full transition-transform duration-500 ease-out"
             style={{ transform: `translateX(-${currentPanel * 100}%)` }}
           >
             {panels.map((panel, index) => (
@@ -580,7 +601,7 @@ const GamesSection = () => {
           <button
             onClick={handlePrevious}
             disabled={currentPanel === 0}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -588,13 +609,13 @@ const GamesSection = () => {
           <button
             onClick={handleNext}
             disabled={currentPanel === panels.length - 1}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Panel Indicators */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10 bg-slate-800/50 backdrop-blur-sm px-3 py-1">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-slate-800/50 backdrop-blur-sm px-3 py-1">
             {panels.map((_, index) => (
               <button
                 key={index}
@@ -609,7 +630,7 @@ const GamesSection = () => {
           </div>
 
           {/* Panel Title */}
-          <div className="absolute top-3 left-3 bg-slate-800/90 backdrop-blur-sm px-3 py-1 z-10">
+          <div className="absolute top-3 left-3 bg-slate-800/90 backdrop-blur-sm px-3 py-1 z-20">
             <span className="text-purple-400 font-bold text-xs font-mono">
               {panels[currentPanel]?.title.toUpperCase()}
             </span>
@@ -617,10 +638,10 @@ const GamesSection = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-6">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-2 text-sm font-black transition-all duration-300 space-x-2 hover:scale-105"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 text-sm font-black transition-all duration-300 space-x-2 hover:scale-105"
           >
             <Trophy className="w-4 h-4" />
             <span>EXPLORE ALL GAMES</span>
