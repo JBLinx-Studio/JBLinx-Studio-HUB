@@ -1,3 +1,4 @@
+
 import React, { useRef, useState, useCallback, useEffect, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -42,8 +43,9 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
 
     updatePanels();
     
+    // Listen for resize events to recalculate panels
     const handleResize = () => {
-      setTimeout(updatePanels, 100);
+      setTimeout(updatePanels, 100); // Debounce resize
     };
     
     window.addEventListener('resize', handleResize);
@@ -75,6 +77,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     const { panelWidth } = panelCalculations;
     const targetScroll = panelIndex * panelWidth;
     
+    // Use smooth scroll for better performance
     container.scrollTo({
       left: targetScroll,
       behavior: 'smooth'
@@ -82,7 +85,8 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     setCurrentPanel(panelIndex);
     
-    setTimeout(() => setIsAnimating(false), 300);
+    // Reset animation flag after scroll completes
+    setTimeout(() => setIsAnimating(false), 500);
   }, [panelCalculations, isAnimating]);
 
   const handlePrevious = useCallback(() => {
@@ -124,6 +128,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     containerRef.current.style.cursor = 'grab';
     containerRef.current.style.userSelect = 'auto';
     
+    // Snap to nearest panel
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
     const newPanel = Math.round(container.scrollLeft / panelWidth);
@@ -136,6 +141,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     }
   }, [isDragging, handleMouseUp]);
 
+  // Touch events for mobile
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (!containerRef.current) return;
     
@@ -159,6 +165,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
     
     setIsDragging(false);
     
+    // Snap to nearest panel
     const container = containerRef.current;
     const panelWidth = container.clientWidth;
     const newPanel = Math.round(container.scrollLeft / panelWidth);
@@ -166,10 +173,10 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
   }, [isDragging, navigateToPanel, totalPanels]);
 
   return (
-    <div className="relative h-full">
+    <div className="relative">
       <div
         ref={containerRef}
-        className={`overflow-x-auto scrollbar-hide cursor-grab select-none snap-x snap-mandatory h-full ${className}`}
+        className={`overflow-x-auto scrollbar-hide cursor-grab select-none snap-x snap-mandatory ${className}`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -183,43 +190,43 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex h-full">
+        <div className="flex">
           {children}
         </div>
       </div>
 
-      {/* Navigation Controls */}
+      {/* Enhanced Navigation Controls */}
       {showNavigation && totalPanels > 1 && (
         <>
           <button
             onClick={handlePrevious}
             disabled={currentPanel === 0 || isAnimating}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 hover:border-purple-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-md shadow-lg"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-3 backdrop-blur-sm hover:bg-purple-500/20 hover:border-purple-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-lg shadow-lg shadow-purple-500/10"
             aria-label="Previous panel"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
           
           <button
             onClick={handleNext}
             disabled={currentPanel === totalPanels - 1 || isAnimating}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 hover:border-purple-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-md shadow-lg"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/95 border border-purple-500/50 text-purple-400 p-3 backdrop-blur-sm hover:bg-purple-500/20 hover:border-purple-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20 rounded-lg shadow-lg shadow-purple-500/10"
             aria-label="Next panel"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Panel Indicators */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-1 z-20 bg-slate-800/80 backdrop-blur-sm rounded-full px-3 py-1 border border-purple-500/30">
+          {/* Enhanced Panel Indicators */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-slate-800/80 backdrop-blur-sm rounded-full px-4 py-2 border border-purple-500/30">
             {Array.from({ length: totalPanels }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => navigateToPanel(index)}
                 disabled={isAnimating}
-                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   index === currentPanel 
-                    ? 'bg-purple-400 scale-125' 
-                    : 'bg-slate-600 hover:bg-purple-400/50'
+                    ? 'bg-purple-400 scale-125 shadow-lg shadow-purple-400/50' 
+                    : 'bg-slate-600 hover:bg-purple-400/50 hover:scale-110'
                 } disabled:cursor-not-allowed`}
                 aria-label={`Go to panel ${index + 1}`}
               />
@@ -227,7 +234,7 @@ const HorizontalDragContainer: React.FC<HorizontalDragContainerProps> = ({
           </div>
 
           {/* Panel Counter */}
-          <div className="absolute top-3 right-3 bg-slate-800/80 backdrop-blur-sm text-purple-400 px-2 py-1 rounded text-xs font-mono border border-purple-500/30 z-20">
+          <div className="absolute top-4 right-4 bg-slate-800/80 backdrop-blur-sm text-purple-400 px-3 py-1 rounded-full text-sm font-mono border border-purple-500/30 z-20">
             {currentPanel + 1} / {totalPanels}
           </div>
         </>
