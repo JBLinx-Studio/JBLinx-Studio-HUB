@@ -1,17 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { Trophy, Search, Users, Star, Download } from 'lucide-react';
+import { Trophy, Search, Users, Star, Download, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './ui/resizable';
 import GameLibraryPanel from './games/GameLibraryPanel';
 import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
-import HorizontalDragContainer from './ui/HorizontalDragContainer';
 
 const GamesSection = () => {
   const [selectedGameId, setSelectedGameId] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
+  const [currentPanel, setCurrentPanel] = useState(0);
 
   const games = [
     {
@@ -52,7 +51,39 @@ const GamesSection = () => {
         steam: "https://store.steampowered.com/",
         epic: "https://store.epicgames.com/",
         direct: "/buy/tactical-strike"
-      }
+      },
+      updates: [
+        {
+          version: "2.1.4",
+          date: "2 days ago",
+          notes: "Balance updates for competitive play, bug fixes for weapon attachments",
+          downloads: "12.3K",
+          rating: "4.9"
+        },
+        {
+          version: "2.1.3", 
+          date: "1 week ago",
+          notes: "New map: Industrial Complex, performance optimizations",
+          downloads: "18.7K",
+          rating: "4.8"
+        }
+      ],
+      devLogs: [
+        {
+          id: 1,
+          title: "Competitive Season 3 Updates",
+          date: "3 days ago",
+          excerpt: "Major balance changes coming to ranked play",
+          category: "Updates"
+        },
+        {
+          id: 2,
+          title: "Behind the Scenes: Map Design",
+          date: "1 week ago", 
+          excerpt: "How we create immersive combat environments",
+          category: "Development"
+        }
+      ]
     },
     {
       id: 2,
@@ -75,7 +106,7 @@ const GamesSection = () => {
         ]
       },
       trailer: "https://example.com/empire-conquest-trailer",
-      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems in this next-gen RTS experience.",
+      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems.",
       features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode"],
       systemReqs: { min: "GTX 1660, 12GB RAM", recommended: "RTX 4060, 32GB RAM" },
       dlc: [
@@ -92,7 +123,25 @@ const GamesSection = () => {
         steam: "https://store.steampowered.com/",
         gog: "https://www.gog.com/",
         direct: "/buy/empire-conquest"
-      }
+      },
+      updates: [
+        {
+          version: "1.3.2",
+          date: "4 days ago", 
+          notes: "New civilization: Byzantine Empire, balance adjustments",
+          downloads: "8.9K",
+          rating: "4.9"
+        }
+      ],
+      devLogs: [
+        {
+          id: 3,
+          title: "Historical Accuracy in Game Design",
+          date: "5 days ago",
+          excerpt: "Research methods for authentic civilizations",
+          category: "Development"
+        }
+      ]
     },
     {
       id: 3,
@@ -131,7 +180,25 @@ const GamesSection = () => {
         steam: "https://store.steampowered.com/",
         epic: "https://store.epicgames.com/",
         direct: "/buy/last-haven"
-      }
+      },
+      updates: [
+        {
+          version: "0.9.5",
+          date: "6 days ago",
+          notes: "Improved zombie AI, new crafting recipes",
+          downloads: "9.1K",
+          rating: "4.7"
+        }
+      ],
+      devLogs: [
+        {
+          id: 4,
+          title: "Designing a Believable Apocalypse",
+          date: "1 week ago",
+          excerpt: "Our approach to world-building and atmosphere",
+          category: "Development"
+        }
+      ]
     },
     {
       id: 4,
@@ -170,7 +237,25 @@ const GamesSection = () => {
         steam: "https://store.steampowered.com/",
         mobile: "https://play.google.com/store/",
         direct: "/buy/stellar-frontier"
-      }
+      },
+      updates: [
+        {
+          version: "0.5.2",
+          date: "5 days ago",
+          notes: "New ship modules, improved trading system",
+          downloads: "4.5K",
+          rating: "4.6"
+        }
+      ],
+      devLogs: [
+        {
+          id: 5,
+          title: "Creating a Dynamic Universe",
+          date: "1 week ago",
+          excerpt: "Procedural generation and emergent gameplay",
+          category: "Development"
+        }
+      ]
     },
     {
       id: 5,
@@ -210,7 +295,25 @@ const GamesSection = () => {
         ios: "https://apps.apple.com/",
         android: "https://play.google.com/store/",
         direct: "/buy/pocket-heroes"
-      }
+      },
+      updates: [
+        {
+          version: "1.8.7",
+          date: "3 days ago",
+          notes: "New hero: Shadow Assassin, PvP balance adjustments",
+          downloads: "22.8K",
+          rating: "4.8"
+        }
+      ],
+      devLogs: [
+        {
+          id: 6,
+          title: "Balancing a Massive Roster",
+          date: "4 days ago",
+          excerpt: "Our design philosophy for hero abilities",
+          category: "Design"
+        }
+      ]
     },
     {
       id: 6,
@@ -248,7 +351,25 @@ const GamesSection = () => {
       storeLinks: {
         web: "https://webwarriors.game/",
         direct: "/play/web-warriors"
-      }
+      },
+      updates: [
+        {
+          version: "2.5.1",
+          date: "2 days ago",
+          notes: "New unit: Cyber Tank, clan war improvements",
+          downloads: "11.2K",
+          rating: "4.5"
+        }
+      ],
+      devLogs: [
+        {
+          id: 7,
+          title: "Optimizing for Web Performance",
+          date: "3 days ago",
+          excerpt: "Our techniques for smooth browser gameplay",
+          category: "Technology"
+        }
+      ]
     }
   ];
 
@@ -271,165 +392,237 @@ const GamesSection = () => {
 
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
-  const gamePanels = [
-    // Main Game Overview Panel
-    <div key="overview" className="w-full flex-shrink-0 h-full">
-      <ResizablePanelGroup direction="horizontal" className="h-full">
-        <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
-          <GameLibraryPanel 
-            games={filteredGames}
-            selectedGameId={selectedGameId}
-            onSelectGame={setSelectedGameId}
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-          />
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={75}>
-          <GameDetailsPanel game={selectedGame} />
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </div>,
-
-    // Community & Updates Panel
-    <div key="community" className="w-full flex-shrink-0 h-full">
-      <ResizablePanelGroup direction="vertical" className="h-full">
-        <ResizablePanel defaultSize={60}>
-          <CommunityPanel game={selectedGame} />
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={40}>
-          <GameUpdatesPanel game={selectedGame} />
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </div>,
-
-    // Extended Stats & Analytics Panel
-    <div key="analytics" className="w-full flex-shrink-0 h-full bg-slate-900/95 p-8">
-      <div className="h-full overflow-y-auto">
-        <h3 className="text-2xl font-black text-white mb-6 font-mono">GAME ANALYTICS</h3>
-        <div className="grid grid-cols-2 gap-6 mb-8">
-          <div className="bg-slate-800 border border-slate-700 p-6">
-            <h4 className="text-purple-400 font-bold mb-4">PLAYER METRICS</h4>
-            <div className="space-y-4">
-              <div className="flex justify-between">
-                <span className="text-slate-300">Peak Players</span>
-                <span className="text-white font-bold">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-300">Avg Session</span>
-                <span className="text-white font-bold">{selectedGame.stats.averageSession}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-300">Retention</span>
-                <span className="text-green-400 font-bold">{selectedGame.stats.retention}</span>
-              </div>
-            </div>
+  const panels = [
+    {
+      id: 'overview',
+      title: 'Game Overview',
+      component: (
+        <div className="flex h-full">
+          <div className="w-80 border-r border-slate-700/50">
+            <GameLibraryPanel 
+              games={filteredGames}
+              selectedGameId={selectedGameId}
+              onSelectGame={setSelectedGameId}
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+            />
           </div>
-          <div className="bg-slate-800 border border-slate-700 p-6">
-            <h4 className="text-cyan-400 font-bold mb-4">PLATFORM DATA</h4>
-            <div className="space-y-4">
-              {selectedGame.platforms.map((platform, index) => (
-                <div key={index} className="flex justify-between">
-                  <span className="text-slate-300">{platform}</span>
-                  <span className="text-white font-bold">{Math.floor(Math.random() * 40 + 10)}%</span>
+          <div className="flex-1">
+            <GameDetailsPanel game={selectedGame} />
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'community',
+      title: 'Community & Updates',
+      component: (
+        <div className="flex h-full">
+          <div className="flex-1">
+            <CommunityPanel game={selectedGame} />
+          </div>
+          <div className="w-80 border-l border-slate-700/50">
+            <GameUpdatesPanel game={selectedGame} />
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'analytics',
+      title: 'Game Analytics',
+      component: (
+        <div className="h-full bg-slate-900/95 p-6 overflow-y-auto">
+          <div className="max-w-4xl mx-auto">
+            <h3 className="text-xl font-black text-white mb-6 font-mono">PERFORMANCE ANALYTICS</h3>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                <h4 className="text-purple-400 font-bold mb-4 text-sm">PLAYER METRICS</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300 text-sm">Peak Players</span>
+                    <span className="text-white font-bold">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300 text-sm">Avg Session</span>
+                    <span className="text-white font-bold">{selectedGame.stats.averageSession}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300 text-sm">Retention Rate</span>
+                    <span className="text-green-400 font-bold">{selectedGame.stats.retention}</span>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                <h4 className="text-cyan-400 font-bold mb-4 text-sm">PLATFORM BREAKDOWN</h4>
+                <div className="space-y-3">
+                  {selectedGame.platforms.map((platform, index) => (
+                    <div key={index} className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">{platform}</span>
+                      <span className="text-white font-bold">{Math.floor(Math.random() * 40 + 20)}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+              <h4 className="text-yellow-400 font-bold mb-4 text-sm">REVENUE INSIGHTS</h4>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <div className="text-lg font-black text-white">${(selectedGame.price.base * 1500).toLocaleString()}</div>
+                  <div className="text-slate-400 text-xs">Monthly Revenue</div>
+                </div>
+                <div>
+                  <div className="text-lg font-black text-white">{selectedGame.reviewCount}</div>
+                  <div className="text-slate-400 text-xs">Total Reviews</div>
+                </div>
+                <div>
+                  <div className="text-lg font-black text-white">{selectedGame.rating}/5</div>
+                  <div className="text-slate-400 text-xs">Rating</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="bg-slate-800 border border-slate-700 p-6">
-          <h4 className="text-yellow-400 font-bold mb-4">REVENUE INSIGHTS</h4>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-black text-white">${(selectedGame.price.base * 1000).toLocaleString()}</div>
-              <div className="text-slate-400 text-sm">Monthly Revenue</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-black text-white">{selectedGame.reviewCount}</div>
-              <div className="text-slate-400 text-sm">Total Reviews</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-black text-white">{selectedGame.rating}/5</div>
-              <div className="text-slate-400 text-sm">Rating</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      )
+    }
   ];
 
+  const navigateToPanel = (index: number) => {
+    if (index >= 0 && index < panels.length) {
+      setCurrentPanel(index);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPanel > 0) {
+      navigateToPanel(currentPanel - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPanel < panels.length - 1) {
+      navigateToPanel(currentPanel + 1);
+    }
+  };
+
   return (
-    <section className="py-16 min-h-[1400px] bg-slate-950 border-t border-slate-800">
+    <section className="py-12 min-h-[1000px] bg-slate-950 border-t border-slate-800">
       <div className="container mx-auto px-4">
         {/* Compact Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1 mb-3 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
-            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
+            <span className="text-purple-400 font-black text-xs font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-3xl font-black text-white leading-tight font-mono mb-4">
+          <h2 className="text-2xl font-black text-white leading-tight font-mono mb-3">
             PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
+          <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-3"></div>
           
-          <p className="text-slate-400 max-w-2xl mx-auto text-base leading-relaxed">
-            Professional games across all platforms and genres with cutting-edge graphics and immersive gameplay
+          <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
+            Professional games across all platforms with cutting-edge graphics and immersive gameplay
           </p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {/* Compact Stats Grid */}
+        <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
-            { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
-            { icon: Download, label: 'TOTAL DOWNLOADS', value: '45K+', color: 'text-blue-400' },
-            { icon: Trophy, label: 'LIVE GAMES', value: '6', color: 'text-purple-400' }
+            { icon: Users, label: 'PLAYERS', value: '112K+', color: 'text-green-400' },
+            { icon: Star, label: 'RATING', value: '4.7★', color: 'text-yellow-400' },
+            { icon: Download, label: 'DOWNLOADS', value: '45K+', color: 'text-blue-400' },
+            { icon: Trophy, label: 'GAMES', value: '6', color: 'text-purple-400' }
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/95 border border-slate-700 p-6 text-center hover:border-purple-400/50 transition-colors backdrop-blur-sm">
-                <IconComponent className={`w-8 h-8 mx-auto mb-3 ${stat.color}`} />
-                <div className="text-2xl font-black text-white font-mono mb-2">{stat.value}</div>
-                <div className="text-slate-400 text-sm font-bold">{stat.label}</div>
+              <div key={index} className="bg-slate-800/50 border border-slate-700/50 p-3 text-center hover:border-purple-400/50 transition-colors">
+                <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
+                <div className="text-lg font-black text-white font-mono">{stat.value}</div>
+                <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
         {/* Search Bar */}
-        <div className="mb-12">
-          <div className="relative max-w-2xl mx-auto">
-            <Search className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+        <div className="mb-8">
+          <div className="relative max-w-xl mx-auto">
+            <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Search games, genres, platforms..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800/90 border-2 border-slate-700 text-white pl-14 pr-6 py-4 text-base focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
+              className="w-full bg-slate-800/50 border border-slate-700 text-white pl-10 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
             />
           </div>
         </div>
 
-        {/* Enhanced Horizontal Drag Container - Much Taller */}
-        <div className="h-[1000px] bg-slate-900/50 border-2 border-slate-700 backdrop-blur-sm shadow-2xl shadow-purple-500/10 mb-12">
-          <HorizontalDragContainer 
-            className="h-full"
-            showNavigation={true}
+        {/* Main Panel Container */}
+        <div className="relative h-[650px] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm">
+          {/* Panel Content */}
+          <div 
+            className="flex h-full transition-transform duration-300 ease-out"
+            style={{ transform: `translateX(-${currentPanel * 100}%)` }}
           >
-            {gamePanels}
-          </HorizontalDragContainer>
+            {panels.map((panel, index) => (
+              <div key={panel.id} className="w-full flex-shrink-0 h-full">
+                {panel.component}
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Controls */}
+          <button
+            onClick={handlePrevious}
+            disabled={currentPanel === 0}
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          
+          <button
+            onClick={handleNext}
+            disabled={currentPanel === panels.length - 1}
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-10"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Panel Indicators */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-10 bg-slate-800/50 backdrop-blur-sm px-3 py-1">
+            {panels.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => navigateToPanel(index)}
+                className={`w-2 h-2 transition-all duration-300 ${
+                  index === currentPanel 
+                    ? 'bg-purple-400 scale-125' 
+                    : 'bg-slate-600 hover:bg-purple-400/50'
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Panel Title */}
+          <div className="absolute top-3 left-3 bg-slate-800/90 backdrop-blur-sm px-3 py-1 z-10">
+            <span className="text-purple-400 font-bold text-xs font-mono">
+              {panels[currentPanel]?.title.toUpperCase()}
+            </span>
+          </div>
         </div>
 
-        {/* Enhanced CTA */}
-        <div className="text-center">
+        {/* CTA */}
+        <div className="text-center mt-8">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-8 py-4 text-base font-black transition-all duration-300 space-x-3 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-6 py-2 text-sm font-black transition-all duration-300 space-x-2 hover:scale-105"
           >
-            <Trophy className="w-6 h-6" />
+            <Trophy className="w-4 h-4" />
             <span>EXPLORE ALL GAMES</span>
           </Link>
         </div>
