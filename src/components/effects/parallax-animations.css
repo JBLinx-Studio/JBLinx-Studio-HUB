@@ -1,0 +1,124 @@
+
+/* Parallax-specific animations */
+@keyframes premium-flow {
+  0% {
+    transform: translateX(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes neural-pulse {
+  0%, 100% {
+    transform: scale(1) rotateZ(0deg);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1) rotateZ(180deg);
+    filter: brightness(1.5);
+  }
+}
+
+@keyframes geometric-spin {
+  0% {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  33% {
+    transform: rotateY(120deg) rotateX(120deg);
+  }
+  66% {
+    transform: rotateY(240deg) rotateX(240deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(360deg);
+  }
+}
+
+@keyframes code-matrix {
+  0% {
+    transform: translateY(-20px) scaleY(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0px) scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(20px) scaleY(0);
+    opacity: 0;
+  }
+}
+
+@keyframes terminal-flow {
+  0% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-1500 {
+  animation-delay: 1.5s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Enhanced 3D effects */
+.parallax-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Smooth transitions for parallax elements */
+.parallax-smooth {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* Gradient animations */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-animate {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
