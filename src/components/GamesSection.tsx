@@ -11,208 +11,153 @@ const GamesSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [currentPanel, setCurrentPanel] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(0);
 
   const games = [
     {
       id: 1,
-      title: "Tactical Strike Force",
-      tagline: "Elite Combat Operations",
-      category: "fps",
-      genres: ["FPS", "Tactical", "Multiplayer"],
+      title: "Ocean's Peril: Survival",
+      tagline: "Medieval Naval Survival Adventure",
+      category: "survival",
+      genres: ["Survival", "Medieval", "Naval", "Exploration"],
       platforms: ["PC", "PlayStation", "Xbox"],
       status: "LIVE",
-      releaseDate: "2024-12-15",
-      price: { base: 39.99, sale: 29.99, currency: "USD" },
-      rating: 4.8,
-      playerCount: "15.2K",
-      reviewCount: 2847,
+      releaseDate: "2024-11-15",
+      price: { base: 34.99, sale: 24.99, currency: "USD" },
+      rating: 4.7,
+      playerCount: "18.3K",
+      reviewCount: 3247,
       images: {
-        hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=450&fit=crop",
+        hero: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=450&fit=crop",
         gallery: [
-          "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop"
         ]
       },
-      trailer: "https://example.com/tactical-strike-trailer",
-      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay. Master multiple game modes across diverse battlegrounds.",
-      features: ["Anti-Cheat Protection", "Competitive Ranking", "Custom Loadouts", "Voice Chat", "Spectator Mode"],
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+      description: "Navigate treacherous medieval seas as a ship captain. Build and upgrade your vessel, manage crew morale, trade with coastal settlements, and survive storms, pirates, and sea monsters in this immersive naval survival experience.",
+      features: ["Dynamic Weather System", "Ship Customization", "Crew Management", "Trading System", "Sea Combat", "Exploration"],
       systemReqs: { min: "GTX 1060, 8GB RAM", recommended: "RTX 3060, 16GB RAM" },
       dlc: [
-        { name: "Urban Warfare Pack", price: 14.99, status: "available" },
-        { name: "Elite Operator Skins", price: 9.99, status: "available" }
+        { name: "Kraken's Domain", price: 12.99, status: "available" },
+        { name: "Pirate Hunter Pack", price: 8.99, status: "available" }
       ],
       stats: {
-        peakPlayers: 45000,
-        averageSession: "45 min",
-        retention: "87%",
-        esportsReady: true
+        peakPlayers: 32000,
+        averageSession: "2.8 hours",
+        retention: "84%",
+        esportsReady: false
       },
       storeLinks: {
         steam: "https://store.steampowered.com/",
         epic: "https://store.epicgames.com/",
-        direct: "/buy/tactical-strike"
+        direct: "/buy/oceans-peril"
       },
       updates: [
         {
-          version: "2.1.4",
-          date: "2 days ago",
-          notes: "Balance updates for competitive play, bug fixes for weapon attachments",
-          downloads: "12.3K",
-          rating: "4.9"
+          version: "1.4.2",
+          date: "3 days ago",
+          notes: "New ship types: Galleon and Frigate, improved storm physics",
+          downloads: "15.7K",
+          rating: "4.8"
         },
         {
-          version: "2.1.3", 
+          version: "1.4.1",
           date: "1 week ago",
-          notes: "New map: Industrial Complex, performance optimizations",
-          downloads: "18.7K",
-          rating: "4.8"
+          notes: "Crew AI improvements, new trading routes",
+          downloads: "22.1K",
+          rating: "4.7"
         }
       ],
       devLogs: [
         {
           id: 1,
-          title: "Competitive Season 3 Updates",
-          date: "3 days ago",
-          excerpt: "Major balance changes coming to ranked play",
-          category: "Updates"
-        },
-        {
-          id: 2,
-          title: "Behind the Scenes: Map Design",
-          date: "1 week ago", 
-          excerpt: "How we create immersive combat environments",
+          title: "Designing Realistic Naval Combat",
+          date: "2 days ago",
+          excerpt: "How we balance authenticity with engaging gameplay",
           category: "Development"
         }
       ]
     },
     {
       id: 2,
-      title: "Empire Conquest",
-      tagline: "Build. Command. Conquer.",
-      category: "rts",
-      genres: ["RTS", "Strategy", "Base Building"],
-      platforms: ["PC", "Mac"],
+      title: "Warzone Nexus",
+      tagline: "Tactical FPS with Marketplace",
+      category: "fps",
+      genres: ["FPS", "Tactical", "Multiplayer", "Competitive"],
+      platforms: ["PC", "PlayStation", "Xbox"],
       status: "LIVE",
-      releaseDate: "2024-11-20",
-      price: { base: 49.99, sale: null, currency: "USD" },
+      releaseDate: "2024-09-20",
+      price: { base: 0, sale: null, currency: "USD" },
       rating: 4.9,
-      playerCount: "8.7K",
-      reviewCount: 1456,
+      playerCount: "127.5K",
+      reviewCount: 8934,
       images: {
-        hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=450&fit=crop",
+        hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=450&fit=crop",
         gallery: [
-          "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=600&h=400&fit=crop"
         ]
       },
-      trailer: "https://example.com/empire-conquest-trailer",
-      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems.",
-      features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode"],
-      systemReqs: { min: "GTX 1660, 12GB RAM", recommended: "RTX 4060, 32GB RAM" },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+      description: "Free-to-play tactical shooter with 5v5 competitive matches. Features an extensive weapon marketplace, character skins, and seasonal battle passes. Master precise gunplay across multiple game modes.",
+      features: ["5v5 Competitive", "Weapon Marketplace", "Battle Pass System", "Ranked Play", "Custom Skins", "Anti-Cheat"],
+      systemReqs: { min: "GTX 1050 Ti, 6GB RAM", recommended: "RTX 3070, 16GB RAM" },
       dlc: [
-        { name: "Ancient Dynasties", price: 19.99, status: "preorder" },
-        { name: "Naval Warfare", price: 12.99, status: "available" }
+        { name: "Elite Battle Pass", price: 9.99, status: "available" },
+        { name: "Operator Pack Alpha", price: 14.99, status: "available" }
       ],
       stats: {
-        peakPlayers: 12000,
-        averageSession: "2.5 hours",
-        retention: "92%",
-        esportsReady: false
+        peakPlayers: 245000,
+        averageSession: "52 min",
+        retention: "91%",
+        esportsReady: true
       },
       storeLinks: {
         steam: "https://store.steampowered.com/",
-        gog: "https://www.gog.com/",
-        direct: "/buy/empire-conquest"
+        epic: "https://store.epicgames.com/",
+        direct: "/play/warzone-nexus"
       },
       updates: [
         {
-          version: "1.3.2",
-          date: "4 days ago", 
-          notes: "New civilization: Byzantine Empire, balance adjustments",
-          downloads: "8.9K",
+          version: "3.2.1",
+          date: "1 day ago",
+          notes: "New map: Industrial Zone, weapon balance updates",
+          downloads: "89.2K",
           rating: "4.9"
+        },
+        {
+          version: "3.2.0",
+          date: "5 days ago",
+          notes: "Season 8 launch: New operators and marketplace items",
+          downloads: "156.3K",
+          rating: "4.8"
         }
       ],
       devLogs: [
         {
-          id: 3,
-          title: "Historical Accuracy in Game Design",
-          date: "5 days ago",
-          excerpt: "Research methods for authentic civilizations",
-          category: "Development"
+          id: 2,
+          title: "Balancing Competitive Gameplay",
+          date: "1 day ago",
+          excerpt: "Our approach to weapon statistics and map design",
+          category: "Esports"
         }
       ]
     },
     {
       id: 3,
-      title: "Last Haven",
-      tagline: "Survive the Apocalypse",
-      category: "survival",
-      genres: ["Survival", "Horror", "Co-op"],
-      platforms: ["PC", "PlayStation", "Xbox"],
-      status: "EARLY_ACCESS",
-      releaseDate: "2025-03-15",
-      price: { base: 29.99, sale: 24.99, currency: "USD" },
-      rating: 4.6,
-      playerCount: "12.1K",
-      reviewCount: 723,
-      images: {
-        hero: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=600&h=400&fit=crop"
-        ]
-      },
-      trailer: "https://example.com/last-haven-trailer",
-      description: "Survive in a haunting post-apocalyptic world. Craft weapons, build shelters, and maintain your sanity while facing both the undead and other desperate survivors.",
-      features: ["4-Player Co-op", "Base Building", "Psychological Horror", "Day/Night Cycle", "Dynamic Weather"],
-      systemReqs: { min: "GTX 1050 Ti, 8GB RAM", recommended: "RTX 3070, 16GB RAM" },
-      dlc: [
-        { name: "Winter Wasteland", price: 15.99, status: "upcoming" }
-      ],
-      stats: {
-        peakPlayers: 25000,
-        averageSession: "3.2 hours",
-        retention: "78%",
-        esportsReady: false
-      },
-      storeLinks: {
-        steam: "https://store.steampowered.com/",
-        epic: "https://store.epicgames.com/",
-        direct: "/buy/last-haven"
-      },
-      updates: [
-        {
-          version: "0.9.5",
-          date: "6 days ago",
-          notes: "Improved zombie AI, new crafting recipes",
-          downloads: "9.1K",
-          rating: "4.7"
-        }
-      ],
-      devLogs: [
-        {
-          id: 4,
-          title: "Designing a Believable Apocalypse",
-          date: "1 week ago",
-          excerpt: "Our approach to world-building and atmosphere",
-          category: "Development"
-        }
-      ]
-    },
-    {
-      id: 4,
-      title: "Stellar Frontier",
-      tagline: "Explore the Unknown",
+      title: "Stellar Odyssey Infinite",
+      tagline: "Endless Space Exploration",
       category: "space",
-      genres: ["Space Sim", "Exploration", "Trading"],
-      platforms: ["PC", "Mobile"],
-      status: "BETA",
-      releaseDate: "2025-06-01",
-      price: { base: 0, sale: null, currency: "USD" },
-      rating: 4.7,
-      playerCount: "6.3K",
-      reviewCount: 234,
+      genres: ["Space Sim", "Top-Down", "Exploration", "Sci-Fi"],
+      platforms: ["PC", "Mac", "Steam Deck"],
+      status: "EARLY_ACCESS",
+      releaseDate: "2024-12-10",
+      price: { base: 29.99, sale: 22.99, currency: "USD" },
+      rating: 4.6,
+      playerCount: "24.7K",
+      reviewCount: 1876,
       images: {
         hero: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&h=450&fit=crop",
         gallery: [
@@ -220,154 +165,387 @@ const GamesSection = () => {
           "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&h=400&fit=crop"
         ]
       },
-      trailer: "https://example.com/stellar-frontier-trailer",
-      description: "Command your own starship and explore procedurally generated galaxies. Trade with alien civilizations, engage in epic space battles, and build your cosmic empire.",
-      features: ["Infinite Universe", "Ship Customization", "Alien Diplomacy", "Fleet Combat", "Cross-Platform"],
-      systemReqs: { min: "GTX 960, 6GB RAM", recommended: "RTX 2060, 12GB RAM" },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_5mb.mp4",
+      description: "Top-down space exploration in an infinite procedurally generated universe. Build space stations, mine asteroids, trade with alien civilizations, and uncover the mysteries of deep space.",
+      features: ["Infinite Universe", "Base Building", "Alien Diplomacy", "Resource Mining", "Fleet Management", "Modding Support"],
+      systemReqs: { min: "GTX 960, 8GB RAM", recommended: "RTX 2070, 16GB RAM" },
       dlc: [
-        { name: "Alien Races Pack", price: 11.99, status: "upcoming" }
+        { name: "Alien Civilizations Pack", price: 15.99, status: "upcoming" },
+        { name: "Advanced Ship Modules", price: 11.99, status: "available" }
       ],
       stats: {
-        peakPlayers: 8500,
-        averageSession: "4.1 hours",
-        retention: "85%",
+        peakPlayers: 48000,
+        averageSession: "4.2 hours",
+        retention: "78%",
         esportsReady: false
       },
       storeLinks: {
         steam: "https://store.steampowered.com/",
-        mobile: "https://play.google.com/store/",
-        direct: "/buy/stellar-frontier"
+        gog: "https://www.gog.com/",
+        direct: "/buy/stellar-odyssey"
       },
       updates: [
         {
-          version: "0.5.2",
-          date: "5 days ago",
-          notes: "New ship modules, improved trading system",
-          downloads: "4.5K",
-          rating: "4.6"
+          version: "0.7.3",
+          date: "4 days ago",
+          notes: "New alien race: The Crystalline Collective, improved AI",
+          downloads: "18.9K",
+          rating: "4.7"
         }
       ],
       devLogs: [
         {
-          id: 5,
-          title: "Creating a Dynamic Universe",
-          date: "1 week ago",
-          excerpt: "Procedural generation and emergent gameplay",
-          category: "Development"
+          id: 3,
+          title: "Procedural Universe Generation",
+          date: "3 days ago",
+          excerpt: "Behind the scenes of infinite world creation",
+          category: "Technology"
         }
       ]
     },
     {
-      id: 5,
-      title: "Pocket Heroes Quest",
-      tagline: "Epic Adventures Anywhere",
-      category: "mobile",
-      genres: ["Mobile RPG", "Turn-Based", "Collection"],
-      platforms: ["iOS", "Android"],
+      id: 4,
+      title: "Midnight Manor",
+      tagline: "Psychological Horror Experience",
+      category: "horror",
+      genres: ["Horror", "Psychological", "Mystery", "Single-Player"],
+      platforms: ["PC", "PlayStation", "Xbox"],
       status: "LIVE",
-      releaseDate: "2024-10-10",
-      price: { base: 0, sale: null, currency: "USD" },
-      rating: 4.5,
-      playerCount: "45.7K",
-      reviewCount: 8203,
+      releaseDate: "2024-10-31",
+      price: { base: 39.99, sale: 29.99, currency: "USD" },
+      rating: 4.4,
+      playerCount: "8.9K",
+      reviewCount: 2134,
       images: {
-        hero: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=800&h=450&fit=crop",
+        hero: "https://images.unsplash.com/photo-1520637836862-4d197d17c13a?w=800&h=450&fit=crop",
         gallery: [
-          "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1520637736862-4d197d17c13a?w=600&h=400&fit=crop"
         ]
       },
-      trailer: "https://example.com/pocket-heroes-trailer",
-      description: "Collect legendary heroes and embark on epic quests. Strategic turn-based combat meets stunning mobile graphics in this award-winning mobile RPG.",
-      features: ["200+ Heroes", "PvP Arena", "Guild System", "Daily Events", "Offline Play"],
-      systemReqs: { min: "iOS 12+ / Android 8+", recommended: "iOS 15+ / Android 11+" },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+      description: "Uncover the dark secrets of an abandoned Victorian manor. Solve puzzles, avoid supernatural entities, and piece together a haunting family mystery in this atmospheric horror experience.",
+      features: ["Atmospheric Horror", "Puzzle Solving", "Multiple Endings", "Immersive Audio", "Psychological Elements", "Photo Mode"],
+      systemReqs: { min: "GTX 1050, 8GB RAM", recommended: "RTX 3060, 16GB RAM" },
       dlc: [
-        { name: "Legendary Pack", price: 7.99, status: "available" },
-        { name: "Premium Pass", price: 4.99, status: "available" }
+        { name: "The Basement Chronicles", price: 12.99, status: "available" }
       ],
       stats: {
-        peakPlayers: 125000,
-        averageSession: "25 min",
-        retention: "68%",
+        peakPlayers: 15000,
+        averageSession: "3.5 hours",
+        retention: "67%",
         esportsReady: false
       },
       storeLinks: {
-        ios: "https://apps.apple.com/",
-        android: "https://play.google.com/store/",
-        direct: "/buy/pocket-heroes"
+        steam: "https://store.steampowered.com/",
+        epic: "https://store.epicgames.com/",
+        direct: "/buy/midnight-manor"
       },
       updates: [
         {
-          version: "1.8.7",
-          date: "3 days ago",
-          notes: "New hero: Shadow Assassin, PvP balance adjustments",
-          downloads: "22.8K",
-          rating: "4.8"
-        }
-      ],
-      devLogs: [
-        {
-          id: 6,
-          title: "Balancing a Massive Roster",
-          date: "4 days ago",
-          excerpt: "Our design philosophy for hero abilities",
-          category: "Design"
-        }
-      ]
-    },
-    {
-      id: 6,
-      title: "Web Warriors Arena",
-      tagline: "No Download. Pure Strategy.",
-      category: "web",
-      genres: ["Web Game", "Strategy", "PvP"],
-      platforms: ["Web Browser"],
-      status: "LIVE",
-      releaseDate: "2024-09-05",
-      price: { base: 0, sale: null, currency: "USD" },
-      rating: 4.4,
-      playerCount: "23.8K",
-      reviewCount: 1567,
-      images: {
-        hero: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=450&fit=crop",
-        gallery: [
-          "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop"
-        ]
-      },
-      trailer: "https://example.com/web-warriors-trailer",
-      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles from any device.",
-      features: ["Instant Play", "Cross-Device", "Real-time PvP", "Clan Wars", "Tournament Mode"],
-      systemReqs: { min: "Modern Web Browser", recommended: "Chrome/Firefox Latest" },
-      dlc: [
-        { name: "Premium Commander", price: 9.99, status: "available" }
-      ],
-      stats: {
-        peakPlayers: 35000,
-        averageSession: "35 min",
-        retention: "71%",
-        esportsReady: true
-      },
-      storeLinks: {
-        web: "https://webwarriors.game/",
-        direct: "/play/web-warriors"
-      },
-      updates: [
-        {
-          version: "2.5.1",
-          date: "2 days ago",
-          notes: "New unit: Cyber Tank, clan war improvements",
-          downloads: "11.2K",
+          version: "1.1.2",
+          date: "1 week ago",
+          notes: "Performance improvements, new ending discovered",
+          downloads: "7.2K",
           rating: "4.5"
         }
       ],
       devLogs: [
         {
-          id: 7,
-          title: "Optimizing for Web Performance",
+          id: 4,
+          title: "Creating Authentic Horror Atmosphere",
+          date: "1 week ago",
+          excerpt: "Sound design and visual techniques for fear",
+          category: "Design"
+        }
+      ]
+    },
+    {
+      id: 5,
+      title: "Kingdom's Valor",
+      tagline: "Medieval Real-Time Strategy",
+      category: "rts",
+      genres: ["RTS", "Medieval", "Strategy", "Base Building"],
+      platforms: ["PC", "Mac"],
+      status: "LIVE",
+      releaseDate: "2024-08-15",
+      price: { base: 49.99, sale: null, currency: "USD" },
+      rating: 4.8,
+      playerCount: "16.2K",
+      reviewCount: 3456,
+      images: {
+        hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=450&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop"
+        ]
+      },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+      description: "Command medieval armies in epic real-time battles. Build castles, manage resources, forge alliances, and conquer territories in campaigns spanning multiple kingdoms and time periods.",
+      features: ["Epic Battles 1000v1000", "Castle Building", "Resource Management", "Campaign Editor", "Multiplayer Conquest", "Historical Accuracy"],
+      systemReqs: { min: "GTX 1660, 12GB RAM", recommended: "RTX 4060, 32GB RAM" },
+      dlc: [
+        { name: "The Crusades Campaign", price: 19.99, status: "available" },
+        { name: "Viking Expansion", price: 16.99, status: "preorder" }
+      ],
+      stats: {
+        peakPlayers: 28000,
+        averageSession: "2.1 hours",
+        retention: "89%",
+        esportsReady: true
+      },
+      storeLinks: {
+        steam: "https://store.steampowered.com/",
+        gog: "https://www.gog.com/",
+        direct: "/buy/kingdoms-valor"
+      },
+      updates: [
+        {
+          version: "2.1.5",
+          date: "2 days ago",
+          notes: "New faction: Byzantine Empire, balance improvements",
+          downloads: "12.8K",
+          rating: "4.9"
+        }
+      ],
+      devLogs: [
+        {
+          id: 5,
+          title: "Historical Research for Authenticity",
+          date: "4 days ago",
+          excerpt: "Our commitment to medieval accuracy",
+          category: "Research"
+        }
+      ]
+    },
+    {
+      id: 6,
+      title: "Arcane Legends TCG",
+      tagline: "Strategic Card Battles",
+      category: "card",
+      genres: ["Card Game", "Strategy", "TCG", "Fantasy"],
+      platforms: ["PC", "Mobile", "Web Browser"],
+      status: "LIVE",
+      releaseDate: "2024-07-12",
+      price: { base: 0, sale: null, currency: "USD" },
+      rating: 4.5,
+      playerCount: "67.4K",
+      reviewCount: 5672,
+      images: {
+        hero: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=800&h=450&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop"
+        ]
+      },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+      description: "Collect, build, and battle with legendary cards in this fantasy TCG. Create powerful decks, master complex strategies, and climb the ranked ladder in both casual and competitive play.",
+      features: ["500+ Cards", "Deck Builder", "Ranked Battles", "Tournament Mode", "Card Crafting", "Cross-Platform"],
+      systemReqs: { min: "Any modern device", recommended: "High-end mobile or PC" },
+      dlc: [
+        { name: "Shadowlands Expansion", price: 24.99, status: "available" },
+        { name: "Starter Pack Bundle", price: 9.99, status: "available" }
+      ],
+      stats: {
+        peakPlayers: 125000,
+        averageSession: "35 min",
+        retention: "73%",
+        esportsReady: true
+      },
+      storeLinks: {
+        steam: "https://store.steampowered.com/",
+        mobile: "https://play.google.com/store/",
+        web: "https://arcane-tcg.game/",
+        direct: "/play/arcane-legends"
+      },
+      updates: [
+        {
+          version: "4.2.1",
+          date: "2 days ago",
+          notes: "New expansion: Rise of Dragons, 75 new cards",
+          downloads: "45.3K",
+          rating: "4.7"
+        }
+      ],
+      devLogs: [
+        {
+          id: 6,
+          title: "Balancing 500+ Cards",
           date: "3 days ago",
-          excerpt: "Our techniques for smooth browser gameplay",
-          category: "Technology"
+          excerpt: "Mathematical approaches to card game balance",
+          category: "Design"
+        }
+      ]
+    },
+    {
+      id: 7,
+      title: "Grand Hotel Empire",
+      tagline: "Hotel Management Simulation",
+      category: "web",
+      genres: ["Simulation", "Management", "Business", "Web Game"],
+      platforms: ["Web Browser", "Mobile"],
+      status: "LIVE",
+      releaseDate: "2024-06-05",
+      price: { base: 0, sale: null, currency: "USD" },
+      rating: 4.3,
+      playerCount: "43.8K",
+      reviewCount: 3289,
+      images: {
+        hero: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=450&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop"
+        ]
+      },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+      description: "Build and manage a luxury hotel empire. Design rooms, hire staff, manage finances, and keep guests happy while expanding your hospitality business across multiple locations.",
+      features: ["Hotel Design", "Staff Management", "Guest Satisfaction", "Financial Planning", "Multi-Location", "Real-Time Events"],
+      systemReqs: { min: "Modern Web Browser", recommended: "Chrome/Firefox Latest" },
+      dlc: [
+        { name: "Resort Paradise Pack", price: 7.99, status: "available" }
+      ],
+      stats: {
+        peakPlayers: 67000,
+        averageSession: "1.8 hours",
+        retention: "82%",
+        esportsReady: false
+      },
+      storeLinks: {
+        web: "https://hotel-empire.game/",
+        mobile: "https://play.google.com/store/",
+        direct: "/play/hotel-empire"
+      },
+      updates: [
+        {
+          version: "2.4.3",
+          date: "3 days ago",
+          notes: "New hotel themes: Modern and Vintage, guest AI improvements",
+          downloads: "28.7K",
+          rating: "4.4"
+        }
+      ],
+      devLogs: [
+        {
+          id: 7,
+          title: "Realistic Hotel Economics",
+          date: "5 days ago",
+          excerpt: "Research into hospitality industry mechanics",
+          category: "Simulation"
+        }
+      ]
+    },
+    {
+      id: 8,
+      title: "Colony Prime",
+      tagline: "Rimworld-Style Colony Sim",
+      category: "web",
+      genres: ["Colony Sim", "Management", "Survival", "Web Game"],
+      platforms: ["Web Browser", "PC"],
+      status: "BETA",
+      releaseDate: "2025-01-20",
+      price: { base: 19.99, sale: 14.99, currency: "USD" },
+      rating: 4.6,
+      playerCount: "12.4K",
+      reviewCount: 892,
+      images: {
+        hero: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&h=450&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=400&fit=crop"
+        ]
+      },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+      description: "Manage a space colony on an alien world. Handle colonist needs, build infrastructure, research technology, and survive environmental hazards while expanding your settlement.",
+      features: ["Colony Management", "Colonist Psychology", "Research Tree", "Environmental Hazards", "Storyteller AI", "Mod Support"],
+      systemReqs: { min: "Modern Browser / GTX 750", recommended: "Chrome Latest / GTX 1060" },
+      dlc: [
+        { name: "Alien Biomes Pack", price: 12.99, status: "upcoming" }
+      ],
+      stats: {
+        peakPlayers: 18000,
+        averageSession: "3.2 hours",
+        retention: "86%",
+        esportsReady: false
+      },
+      storeLinks: {
+        steam: "https://store.steampowered.com/",
+        web: "https://colony-prime.game/",
+        direct: "/buy/colony-prime"
+      },
+      updates: [
+        {
+          version: "0.8.4",
+          date: "1 week ago",
+          notes: "New research branch: Xenobiology, improved colonist AI",
+          downloads: "6.8K",
+          rating: "4.7"
+        }
+      ],
+      devLogs: [
+        {
+          id: 8,
+          title: "AI-Driven Storytelling",
+          date: "1 week ago",
+          excerpt: "How our storyteller creates unique colony narratives",
+          category: "AI"
+        }
+      ]
+    },
+    {
+      id: 9,
+      title: "Pocket Adventures",
+      tagline: "Mini Mobile Game Collection",
+      category: "mobile",
+      genres: ["Mobile", "Casual", "Mini-Games", "Collection"],
+      platforms: ["iOS", "Android"],
+      status: "LIVE",
+      releaseDate: "2024-05-15",
+      price: { base: 0, sale: null, currency: "USD" },
+      rating: 4.2,
+      playerCount: "89.3K",
+      reviewCount: 12456,
+      images: {
+        hero: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=800&h=450&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop"
+        ]
+      },
+      trailer: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+      description: "A collection of 20+ mini-games perfect for quick play sessions. From puzzle games to arcade action, each game offers unique challenges and achievements.",
+      features: ["20+ Mini Games", "Daily Challenges", "Achievement System", "Offline Play", "Cloud Save", "No Ads Premium"],
+      systemReqs: { min: "iOS 12+ / Android 8+", recommended: "iOS 15+ / Android 11+" },
+      dlc: [
+        { name: "Premium Game Pack", price: 4.99, status: "available" },
+        { name: "Ad-Free Experience", price: 2.99, status: "available" }
+      ],
+      stats: {
+        peakPlayers: 156000,
+        averageSession: "15 min",
+        retention: "65%",
+        esportsReady: false
+      },
+      storeLinks: {
+        ios: "https://apps.apple.com/",
+        android: "https://play.google.com/store/",
+        direct: "/download/pocket-adventures"
+      },
+      updates: [
+        {
+          version: "3.1.8",
+          date: "4 days ago",
+          notes: "3 new mini-games added: Block Puzzle, Color Match, Speed Runner",
+          downloads: "67.2K",
+          rating: "4.3"
+        }
+      ],
+      devLogs: [
+        {
+          id: 9,
+          title: "Designing for Mobile First",
+          date: "6 days ago",
+          excerpt: "Touch controls and quick gameplay sessions",
+          category: "Mobile"
         }
       ]
     }
@@ -392,13 +570,36 @@ const GamesSection = () => {
 
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart(e.clientX);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    
+    const dragDistance = e.clientX - dragStart;
+    if (Math.abs(dragDistance) > 100) {
+      if (dragDistance > 0 && currentPanel > 0) {
+        setCurrentPanel(currentPanel - 1);
+      } else if (dragDistance < 0 && currentPanel < panels.length - 1) {
+        setCurrentPanel(currentPanel + 1);
+      }
+      setIsDragging(false);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   const panels = [
     {
       id: 'overview',
       title: 'Game Overview',
       component: (
         <div className="flex h-full">
-          <div className="w-72">
+          <div className="w-72 flex-shrink-0">
             <GameLibraryPanel 
               games={filteredGames}
               selectedGameId={selectedGameId}
@@ -418,7 +619,7 @@ const GamesSection = () => {
       title: 'Community Hub',
       component: (
         <div className="flex h-full">
-          <div className="w-72">
+          <div className="w-72 flex-shrink-0">
             <GameLibraryPanel 
               games={filteredGames}
               selectedGameId={selectedGameId}
@@ -430,7 +631,7 @@ const GamesSection = () => {
           <div className="flex-1">
             <CommunityPanel game={selectedGame} />
           </div>
-          <div className="w-64">
+          <div className="w-64 flex-shrink-0">
             <GameUpdatesPanel game={selectedGame} />
           </div>
         </div>
@@ -441,7 +642,7 @@ const GamesSection = () => {
       title: 'Performance Analytics',
       component: (
         <div className="flex h-full">
-          <div className="w-72">
+          <div className="w-72 flex-shrink-0">
             <GameLibraryPanel 
               games={filteredGames}
               selectedGameId={selectedGameId}
@@ -450,14 +651,17 @@ const GamesSection = () => {
               onCategoryChange={setActiveCategory}
             />
           </div>
-          <div className="flex-1 bg-slate-900/95 p-4 overflow-y-auto">
+          <div className="flex-1 bg-slate-900/95 p-6 overflow-y-auto">
             <div className="max-w-4xl mx-auto">
-              <h3 className="text-lg font-black text-white mb-4 font-mono">PERFORMANCE ANALYTICS</h3>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-black text-white font-mono">PERFORMANCE ANALYTICS</h3>
+                <div className="text-purple-400 font-mono text-sm">REAL-TIME DATA</div>
+              </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-                <div className="bg-slate-800/50 border border-slate-700/50 p-3">
-                  <h4 className="text-purple-400 font-bold mb-3 text-sm">PLAYER METRICS</h4>
-                  <div className="space-y-2">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                  <h4 className="text-purple-400 font-bold mb-4 text-sm">PLAYER METRICS</h4>
+                  <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-slate-300 text-sm">Peak Players</span>
                       <span className="text-white font-bold text-sm">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
@@ -473,33 +677,63 @@ const GamesSection = () => {
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-slate-700/50 p-3">
-                  <h4 className="text-cyan-400 font-bold mb-3 text-sm">PLATFORM BREAKDOWN</h4>
-                  <div className="space-y-2">
+                <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                  <h4 className="text-cyan-400 font-bold mb-4 text-sm">PLATFORM BREAKDOWN</h4>
+                  <div className="space-y-3">
                     {selectedGame.platforms.map((platform, index) => (
                       <div key={index} className="flex justify-between items-center">
                         <span className="text-slate-300 text-sm">{platform}</span>
-                        <span className="text-white font-bold text-sm">{Math.floor(Math.random() * 40 + 20)}%</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 bg-slate-700 h-2">
+                            <div 
+                              className="h-full bg-cyan-400"
+                              style={{ width: `${Math.floor(Math.random() * 60 + 20)}%` }}
+                            ></div>
+                          </div>
+                          <span className="text-white font-bold text-sm w-10">{Math.floor(Math.random() * 40 + 20)}%</span>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
+
+                <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                  <h4 className="text-yellow-400 font-bold mb-4 text-sm">REVENUE INSIGHTS</h4>
+                  <div className="space-y-3">
+                    <div className="text-center">
+                      <div className="text-lg font-black text-white">${(selectedGame.price.base * 1500).toLocaleString()}</div>
+                      <div className="text-slate-400 text-xs">Monthly Revenue</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-black text-white">{selectedGame.reviewCount.toLocaleString()}</div>
+                      <div className="text-slate-400 text-xs">Total Reviews</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-black text-white">{selectedGame.rating}/5</div>
+                      <div className="text-slate-400 text-xs">Rating</div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-slate-800/50 border border-slate-700/50 p-4">
-                <h4 className="text-yellow-400 font-bold mb-3 text-sm">REVENUE INSIGHTS</h4>
-                <div className="grid grid-cols-3 gap-3 text-center">
+              <div className="bg-slate-800/50 border border-slate-700/50 p-6">
+                <h4 className="text-green-400 font-bold mb-4">GROWTH TRENDS</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                   <div>
-                    <div className="text-base font-black text-white">${(selectedGame.price.base * 1500).toLocaleString()}</div>
-                    <div className="text-slate-400 text-xs">Monthly Revenue</div>
+                    <div className="text-2xl font-black text-green-400">+12%</div>
+                    <div className="text-slate-400 text-xs">Weekly Growth</div>
                   </div>
                   <div>
-                    <div className="text-base font-black text-white">{selectedGame.reviewCount}</div>
-                    <div className="text-slate-400 text-xs">Total Reviews</div>
+                    <div className="text-2xl font-black text-blue-400">+34%</div>
+                    <div className="text-slate-400 text-xs">Monthly Growth</div>
                   </div>
                   <div>
-                    <div className="text-base font-black text-white">{selectedGame.rating}/5</div>
-                    <div className="text-slate-400 text-xs">Rating</div>
+                    <div className="text-2xl font-black text-purple-400">87%</div>
+                    <div className="text-slate-400 text-xs">User Satisfaction</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-orange-400">92%</div>
+                    <div className="text-slate-400 text-xs">Server Uptime</div>
                   </div>
                 </div>
               </div>
@@ -551,22 +785,27 @@ const GamesSection = () => {
 
         {/* Compact Stats - Single Row */}
         <div className="flex justify-center gap-6 mb-6">
-          {[
-            { icon: Users, label: 'PLAYERS', value: '112K+', color: 'text-green-400' },
-            { icon: Star, label: 'RATING', value: '4.7★', color: 'text-yellow-400' },
-            { icon: Download, label: 'GAMES', value: '6', color: 'text-purple-400' }
-          ].map((stat, index) => {
-            const IconComponent = stat.icon;
-            return (
-              <div key={index} className="flex items-center space-x-2 text-center">
-                <IconComponent className={`w-4 h-4 ${stat.color}`} />
-                <div>
-                  <div className="text-sm font-black text-white font-mono">{stat.value}</div>
-                  <div className="text-slate-400 text-xs font-bold">{stat.label}</div>
-                </div>
-              </div>
-            );
-          })}
+          <div className="flex items-center space-x-2">
+            <Users className="w-4 h-4 text-green-400" />
+            <div>
+              <div className="text-sm font-black text-white font-mono">425K+</div>
+              <div className="text-slate-400 text-xs font-bold">PLAYERS</div>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Star className="w-4 h-4 text-yellow-400" />
+            <div>
+              <div className="text-sm font-black text-white font-mono">4.6★</div>
+              <div className="text-slate-400 text-xs font-bold">RATING</div>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Download className="w-4 h-4 text-purple-400" />
+            <div>
+              <div className="text-sm font-black text-white font-mono">9</div>
+              <div className="text-slate-400 text-xs font-bold">GAMES</div>
+            </div>
+          </div>
         </div>
 
         {/* Search Bar */}
@@ -583,8 +822,14 @@ const GamesSection = () => {
           </div>
         </div>
 
-        {/* Main Panel Container - Much Taller */}
-        <div className="relative h-[750px] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm overflow-hidden">
+        {/* Main Panel Container */}
+        <div 
+          className="relative h-[750px] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm overflow-hidden cursor-grab active:cursor-grabbing"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
           {/* Panel Content */}
           <div 
             className="flex h-full transition-transform duration-500 ease-out"
