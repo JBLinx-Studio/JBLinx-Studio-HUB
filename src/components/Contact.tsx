@@ -1,205 +1,146 @@
 
 import React from 'react';
-import { Mail, Phone, MapPin, Send, MessageCircle, Calendar, Trophy, Users, Star, Activity, Code, Terminal, Zap } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageCircle, Calendar } from 'lucide-react';
 
 const Contact = () => {
-  const contactMethods = [
-    {
-      icon: Mail,
-      title: "EMAIL",
-      contact: "hello@jblinxstudio.com",
-      color: "text-emerald-400"
-    },
-    {
-      icon: Phone, 
-      title: "PHONE",
-      contact: "+1 (555) 123-4567",
-      color: "text-blue-400"
-    },
-    {
-      icon: MapPin,
-      title: "LOCATION", 
-      contact: "123 Innovation Street, Tech City",
-      color: "text-purple-400"
-    },
-    {
-      icon: MessageCircle,
-      title: "CHAT",
-      contact: "Live Support Available",
-      color: "text-orange-400"
-    }
-  ];
-
-  const quickActions = [
-    { icon: MessageCircle, label: "START CHAT", color: "from-emerald-500 to-cyan-500" },
-    { icon: Calendar, label: "BOOK MEETING", color: "from-blue-500 to-purple-500" },
-    { icon: Phone, label: "REQUEST CALL", color: "from-orange-500 to-red-500" }
-  ];
-
   return (
-    <section id="contact" className="py-6 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
+    <section id="contact" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
       <div className="container mx-auto px-4">
-        {/* Compact Header */}
-        <div className="text-center mb-5">
-          <div className="inline-flex items-center bg-slate-800/95 border border-emerald-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
-            <Terminal className="w-3 h-3 mr-1 text-emerald-400" />
-            <span className="text-emerald-400 font-black text-xs font-mono tracking-widest">CONTACT PROTOCOL</span>
-          </div>
-          
-          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
-            LET'S START YOUR <span className="text-emerald-400">NEXT PROJECT</span>
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            Get In <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Touch</span>
           </h2>
-          
-          <div className="w-16 h-0.5 bg-emerald-400 mx-auto mb-2"></div>
-          
-          <p className="text-sm text-slate-400 max-w-xl mx-auto mb-3">
-            Ready to transform your ideas? Get in touch with our expert team
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Ready to transform your ideas into reality? Let's discuss your next project and create something amazing together.
           </p>
-
-          {/* Contact Stats */}
-          <div className="grid grid-cols-4 gap-1 max-w-xl mx-auto mb-4">
-            {[
-              { icon: Trophy, value: "98.7%", label: "Satisfaction", color: "text-yellow-400" },
-              { icon: Users, value: "150+", label: "Clients", color: "text-blue-400" },
-              { icon: Star, value: "4.9/5", label: "Rating", color: "text-purple-400" },
-              { icon: Activity, value: "24/7", label: "Support", color: "text-green-400" }
-            ].map((stat, index) => {
-              const IconComponent = stat.icon;
-              return (
-                <div key={index} className="bg-slate-800/80 border border-slate-700 p-1.5 text-center backdrop-blur-sm">
-                  <IconComponent className={`w-3 h-3 ${stat.color} mx-auto mb-0.5`} />
-                  <div className={`text-xs font-black ${stat.color} font-mono`}>{stat.value}</div>
-                  <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
-                </div>
-              );
-            })}
-          </div>
         </div>
 
-        {/* Contact Methods Grid - Compact */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-          {contactMethods.map((method, index) => {
-            const IconComponent = method.icon;
-            return (
-              <div key={index} className="bg-slate-800/95 border border-slate-700 p-3 hover:border-emerald-400/50 transition-all duration-300 group hover:scale-[1.02]">
-                <div className="flex items-center space-x-2 mb-2">
-                  <div className="w-8 h-8 bg-slate-700 border border-slate-600 flex items-center justify-center group-hover:border-emerald-400/50 transition-all duration-300">
-                    <IconComponent className={`w-4 h-4 ${method.color} group-hover:text-emerald-400 transition-colors duration-300`} />
-                  </div>
-                  <h3 className="font-black text-white text-sm font-mono tracking-[0.1em] group-hover:text-emerald-300 transition-colors duration-300">
-                    {method.title}
-                  </h3>
-                </div>
-                <p className={`text-xs font-bold ${method.color} font-mono break-all group-hover:text-emerald-300 transition-colors duration-300`}>
-                  {method.contact}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-5">
-          {/* Contact Form - Compact */}
-          <div className="bg-slate-800/80 border border-slate-600/50 p-5 hover:border-emerald-500/30 transition-all duration-300">
-            <div className="flex items-center mb-4">
-              <Code className="mr-2 text-emerald-400" size={20} />
-              <h3 className="text-lg font-black text-white font-mono tracking-wider">SEND_MESSAGE</h3>
-            </div>
+        <div className="grid lg:grid-cols-2 gap-16">
+          {/* Contact Information */}
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-8">Let's Start a Conversation</h3>
             
-            <form className="space-y-4">
-              <div className="grid sm:grid-cols-2 gap-3">
+            <div className="space-y-6 mb-8">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mr-4">
+                  <Mail className="text-blue-600" size={24} />
+                </div>
                 <div>
-                  <label className="block text-xs font-black text-emerald-400 mb-1 font-mono tracking-[0.1em]">NAME *</label>
+                  <div className="font-semibold text-gray-900">Email Us</div>
+                  <div className="text-gray-600">hello@jblinxstudio.com</div>
+                </div>
+              </div>
+
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mr-4">
+                  <Phone className="text-blue-600" size={24} />
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900">Call Us</div>
+                  <div className="text-gray-600">+1 (555) 123-4567</div>
+                </div>
+              </div>
+
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mr-4">
+                  <MapPin className="text-blue-600" size={24} />
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900">Visit Us</div>
+                  <div className="text-gray-600">123 Innovation Street, Tech City, TC 12345</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="space-y-4">
+              <button className="w-full flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-xl hover:shadow-lg transition-all duration-300">
+                <MessageCircle className="mr-2" size={20} />
+                Start Live Chat
+              </button>
+              
+              <button className="w-full flex items-center justify-center border-2 border-gray-300 text-gray-700 py-3 px-6 rounded-xl hover:border-blue-600 hover:text-blue-600 transition-all duration-300">
+                <Calendar className="mr-2" size={20} />
+                Schedule a Meeting
+              </button>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="bg-white rounded-2xl shadow-xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
+            
+            <form className="space-y-6">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
                   <input 
                     type="text" 
-                    className="w-full px-3 py-2 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 transition-all font-mono text-sm placeholder:text-slate-500"
-                    placeholder="John Doe"
-                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="John"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-black text-emerald-400 mb-1 font-mono tracking-[0.1em]">EMAIL *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
                   <input 
-                    type="email" 
-                    className="w-full px-3 py-2 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 transition-all font-mono text-sm placeholder:text-slate-500"
-                    placeholder="john@example.com"
-                    required
+                    type="text" 
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Doe"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-black text-emerald-400 mb-1 font-mono tracking-[0.1em]">SERVICE</label>
-                <select className="w-full px-3 py-2 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 transition-all font-mono text-sm">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                <input 
+                  type="email" 
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Service Interested In</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                  <option>Select a service</option>
                   <option>Game Development</option>
+                  <option>Mobile Applications</option>
                   <option>Web Applications</option>
-                  <option>Mobile Development</option>
-                  <option>Backend Systems</option>
+                  <option>Custom Software</option>
+                  <option>Digital Publishing</option>
+                  <option>Content & Blogs</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-black text-emerald-400 mb-1 font-mono tracking-[0.1em]">MESSAGE *</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Project Budget</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                  <option>Select budget range</option>
+                  <option>$5,000 - $10,000</option>
+                  <option>$10,000 - $25,000</option>
+                  <option>$25,000 - $50,000</option>
+                  <option>$50,000+</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Message</label>
                 <textarea 
                   rows={4}
-                  className="w-full px-3 py-2 bg-slate-900/60 border border-slate-600/50 text-white focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 transition-all resize-none font-mono text-sm placeholder:text-slate-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
                   placeholder="Tell us about your project..."
-                  required
                 ></textarea>
               </div>
 
               <button 
                 type="submit"
-                className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-black py-3 px-4 font-black transition-all duration-300 font-mono text-sm tracking-[0.1em] hover:from-emerald-600 hover:to-cyan-600 flex items-center justify-center group hover:scale-[1.02]"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center group"
               >
-                SEND_MESSAGE
-                <Send className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
+                Send Message
+                <Send className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
               </button>
             </form>
-          </div>
-
-          {/* Quick Actions - Compact */}
-          <div className="space-y-3">
-            <div className="bg-slate-800/80 border border-slate-600/50 p-5 hover:border-emerald-500/30 transition-all duration-300">
-              <div className="flex items-center mb-4">
-                <Zap className="mr-2 text-emerald-400" size={20} />
-                <h3 className="text-lg font-black text-white font-mono tracking-wider">QUICK_ACTIONS</h3>
-              </div>
-              
-              <div className="space-y-2">
-                {quickActions.map((action, index) => {
-                  const IconComponent = action.icon;
-                  return (
-                    <button key={index} className={`w-full flex items-center justify-center bg-gradient-to-r ${action.color} text-black py-3 px-4 transition-all duration-300 font-black font-mono text-sm tracking-[0.1em] hover:scale-[1.02] group`}>
-                      <IconComponent className="mr-2 group-hover:scale-110 transition-transform" size={16} />
-                      {action.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Office Hours - Compact */}
-            <div className="bg-slate-800/80 border border-slate-600/50 p-5">
-              <h4 className="font-black text-white mb-3 flex items-center font-mono tracking-[0.1em] text-sm">
-                <Terminal className="mr-2 text-emerald-400" size={16} />
-                OFFICE_HOURS
-              </h4>
-              <div className="space-y-1 font-mono text-xs">
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-400">MON-FRI</span>
-                  <span className="font-bold text-emerald-400">8AM-6PM</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-400">SAT</span>
-                  <span className="font-bold text-emerald-400">9AM-4PM</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-400">SUN</span>
-                  <span className="font-bold text-slate-500">CLOSED</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
