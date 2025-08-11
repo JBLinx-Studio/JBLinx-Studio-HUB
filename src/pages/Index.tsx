@@ -26,7 +26,7 @@ const Index = () => {
           <Services />
           
           {/* Premium Visual Break Section with Animated Elements */}
-          <div className="py-32 bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 border-y border-slate-700/50 relative overflow-hidden backdrop-blur-sm">
+          <div className="py-32 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-y border-slate-700/50 relative overflow-hidden">
             {/* Animated Background Elements */}
             <div className="absolute inset-0">
               <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/5 blur-3xl animate-pulse"></div>
@@ -67,7 +67,7 @@ const Index = () => {
           </div>
           
           {/* Enhanced Transition Zone with Connected Vertices Background */}
-          <div className="py-40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-slate-900/95 relative overflow-hidden backdrop-blur-sm">
+          <div className="py-40 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 relative overflow-hidden">
             {/* Connected Vertices Background */}
             <div className="absolute inset-0 pointer-events-none">
               <svg className="w-full h-full opacity-10" viewBox="0 0 800 400">
@@ -163,7 +163,7 @@ const Index = () => {
           </div>
           
           {/* Premium Breathing Space with Geometric Patterns */}
-          <div className="py-44 bg-gradient-to-b from-slate-950/95 via-black/95 to-slate-950/95 relative overflow-hidden backdrop-blur-sm">
+          <div className="py-44 bg-gradient-to-b from-slate-950 via-black to-slate-950 relative overflow-hidden">
             {/* Geometric Grid Background */}
             <div className="absolute inset-0 pointer-events-none">
               <svg className="w-full h-full opacity-5" viewBox="0 0 400 400">
@@ -246,7 +246,7 @@ const Index = () => {
           </div>
           
           {/* Ultimate Breathing Space with Circuit Board Background */}
-          <div className="py-48 bg-gradient-to-b from-slate-950/95 via-slate-900/95 to-black/95 relative overflow-hidden backdrop-blur-sm">
+          <div className="py-48 bg-gradient-to-b from-slate-950 via-slate-900 to-black relative overflow-hidden">
             {/* Circuit Board Background */}
             <div className="absolute inset-0 pointer-events-none">
               <svg className="w-full h-full opacity-8" viewBox="0 0 800 600">
@@ -362,7 +362,7 @@ const Index = () => {
           </div>
           
           {/* Final Premium Breathing Space with Data Flow Background */}
-          <div className="py-36 bg-gradient-to-b from-black/95 via-slate-950/95 to-slate-900/95 relative overflow-hidden backdrop-blur-sm">
+          <div className="py-36 bg-gradient-to-b from-black via-slate-950 to-slate-900 relative overflow-hidden">
             {/* Data Flow Background */}
             <div className="absolute inset-0 pointer-events-none">
               <svg className="w-full h-full opacity-6" viewBox="0 0 1000 400">
