@@ -10,10 +10,10 @@ interface ParallaxScrollOptions {
 
 export const useParallaxScroll = ({
   enableMouseDrag = true,
-  friction = 0.88,
-  momentum = 2.5,
-  sensitivity = 3.5,
-  minVelocity = 0.05
+  friction = 0.96,
+  momentum = 4.0,
+  sensitivity = 5.0,
+  minVelocity = 0.01
 }: ParallaxScrollOptions = {}) => {
   const [scrollY, setScrollY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -23,51 +23,71 @@ export const useParallaxScroll = ({
   const animationFrame = useRef<number>();
   const lastFrameTime = useRef(0);
   const velocityHistory = useRef<number[]>([]);
+  const smoothingBuffer = useRef<number[]>([]);
 
-  // Enhanced smooth scrolling animation with improved momentum physics
+  // Ultra-smooth scrolling animation with enhanced physics
   const animateScroll = (currentTime: number) => {
-    const deltaTime = Math.min(currentTime - lastFrameTime.current, 32); // Cap at ~30fps for stability
+    const deltaTime = Math.min(currentTime - lastFrameTime.current, 20); // Higher precision
     lastFrameTime.current = currentTime;
 
-    // Apply sophisticated time-based friction with exponential decay
-    const timeBasedFriction = Math.pow(friction, deltaTime / 16);
+    // Advanced time-based friction with velocity-dependent damping
+    const baseFriction = friction;
+    const velocityMagnitude = Math.abs(velocity.current);
+    const adaptiveFriction = baseFriction + (1 - baseFriction) * Math.min(velocityMagnitude / 100, 0.3);
+    const timeBasedFriction = Math.pow(adaptiveFriction, deltaTime / 16);
     
-    if (Math.abs(velocity.current) > minVelocity) {
+    if (velocityMagnitude > minVelocity) {
       const currentScroll = window.scrollY;
       const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       
-      // Calculate new scroll position with enhanced easing and momentum preservation
-      let newScroll = currentScroll + velocity.current * (deltaTime / 16);
+      // Enhanced easing with quintic interpolation for ultra-smooth motion
+      const easingFactor = 1 - Math.pow(1 - Math.min(velocityMagnitude / 50, 1), 3);
+      let newScroll = currentScroll + velocity.current * (deltaTime / 16) * (0.8 + easingFactor * 0.4);
       
-      // Enhanced boundary handling with progressive resistance and smooth bounce
+      // Sophisticated boundary handling with progressive elastic resistance
       if (newScroll < 0) {
         const overshoot = Math.abs(newScroll);
-        const resistance = Math.min(overshoot / 100, 0.8); // Progressive resistance
-        newScroll = newScroll * (1 - resistance);
-        velocity.current *= -0.2 * (1 - resistance); // Softer bounce with resistance
+        const elasticity = Math.pow(0.7, overshoot / 50); // Exponential resistance
+        newScroll = newScroll * elasticity;
+        velocity.current *= -0.15 * elasticity; // Gentle bounce with resistance decay
       } else if (newScroll > maxScroll) {
         const overshoot = newScroll - maxScroll;
-        const resistance = Math.min(overshoot / 100, 0.8);
-        newScroll = maxScroll + overshoot * (1 - resistance);
-        velocity.current *= -0.2 * (1 - resistance);
+        const elasticity = Math.pow(0.7, overshoot / 50);
+        newScroll = maxScroll + overshoot * elasticity;
+        velocity.current *= -0.15 * elasticity;
       }
       
-      window.scrollTo(0, newScroll);
-      setScrollY(newScroll);
+      // Smooth the scroll position with temporal averaging
+      smoothingBuffer.current.push(newScroll);
+      if (smoothingBuffer.current.length > 3) {
+        smoothingBuffer.current.shift();
+      }
+      const smoothedScroll = smoothingBuffer.current.reduce((sum, val) => sum + val, 0) / smoothingBuffer.current.length;
       
-      // Apply enhanced friction with velocity-dependent damping
-      const velocityFactor = Math.min(Math.abs(velocity.current) / 50, 1);
-      const adaptiveFriction = friction + (1 - friction) * velocityFactor * 0.1;
-      velocity.current *= Math.pow(adaptiveFriction, deltaTime / 16);
+      window.scrollTo(0, smoothedScroll);
+      setScrollY(smoothedScroll);
+      
+      // Apply enhanced friction with acceleration-based damping
+      const acceleration = Math.abs(velocity.current - (velocityHistory.current[velocityHistory.current.length - 1] || 0));
+      const accelerationDamping = 1 + acceleration * 0.02; // Slight damping for rapid changes
+      
+      velocity.current *= timeBasedFriction / accelerationDamping;
+      
+      // Track velocity for acceleration calculations
+      velocityHistory.current.push(velocity.current);
+      if (velocityHistory.current.length > 5) {
+        velocityHistory.current.shift();
+      }
       
       animationFrame.current = requestAnimationFrame(animateScroll);
     } else {
       velocity.current = 0;
       velocityHistory.current = [];
+      smoothingBuffer.current = [];
     }
   };
 
-  // Enhanced scroll event handling with improved performance
+  // Enhanced scroll event handling
   useEffect(() => {
     let ticking = false;
     
@@ -85,18 +105,19 @@ export const useParallaxScroll = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isDragging]);
 
-  // Significantly enhanced mouse drag functionality with advanced physics
+  // Ultra-enhanced mouse drag with professional-grade physics
   useEffect(() => {
     if (!enableMouseDrag) return;
 
     const handleMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return; // Only left mouse button
+      if (e.button !== 0) return;
       
       setIsDragging(true);
       dragStartY.current = e.clientY;
       lastMouseY.current = e.clientY;
       velocity.current = 0;
       velocityHistory.current = [];
+      smoothingBuffer.current = [];
       lastFrameTime.current = performance.now();
       
       if (animationFrame.current) {
@@ -115,28 +136,33 @@ export const useParallaxScroll = ({
       const currentScroll = window.scrollY;
       const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       
-      // Enhanced scroll calculation with improved sensitivity and responsiveness
-      const scrollDelta = deltaY * sensitivity;
+      // Ultra-responsive scroll calculation with dynamic sensitivity
+      const velocityBasedSensitivity = sensitivity * (1 + Math.min(Math.abs(deltaY) / 20, 1));
+      const scrollDelta = deltaY * velocityBasedSensitivity;
       let newScroll = Math.max(0, Math.min(maxScroll, currentScroll + scrollDelta));
 
       window.scrollTo(0, newScroll);
       setScrollY(newScroll);
       
-      // Advanced velocity calculation with temporal smoothing
+      // Advanced velocity calculation with temporal and spatial smoothing
       const instantVelocity = scrollDelta * momentum;
-      velocityHistory.current.push(instantVelocity);
+      const timeWeight = Math.min(performance.now() - lastFrameTime.current, 50) / 16; // Time-weighted velocity
+      const weightedVelocity = instantVelocity * timeWeight;
       
-      // Keep only recent velocity samples for better momentum calculation
-      if (velocityHistory.current.length > 8) {
+      velocityHistory.current.push(weightedVelocity);
+      
+      // Keep optimal history length for best momentum calculation
+      if (velocityHistory.current.length > 12) {
         velocityHistory.current.shift();
       }
       
-      // Calculate weighted average velocity with emphasis on recent samples
-      const weights = velocityHistory.current.map((_, i) => Math.pow(1.5, i));
+      // Calculate exponentially weighted moving average for ultra-smooth velocity
+      const weights = velocityHistory.current.map((_, i) => Math.pow(1.8, i));
       const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
       velocity.current = velocityHistory.current.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
       
       lastMouseY.current = e.clientY;
+      lastFrameTime.current = performance.now();
       e.preventDefault();
     };
 
@@ -147,26 +173,35 @@ export const useParallaxScroll = ({
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
       
-      // Enhanced momentum calculation from velocity history
-      if (velocityHistory.current.length > 0) {
-        // Use weighted average of recent velocities for smoother momentum
-        const recentVelocities = velocityHistory.current.slice(-5);
-        const weights = recentVelocities.map((_, i) => Math.pow(1.8, i));
+      // Ultra-enhanced momentum calculation with predictive smoothing
+      if (velocityHistory.current.length > 2) {
+        // Use weighted average with exponential decay for recent velocities
+        const recentVelocities = velocityHistory.current.slice(-8);
+        const weights = recentVelocities.map((_, i) => Math.pow(2.2, i)); // Higher exponential weighting
         const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-        velocity.current = recentVelocities.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
         
-        // Apply momentum multiplier for better feel
-        velocity.current *= 1.4;
+        const avgVelocity = recentVelocities.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
+        
+        // Apply enhanced momentum with velocity-dependent multiplier
+        const velocityMagnitude = Math.abs(avgVelocity);
+        const momentumMultiplier = 1.8 + Math.min(velocityMagnitude / 30, 1.2); // Adaptive momentum
+        
+        velocity.current = avgVelocity * momentumMultiplier;
+        
+        // Cap maximum velocity for stability
+        const maxVelocity = 80;
+        velocity.current = Math.sign(velocity.current) * Math.min(Math.abs(velocity.current), maxVelocity);
       }
       
-      // Start enhanced momentum animation with improved initial conditions
+      // Start ultra-smooth momentum animation
       if (Math.abs(velocity.current) > minVelocity) {
         lastFrameTime.current = performance.now();
+        smoothingBuffer.current = [window.scrollY];
         animationFrame.current = requestAnimationFrame(animateScroll);
       }
     };
 
-    // Enhanced touch support for mobile devices
+    // Enhanced touch support with same ultra-smooth physics
     const handleTouchStart = (e: TouchEvent) => {
       const touch = e.touches[0];
       setIsDragging(true);
@@ -174,6 +209,7 @@ export const useParallaxScroll = ({
       lastMouseY.current = touch.clientY;
       velocity.current = 0;
       velocityHistory.current = [];
+      smoothingBuffer.current = [];
       lastFrameTime.current = performance.now();
       
       if (animationFrame.current) {
@@ -189,24 +225,29 @@ export const useParallaxScroll = ({
       const currentScroll = window.scrollY;
       const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       
-      const scrollDelta = deltaY * sensitivity;
+      const velocityBasedSensitivity = sensitivity * (1 + Math.min(Math.abs(deltaY) / 20, 1));
+      const scrollDelta = deltaY * velocityBasedSensitivity;
       let newScroll = Math.max(0, Math.min(maxScroll, currentScroll + scrollDelta));
 
       window.scrollTo(0, newScroll);
       setScrollY(newScroll);
       
       const instantVelocity = scrollDelta * momentum;
-      velocityHistory.current.push(instantVelocity);
+      const timeWeight = Math.min(performance.now() - lastFrameTime.current, 50) / 16;
+      const weightedVelocity = instantVelocity * timeWeight;
       
-      if (velocityHistory.current.length > 8) {
+      velocityHistory.current.push(weightedVelocity);
+      
+      if (velocityHistory.current.length > 12) {
         velocityHistory.current.shift();
       }
       
-      const weights = velocityHistory.current.map((_, i) => Math.pow(1.5, i));
+      const weights = velocityHistory.current.map((_, i) => Math.pow(1.8, i));
       const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
       velocity.current = velocityHistory.current.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
       
       lastMouseY.current = touch.clientY;
+      lastFrameTime.current = performance.now();
       e.preventDefault();
     };
 
@@ -215,27 +256,34 @@ export const useParallaxScroll = ({
       
       setIsDragging(false);
       
-      if (velocityHistory.current.length > 0) {
-        const recentVelocities = velocityHistory.current.slice(-5);
-        const weights = recentVelocities.map((_, i) => Math.pow(1.8, i));
+      if (velocityHistory.current.length > 2) {
+        const recentVelocities = velocityHistory.current.slice(-8);
+        const weights = recentVelocities.map((_, i) => Math.pow(2.2, i));
         const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-        velocity.current = recentVelocities.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
-        velocity.current *= 1.4;
+        
+        const avgVelocity = recentVelocities.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
+        const velocityMagnitude = Math.abs(avgVelocity);
+        const momentumMultiplier = 1.8 + Math.min(velocityMagnitude / 30, 1.2);
+        
+        velocity.current = avgVelocity * momentumMultiplier;
+        
+        const maxVelocity = 80;
+        velocity.current = Math.sign(velocity.current) * Math.min(Math.abs(velocity.current), maxVelocity);
       }
       
       if (Math.abs(velocity.current) > minVelocity) {
         lastFrameTime.current = performance.now();
+        smoothingBuffer.current = [window.scrollY];
         animationFrame.current = requestAnimationFrame(animateScroll);
       }
     };
 
-    // Add event listeners
+    // Add all event listeners
     document.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mouseleave', handleMouseUp);
     
-    // Touch events
     document.addEventListener('touchstart', handleTouchStart, { passive: false });
     document.addEventListener('touchmove', handleTouchMove, { passive: false });
     document.addEventListener('touchend', handleTouchEnd);
