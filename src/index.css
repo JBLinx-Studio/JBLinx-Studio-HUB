@@ -7,30 +7,30 @@
 
 @layer base {
   :root {
-    --background: 15 100% 4%;
-    --foreground: 39 100% 95%;
-    --card: 24 100% 6%;
-    --card-foreground: 39 100% 95%;
-    --popover: 24 100% 6%;
-    --popover-foreground: 39 100% 95%;
-    --primary: 39 100% 55%;
-    --primary-foreground: 15 100% 4%;
-    --secondary: 150 60% 30%;
-    --secondary-foreground: 39 100% 95%;
-    --muted: 30 50% 15%;
-    --muted-foreground: 39 30% 65%;
-    --accent: 180 70% 35%;
-    --accent-foreground: 39 100% 95%;
-    --destructive: 0 84% 50%;
-    --destructive-foreground: 39 100% 95%;
-    --border: 30 50% 20%;
-    --input: 30 50% 20%;
-    --ring: 39 100% 55%;
-    --chart-1: 39 100% 55%;
-    --chart-2: 150 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 180 65% 60%;
-    --chart-5: 200 75% 55%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 10% 3.9%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 25 95% 53%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 }
 
@@ -42,10 +42,6 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
-    scroll-behavior: auto;
-    /* Remove the old blue gradient - let ParallaxBackground handle all backgrounds */
-    background: transparent;
-    min-height: 100vh;
   }
   
   .font-mono {
@@ -53,36 +49,13 @@
   }
 }
 
-/* Enhanced gradient utilities */
-@layer utilities {
-  .bg-gradient-radial {
-    background: radial-gradient(var(--tw-gradient-stops));
-  }
-  
-  .bg-gradient-conic {
-    background: conic-gradient(var(--tw-gradient-stops));
-  }
-  
-  .bg-gradient-animated {
-    background: linear-gradient(-45deg, var(--tw-gradient-stops));
-    background-size: 400% 400%;
-    animation: gradient-shift 15s ease infinite;
-  }
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Gaming-specific enhancements with new theme colors */
+/* Gaming-specific enhancements with improved color schemes */
 .game-card-hover {
-  @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/20;
+  @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-orange-500/20;
 }
 
 .trailer-overlay {
-  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
   backdrop-filter: blur(8px);
 }
 
@@ -91,19 +64,19 @@
 }
 
 .game-feature-tag {
-  @apply bg-secondary text-secondary-foreground px-2 py-1 text-xs font-bold transition-colors hover:bg-primary hover:text-primary-foreground;
+  @apply bg-zinc-800 text-orange-400 px-2 py-1 text-xs font-bold transition-colors hover:bg-orange-400 hover:text-zinc-900;
 }
 
 .review-card {
-  @apply bg-card/70 border border-border p-3 hover:border-primary/50 transition-all duration-300;
+  @apply bg-zinc-950/50 border border-zinc-700 p-3 hover:border-emerald-400/50 transition-all duration-300;
 }
 
 .dlc-card {
-  @apply bg-card/70 border border-primary/30 p-3 hover:border-primary transition-all duration-300;
+  @apply bg-zinc-950/50 border border-orange-400/30 p-3 hover:border-orange-400 transition-all duration-300;
 }
 
 .update-card {
-  @apply bg-card/70 border border-accent/30 p-3 hover:border-accent transition-all duration-300;
+  @apply bg-zinc-950/50 border border-emerald-400/30 p-3 hover:border-emerald-400 transition-all duration-300;
 }
 
 /* Enhanced scrollbars for gaming content */
@@ -112,11 +85,11 @@
 }
 
 .game-scroll::-webkit-scrollbar-track {
-  @apply bg-muted;
+  @apply bg-zinc-900;
 }
 
 .game-scroll::-webkit-scrollbar-thumb {
-  @apply bg-primary rounded-full hover:bg-primary/80;
+  @apply bg-orange-500 rounded-full hover:bg-orange-400;
 }
 
 /* Gaming panel transitions */
@@ -185,35 +158,35 @@
 }
 
 .rating-star.filled {
-  @apply text-primary scale-110;
+  @apply text-orange-400 scale-110;
 }
 
-/* Platform badges with new theme colors */
+/* Platform badges */
 .platform-pc {
-  @apply bg-primary/90 text-primary-foreground;
+  @apply bg-orange-500/90 text-white;
 }
 
 .platform-mobile {
-  @apply bg-accent/90 text-accent-foreground;
+  @apply bg-emerald-500/90 text-white;
 }
 
 .platform-web {
-  @apply bg-secondary/90 text-secondary-foreground;
+  @apply bg-cyan-500/90 text-white;
 }
 
-/* Status indicators with new theme colors */
+/* Status indicators */
 .status-released {
-  @apply bg-accent text-accent-foreground;
+  @apply bg-emerald-500 text-white;
 }
 
 .status-beta {
-  @apply bg-primary text-primary-foreground;
+  @apply bg-orange-500 text-black;
 }
 
 .status-coming-soon {
-  @apply bg-secondary text-secondary-foreground;
+  @apply bg-cyan-500 text-white;
 }
 
 .status-early-access {
-  @apply bg-chart-4 text-foreground;
+  @apply bg-amber-500 text-white;
 }
