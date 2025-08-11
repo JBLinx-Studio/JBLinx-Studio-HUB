@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from 'react';
 
 interface ParallaxScrollOptions {
@@ -9,8 +8,8 @@ interface ParallaxScrollOptions {
 
 export const useParallaxScroll = ({
   enableMouseDrag = true,
-  friction = 0.95,
-  momentum = 0.8
+  friction = 0.94,
+  momentum = 1.35
 }: ParallaxScrollOptions = {}) => {
   const [scrollY, setScrollY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -19,7 +18,7 @@ export const useParallaxScroll = ({
   const velocity = useRef(0);
   const animationFrame = useRef<number>();
 
-  // Smooth scrolling animation with momentum
+  // Enhanced smooth scrolling animation with improved momentum
   const animateScroll = () => {
     if (Math.abs(velocity.current) > 0.1) {
       const currentScroll = window.scrollY;
@@ -50,12 +49,12 @@ export const useParallaxScroll = ({
     return () => window.removeEventListener('scroll', throttledScroll);
   }, [isDragging]);
 
-  // Mouse drag functionality
+  // Enhanced mouse drag functionality with improved sensitivity
   useEffect(() => {
     if (!enableMouseDrag) return;
 
     const handleMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return; // Only left mouse button
+      if (e.button !== 0) return;
       
       setIsDragging(true);
       dragStartY.current = e.clientY;
@@ -78,13 +77,13 @@ export const useParallaxScroll = ({
       const currentScroll = window.scrollY;
       const newScroll = Math.max(0, Math.min(
         document.documentElement.scrollHeight - window.innerHeight,
-        currentScroll + deltaY * 2 // Multiply for more sensitivity
+        currentScroll + deltaY * 2.5 // Enhanced sensitivity
       ));
 
       window.scrollTo(0, newScroll);
       setScrollY(newScroll);
       
-      // Calculate velocity for momentum
+      // Enhanced velocity calculation for better momentum
       velocity.current = deltaY * momentum;
       lastMouseY.current = e.clientY;
       
@@ -98,7 +97,7 @@ export const useParallaxScroll = ({
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
       
-      // Start momentum animation
+      // Start enhanced momentum animation
       if (Math.abs(velocity.current) > 1) {
         animateScroll();
       }
