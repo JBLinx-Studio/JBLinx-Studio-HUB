@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from 'react';
 
 interface ParallaxScrollOptions {
@@ -11,10 +10,10 @@ interface ParallaxScrollOptions {
 
 export const useParallaxScroll = ({
   enableMouseDrag = true,
-  friction = 0.96,
-  momentum = 1.2,
-  sensitivity = 2.5,
-  minVelocity = 0.1
+  friction = 0.88,
+  momentum = 2.5,
+  sensitivity = 3.5,
+  minVelocity = 0.05
 }: ParallaxScrollOptions = {}) => {
   const [scrollY, setScrollY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -23,40 +22,52 @@ export const useParallaxScroll = ({
   const velocity = useRef(0);
   const animationFrame = useRef<number>();
   const lastFrameTime = useRef(0);
+  const velocityHistory = useRef<number[]>([]);
 
-  // Enhanced smooth scrolling animation with momentum
+  // Enhanced smooth scrolling animation with improved momentum physics
   const animateScroll = (currentTime: number) => {
-    const deltaTime = currentTime - lastFrameTime.current;
+    const deltaTime = Math.min(currentTime - lastFrameTime.current, 32); // Cap at ~30fps for stability
     lastFrameTime.current = currentTime;
 
-    // Apply time-based friction for consistent physics regardless of framerate
+    // Apply sophisticated time-based friction with exponential decay
     const timeBasedFriction = Math.pow(friction, deltaTime / 16);
     
     if (Math.abs(velocity.current) > minVelocity) {
       const currentScroll = window.scrollY;
       const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       
-      // Calculate new scroll position with improved easing
+      // Calculate new scroll position with enhanced easing and momentum preservation
       let newScroll = currentScroll + velocity.current * (deltaTime / 16);
       
-      // Boundary handling with soft bounce effect
+      // Enhanced boundary handling with progressive resistance and smooth bounce
       if (newScroll < 0) {
-        newScroll = 0;
-        velocity.current *= -0.3; // Soft bounce at top
+        const overshoot = Math.abs(newScroll);
+        const resistance = Math.min(overshoot / 100, 0.8); // Progressive resistance
+        newScroll = newScroll * (1 - resistance);
+        velocity.current *= -0.2 * (1 - resistance); // Softer bounce with resistance
       } else if (newScroll > maxScroll) {
-        newScroll = maxScroll;
-        velocity.current *= -0.3; // Soft bounce at bottom
+        const overshoot = newScroll - maxScroll;
+        const resistance = Math.min(overshoot / 100, 0.8);
+        newScroll = maxScroll + overshoot * (1 - resistance);
+        velocity.current *= -0.2 * (1 - resistance);
       }
       
       window.scrollTo(0, newScroll);
-      velocity.current *= timeBasedFriction;
+      setScrollY(newScroll);
+      
+      // Apply enhanced friction with velocity-dependent damping
+      const velocityFactor = Math.min(Math.abs(velocity.current) / 50, 1);
+      const adaptiveFriction = friction + (1 - friction) * velocityFactor * 0.1;
+      velocity.current *= Math.pow(adaptiveFriction, deltaTime / 16);
+      
       animationFrame.current = requestAnimationFrame(animateScroll);
     } else {
       velocity.current = 0;
+      velocityHistory.current = [];
     }
   };
 
-  // Handle scroll events with improved throttling
+  // Enhanced scroll event handling with improved performance
   useEffect(() => {
     let ticking = false;
     
@@ -74,7 +85,7 @@ export const useParallaxScroll = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isDragging]);
 
-  // Enhanced mouse drag functionality with improved physics
+  // Significantly enhanced mouse drag functionality with advanced physics
   useEffect(() => {
     if (!enableMouseDrag) return;
 
@@ -85,6 +96,7 @@ export const useParallaxScroll = ({
       dragStartY.current = e.clientY;
       lastMouseY.current = e.clientY;
       velocity.current = 0;
+      velocityHistory.current = [];
       lastFrameTime.current = performance.now();
       
       if (animationFrame.current) {
@@ -103,17 +115,28 @@ export const useParallaxScroll = ({
       const currentScroll = window.scrollY;
       const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
       
-      // Enhanced scroll calculation with improved sensitivity
+      // Enhanced scroll calculation with improved sensitivity and responsiveness
       const scrollDelta = deltaY * sensitivity;
       let newScroll = Math.max(0, Math.min(maxScroll, currentScroll + scrollDelta));
 
       window.scrollTo(0, newScroll);
       setScrollY(newScroll);
       
-      // Calculate velocity for momentum with time-based smoothing
-      velocity.current = scrollDelta * momentum;
-      lastMouseY.current = e.clientY;
+      // Advanced velocity calculation with temporal smoothing
+      const instantVelocity = scrollDelta * momentum;
+      velocityHistory.current.push(instantVelocity);
       
+      // Keep only recent velocity samples for better momentum calculation
+      if (velocityHistory.current.length > 8) {
+        velocityHistory.current.shift();
+      }
+      
+      // Calculate weighted average velocity with emphasis on recent samples
+      const weights = velocityHistory.current.map((_, i) => Math.pow(1.5, i));
+      const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+      velocity.current = velocityHistory.current.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
+      
+      lastMouseY.current = e.clientY;
       e.preventDefault();
     };
 
@@ -124,6 +147,18 @@ export const useParallaxScroll = ({
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
       
+      // Enhanced momentum calculation from velocity history
+      if (velocityHistory.current.length > 0) {
+        // Use weighted average of recent velocities for smoother momentum
+        const recentVelocities = velocityHistory.current.slice(-5);
+        const weights = recentVelocities.map((_, i) => Math.pow(1.8, i));
+        const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+        velocity.current = recentVelocities.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
+        
+        // Apply momentum multiplier for better feel
+        velocity.current *= 1.4;
+      }
+      
       // Start enhanced momentum animation with improved initial conditions
       if (Math.abs(velocity.current) > minVelocity) {
         lastFrameTime.current = performance.now();
@@ -131,13 +166,14 @@ export const useParallaxScroll = ({
       }
     };
 
-    // Touch support for mobile devices
+    // Enhanced touch support for mobile devices
     const handleTouchStart = (e: TouchEvent) => {
       const touch = e.touches[0];
       setIsDragging(true);
       dragStartY.current = touch.clientY;
       lastMouseY.current = touch.clientY;
       velocity.current = 0;
+      velocityHistory.current = [];
       lastFrameTime.current = performance.now();
       
       if (animationFrame.current) {
@@ -159,9 +195,18 @@ export const useParallaxScroll = ({
       window.scrollTo(0, newScroll);
       setScrollY(newScroll);
       
-      velocity.current = scrollDelta * momentum;
-      lastMouseY.current = touch.clientY;
+      const instantVelocity = scrollDelta * momentum;
+      velocityHistory.current.push(instantVelocity);
       
+      if (velocityHistory.current.length > 8) {
+        velocityHistory.current.shift();
+      }
+      
+      const weights = velocityHistory.current.map((_, i) => Math.pow(1.5, i));
+      const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+      velocity.current = velocityHistory.current.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
+      
+      lastMouseY.current = touch.clientY;
       e.preventDefault();
     };
 
@@ -169,6 +214,14 @@ export const useParallaxScroll = ({
       if (!isDragging) return;
       
       setIsDragging(false);
+      
+      if (velocityHistory.current.length > 0) {
+        const recentVelocities = velocityHistory.current.slice(-5);
+        const weights = recentVelocities.map((_, i) => Math.pow(1.8, i));
+        const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+        velocity.current = recentVelocities.reduce((sum, vel, i) => sum + vel * weights[i], 0) / totalWeight;
+        velocity.current *= 1.4;
+      }
       
       if (Math.abs(velocity.current) > minVelocity) {
         lastFrameTime.current = performance.now();
