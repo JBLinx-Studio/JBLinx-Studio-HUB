@@ -9,17 +9,15 @@ import Services from '../components/Services';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import ParallaxBackground from '../components/effects/ParallaxBackground';
-
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-slate-950 overflow-x-hidden relative">
+  return <div className="min-h-screen bg-slate-950 overflow-x-hidden relative">
       {/* Parallax Background Layer */}
       <ParallaxBackground />
       
       {/* Main Content - positioned above parallax background */}
       <div className="relative z-10">
         <Header />
-        <main className="relative">
+        <main className="relative bg-transparent">
           <Hero />
           
           {/* Enhanced Services Overview */}
@@ -48,13 +46,11 @@ const Index = () => {
               
               {/* Animated Dots Pattern */}
               <div className="grid grid-cols-5 gap-4 max-w-sm mx-auto mb-8">
-                {Array.from({ length: 15 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className="w-2 h-2 bg-slate-600/50 animate-pulse"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  ></div>
-                ))}
+                {Array.from({
+                length: 15
+              }).map((_, index) => <div key={index} className="w-2 h-2 bg-slate-600/50 animate-pulse" style={{
+                animationDelay: `${index * 100}ms`
+              }}></div>)}
               </div>
               
               <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-slate-500 to-transparent mx-auto"></div>
@@ -81,30 +77,64 @@ const Index = () => {
                 {/* Animated connecting lines */}
                 <g stroke="url(#vertexGradient1)" strokeWidth="1" fill="none">
                   <line x1="100" y1="80" x2="200" y2="150" className="animate-pulse" />
-                  <line x1="200" y1="150" x2="350" y2="120" className="animate-pulse" style={{animationDelay: '300ms'}} />
-                  <line x1="350" y1="120" x2="500" y2="200" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                  <line x1="500" y1="200" x2="650" y2="140" className="animate-pulse" style={{animationDelay: '900ms'}} />
-                  <line x1="150" y1="250" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                  <line x1="300" y1="280" x2="450" y2="250" className="animate-pulse" style={{animationDelay: '1500ms'}} />
-                  <line x1="450" y1="250" x2="600" y2="320" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+                  <line x1="200" y1="150" x2="350" y2="120" className="animate-pulse" style={{
+                  animationDelay: '300ms'
+                }} />
+                  <line x1="350" y1="120" x2="500" y2="200" className="animate-pulse" style={{
+                  animationDelay: '600ms'
+                }} />
+                  <line x1="500" y1="200" x2="650" y2="140" className="animate-pulse" style={{
+                  animationDelay: '900ms'
+                }} />
+                  <line x1="150" y1="250" x2="300" y2="280" className="animate-pulse" style={{
+                  animationDelay: '1200ms'
+                }} />
+                  <line x1="300" y1="280" x2="450" y2="250" className="animate-pulse" style={{
+                  animationDelay: '1500ms'
+                }} />
+                  <line x1="450" y1="250" x2="600" y2="320" className="animate-pulse" style={{
+                  animationDelay: '1800ms'
+                }} />
                   
                   {/* Cross connections */}
-                  <line x1="200" y1="150" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                  <line x1="350" y1="120" x2="450" y2="250" className="animate-pulse" style={{animationDelay: '700ms'}} />
-                  <line x1="500" y1="200" x2="300" y2="280" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                  <line x1="200" y1="150" x2="300" y2="280" className="animate-pulse" style={{
+                  animationDelay: '400ms'
+                }} />
+                  <line x1="350" y1="120" x2="450" y2="250" className="animate-pulse" style={{
+                  animationDelay: '700ms'
+                }} />
+                  <line x1="500" y1="200" x2="300" y2="280" className="animate-pulse" style={{
+                  animationDelay: '1000ms'
+                }} />
                 </g>
                 
                 {/* Animated vertices */}
                 <g fill="url(#vertexGradient1)">
                   <circle cx="100" cy="80" r="3" className="animate-pulse" />
-                  <circle cx="200" cy="150" r="4" className="animate-pulse" style={{animationDelay: '200ms'}} />
-                  <circle cx="350" cy="120" r="3" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                  <circle cx="500" cy="200" r="5" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                  <circle cx="650" cy="140" r="3" className="animate-pulse" style={{animationDelay: '800ms'}} />
-                  <circle cx="150" cy="250" r="4" className="animate-pulse" style={{animationDelay: '1000ms'}} />
-                  <circle cx="300" cy="280" r="6" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                  <circle cx="450" cy="250" r="3" className="animate-pulse" style={{animationDelay: '1400ms'}} />
-                  <circle cx="600" cy="320" r="4" className="animate-pulse" style={{animationDelay: '1600ms'}} />
+                  <circle cx="200" cy="150" r="4" className="animate-pulse" style={{
+                  animationDelay: '200ms'
+                }} />
+                  <circle cx="350" cy="120" r="3" className="animate-pulse" style={{
+                  animationDelay: '400ms'
+                }} />
+                  <circle cx="500" cy="200" r="5" className="animate-pulse" style={{
+                  animationDelay: '600ms'
+                }} />
+                  <circle cx="650" cy="140" r="3" className="animate-pulse" style={{
+                  animationDelay: '800ms'
+                }} />
+                  <circle cx="150" cy="250" r="4" className="animate-pulse" style={{
+                  animationDelay: '1000ms'
+                }} />
+                  <circle cx="300" cy="280" r="6" className="animate-pulse" style={{
+                  animationDelay: '1200ms'
+                }} />
+                  <circle cx="450" cy="250" r="3" className="animate-pulse" style={{
+                  animationDelay: '1400ms'
+                }} />
+                  <circle cx="600" cy="320" r="4" className="animate-pulse" style={{
+                  animationDelay: '1600ms'
+                }} />
                 </g>
               </svg>
             </div>
@@ -141,16 +171,11 @@ const Index = () => {
               
               {/* Enhanced Pattern Grid */}
               <div className="grid grid-cols-7 gap-3 max-w-lg mx-auto mb-16">
-                {Array.from({ length: 21 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className={`w-2 h-2 ${
-                      index % 3 === 0 ? 'bg-purple-400/40' : 
-                      index % 3 === 1 ? 'bg-blue-400/40' : 'bg-cyan-400/40'
-                    } animate-pulse`}
-                    style={{ animationDelay: `${index * 50}ms` }}
-                  ></div>
-                ))}
+                {Array.from({
+                length: 21
+              }).map((_, index) => <div key={index} className={`w-2 h-2 ${index % 3 === 0 ? 'bg-purple-400/40' : index % 3 === 1 ? 'bg-blue-400/40' : 'bg-cyan-400/40'} animate-pulse`} style={{
+                animationDelay: `${index * 50}ms`
+              }}></div>)}
               </div>
               
               <div className="w-28 h-0.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mx-auto"></div>
@@ -183,8 +208,12 @@ const Index = () => {
                 {/* Animated geometric shapes */}
                 <g fill="url(#geometricGradient)" stroke="#10b981" strokeWidth="1" opacity="0.3">
                   <polygon points="100,50 150,100 100,150 50,100" className="animate-pulse" />
-                  <polygon points="300,80 340,120 300,160 260,120" className="animate-pulse" style={{animationDelay: '500ms'}} />
-                  <polygon points="180,250 220,290 180,330 140,290" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                  <polygon points="300,80 340,120 300,160 260,120" className="animate-pulse" style={{
+                  animationDelay: '500ms'
+                }} />
+                  <polygon points="180,250 220,290 180,330 140,290" className="animate-pulse" style={{
+                  animationDelay: '1000ms'
+                }} />
                 </g>
               </svg>
             </div>
@@ -223,17 +252,11 @@ const Index = () => {
               
               {/* Enhanced Geometric Pattern */}
               <div className="grid grid-cols-6 gap-4 max-w-md mx-auto mb-20">
-                {Array.from({ length: 18 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className={`${
-                      index % 4 === 0 ? 'w-3 h-3 bg-green-400/30' : 
-                      index % 4 === 1 ? 'w-2 h-2 bg-blue-400/30' : 
-                      index % 4 === 2 ? 'w-4 h-4 bg-cyan-400/30' : 'w-2 h-2 bg-purple-400/30'
-                    } animate-pulse`}
-                    style={{ animationDelay: `${index * 75}ms` }}
-                  ></div>
-                ))}
+                {Array.from({
+                length: 18
+              }).map((_, index) => <div key={index} className={`${index % 4 === 0 ? 'w-3 h-3 bg-green-400/30' : index % 4 === 1 ? 'w-2 h-2 bg-blue-400/30' : index % 4 === 2 ? 'w-4 h-4 bg-cyan-400/30' : 'w-2 h-2 bg-purple-400/30'} animate-pulse`} style={{
+                animationDelay: `${index * 75}ms`
+              }}></div>)}
               </div>
               
               <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mx-auto"></div>
@@ -262,35 +285,75 @@ const Index = () => {
                 <g stroke="url(#circuitGradient)" strokeWidth="2" fill="none">
                   {/* Horizontal lines */}
                   <line x1="50" y1="100" x2="300" y2="100" className="animate-pulse" />
-                  <line x1="320" y1="100" x2="600" y2="100" className="animate-pulse" style={{animationDelay: '200ms'}} />
-                  <line x1="100" y1="200" x2="400" y2="200" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                  <line x1="420" y1="200" x2="700" y2="200" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                  <line x1="80" y1="300" x2="350" y2="300" className="animate-pulse" style={{animationDelay: '800ms'}} />
-                  <line x1="370" y1="300" x2="650" y2="300" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                  <line x1="320" y1="100" x2="600" y2="100" className="animate-pulse" style={{
+                  animationDelay: '200ms'
+                }} />
+                  <line x1="100" y1="200" x2="400" y2="200" className="animate-pulse" style={{
+                  animationDelay: '400ms'
+                }} />
+                  <line x1="420" y1="200" x2="700" y2="200" className="animate-pulse" style={{
+                  animationDelay: '600ms'
+                }} />
+                  <line x1="80" y1="300" x2="350" y2="300" className="animate-pulse" style={{
+                  animationDelay: '800ms'
+                }} />
+                  <line x1="370" y1="300" x2="650" y2="300" className="animate-pulse" style={{
+                  animationDelay: '1000ms'
+                }} />
                   
                   {/* Vertical connections */}
-                  <line x1="150" y1="80" x2="150" y2="320" className="animate-pulse" style={{animationDelay: '300ms'}} />
-                  <line x1="300" y1="80" x2="300" y2="220" className="animate-pulse" style={{animationDelay: '500ms'}} />
-                  <line x1="450" y1="90" x2="450" y2="320" className="animate-pulse" style={{animationDelay: '700ms'}} />
-                  <line x1="600" y1="80" x2="600" y2="320" className="animate-pulse" style={{animationDelay: '900ms'}} />
+                  <line x1="150" y1="80" x2="150" y2="320" className="animate-pulse" style={{
+                  animationDelay: '300ms'
+                }} />
+                  <line x1="300" y1="80" x2="300" y2="220" className="animate-pulse" style={{
+                  animationDelay: '500ms'
+                }} />
+                  <line x1="450" y1="90" x2="450" y2="320" className="animate-pulse" style={{
+                  animationDelay: '700ms'
+                }} />
+                  <line x1="600" y1="80" x2="600" y2="320" className="animate-pulse" style={{
+                  animationDelay: '900ms'
+                }} />
                 </g>
                 
                 {/* Circuit nodes */}
                 <g fill="url(#circuitGradient)">
                   <rect x="145" y="95" width="10" height="10" rx="2" className="animate-pulse" />
-                  <rect x="295" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '200ms'}} />
-                  <rect x="445" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '400ms'}} />
-                  <rect x="595" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '600ms'}} />
-                  <rect x="145" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '800ms'}} />
-                  <rect x="295" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1000ms'}} />
-                  <rect x="445" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1200ms'}} />
-                  <rect x="595" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1400ms'}} />
-                  <rect x="145" y="295" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1600ms'}} />
-                  <rect x="445" y="295" width="10" height="10" rx="2" className="animate-pulse" style={{animationDelay: '1800ms'}} />
+                  <rect x="295" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '200ms'
+                }} />
+                  <rect x="445" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '400ms'
+                }} />
+                  <rect x="595" y="95" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '600ms'
+                }} />
+                  <rect x="145" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '800ms'
+                }} />
+                  <rect x="295" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '1000ms'
+                }} />
+                  <rect x="445" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '1200ms'
+                }} />
+                  <rect x="595" y="195" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '1400ms'
+                }} />
+                  <rect x="145" y="295" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '1600ms'
+                }} />
+                  <rect x="445" y="295" width="10" height="10" rx="2" className="animate-pulse" style={{
+                  animationDelay: '1800ms'
+                }} />
                   
                   {/* Processor chips */}
-                  <rect x="140" y="140" width="20" height="20" rx="3" className="animate-pulse" style={{animationDelay: '500ms'}} />
-                  <rect x="440" y="240" width="20" height="20" rx="3" className="animate-pulse" style={{animationDelay: '1000ms'}} />
+                  <rect x="140" y="140" width="20" height="20" rx="3" className="animate-pulse" style={{
+                  animationDelay: '500ms'
+                }} />
+                  <rect x="440" y="240" width="20" height="20" rx="3" className="animate-pulse" style={{
+                  animationDelay: '1000ms'
+                }} />
                 </g>
               </svg>
             </div>
@@ -309,40 +372,111 @@ const Index = () => {
               
               {/* Advanced Tech Grid Visual Break */}
               <div className="grid grid-cols-5 gap-6 max-w-lg mx-auto mb-24">
-                {[
-                  { color: "bg-blue-400/30", size: "w-4 h-4", delay: "0ms" },
-                  { color: "bg-green-400/30", size: "w-3 h-3", delay: "100ms" },
-                  { color: "bg-purple-400/30", size: "w-5 h-5", delay: "200ms" },
-                  { color: "bg-cyan-400/30", size: "w-3 h-3", delay: "300ms" },
-                  { color: "bg-pink-400/30", size: "w-4 h-4", delay: "400ms" },
-                  { color: "bg-yellow-400/30", size: "w-2 h-2", delay: "500ms" },
-                  { color: "bg-orange-400/30", size: "w-4 h-4", delay: "600ms" },
-                  { color: "bg-red-400/30", size: "w-3 h-3", delay: "700ms" },
-                  { color: "bg-indigo-400/30", size: "w-3 h-3", delay: "800ms" },
-                  { color: "bg-teal-400/30", size: "w-4 h-4", delay: "900ms" },
-                  { color: "bg-slate-400/40", size: "w-6 h-6", delay: "1000ms" },
-                  { color: "bg-emerald-400/30", size: "w-3 h-3", delay: "1100ms" },
-                  { color: "bg-violet-400/30", size: "w-4 h-4", delay: "1200ms" },
-                  { color: "bg-rose-400/30", size: "w-3 h-3", delay: "1300ms" },
-                  { color: "bg-sky-400/30", size: "w-2 h-2", delay: "1400ms" },
-                  { color: "bg-amber-400/30", size: "w-4 h-4", delay: "1500ms" },
-                  { color: "bg-lime-400/30", size: "w-3 h-3", delay: "1600ms" },
-                  { color: "bg-fuchsia-400/30", size: "w-3 h-3", delay: "1700ms" },
-                  { color: "bg-blue-500/30", size: "w-4 h-4", delay: "1800ms" },
-                  { color: "bg-green-500/30", size: "w-3 h-3", delay: "1900ms" },
-                  { color: "bg-purple-500/30", size: "w-2 h-2", delay: "2000ms" },
-                  { color: "bg-cyan-500/30", size: "w-4 h-4", delay: "2100ms" },
-                  { color: "bg-pink-500/30", size: "w-3 h-3", delay: "2200ms" },
-                  { color: "bg-yellow-500/30", size: "w-3 h-3", delay: "2300ms" },
-                  { color: "bg-orange-500/30", size: "w-2 h-2", delay: "2400ms" }
-                ].map((dot, index) => (
-                  <div key={index} className="flex justify-center items-center">
-                    <div 
-                      className={`${dot.color} ${dot.size} animate-pulse`}
-                      style={{ animationDelay: dot.delay }}
-                    ></div>
-                  </div>
-                ))}
+                {[{
+                color: "bg-blue-400/30",
+                size: "w-4 h-4",
+                delay: "0ms"
+              }, {
+                color: "bg-green-400/30",
+                size: "w-3 h-3",
+                delay: "100ms"
+              }, {
+                color: "bg-purple-400/30",
+                size: "w-5 h-5",
+                delay: "200ms"
+              }, {
+                color: "bg-cyan-400/30",
+                size: "w-3 h-3",
+                delay: "300ms"
+              }, {
+                color: "bg-pink-400/30",
+                size: "w-4 h-4",
+                delay: "400ms"
+              }, {
+                color: "bg-yellow-400/30",
+                size: "w-2 h-2",
+                delay: "500ms"
+              }, {
+                color: "bg-orange-400/30",
+                size: "w-4 h-4",
+                delay: "600ms"
+              }, {
+                color: "bg-red-400/30",
+                size: "w-3 h-3",
+                delay: "700ms"
+              }, {
+                color: "bg-indigo-400/30",
+                size: "w-3 h-3",
+                delay: "800ms"
+              }, {
+                color: "bg-teal-400/30",
+                size: "w-4 h-4",
+                delay: "900ms"
+              }, {
+                color: "bg-slate-400/40",
+                size: "w-6 h-6",
+                delay: "1000ms"
+              }, {
+                color: "bg-emerald-400/30",
+                size: "w-3 h-3",
+                delay: "1100ms"
+              }, {
+                color: "bg-violet-400/30",
+                size: "w-4 h-4",
+                delay: "1200ms"
+              }, {
+                color: "bg-rose-400/30",
+                size: "w-3 h-3",
+                delay: "1300ms"
+              }, {
+                color: "bg-sky-400/30",
+                size: "w-2 h-2",
+                delay: "1400ms"
+              }, {
+                color: "bg-amber-400/30",
+                size: "w-4 h-4",
+                delay: "1500ms"
+              }, {
+                color: "bg-lime-400/30",
+                size: "w-3 h-3",
+                delay: "1600ms"
+              }, {
+                color: "bg-fuchsia-400/30",
+                size: "w-3 h-3",
+                delay: "1700ms"
+              }, {
+                color: "bg-blue-500/30",
+                size: "w-4 h-4",
+                delay: "1800ms"
+              }, {
+                color: "bg-green-500/30",
+                size: "w-3 h-3",
+                delay: "1900ms"
+              }, {
+                color: "bg-purple-500/30",
+                size: "w-2 h-2",
+                delay: "2000ms"
+              }, {
+                color: "bg-cyan-500/30",
+                size: "w-4 h-4",
+                delay: "2100ms"
+              }, {
+                color: "bg-pink-500/30",
+                size: "w-3 h-3",
+                delay: "2200ms"
+              }, {
+                color: "bg-yellow-500/30",
+                size: "w-3 h-3",
+                delay: "2300ms"
+              }, {
+                color: "bg-orange-500/30",
+                size: "w-2 h-2",
+                delay: "2400ms"
+              }].map((dot, index) => <div key={index} className="flex justify-center items-center">
+                    <div className={`${dot.color} ${dot.size} animate-pulse`} style={{
+                  animationDelay: dot.delay
+                }}></div>
+                  </div>)}
               </div>
               
               {/* Enhanced Zone Label */}
@@ -376,37 +510,20 @@ const Index = () => {
                 
                 {/* Data streams */}
                 <g stroke="url(#dataFlowGradient)" strokeWidth="1" fill="none">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <g key={i}>
-                      <line 
-                        x1="0" 
-                        y1={50 + i * 40} 
-                        x2="1000" 
-                        y2={50 + i * 40} 
-                        className="animate-pulse" 
-                        style={{animationDelay: `${i * 200}ms`}} 
-                      />
+                  {Array.from({
+                  length: 8
+                }).map((_, i) => <g key={i}>
+                      <line x1="0" y1={50 + i * 40} x2="1000" y2={50 + i * 40} className="animate-pulse" style={{
+                    animationDelay: `${i * 200}ms`
+                  }} />
                       {/* Data packets */}
-                      <circle 
-                        cx={100 + (i * 120)} 
-                        cy={50 + i * 40} 
-                        r="2" 
-                        fill="#64748b" 
-                        opacity="0.6"
-                        className="animate-pulse" 
-                        style={{animationDelay: `${i * 300}ms`}} 
-                      />
-                      <circle 
-                        cx={300 + (i * 80)} 
-                        cy={50 + i * 40} 
-                        r="1.5" 
-                        fill="#64748b" 
-                        opacity="0.4"
-                        className="animate-pulse" 
-                        style={{animationDelay: `${i * 400}ms`}} 
-                      />
-                    </g>
-                  ))}
+                      <circle cx={100 + i * 120} cy={50 + i * 40} r="2" fill="#64748b" opacity="0.6" className="animate-pulse" style={{
+                    animationDelay: `${i * 300}ms`
+                  }} />
+                      <circle cx={300 + i * 80} cy={50 + i * 40} r="1.5" fill="#64748b" opacity="0.4" className="animate-pulse" style={{
+                    animationDelay: `${i * 400}ms`
+                  }} />
+                    </g>)}
                 </g>
               </svg>
             </div>
@@ -445,18 +562,11 @@ const Index = () => {
               
               {/* Enhanced Final Pattern */}
               <div className="grid grid-cols-8 gap-2 max-w-2xl mx-auto mb-20">
-                {Array.from({ length: 32 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className={`w-1 h-1 ${
-                      index % 5 === 0 ? 'bg-slate-400/40' : 
-                      index % 5 === 1 ? 'bg-slate-500/40' : 
-                      index % 5 === 2 ? 'bg-slate-600/40' : 
-                      index % 5 === 3 ? 'bg-slate-400/30' : 'bg-slate-500/30'
-                    } animate-pulse`}
-                    style={{ animationDelay: `${index * 25}ms` }}
-                  ></div>
-                ))}
+                {Array.from({
+                length: 32
+              }).map((_, index) => <div key={index} className={`w-1 h-1 ${index % 5 === 0 ? 'bg-slate-400/40' : index % 5 === 1 ? 'bg-slate-500/40' : index % 5 === 2 ? 'bg-slate-600/40' : index % 5 === 3 ? 'bg-slate-400/30' : 'bg-slate-500/30'} animate-pulse`} style={{
+                animationDelay: `${index * 25}ms`
+              }}></div>)}
               </div>
               
               <div className="w-48 h-1 bg-gradient-to-r from-transparent via-slate-600/60 to-transparent mx-auto"></div>
@@ -470,8 +580,6 @@ const Index = () => {
         </main>
         <Footer />
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;

@@ -89,7 +89,7 @@ const ServicesSection = () => {
     label: "Uptime SLA",
     color: "text-green-400"
   }];
-  return <section className="py-6 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800 bg-zinc-950">
+  return <section className="bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800 -bottom-0 rounded-full py-[240px] bg-white">
       <div className="container mx-auto px-4">
         {/* Compact Services Header */}
         <div className="text-center mb-5">

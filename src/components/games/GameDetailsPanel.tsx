@@ -70,7 +70,7 @@ const GameDetailsPanel: React.FC<GameDetailsPanelProps> = ({
   };
   return <div className="h-full bg-gradient-to-b from-slate-900 via-slate-800/95 to-slate-900 flex flex-col backdrop-blur-sm">
       {/* Enhanced Header */}
-      <div className="p-6 border-b border-slate-700/50 backdrop-blur-sm bg-orange-600">
+      <div className="p-6 border-b border-slate-700/50 backdrop-blur-sm bg-neutral-950">
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
             <div className="flex items-center space-x-3 mb-2">
@@ -158,10 +158,10 @@ const GameDetailsPanel: React.FC<GameDetailsPanelProps> = ({
       {/* Enhanced Main Content */}
       <div className="flex-1 overflow-y-auto game-scroll">
         <div className="p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-slate-600">
             {/* Enhanced Media Gallery */}
             <div className="space-y-4">
-              <div className="relative h-80 bg-slate-800/50 border border-slate-600/50 overflow-hidden group">
+              <div className="relative h-80 border border-slate-600/50 overflow-hidden group bg-neutral-950">
                 <img src={game.images.gallery[activeImage] || game.images.hero} alt={game.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                 <button className="absolute top-4 right-4 bg-purple-500/90 hover:bg-purple-600/90 text-white p-3 backdrop-blur-sm transition-all duration-300 hover:scale-110 shadow-lg shadow-purple-500/30">
@@ -180,7 +180,7 @@ const GameDetailsPanel: React.FC<GameDetailsPanelProps> = ({
             </div>
 
             {/* Enhanced Game Info */}
-            <div className="space-y-6">
+            <div className="space-y-6 bg-rose-500">
               <div>
                 <h3 className="text-white font-black mb-3 flex items-center">
                   <GamepadIcon className="w-5 h-5 mr-2 text-purple-400" />
