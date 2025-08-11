@@ -21,7 +21,37 @@ const Index = () => {
       <div className="relative z-10">
         <Header />
         <main className="relative bg-transparent">
-          <Hero />
+          {/* Enhanced Hero Section */}
+          <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl py-16 overflow-hidden">
+            {/* Enhanced Hero background effects */}
+            <div className="absolute inset-0 pointer-events-none opacity-70">
+              {/* Main ambient lighting */}
+              <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-orange-500/10 to-amber-500/8 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-emerald-500/10 to-teal-500/8 blur-3xl rounded-full animate-pulse" style={{animationDelay: '3s'}}></div>
+              
+              {/* Secondary lighting layers */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-r from-amber-400/8 to-orange-400/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '6s'}}></div>
+              
+              {/* Enhanced grid overlay */}
+              <div className="absolute inset-0 opacity-[0.10]">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(251, 146, 60, 0.3) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(251, 146, 60, 0.3) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '80px 80px'
+                }}></div>
+              </div>
+
+              {/* Floating geometric shapes */}
+              <div className="absolute top-1/6 left-1/6 w-4 h-4 bg-orange-400/40 transform rotate-45 animate-pulse border border-orange-400/30"></div>
+              <div className="absolute top-1/3 right-1/5 w-3 h-3 bg-emerald-400/40 rounded-full animate-pulse border border-emerald-400/30" style={{animationDelay: '2s'}}></div>
+              <div className="absolute bottom-1/3 left-1/4 w-5 h-5 bg-amber-400/30 animate-pulse border border-amber-400/20" style={{animationDelay: '4s'}}></div>
+              <div className="absolute bottom-1/6 right-1/6 w-4 h-4 bg-teal-400/30 transform rotate-12 animate-pulse border border-teal-400/20" style={{animationDelay: '6s'}}></div>
+            </div>
+
+            <Hero />
+          </section>
           
           {/* Enhanced Services Overview */}
           <Services />
@@ -63,7 +93,7 @@ const Index = () => {
               {/* Enhanced Visual Elements */}
               <div className="flex justify-center items-center space-x-8 mb-12">
                 <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-orange-400/60 to-transparent animate-pulse"></div>
-                <div className="px-4 py-2 bg-zinc-900/95 border border-orange-500/30 backdrop-blur-sm">
+                <div className="px-4 py-2 bg-zinc-800/95 border border-orange-500/30 backdrop-blur-sm">
                   <div className="text-orange-400 font-mono text-xs font-black tracking-widest">
                     HEXAGONAL MATRIX ZONE
                   </div>
@@ -86,10 +116,36 @@ const Index = () => {
             </div>
           </div>
           
-          {/* PRIORITY 1: GAMERS - Enhanced Entry Animation */}
-          <div className="animate-fade-in">
-            <GamesSection />
-          </div>
+          {/* PRIORITY 1: GAMERS - Enhanced with Professional Background */}
+          <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl py-16 overflow-hidden">
+            {/* Gaming-specific background effects */}
+            <div className="absolute inset-0 pointer-events-none opacity-60">
+              {/* Main ambient lighting */}
+              <div className="absolute top-1/3 left-1/5 w-[700px] h-[700px] bg-gradient-to-r from-purple-500/8 to-pink-500/6 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute bottom-1/3 right-1/5 w-[600px] h-[600px] bg-gradient-to-r from-blue-500/8 to-purple-500/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '4s'}}></div>
+              
+              {/* Gaming grid pattern */}
+              <div className="absolute inset-0 opacity-[0.08]">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(168, 85, 247, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(168, 85, 247, 0.4) 1px, transparent 1px),
+                    radial-gradient(circle at 25% 25%, rgba(236, 72, 153, 0.2) 2px, transparent 2px)
+                  `,
+                  backgroundSize: '60px 60px, 60px 60px, 120px 120px'
+                }}></div>
+              </div>
+
+              {/* Gaming geometric elements */}
+              <div className="absolute top-1/4 left-1/3 w-6 h-6 bg-purple-400/40 transform rotate-45 animate-pulse border border-purple-400/30"></div>
+              <div className="absolute top-2/3 right-1/4 w-4 h-4 bg-pink-400/40 rounded-full animate-pulse border border-pink-400/30" style={{animationDelay: '2s'}}></div>
+              <div className="absolute bottom-1/4 left-1/6 w-8 h-8 bg-blue-400/30 animate-pulse border border-blue-400/20 transform rotate-12" style={{animationDelay: '3s'}}></div>
+            </div>
+
+            <div className="animate-fade-in">
+              <GamesSection />
+            </div>
+          </section>
           
           {/* Enhanced Transition Zone with Neural Network Background */}
           <div className="py-40 bg-gradient-to-b from-zinc-900/98 via-zinc-950/95 to-zinc-900/98 relative overflow-hidden backdrop-blur-sm">
@@ -145,7 +201,7 @@ const Index = () => {
                   <div className="w-16 h-0.5 bg-gradient-to-r from-emerald-400/30 to-transparent"></div>
                 </div>
                 
-                <div className="px-4 py-2 bg-zinc-900/95 border border-emerald-500/40 backdrop-blur-sm">
+                <div className="px-4 py-2 bg-zinc-800/95 border border-emerald-500/40 backdrop-blur-sm">
                   <div className="text-emerald-400 font-mono text-xs font-black tracking-widest">
                     NEURAL SYNAPTIC BRIDGE
                   </div>
@@ -175,10 +231,36 @@ const Index = () => {
             </div>
           </div>
           
-          {/* PRIORITY 2: GENERAL PRODUCTS - Enhanced */}
-          <div className="animate-fade-in">
-            <ProductsShowcase />
-          </div>
+          {/* PRIORITY 2: GENERAL PRODUCTS - Enhanced with Tech Background */}
+          <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl py-16 overflow-hidden">
+            {/* Tech-focused background effects */}
+            <div className="absolute inset-0 pointer-events-none opacity-60">
+              {/* Tech ambient lighting */}
+              <div className="absolute top-1/5 left-1/4 w-[650px] h-[650px] bg-gradient-to-r from-cyan-500/8 to-blue-500/6 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute bottom-1/5 right-1/4 w-[550px] h-[550px] bg-gradient-to-r from-indigo-500/8 to-cyan-500/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '3s'}}></div>
+              
+              {/* Circuit-like grid pattern */}
+              <div className="absolute inset-0 opacity-[0.08]">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(6, 182, 212, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(6, 182, 212, 0.4) 1px, transparent 1px),
+                    linear-gradient(45deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '70px 70px, 70px 70px, 35px 35px'
+                }}></div>
+              </div>
+
+              {/* Tech geometric elements */}
+              <div className="absolute top-1/3 left-1/5 w-5 h-5 bg-cyan-400/40 transform rotate-45 animate-pulse border border-cyan-400/30"></div>
+              <div className="absolute top-1/6 right-1/3 w-3 h-3 bg-blue-400/40 rounded-full animate-pulse border border-blue-400/30" style={{animationDelay: '1s'}}></div>
+              <div className="absolute bottom-1/3 left-1/3 w-7 h-7 bg-indigo-400/30 animate-pulse border border-indigo-400/20" style={{animationDelay: '2s'}}></div>
+            </div>
+
+            <div className="animate-fade-in">
+              <ProductsShowcase />
+            </div>
+          </section>
           
           {/* Premium Breathing Space with Crystalline Patterns */}
           <div className="py-44 bg-gradient-to-b from-zinc-950/98 via-black/95 to-zinc-950/98 relative overflow-hidden backdrop-blur-sm">
@@ -234,7 +316,7 @@ const Index = () => {
                   <div className="w-3 h-3 bg-orange-400/40 rounded-full animate-pulse delay-300"></div>
                 </div>
                 
-                <div className="px-6 py-3 bg-zinc-900/95 border border-amber-500/40 backdrop-blur-sm">
+                <div className="px-6 py-3 bg-zinc-800/95 border border-amber-500/40 backdrop-blur-sm">
                   <div className="text-amber-400 font-mono text-xs font-black tracking-widest">
                     CRYSTALLINE MATRIX FORMATION
                   </div>
@@ -267,10 +349,36 @@ const Index = () => {
             </div>
           </div>
           
-          {/* PRIORITY 3: APP USERS - Enhanced */}
-          <div className="animate-fade-in">
-            <WebAppsSection />
-          </div>
+          {/* PRIORITY 3: APP USERS - Enhanced with Mobile-focused Background */}
+          <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl py-16 overflow-hidden">
+            {/* Mobile-focused background effects */}
+            <div className="absolute inset-0 pointer-events-none opacity-60">
+              {/* Mobile ambient lighting */}
+              <div className="absolute top-1/4 left-1/6 w-[600px] h-[600px] bg-gradient-to-r from-green-500/8 to-emerald-500/6 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute bottom-1/4 right-1/6 w-[500px] h-[500px] bg-gradient-to-r from-teal-500/8 to-green-500/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+              
+              {/* App-like grid pattern */}
+              <div className="absolute inset-0 opacity-[0.08]">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(16, 185, 129, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(16, 185, 129, 0.4) 1px, transparent 1px),
+                    radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.3) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '50px 50px, 50px 50px, 25px 25px'
+                }}></div>
+              </div>
+
+              {/* Mobile geometric elements */}
+              <div className="absolute top-1/5 left-1/4 w-4 h-4 bg-green-400/40 transform rotate-45 animate-pulse border border-green-400/30"></div>
+              <div className="absolute top-3/4 right-1/5 w-3 h-3 bg-emerald-400/40 rounded-full animate-pulse border border-emerald-400/30" style={{animationDelay: '1s'}}></div>
+              <div className="absolute bottom-1/5 left-1/5 w-6 h-6 bg-teal-400/30 animate-pulse border border-teal-400/20" style={{animationDelay: '1.5s'}}></div>
+            </div>
+
+            <div className="animate-fade-in">
+              <WebAppsSection />
+            </div>
+          </section>
           
           {/* Ultimate Breathing Space with Quantum Field Background */}
           <div className="py-48 bg-gradient-to-b from-zinc-950/98 via-zinc-900/95 to-black/95 relative overflow-hidden backdrop-blur-sm">
@@ -346,7 +454,7 @@ const Index = () => {
               </div>
               
               {/* Enhanced Zone Label */}
-              <div className="px-6 py-3 bg-zinc-900/95 border border-emerald-500/40 backdrop-blur-sm mb-12 inline-block">
+              <div className="px-6 py-3 bg-zinc-800/95 border border-emerald-500/40 backdrop-blur-sm mb-12 inline-block">
                 <div className="text-emerald-400 font-mono text-xs font-black tracking-widest">
                   QUANTUM FIELD RESONANCE CHAMBER
                 </div>
@@ -356,10 +464,36 @@ const Index = () => {
             </div>
           </div>
           
-          {/* PRIORITY 4: DEVELOPERS - Enhanced */}
-          <div className="animate-fade-in">
-            <DeveloperTools />
-          </div>
+          {/* PRIORITY 4: DEVELOPERS - Enhanced with Code-focused Background */}
+          <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl py-16 overflow-hidden">
+            {/* Developer-focused background effects */}
+            <div className="absolute inset-0 pointer-events-none opacity-60">
+              {/* Code ambient lighting */}
+              <div className="absolute top-1/3 left-1/4 w-[650px] h-[650px] bg-gradient-to-r from-amber-500/8 to-orange-500/6 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute bottom-1/3 right-1/4 w-[550px] h-[550px] bg-gradient-to-r from-orange-500/8 to-red-500/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '3s'}}></div>
+              
+              {/* Code-like grid pattern */}
+              <div className="absolute inset-0 opacity-[0.08]">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(245, 158, 11, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(245, 158, 11, 0.4) 1px, transparent 1px),
+                    linear-gradient(45deg, rgba(251, 146, 60, 0.3) 0.5px, transparent 0.5px)
+                  `,
+                  backgroundSize: '40px 40px, 40px 40px, 20px 20px'
+                }}></div>
+              </div>
+
+              {/* Developer geometric elements */}
+              <div className="absolute top-1/4 left-1/5 w-5 h-5 bg-amber-400/40 transform rotate-45 animate-pulse border border-amber-400/30"></div>
+              <div className="absolute top-2/3 right-1/4 w-4 h-4 bg-orange-400/40 rounded-full animate-pulse border border-orange-400/30" style={{animationDelay: '1s'}}></div>
+              <div className="absolute bottom-1/4 left-1/3 w-6 h-6 bg-red-400/30 animate-pulse border border-red-400/20 transform rotate-12" style={{animationDelay: '2s'}}></div>
+            </div>
+
+            <div className="animate-fade-in">
+              <DeveloperTools />
+            </div>
+          </section>
           
           {/* Final Premium Breathing Space with Data Stream Background */}
           <div className="py-36 bg-gradient-to-b from-black/98 via-zinc-950/95 to-zinc-900/95 relative overflow-hidden backdrop-blur-sm">
@@ -430,7 +564,7 @@ const Index = () => {
                   <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-amber-400/40 animate-pulse delay-400"></div>
                 </div>
                 
-                <div className="px-8 py-4 bg-zinc-900/95 border border-orange-500/40 backdrop-blur-sm">
+                <div className="px-8 py-4 bg-zinc-800/95 border border-orange-500/40 backdrop-blur-sm">
                   <div className="text-orange-400 font-mono text-xs font-black tracking-widest">
                     DATA STREAM CONVERGENCE POINT
                   </div>
@@ -464,10 +598,36 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Contact Section */}
-          <div className="animate-fade-in">
-            <Contact />
-          </div>
+          {/* Contact Section - Enhanced with Professional Background */}
+          <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl py-16 overflow-hidden">
+            {/* Contact-focused background effects */}
+            <div className="absolute inset-0 pointer-events-none opacity-60">
+              {/* Contact ambient lighting */}
+              <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-gradient-to-r from-emerald-500/8 to-cyan-500/6 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-gradient-to-r from-cyan-500/8 to-blue-500/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+              
+              {/* Communication grid pattern */}
+              <div className="absolute inset-0 opacity-[0.08]">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(16, 185, 129, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(16, 185, 129, 0.4) 1px, transparent 1px),
+                    radial-gradient(circle at 25% 75%, rgba(6, 182, 212, 0.3) 2px, transparent 2px)
+                  `,
+                  backgroundSize: '90px 90px, 90px 90px, 45px 45px'
+                }}></div>
+              </div>
+
+              {/* Contact geometric elements */}
+              <div className="absolute top-1/5 left-1/6 w-4 h-4 bg-emerald-400/40 transform rotate-45 animate-pulse border border-emerald-400/30"></div>
+              <div className="absolute top-3/4 right-1/6 w-3 h-3 bg-cyan-400/40 rounded-full animate-pulse border border-cyan-400/30" style={{animationDelay: '1s'}}></div>
+              <div className="absolute bottom-1/6 left-1/4 w-5 h-5 bg-blue-400/30 animate-pulse border border-blue-400/20" style={{animationDelay: '1.5s'}}></div>
+            </div>
+
+            <div className="animate-fade-in">
+              <Contact />
+            </div>
+          </section>
         </main>
         <Footer />
       </div>
