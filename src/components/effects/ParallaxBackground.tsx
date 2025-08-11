@@ -13,6 +13,9 @@ const ParallaxBackground: React.FC = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {/* Solid base background to prevent flickering */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-900 via-yellow-900 to-emerald-900"></div>
+      
       {/* Futuristic orange base layer */}
       <div 
         className="absolute inset-0 opacity-80"
