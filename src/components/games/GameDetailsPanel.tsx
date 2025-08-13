@@ -21,7 +21,9 @@ import {
   Info,
   Award,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Cloud,
+  ThumbsUp
 } from 'lucide-react';
 
 interface GameDetailsPanelProps {
