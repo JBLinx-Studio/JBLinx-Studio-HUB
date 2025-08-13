@@ -5,6 +5,7 @@ import GameLibraryPanel from './games/GameLibraryPanel';
 import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
+
 const GamesSection = () => {
   const [selectedGameId, setSelectedGameId] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,6 +13,7 @@ const GamesSection = () => {
   const [currentPanel, setCurrentPanel] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(0);
+
   const games = [{
     id: 1,
     title: "Ocean's Peril: Survival",
@@ -572,6 +574,7 @@ const GamesSection = () => {
       category: "Mobile"
     }]
   }];
+
   const filteredGames = useMemo(() => {
     let filtered = games;
     if (activeCategory !== 'all') {
@@ -582,11 +585,14 @@ const GamesSection = () => {
     }
     return filtered;
   }, [activeCategory, searchQuery]);
+
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
+
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setDragStart(e.clientX);
   };
+
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
     const dragDistance = e.clientX - dragStart;
@@ -599,26 +605,45 @@ const GamesSection = () => {
       setIsDragging(false);
     }
   };
+
   const handleMouseUp = () => {
     setIsDragging(false);
   };
-  const panels = [{
-    id: 'overview',
-    title: 'Game Overview',
-    component: <div className="flex h-full">
+
+  const panels = [
+    {
+      id: 'overview',
+      title: 'Game Overview',
+      component: (
+        <div className="flex h-full">
           <div className="w-72 flex-shrink-0">
-            <GameLibraryPanel games={filteredGames} selectedGameId={selectedGameId} onSelectGame={setSelectedGameId} activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+            <GameLibraryPanel 
+              games={filteredGames} 
+              selectedGameId={selectedGameId} 
+              onSelectGame={setSelectedGameId} 
+              activeCategory={activeCategory} 
+              onCategoryChange={setActiveCategory} 
+            />
           </div>
           <div className="flex-1">
             <GameDetailsPanel game={selectedGame} />
           </div>
         </div>
-  }, {
-    id: 'community',
-    title: 'Community Hub',
-    component: <div className="flex h-full">
+      )
+    },
+    {
+      id: 'community',
+      title: 'Community Hub',
+      component: (
+        <div className="flex h-full">
           <div className="w-72 flex-shrink-0">
-            <GameLibraryPanel games={filteredGames} selectedGameId={selectedGameId} onSelectGame={setSelectedGameId} activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+            <GameLibraryPanel 
+              games={filteredGames} 
+              selectedGameId={selectedGameId} 
+              onSelectGame={setSelectedGameId} 
+              activeCategory={activeCategory} 
+              onCategoryChange={setActiveCategory} 
+            />
           </div>
           <div className="flex-1">
             <CommunityPanel game={selectedGame} />
@@ -627,14 +652,23 @@ const GamesSection = () => {
             <GameUpdatesPanel game={selectedGame} />
           </div>
         </div>
-  }, {
-    id: 'analytics',
-    title: 'Performance Analytics',
-    component: <div className="flex h-full">
+      )
+    },
+    {
+      id: 'analytics',
+      title: 'Performance Analytics',
+      component: (
+        <div className="flex h-full">
           <div className="w-72 flex-shrink-0">
-            <GameLibraryPanel games={filteredGames} selectedGameId={selectedGameId} onSelectGame={setSelectedGameId} activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+            <GameLibraryPanel 
+              games={filteredGames} 
+              selectedGameId={selectedGameId} 
+              onSelectGame={setSelectedGameId} 
+              activeCategory={activeCategory} 
+              onCategoryChange={setActiveCategory} 
+            />
           </div>
-          <div className="flex-1 bg-slate-900/95 p-6 overflow-y-auto">
+          <div className="flex-1 bg-zinc-800/95 p-6 overflow-y-auto backdrop-blur-sm">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-black text-white font-mono">PERFORMANCE ANALYTICS</h3>
@@ -642,105 +676,158 @@ const GamesSection = () => {
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                <div className="bg-zinc-800/50 border border-zinc-700/50 p-4 backdrop-blur-sm">
                   <h4 className="text-purple-400 font-bold mb-4 text-sm">PLAYER METRICS</h4>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-300 text-sm">Peak Players</span>
+                      <span className="text-zinc-300 text-sm">Peak Players</span>
                       <span className="text-white font-bold text-sm">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-300 text-sm">Avg Session</span>
+                      <span className="text-zinc-300 text-sm">Avg Session</span>
                       <span className="text-white font-bold text-sm">{selectedGame.stats.averageSession}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-300 text-sm">Retention Rate</span>
+                      <span className="text-zinc-300 text-sm">Retention Rate</span>
                       <span className="text-green-400 font-bold text-sm">{selectedGame.stats.retention}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                <div className="bg-zinc-800/50 border border-zinc-700/50 p-4 backdrop-blur-sm">
                   <h4 className="text-cyan-400 font-bold mb-4 text-sm">PLATFORM BREAKDOWN</h4>
                   <div className="space-y-3">
-                    {selectedGame.platforms.map((platform, index) => <div key={index} className="flex justify-between items-center">
-                        <span className="text-slate-300 text-sm">{platform}</span>
+                    {selectedGame.platforms.map((platform, index) => (
+                      <div key={index} className="flex justify-between items-center">
+                        <span className="text-zinc-300 text-sm">{platform}</span>
                         <div className="flex items-center space-x-2">
-                          <div className="w-16 bg-slate-700 h-2">
-                            <div className="h-full bg-cyan-400" style={{
-                        width: `${Math.floor(Math.random() * 60 + 20)}%`
-                      }}></div>
+                          <div className="w-16 bg-zinc-700 h-2">
+                            <div 
+                              className="h-full bg-cyan-400" 
+                              style={{ width: `${Math.floor(Math.random() * 60 + 20)}%` }}
+                            ></div>
                           </div>
-                          <span className="text-white font-bold text-sm w-10">{Math.floor(Math.random() * 40 + 20)}%</span>
+                          <span className="text-white font-bold text-sm w-10">
+                            {Math.floor(Math.random() * 40 + 20)}%
+                          </span>
                         </div>
-                      </div>)}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-slate-700/50 p-4">
+                <div className="bg-zinc-800/50 border border-zinc-700/50 p-4 backdrop-blur-sm">
                   <h4 className="text-yellow-400 font-bold mb-4 text-sm">REVENUE INSIGHTS</h4>
                   <div className="space-y-3">
                     <div className="text-center">
-                      <div className="text-lg font-black text-white">${(selectedGame.price.base * 1500).toLocaleString()}</div>
-                      <div className="text-slate-400 text-xs">Monthly Revenue</div>
+                      <div className="text-lg font-black text-white">
+                        ${(selectedGame.price.base * 1500).toLocaleString()}
+                      </div>
+                      <div className="text-zinc-400 text-xs">Monthly Revenue</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-black text-white">{selectedGame.reviewCount.toLocaleString()}</div>
-                      <div className="text-slate-400 text-xs">Total Reviews</div>
+                      <div className="text-lg font-black text-white">
+                        {selectedGame.reviewCount.toLocaleString()}
+                      </div>
+                      <div className="text-zinc-400 text-xs">Total Reviews</div>
                     </div>
                     <div className="text-center">
                       <div className="text-lg font-black text-white">{selectedGame.rating}/5</div>
-                      <div className="text-slate-400 text-xs">Rating</div>
+                      <div className="text-zinc-400 text-xs">Rating</div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 border border-slate-700/50 p-6">
+              <div className="bg-zinc-800/50 border border-zinc-700/50 p-6 backdrop-blur-sm">
                 <h4 className="text-green-400 font-bold mb-4">GROWTH TRENDS</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                   <div>
                     <div className="text-2xl font-black text-green-400">+12%</div>
-                    <div className="text-slate-400 text-xs">Weekly Growth</div>
+                    <div className="text-zinc-400 text-xs">Weekly Growth</div>
                   </div>
                   <div>
                     <div className="text-2xl font-black text-blue-400">+34%</div>
-                    <div className="text-slate-400 text-xs">Monthly Growth</div>
+                    <div className="text-zinc-400 text-xs">Monthly Growth</div>
                   </div>
                   <div>
                     <div className="text-2xl font-black text-purple-400">87%</div>
-                    <div className="text-slate-400 text-xs">User Satisfaction</div>
+                    <div className="text-zinc-400 text-xs">User Satisfaction</div>
                   </div>
                   <div>
                     <div className="text-2xl font-black text-orange-400">92%</div>
-                    <div className="text-slate-400 text-xs">Server Uptime</div>
+                    <div className="text-zinc-400 text-xs">Server Uptime</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-  }];
+      )
+    }
+  ];
+
   const navigateToPanel = (index: number) => {
     if (index >= 0 && index < panels.length) {
       setCurrentPanel(index);
     }
   };
+
   const handlePrevious = () => {
     if (currentPanel > 0) {
       navigateToPanel(currentPanel - 1);
     }
   };
+
   const handleNext = () => {
     if (currentPanel < panels.length - 1) {
       navigateToPanel(currentPanel + 1);
     }
   };
-  return <section className="py-8 min-h-[900px] border-t border-slate-800 bg-zinc-950">
-      <div className="container mx-auto px-4">
+
+  return (
+    <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-24 overflow-hidden">
+      {/* Enhanced paradoxical background effects - Purple theme for Games */}
+      <div className="absolute inset-0 pointer-events-none opacity-60">
+        {/* Primary ambient lighting with paradoxical movement */}
+        <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-gradient-to-r from-purple-500/12 to-pink-500/8 blur-3xl rounded-full animate-pulse transform -rotate-45"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-r from-purple-500/12 to-violet-500/8 blur-3xl rounded-full animate-pulse transform rotate-45" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-r from-purple-400/8 to-pink-400/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '4s'}}></div>
+        
+        {/* Paradoxical secondary layers */}
+        <div className="absolute top-1/6 right-1/3 w-[400px] h-[400px] bg-gradient-to-l from-purple-300/10 to-pink-300/6 blur-2xl rounded-full animate-pulse transform rotate-12" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-1/6 left-1/3 w-[500px] h-[500px] bg-gradient-to-r from-violet-400/8 to-purple-400/6 blur-2xl rounded-full animate-pulse transform -rotate-12" style={{animationDelay: '3s'}}></div>
+        
+        {/* Enhanced paradoxical grid overlay */}
+        <div className="absolute inset-0 opacity-[0.12]">
+          <div className="w-full h-full" style={{
+            backgroundImage: `
+              linear-gradient(rgba(168, 85, 247, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(168, 85, 247, 0.3) 1px, transparent 1px),
+              linear-gradient(45deg, rgba(236, 72, 153, 0.2) 1px, transparent 1px),
+              linear-gradient(-45deg, rgba(147, 51, 234, 0.2) 1px, transparent 1px)
+            `,
+            backgroundSize: '100px 100px, 100px 100px, 50px 50px, 50px 50px'
+          }}></div>
+        </div>
+
+        {/* Floating geometric paradoxical shapes */}
+        <div className="absolute top-1/3 left-1/6 w-8 h-8 bg-purple-400/40 transform rotate-45 animate-pulse border border-purple-400/30 shadow-lg shadow-purple-400/20"></div>
+        <div className="absolute top-1/5 right-1/4 w-6 h-6 bg-pink-400/40 rounded-full animate-pulse border border-pink-400/30 shadow-lg shadow-pink-400/20" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-1/3 left-1/3 w-10 h-10 bg-purple-400/35 animate-pulse border border-purple-400/25 shadow-lg shadow-purple-400/20 transform rotate-12" style={{animationDelay: '4s'}}></div>
+        <div className="absolute bottom-1/5 right-1/6 w-12 h-12 bg-violet-400/30 transform rotate-30 animate-pulse border border-violet-400/20 shadow-lg shadow-violet-400/20" style={{animationDelay: '6s'}}></div>
+
+        {/* Enhanced paradoxical accent lines */}
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/40 to-transparent transform rotate-1"></div>
+        <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-pink-400/40 to-transparent transform -rotate-1"></div>
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-purple-400/40 to-transparent transform rotate-2"></div>
+        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-violet-400/40 to-transparent transform -rotate-2"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Compact Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
+        <div className="text-center mb-5">
+          <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
             <span className="text-purple-400 font-black text-xs font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
@@ -751,7 +838,7 @@ const GamesSection = () => {
           
           <div className="w-12 h-0.5 bg-purple-400 mx-auto mb-2"></div>
           
-          <p className="text-slate-400 max-w-lg mx-auto text-sm">
+          <p className="text-zinc-400 max-w-lg mx-auto text-sm">
             Professional games across all platforms with cutting-edge graphics
           </p>
         </div>
@@ -762,21 +849,21 @@ const GamesSection = () => {
             <Users className="w-4 h-4 text-green-400" />
             <div>
               <div className="text-sm font-black text-white font-mono">425K+</div>
-              <div className="text-slate-400 text-xs font-bold">PLAYERS</div>
+              <div className="text-zinc-400 text-xs font-bold">PLAYERS</div>
             </div>
           </div>
           <div className="flex items-center space-x-2">
             <Star className="w-4 h-4 text-yellow-400" />
             <div>
               <div className="text-sm font-black text-white font-mono">4.6★</div>
-              <div className="text-slate-400 text-xs font-bold">RATING</div>
+              <div className="text-zinc-400 text-xs font-bold">RATING</div>
             </div>
           </div>
           <div className="flex items-center space-x-2">
             <Download className="w-4 h-4 text-purple-400" />
             <div>
               <div className="text-sm font-black text-white font-mono">9</div>
-              <div className="text-slate-400 text-xs font-bold">GAMES</div>
+              <div className="text-zinc-400 text-xs font-bold">GAMES</div>
             </div>
           </div>
         </div>
@@ -784,38 +871,69 @@ const GamesSection = () => {
         {/* Search Bar */}
         <div className="mb-6">
           <div className="relative max-w-md mx-auto">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input type="text" placeholder="Search games..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full bg-slate-800/50 border border-slate-700 text-white pl-9 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
+            <input 
+              type="text" 
+              placeholder="Search games..." 
+              value={searchQuery} 
+              onChange={(e) => setSearchQuery(e.target.value)} 
+              className="w-full bg-zinc-800/50 border border-zinc-700 text-white pl-9 pr-4 py-2 text-sm focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors" 
+            />
           </div>
         </div>
 
         {/* Main Panel Container */}
-        <div className="relative h-[750px] bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm overflow-hidden cursor-grab active:cursor-grabbing" onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
+        <div 
+          className="relative h-[750px] bg-zinc-800/50 border border-zinc-700/50 backdrop-blur-sm overflow-hidden cursor-grab active:cursor-grabbing" 
+          onMouseDown={handleMouseDown} 
+          onMouseMove={handleMouseMove} 
+          onMouseUp={handleMouseUp} 
+          onMouseLeave={handleMouseUp}
+        >
           {/* Panel Content */}
-          <div className="flex h-full transition-transform duration-500 ease-out" style={{
-          transform: `translateX(-${currentPanel * 100}%)`
-        }}>
-            {panels.map((panel, index) => <div key={panel.id} className="w-full flex-shrink-0 h-full">
+          <div 
+            className="flex h-full transition-transform duration-500 ease-out" 
+            style={{ transform: `translateX(-${currentPanel * 100}%)` }}
+          >
+            {panels.map((panel, index) => (
+              <div key={panel.id} className="w-full flex-shrink-0 h-full">
                 {panel.component}
-              </div>)}
+              </div>
+            ))}
           </div>
 
           {/* Navigation Controls */}
-          <button onClick={handlePrevious} disabled={currentPanel === 0} className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20">
+          <button 
+            onClick={handlePrevious} 
+            disabled={currentPanel === 0} 
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-zinc-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
+          >
             <ChevronLeft className="w-5 h-5" />
           </button>
           
-          <button onClick={handleNext} disabled={currentPanel === panels.length - 1} className="absolute right-2 top-1/2 -translate-y-1/2 bg-slate-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20">
+          <button 
+            onClick={handleNext} 
+            disabled={currentPanel === panels.length - 1} 
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-zinc-800/90 border border-purple-500/50 text-purple-400 p-2 backdrop-blur-sm hover:bg-purple-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 z-20"
+          >
             <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Panel Indicators */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-slate-800/50 backdrop-blur-sm px-3 py-1">
-            {panels.map((_, index) => <button key={index} onClick={() => navigateToPanel(index)} className={`w-2 h-2 transition-all duration-300 ${index === currentPanel ? 'bg-purple-400 scale-125' : 'bg-slate-600 hover:bg-purple-400/50'}`} />)}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20 bg-zinc-800/50 backdrop-blur-sm px-3 py-1">
+            {panels.map((_, index) => (
+              <button 
+                key={index} 
+                onClick={() => navigateToPanel(index)} 
+                className={`w-2 h-2 transition-all duration-300 ${
+                  index === currentPanel ? 'bg-purple-400 scale-125' : 'bg-zinc-600 hover:bg-purple-400/50'
+                }`} 
+              />
+            ))}
           </div>
 
           {/* Panel Title */}
-          <div className="absolute top-3 left-3 bg-slate-800/90 backdrop-blur-sm px-3 py-1 z-20">
+          <div className="absolute top-3 left-3 bg-zinc-800/90 backdrop-blur-sm px-3 py-1 z-20">
             <span className="text-purple-400 font-bold text-xs font-mono">
               {panels[currentPanel]?.title.toUpperCase()}
             </span>
@@ -824,12 +942,17 @@ const GamesSection = () => {
 
         {/* CTA */}
         <div className="text-center mt-6">
-          <Link to="/game-development" className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 text-sm font-black transition-all duration-300 space-x-2 hover:scale-105">
+          <Link 
+            to="/game-development" 
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-4 py-2 text-sm font-black transition-all duration-300 space-x-2 hover:scale-105"
+          >
             <Trophy className="w-4 h-4" />
             <span>EXPLORE ALL GAMES</span>
           </Link>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default GamesSection;
