@@ -1,6 +1,33 @@
 
 import React, { useState } from 'react';
-import { Play, ShoppingCart, Heart, Share2, Star, Users, Download, Calendar, Monitor, Smartphone, Globe, Trophy, Zap, GamepadIcon, Shield, Clock, Target } from 'lucide-react';
+import { 
+  Play, 
+  ShoppingCart, 
+  Heart, 
+  Share2, 
+  Star, 
+  Users, 
+  Download, 
+  Calendar, 
+  Monitor, 
+  Smartphone, 
+  Globe, 
+  Trophy, 
+  Zap, 
+  GamepadIcon, 
+  Shield, 
+  Clock, 
+  Target,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  ThumbsUp,
+  MessageSquare,
+  Cloud,
+  Cpu,
+  HardDrive,
+  Memory
+} from 'lucide-react';
 
 interface GameDetailsPanelProps {
   game: {
@@ -43,6 +70,42 @@ interface GameDetailsPanelProps {
 const GameDetailsPanel: React.FC<GameDetailsPanelProps> = ({ game }) => {
   const [activeImage, setActiveImage] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [activeTab, setActiveTab] = useState('description');
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  // Mock review data
+  const recentReviews = [
+    {
+      id: 1,
+      user: "TacticalGamer99",
+      rating: 5,
+      date: "January 10, 2024",
+      hours: 147,
+      review: "Incredible tactical depth and amazing graphics. The AI is challenging without being unfair. Best purchase I've made this year!",
+      helpful: 24,
+      verified: true
+    },
+    {
+      id: 2,
+      user: "StrategyMaster",
+      rating: 4,
+      date: "January 8, 2024",
+      hours: 89,
+      review: "Great game overall but could use some balance tweaks. The multiplayer is fantastic and runs smoothly.",
+      helpful: 18,
+      verified: true
+    },
+    {
+      id: 3,
+      user: "CyberpunkFan",
+      rating: 5,
+      date: "January 5, 2024",
+      hours: 203,
+      review: "The atmosphere is incredible! Love the cyberpunk setting and the story is engaging. Highly recommended.",
+      helpful: 31,
+      verified: false
+    }
+  ];
 
   const getPlatformIcon = (platform: string) => {
     switch (platform.toLowerCase()) {
@@ -133,6 +196,22 @@ const GameDetailsPanel: React.FC<GameDetailsPanelProps> = ({ game }) => {
                 <span>{game.price.base === 0 ? 'PLAY NOW' : 'BUY NOW'}</span>
               </button>
             </div>
+
+            {/* Store Links */}
+            <div className="flex items-center justify-end space-x-2">
+              {Object.entries(game.storeLinks).map(([store, link]) => (
+                <a
+                  key={store}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-zinc-800 border border-zinc-600 text-zinc-400 hover:text-white hover:border-purple-400/50 px-3 py-1 text-xs font-mono transition-all duration-300 flex items-center space-x-1"
+                >
+                  <span>{store.toUpperCase()}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -153,6 +232,29 @@ const GameDetailsPanel: React.FC<GameDetailsPanelProps> = ({ game }) => {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Tabbed Content */}
+      <div className="border-b border-zinc-700/50">
+        <div className="flex">
+          {[
+            { id: 'description', label: 'DESCRIPTION' },
+            { id: 'requirements', label: 'SYSTEM REQUIREMENTS' },
+            { id: 'reviews', label: 'REVIEWS' }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-6 py-3 text-sm font-bold font-mono transition-all duration-300 border-b-2 ${
+                activeTab === tab.id
+                  ? 'border-purple-400 text-purple-400 bg-zinc-800/50'
+                  : 'border-transparent text-zinc-400 hover:text-white hover:bg-zinc-800/30'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -193,67 +295,130 @@ const GameDetailsPanel: React.FC<GameDetailsPanelProps> = ({ game }) => {
             </div>
           </div>
 
-          {/* Enhanced Game Info */}
+          {/* Tab Content */}
           <div className="space-y-6">
-            <div>
-              <h3 className="text-white font-black mb-3 flex items-center font-mono">
-                <GamepadIcon className="w-4 h-4 mr-2 text-purple-400" />
-                DESCRIPTION
-              </h3>
-              <p className="text-zinc-300 leading-relaxed text-sm">{game.description}</p>
-            </div>
-
-            <div>
-              <h3 className="text-white font-black mb-3 flex items-center font-mono">
-                <Zap className="w-4 h-4 mr-2 text-cyan-400" />
-                KEY FEATURES
-              </h3>
-              <div className="grid grid-cols-1 gap-2">
-                {game.features.slice(0, 6).map((feature, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-2 bg-zinc-800/50 border border-zinc-700/50 hover:border-cyan-400/30 transition-colors">
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                    <span className="text-zinc-300 text-sm font-medium">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-white font-black mb-3 flex items-center font-mono">
-                <Shield className="w-4 h-4 mr-2 text-green-400" />
-                SYSTEM REQUIREMENTS
-              </h3>
-              <div className="bg-zinc-800/50 border border-zinc-600/50 p-4 space-y-3">
+            {activeTab === 'description' && (
+              <>
                 <div>
-                  <div className="text-xs text-green-400 font-black mb-1 font-mono">MINIMUM SPECS</div>
-                  <div className="text-zinc-300 text-sm">{game.systemReqs.min}</div>
+                  <h3 className="text-white font-black mb-3 flex items-center font-mono">
+                    <GamepadIcon className="w-4 h-4 mr-2 text-purple-400" />
+                    DESCRIPTION
+                  </h3>
+                  <div className="relative">
+                    <p className={`text-zinc-300 leading-relaxed text-sm ${!showFullDescription ? 'line-clamp-4' : ''}`}>
+                      {game.description}
+                    </p>
+                    <button
+                      onClick={() => setShowFullDescription(!showFullDescription)}
+                      className="text-purple-400 hover:text-purple-300 text-sm font-bold mt-2 flex items-center space-x-1"
+                    >
+                      <span>{showFullDescription ? 'Show Less' : 'Show More'}</span>
+                      {showFullDescription ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                    </button>
+                  </div>
                 </div>
-                <div className="border-t border-zinc-700/50 pt-3">
-                  <div className="text-xs text-cyan-400 font-black mb-1 font-mono">RECOMMENDED SPECS</div>
-                  <div className="text-zinc-300 text-sm">{game.systemReqs.recommended}</div>
-                </div>
-              </div>
-            </div>
 
-            {/* Game Stats */}
-            <div>
-              <h3 className="text-white font-black mb-3 flex items-center font-mono">
-                <Target className="w-4 h-4 mr-2 text-orange-400" />
-                PERFORMANCE METRICS
-              </h3>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-zinc-800/50 border border-zinc-600/50 p-3 text-center">
-                  <Clock className="w-4 h-4 mx-auto mb-1 text-blue-400" />
-                  <div className="text-sm font-black text-white font-mono">{game.stats.averageSession}</div>
-                  <div className="text-xs text-zinc-400 font-mono">AVG SESSION</div>
+                <div>
+                  <h3 className="text-white font-black mb-3 flex items-center font-mono">
+                    <Zap className="w-4 h-4 mr-2 text-cyan-400" />
+                    KEY FEATURES
+                  </h3>
+                  <div className="grid grid-cols-1 gap-2">
+                    {game.features.map((feature, index) => (
+                      <div key={index} className="flex items-center space-x-3 p-3 bg-zinc-800/50 border border-zinc-700/50 hover:border-cyan-400/30 transition-colors">
+                        <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
+                        <span className="text-zinc-300 text-sm font-medium">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="bg-zinc-800/50 border border-zinc-600/50 p-3 text-center">
-                  <Users className="w-4 h-4 mx-auto mb-1 text-green-400" />
-                  <div className="text-sm font-black text-white font-mono">{game.stats.retention}</div>
-                  <div className="text-xs text-zinc-400 font-mono">RETENTION</div>
+
+                {/* Game Stats */}
+                <div>
+                  <h3 className="text-white font-black mb-3 flex items-center font-mono">
+                    <Target className="w-4 h-4 mr-2 text-orange-400" />
+                    PERFORMANCE METRICS
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-zinc-800/50 border border-zinc-600/50 p-3 text-center">
+                      <Clock className="w-4 h-4 mx-auto mb-1 text-blue-400" />
+                      <div className="text-sm font-black text-white font-mono">{game.stats.averageSession}</div>
+                      <div className="text-xs text-zinc-400 font-mono">AVG SESSION</div>
+                    </div>
+                    <div className="bg-zinc-800/50 border border-zinc-600/50 p-3 text-center">
+                      <Users className="w-4 h-4 mx-auto mb-1 text-green-400" />
+                      <div className="text-sm font-black text-white font-mono">{game.stats.retention}</div>
+                      <div className="text-xs text-zinc-400 font-mono">RETENTION</div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {activeTab === 'requirements' && (
+              <div>
+                <h3 className="text-white font-black mb-4 flex items-center font-mono">
+                  <Shield className="w-4 h-4 mr-2 text-green-400" />
+                  SYSTEM REQUIREMENTS
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-zinc-800/50 border border-zinc-600/50 p-4">
+                    <div className="flex items-center space-x-2 mb-3">
+                      <Cpu className="w-4 h-4 text-green-400" />
+                      <div className="text-sm text-green-400 font-black font-mono">MINIMUM REQUIREMENTS</div>
+                    </div>
+                    <div className="text-zinc-300 text-sm leading-relaxed">{game.systemReqs.min}</div>
+                  </div>
+                  <div className="bg-zinc-800/50 border border-zinc-600/50 p-4">
+                    <div className="flex items-center space-x-2 mb-3">
+                      <HardDrive className="w-4 h-4 text-cyan-400" />
+                      <div className="text-sm text-cyan-400 font-black font-mono">RECOMMENDED REQUIREMENTS</div>
+                    </div>
+                    <div className="text-zinc-300 text-sm leading-relaxed">{game.systemReqs.recommended}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+
+            {activeTab === 'reviews' && (
+              <div>
+                <h3 className="text-white font-black mb-4 flex items-center font-mono">
+                  <MessageSquare className="w-4 h-4 mr-2 text-blue-400" />
+                  RECENT REVIEWS
+                </h3>
+                <div className="space-y-4">
+                  {recentReviews.map((review) => (
+                    <div key={review.id} className="bg-zinc-800/50 border border-zinc-600/50 p-4 hover:border-blue-400/30 transition-colors">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-white font-bold text-sm">{review.user}</span>
+                          {review.verified && (
+                            <span className="bg-green-500 text-white px-2 py-0.5 text-xs font-bold rounded">VERIFIED</span>
+                          )}
+                          <div className="flex items-center">
+                            {Array.from({ length: review.rating }).map((_, i) => (
+                              <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                            ))}
+                          </div>
+                        </div>
+                        <div className="text-zinc-400 text-xs">{review.date}</div>
+                      </div>
+                      <div className="text-zinc-400 text-xs mb-2">{review.hours} hours played</div>
+                      <p className="text-zinc-300 text-sm mb-3 leading-relaxed">{review.review}</p>
+                      <div className="flex items-center justify-between">
+                        <button className="flex items-center space-x-1 text-xs text-zinc-400 hover:text-green-400 transition-colors">
+                          <ThumbsUp className="w-3 h-3" />
+                          <span>Helpful ({review.helpful})</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  <button className="w-full bg-zinc-700 hover:bg-zinc-600 border border-zinc-600 hover:border-blue-400/50 text-white px-4 py-3 font-black transition-all duration-300 font-mono text-sm">
+                    VIEW ALL REVIEWS
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
