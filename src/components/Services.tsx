@@ -1,9 +1,9 @@
 
 import React from 'react';
-import EnhancedServicesSection from './services/EnhancedServicesSection';
+import ServicesSection from './services/ServicesSection';
 
 const Services = () => {
-  return <EnhancedServicesSection />;
+  return <ServicesSection />;
 };
 
 export default Services;
