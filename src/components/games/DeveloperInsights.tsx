@@ -1,118 +1,102 @@
 
-import React from 'react';
-import { Code, FileText, Users, Lightbulb, Calendar, TrendingUp, MessageSquare } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  Code, 
+  FileText, 
+  Users, 
+  Lightbulb, 
+  Calendar, 
+  TrendingUp, 
+  MessageSquare,
+  Video,
+  Play,
+  Clock,
+  Eye,
+  ThumbsUp,
+  Share2,
+  BookOpen,
+  Download
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { blogPosts } from '../../data/blogData';
 
 interface DeveloperInsightsProps {
-  games: Array<{
+  game: {
     id: number;
     title: string;
-    category: string;
-  }>;
+    blogPosts: number[];
+    devVideos: Array<{
+      title: string;
+      url: string;
+      duration: string;
+      views: string;
+      publishDate: string;
+    }>;
+  };
 }
 
-const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
-  const devBlogs = [
-    {
-      id: 1,
-      title: 'Building Realistic Weapon Physics in Tactical Strike',
-      game: games[0],
-      category: 'Technical Deep Dive',
-      author: 'Lead Physics Developer',
-      date: '3 days ago',
-      readTime: '8 min read',
-      views: '2.4K',
-      comments: 47,
-      excerpt: 'Exploring our custom physics engine and how we achieved realistic ballistics and weapon behavior.',
-      tags: ['Physics', 'C++', 'Game Engine']
-    },
-    {
-      id: 2,
-      title: 'AI Behavior Trees in Empire Conquest RTS',
-      game: games[1],
-      category: 'AI Development',
-      author: 'AI Systems Lead',
-      date: '1 week ago',
-      readTime: '12 min read',
-      views: '1.8K',
-      comments: 32,
-      excerpt: 'How we designed sophisticated AI opponents that adapt to player strategies using behavior trees.',
-      tags: ['AI', 'Behavior Trees', 'Strategy']
-    },
-    {
-      id: 3,
-      title: 'Procedural Horror: Creating Fear in Last Haven',
-      game: games[2],
-      category: 'Game Design',
-      author: 'Creative Director',
-      date: '2 weeks ago',
-      readTime: '6 min read',
-      views: '3.1K',
-      comments: 68,
-      excerpt: 'The psychology and technical implementation behind our dynamic horror generation system.',
-      tags: ['Horror Design', 'Psychology', 'Procedural']
-    }
-  ];
+const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ game }) => {
+  const [activeTab, setActiveTab] = useState('videos');
+
+  // Get related blog posts for this game
+  const relatedPosts = blogPosts.filter(post => game.blogPosts.includes(post.id));
 
   const developmentStats = [
     {
-      label: 'DEV ARTICLES',
-      value: '47',
-      icon: FileText,
+      label: 'DEV VIDEOS',
+      value: game.devVideos.length.toString(),
+      icon: Video,
       color: 'text-purple-400',
-      change: '+5 this month'
+      change: '+2 this month'
+    },
+    {
+      label: 'BLOG ARTICLES',
+      value: relatedPosts.length.toString(),
+      icon: FileText,
+      color: 'text-cyan-400',
+      change: '+1 this week'
     },
     {
       label: 'CODE SAMPLES',
-      value: '128',
+      value: '23',
       icon: Code,
-      color: 'text-cyan-400',
-      change: '+12 new'
+      color: 'text-pink-400',
+      change: '+5 new'
     },
     {
       label: 'DISCUSSIONS',
-      value: '892',
+      value: '156',
       icon: MessageSquare,
-      color: 'text-pink-400',
-      change: '+47 active'
+      color: 'text-green-400',
+      change: '+12 active'
     }
   ];
 
   const upcomingContent = [
     {
-      title: 'Behind the Scenes: Motion Capture Session',
+      title: 'Behind the Scenes: Level Design Process',
       type: 'Video Dev Log',
-      date: 'Jan 20, 2025',
-      game: games[0]
-    },
-    {
-      title: 'Advanced Pathfinding Algorithms',
-      type: 'Technical Article',
       date: 'Jan 25, 2025',
-      game: games[1]
+      category: 'Game Design'
     },
     {
-      title: 'Sound Design Philosophy',
-      type: 'Audio Dev Log',
+      title: 'Advanced AI Behavior Implementation',
+      type: 'Technical Article',
       date: 'Feb 1, 2025',
-      game: games[2]
+      category: 'Programming'
+    },
+    {
+      title: 'Community Feedback Integration',
+      type: 'Dev Blog',
+      date: 'Feb 8, 2025',
+      category: 'Community'
     }
   ];
 
   return (
     <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-2">
-          <Code className="w-5 h-5 text-purple-400" />
-          <span className="text-purple-400 font-black text-lg font-mono tracking-wider">DEVELOPER INSIGHTS</span>
-        </div>
-        <Link to="/blog" className="text-purple-400 hover:text-purple-300 text-sm font-bold font-mono">
-          VIEW ALL →
-        </Link>
-      </div>
-
-      {/* Development Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      {/* Developer Stats Header */}
+      <div className="grid grid-cols-4 gap-4 mb-6">
         {developmentStats.map((stat, index) => {
           const IconComponent = stat.icon;
           return (
@@ -126,106 +110,211 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
         })}
       </div>
 
-      {/* Recent Dev Blogs - More Compact */}
-      <div className="mb-6">
-        <div className="flex items-center space-x-2 mb-4">
-          <FileText className="w-4 h-4 text-cyan-400" />
-          <span className="text-cyan-400 font-bold text-sm font-mono">RECENT ARTICLES</span>
-        </div>
-
-        <div className="space-y-3">
-          {devBlogs.map((blog) => (
-            <Link
-              key={blog.id}
-              to={`/blog/${blog.id}`}
-              className="block bg-zinc-900/50 border border-zinc-700/50 p-4 hover:border-purple-400/30 transition-colors group"
+      {/* Tab Navigation */}
+      <div className="flex border-b border-zinc-700/50 mb-6">
+        {[
+          { id: 'videos', label: 'DEV VIDEOS', icon: Video },
+          { id: 'articles', label: 'BLOG ARTICLES', icon: FileText },
+          { id: 'upcoming', label: 'UPCOMING', icon: Calendar }
+        ].map((tab) => {
+          const IconComponent = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center space-x-2 px-6 py-3 text-sm font-bold transition-colors ${
+                activeTab === tab.id
+                  ? 'text-purple-400 border-b-2 border-purple-400'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
             >
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="bg-zinc-700 border border-zinc-600 text-white px-2 py-1 text-xs font-bold font-mono">
-                      {blog.category}
-                    </span>
-                    <span className="text-zinc-400 text-xs font-mono">{blog.game.title}</span>
-                  </div>
-                  <h3 className="text-white font-bold text-sm mb-1 group-hover:text-purple-300 transition-colors">
-                    {blog.title}
-                  </h3>
-                  <div className="text-zinc-400 text-xs mb-2 font-mono">
-                    By {blog.author} • {blog.date}
-                  </div>
-                </div>
-              </div>
-              
-              <p className="text-zinc-300 text-xs mb-3 leading-relaxed">{blog.excerpt}</p>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex flex-wrap gap-1">
-                  {blog.tags.map((tag, index) => (
-                    <span key={index} className="bg-zinc-800 border border-zinc-600 text-zinc-300 px-2 py-1 text-xs font-mono">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex items-center space-x-4 text-xs text-zinc-400 font-mono">
-                  <div className="flex items-center space-x-1">
-                    <TrendingUp className="w-3 h-3" />
-                    <span>{blog.views}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <MessageSquare className="w-3 h-3" />
-                    <span>{blog.comments}</span>
-                  </div>
-                  <span>{blog.readTime}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              <IconComponent className="w-4 h-4" />
+              <span className="font-mono">{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Upcoming Content */}
-      <div className="border-t border-zinc-700/50 pt-6">
-        <div className="flex items-center space-x-2 mb-4">
-          <Calendar className="w-4 h-4 text-pink-400" />
-          <span className="text-pink-400 font-bold text-sm font-mono">UPCOMING CONTENT</span>
-        </div>
-
-        <div className="space-y-3">
-          {upcomingContent.map((content, index) => (
-            <div key={index} className="bg-zinc-900/50 border border-zinc-700/50 p-3 hover:border-pink-400/30 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <div className="text-white font-bold text-sm">{content.title}</div>
-                  <div className="text-pink-400 text-xs font-mono">{content.game.title}</div>
-                </div>
-                <span className="bg-zinc-700 border border-zinc-600 text-white px-2 py-1 text-xs font-bold font-mono">
-                  {content.type}
-                </span>
-              </div>
-              <div className="text-zinc-400 text-xs flex items-center font-mono">
-                <Calendar className="w-3 h-3 mr-1" />
-                <span>{content.date}</span>
-              </div>
+      {/* Tab Content */}
+      {activeTab === 'videos' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Play className="w-5 h-5 text-purple-400" />
+              <span className="text-purple-400 font-black text-lg font-mono">DEVELOPMENT VIDEOS</span>
             </div>
-          ))}
-        </div>
+            <Link to="/blog?category=devlogs" className="text-purple-400 hover:text-purple-300 text-sm font-bold font-mono">
+              VIEW ALL VIDEOS →
+            </Link>
+          </div>
 
-        <div className="grid grid-cols-2 gap-3 mt-6">
-          <Link
-            to="/blog"
-            className="bg-zinc-700 hover:bg-zinc-600 border border-zinc-600 hover:border-purple-400/50 text-white px-4 py-2 font-black transition-all duration-300 text-center font-mono text-sm"
-          >
-            READ DEV BLOG
-          </Link>
-          <Link
-            to="/contact"
-            className="bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 hover:border-cyan-400/50 text-white px-4 py-2 font-black transition-all duration-300 text-center font-mono text-sm"
-          >
-            DEVELOPER Q&A
-          </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {game.devVideos.map((video, index) => (
+              <div key={index} className="bg-zinc-900/50 border border-zinc-700/50 overflow-hidden hover:border-zinc-600 transition-colors group">
+                {/* Video Thumbnail */}
+                <div className="aspect-video bg-zinc-800 relative overflow-hidden">
+                  <div className="w-full h-full bg-gradient-to-br from-purple-900/50 to-blue-900/50 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-purple-500/90 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <Play className="w-8 h-8 text-white" />
+                      </div>
+                      <div className="text-white font-bold text-sm">{game.title}</div>
+                      <div className="text-purple-400 text-xs">Development Video</div>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-2 right-2 bg-black/80 text-white px-2 py-1 text-xs font-mono">
+                    {video.duration}
+                  </div>
+                </div>
+
+                {/* Video Info */}
+                <div className="p-4 space-y-3">
+                  <h3 className="text-white font-bold text-sm leading-tight group-hover:text-purple-300 transition-colors">
+                    {video.title}
+                  </h3>
+                  
+                  <div className="flex items-center justify-between text-xs text-zinc-400 font-mono">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-1">
+                        <Eye className="w-3 h-3" />
+                        <span>{video.views}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>{video.publishDate}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button className="flex-1 bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 text-xs font-bold font-mono transition-colors">
+                      WATCH NOW
+                    </button>
+                    <button className="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-2 text-xs font-bold transition-colors">
+                      <Share2 className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {activeTab === 'articles' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <BookOpen className="w-5 h-5 text-cyan-400" />
+              <span className="text-cyan-400 font-black text-lg font-mono">DEVELOPMENT ARTICLES</span>
+            </div>
+            <Link to="/blog" className="text-cyan-400 hover:text-cyan-300 text-sm font-bold font-mono">
+              READ ALL ARTICLES →
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {relatedPosts.map((post) => (
+              <Link
+                key={post.id}
+                to={`/blog/${post.id}`}
+                className="block bg-zinc-900/50 border border-zinc-700/50 p-4 hover:border-zinc-600 transition-colors group"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="bg-zinc-700 border border-zinc-600 text-white px-2 py-1 text-xs font-bold font-mono">
+                        {post.type}
+                      </span>
+                      <span className="bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 px-2 py-1 text-xs font-bold font-mono">
+                        {post.category.toUpperCase()}
+                      </span>
+                      {post.difficulty && (
+                        <span className="text-zinc-400 text-xs font-mono">
+                          {post.difficulty}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-white font-bold text-lg mb-2 group-hover:text-cyan-300 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-zinc-400 text-sm mb-3 leading-relaxed">{post.excerpt}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap gap-1">
+                    {post.tags.slice(0, 4).map((tag, index) => (
+                      <span key={index} className="bg-zinc-800 border border-zinc-600 text-zinc-300 px-2 py-1 text-xs font-mono">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center space-x-4 text-xs text-zinc-400 font-mono">
+                    <div className="flex items-center space-x-1">
+                      <Clock className="w-3 h-3" />
+                      <span>{post.readTime}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Download className="w-3 h-3" />
+                      <span>{post.downloads}</span>
+                    </div>
+                    <span>{post.date}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'upcoming' && (
+        <div className="space-y-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <Calendar className="w-5 h-5 text-pink-400" />
+            <span className="text-pink-400 font-black text-lg font-mono">UPCOMING CONTENT</span>
+          </div>
+
+          <div className="space-y-4">
+            {upcomingContent.map((content, index) => (
+              <div key={index} className="bg-zinc-900/50 border border-zinc-700/50 p-4 hover:border-pink-400/30 transition-colors">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="bg-pink-500/20 border border-pink-500/30 text-pink-400 px-2 py-1 text-xs font-bold font-mono">
+                        {content.type}
+                      </span>
+                      <span className="bg-zinc-700 border border-zinc-600 text-white px-2 py-1 text-xs font-bold font-mono">
+                        {content.category}
+                      </span>
+                    </div>
+                    <h3 className="text-white font-bold text-lg">{content.title}</h3>
+                  </div>
+                  <div className="text-pink-400 text-sm font-mono flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {content.date}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-zinc-700/50">
+            <Link
+              to="/blog"
+              className="bg-zinc-700 hover:bg-zinc-600 border border-zinc-600 hover:border-cyan-400/50 text-white px-4 py-3 font-black transition-all duration-300 text-center font-mono text-sm"
+            >
+              READ DEV BLOG
+            </Link>
+            <Link
+              to="/contact"
+              className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-3 font-black transition-all duration-300 text-center font-mono text-sm"
+            >
+              DEVELOPER Q&A
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
