@@ -16,20 +16,21 @@ import {
   Filter,
   Grid3X3,
   List,
-  Search
+  Search,
+  MessageSquare
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GameDetailsPanel from './games/GameDetailsPanel';
 import DLCUpdatesPanel from './games/DLCUpdatesPanel';
 import DeveloperInsights from './games/DeveloperInsights';
 import CommunityPanel from './games/CommunityPanel';
+import GameLibraryPanel from './games/GameLibraryPanel';
 
 const GamesSection = () => {
   const [activeGame, setActiveGame] = useState(0);
   const [selectedPanel, setSelectedPanel] = useState('details');
-  const [viewMode, setViewMode] = useState('grid');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('all');
 
   const games = [
     {
@@ -234,17 +235,26 @@ const GamesSection = () => {
     { icon: Trophy, value: "50+", label: "Awards", color: "text-green-400" }
   ];
 
-  const genres = ['all', 'Action', 'Strategy', 'RPG', 'Horror', 'Sci-Fi'];
-  const currentGame = games[activeGame];
+  const handleGameSelect = (gameId: number) => {
+    const gameIndex = games.findIndex(g => g.id === gameId);
+    if (gameIndex !== -1) {
+      setActiveGame(gameIndex);
+    }
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+  };
 
   const filteredGames = games.filter(game => {
     const matchesSearch = game.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          game.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesGenre = selectedGenre === 'all' || game.genres.some(g => g.toLowerCase().includes(selectedGenre.toLowerCase()));
-    return matchesSearch && matchesGenre;
+    const matchesCategory = activeCategory === 'all' || game.category.toLowerCase().includes(activeCategory.toLowerCase());
+    return matchesSearch && matchesCategory;
   });
 
-  // Simple games array for DeveloperInsights component
+  const currentGame = games[activeGame];
+
   const simpleGames = games.map(game => ({
     id: game.id,
     title: game.title,
@@ -252,7 +262,7 @@ const GamesSection = () => {
   }));
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-24 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 overflow-hidden">
       {/* Gaming-themed unique background effects */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
         {/* Primary gaming ambient lighting with circuit-like patterns */}
@@ -285,239 +295,179 @@ const GamesSection = () => {
         <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-violet-400/60 to-transparent animate-pulse" style={{animationDelay: '6s'}}></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Games Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-3 py-1 mb-3 backdrop-blur-sm">
-            <Gamepad2 className="w-3 h-3 mr-1 text-purple-400" />
-            <span className="text-purple-400 font-black text-xs font-mono tracking-widest">JBLINX GAME UNIVERSE</span>
+      <div className="container mx-auto px-4 relative z-10 py-12">
+        {/* Enhanced Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center bg-zinc-800/95 border border-orange-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
+            <Gamepad2 className="w-4 h-4 mr-2 text-orange-400" />
+            <span className="text-orange-400 font-black text-sm font-mono tracking-widest">JBLINX GAME UNIVERSE</span>
           </div>
           
-          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-2">
-            PREMIUM <span className="text-purple-400">GAMES</span> LIBRARY
+          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight font-mono mb-4">
+            PREMIUM <span className="text-orange-400">GAMES</span> LIBRARY
           </h2>
           
-          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-3"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-purple-500 mx-auto mb-4"></div>
           
-          <p className="text-sm text-slate-400 max-w-2xl mx-auto mb-4">
-            Immersive gaming experiences across multiple platforms and genres, developed by JBLinx Studio
+          <p className="text-zinc-400 max-w-3xl mx-auto mb-6 text-lg">
+            Experience cutting-edge gaming technology across multiple platforms. 
+            From tactical warfare to strategic empire building, discover immersive worlds crafted by JBLinx Studio.
           </p>
 
-          {/* Game Stats */}
-          <div className="grid grid-cols-4 gap-2 max-w-2xl mx-auto mb-6">
-            {gameStats.map((stat, index) => {
-              const IconComponent = stat.icon;
-              return (
-                <div key={index} className="bg-zinc-800/80 border border-zinc-700 p-3 text-center backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300">
-                  <IconComponent className={`w-4 h-4 ${stat.color} mx-auto mb-1`} />
-                  <div className={`text-sm font-black ${stat.color} font-mono`}>{stat.value}</div>
-                  <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Search and Filters */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search games..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-zinc-800 border border-zinc-600 text-white pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-purple-400 transition-colors"
-              />
-            </div>
-            
-            <select
-              value={selectedGenre}
-              onChange={(e) => setSelectedGenre(e.target.value)}
-              className="bg-zinc-800 border border-zinc-600 text-white px-4 py-2 text-sm focus:outline-none focus:border-purple-400 transition-colors"
-            >
-              {genres.map(genre => (
-                <option key={genre} value={genre}>
-                  {genre === 'all' ? 'All Genres' : genre}
-                </option>
-              ))}
-            </select>
-
-            <div className="flex border border-zinc-600 bg-zinc-800">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 ${viewMode === 'grid' ? 'bg-purple-500 text-white' : 'text-slate-400 hover:text-white'} transition-colors`}
-              >
-                <Grid3X3 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2 ${viewMode === 'list' ? 'bg-purple-500 text-white' : 'text-slate-400 hover:text-white'} transition-colors`}
-              >
-                <List className="w-4 h-4" />
-              </button>
-            </div>
+          {/* Enhanced Search */}
+          <div className="max-w-md mx-auto relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-zinc-400" />
+            <input
+              type="text"
+              placeholder="Search our game library..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-zinc-800/80 border border-zinc-600 text-white pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-orange-400 transition-colors backdrop-blur-sm"
+            />
           </div>
         </div>
 
-        {/* Game Selection Grid */}
-        <div className={`${viewMode === 'grid' ? 'grid lg:grid-cols-4 gap-3' : 'space-y-3'} mb-6`}>
-          {filteredGames.map((game, index) => {
-            const isActive = activeGame === index;
-            return (
-              <div 
-                key={index} 
-                className={`bg-zinc-800/95 border transition-all duration-300 cursor-pointer p-4 backdrop-blur-sm hover:scale-105 ${
-                  isActive ? 'border-purple-500/50 shadow-lg shadow-purple-500/20' : 'border-zinc-700 hover:border-zinc-600'
-                } ${viewMode === 'list' ? 'flex items-center space-x-4' : ''}`}
-                onClick={() => setActiveGame(games.findIndex(g => g.id === game.id))}
-              >
-                {/* Game Image */}
-                {viewMode === 'list' && (
-                  <img 
-                    src={game.images.hero} 
-                    alt={game.title}
-                    className="w-20 h-12 object-cover border border-zinc-600"
-                  />
-                )}
+        {/* Main Layout with Sidebar */}
+        <div className="flex gap-6 min-h-[800px]">
+          {/* Game Library Sidebar */}
+          <div className="w-80 flex-shrink-0">
+            <GameLibraryPanel
+              games={filteredGames}
+              selectedGameId={currentGame.id}
+              onSelectGame={handleGameSelect}
+              activeCategory={activeCategory}
+              onCategoryChange={handleCategoryChange}
+            />
+          </div>
 
-                <div className="flex-1">
-                  {/* Game Header */}
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center ${viewMode === 'list' ? 'w-6 h-6' : ''}`}>
-                        <Gamepad2 className={`${viewMode === 'list' ? 'w-3 h-3' : 'w-4 h-4'} text-white`} />
-                      </div>
-                      <div>
-                        <h3 className={`${viewMode === 'list' ? 'text-sm' : 'text-sm'} font-black font-mono ${isActive ? 'text-purple-400' : 'text-white'}`}>
-                          {game.title}
-                        </h3>
-                        <p className="text-xs text-slate-400">{game.category}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="text-right">
-                      <div className="flex items-center space-x-1">
-                        <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                        <span className="text-white font-bold text-xs">{game.rating}</span>
-                      </div>
-                      <div className={`text-xs font-bold ${isActive ? 'text-purple-400' : 'text-slate-400'}`}>
-                        {game.playerCount}
-                      </div>
+          {/* Main Content Area */}
+          <div className="flex-1 space-y-6">
+            {/* Featured Game Hero */}
+            <div className="bg-gradient-to-r from-zinc-900/90 to-zinc-800/90 border border-zinc-700/50 p-6 backdrop-blur-sm">
+              <div className="grid lg:grid-cols-2 gap-6 items-center">
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-3 py-1 text-xs font-black border ${
+                      currentGame.status === 'LIVE' ? 'bg-emerald-500/20 border-emerald-400/50 text-emerald-400' :
+                      currentGame.status === 'BETA' ? 'bg-orange-500/20 border-orange-400/50 text-orange-400' :
+                      'bg-cyan-500/20 border-cyan-400/50 text-cyan-400'
+                    }`}>
+                      {currentGame.status}
+                    </span>
+                    <div className="flex items-center space-x-1">
+                      {currentGame.platforms.slice(0, 3).map((platform, idx) => (
+                        <span key={idx} className="text-zinc-400 text-sm">
+                          {platform === 'PC' ? '🖥️' : platform === 'Mobile' ? '📱' : '🌐'}
+                        </span>
+                      ))}
                     </div>
                   </div>
 
-                  {viewMode === 'grid' && (
-                    <>
-                      {/* Game Content */}
-                      <div className="space-y-2">
-                        <p className="text-slate-300 text-xs leading-relaxed line-clamp-2">{game.description}</p>
-                        
-                        {/* Genres */}
-                        <div className="flex flex-wrap gap-1">
-                          {game.genres.slice(0, 3).map((genre, genreIndex) => (
-                            <span 
-                              key={genreIndex} 
-                              className={`px-2 py-0.5 text-xs font-bold border transition-all duration-300 ${
-                                isActive 
-                                  ? 'border-purple-500/40 bg-purple-500/10 text-purple-400' 
-                                  : 'border-zinc-600 bg-zinc-700/50 text-slate-300'
-                              }`}
-                            >
-                              {genre}
-                            </span>
-                          ))}
-                        </div>
-                        
-                        {/* Stats & CTA */}
-                        <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center space-x-2 text-xs">
-                            <Users className="w-3 h-3 text-slate-400" />
-                            <span className="text-slate-300 font-medium">{game.stats.peakPlayers}k</span>
-                          </div>
-                          
-                          <Link 
-                            to={`/game/${game.id}`} 
-                            className={`flex items-center space-x-1 text-xs font-bold transition-all duration-300 hover:scale-105 ${
-                              isActive ? 'text-purple-400' : 'text-slate-400 hover:text-purple-400'
-                            }`}
-                          >
-                            <span>PLAY</span>
-                            <ArrowRight className="w-3 h-3" />
-                          </Link>
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  <h3 className="text-3xl font-black text-white leading-tight">{currentGame.title}</h3>
+                  <p className="text-orange-400 font-bold text-lg">{currentGame.tagline}</p>
+                  <p className="text-zinc-300 leading-relaxed">{currentGame.description}</p>
 
-                  {viewMode === 'list' && (
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-wrap gap-1">
-                        {game.genres.slice(0, 2).map((genre, genreIndex) => (
-                          <span 
-                            key={genreIndex} 
-                            className="px-2 py-1 text-xs font-bold border border-zinc-600 bg-zinc-700/50 text-slate-300"
-                          >
-                            {genre}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="text-green-400 font-black text-sm">
-                        {game.price.base === 0 ? 'FREE' : `$${game.price.base}`}
-                      </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-1">
+                      <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                      <span className="text-white font-bold">{currentGame.rating}</span>
+                      <span className="text-zinc-400">({currentGame.reviewCount} reviews)</span>
                     </div>
-                  )}
+                    <div className="text-emerald-400 font-black text-xl">
+                      {currentGame.price.base === 0 ? 'FREE' : `$${currentGame.price.base}`}
+                    </div>
+                  </div>
+
+                  <div className="flex space-x-3">
+                    <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 font-black transition-all duration-300 hover:scale-105 flex items-center space-x-2">
+                      <Play className="w-5 h-5" />
+                      <span>PLAY NOW</span>
+                    </button>
+                    <button className="bg-zinc-700 hover:bg-zinc-600 text-white px-6 py-3 font-bold transition-colors flex items-center space-x-2">
+                      <Download className="w-5 h-5" />
+                      <span>DOWNLOAD</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <img 
+                    src={currentGame.images.hero} 
+                    alt={currentGame.title}
+                    className="w-full h-80 object-cover border border-zinc-600"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm border border-white/30 p-4 hover:bg-white/30 transition-colors">
+                    <Play className="w-8 h-8 text-white" />
+                  </button>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
 
-        {/* Panel Navigation */}
-        <div className="bg-zinc-800/80 border border-zinc-600/50 p-3 mb-4 backdrop-blur-sm">
-          <div className="flex justify-center space-x-2">
-            {[
-              { id: 'details', label: 'GAME DETAILS', icon: Target },
-              { id: 'dlc', label: 'DLC & UPDATES', icon: Download },
-              { id: 'insights', label: 'DEV INSIGHTS', icon: Eye },
-              { id: 'community', label: 'COMMUNITY', icon: Users }
-            ].map((panel) => {
-              const IconComponent = panel.icon;
-              return (
-                <button
-                  key={panel.id}
-                  onClick={() => setSelectedPanel(panel.id)}
-                  className={`flex items-center space-x-1 px-4 py-2 text-xs font-bold transition-all duration-300 ${
-                    selectedPanel === panel.id
-                      ? 'bg-purple-500 text-white shadow-lg'
-                      : 'bg-zinc-700/50 text-slate-400 hover:bg-zinc-600/50 hover:text-white'
-                  }`}
-                >
-                  <IconComponent className="w-3 h-3" />
-                  <span>{panel.label}</span>
-                </button>
-              );
-            })}
+            {/* Panel Navigation */}
+            <div className="bg-zinc-800/80 border border-zinc-600/50 p-3 backdrop-blur-sm">
+              <div className="flex justify-center space-x-2">
+                {[
+                  { id: 'details', label: 'GAME DETAILS', icon: Target },
+                  { id: 'dlc', label: 'DLC & UPDATES', icon: Download },
+                  { id: 'insights', label: 'DEV INSIGHTS', icon: Eye },
+                  { id: 'community', label: 'COMMUNITY', icon: Users }
+                ].map((panel) => {
+                  const IconComponent = panel.icon;
+                  return (
+                    <button
+                      key={panel.id}
+                      onClick={() => setSelectedPanel(panel.id)}
+                      className={`flex items-center space-x-1 px-4 py-2 text-xs font-bold transition-all duration-300 ${
+                        selectedPanel === panel.id
+                          ? 'bg-orange-500 text-white shadow-lg'
+                          : 'bg-zinc-700/50 text-zinc-400 hover:bg-zinc-600/50 hover:text-white'
+                      }`}
+                    >
+                      <IconComponent className="w-3 h-3" />
+                      <span>{panel.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Dynamic Panel Content */}
+            <div className="bg-zinc-800/80 border border-zinc-600/50 backdrop-blur-sm">
+              {selectedPanel === 'details' && <GameDetailsPanel game={currentGame} />}
+              {selectedPanel === 'dlc' && <DLCUpdatesPanel dlcs={currentGame.dlc} updates={currentGame.updates} />}
+              {selectedPanel === 'insights' && <DeveloperInsights games={simpleGames} />}
+              {selectedPanel === 'community' && <CommunityPanel game={currentGame} />}
+            </div>
           </div>
         </div>
 
-        {/* Dynamic Panel Content */}
-        <div className="bg-zinc-800/80 border border-zinc-600/50 backdrop-blur-sm mb-6">
-          {selectedPanel === 'details' && <GameDetailsPanel game={currentGame} />}
-          {selectedPanel === 'dlc' && <DLCUpdatesPanel dlcs={currentGame.dlc} updates={currentGame.updates} />}
-          {selectedPanel === 'insights' && <DeveloperInsights games={simpleGames} />}
-          {selectedPanel === 'community' && <CommunityPanel game={currentGame} />}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <Link 
-            to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-6 py-3 font-black transition-all duration-300 space-x-2 shadow-lg text-sm hover:scale-105"
-          >
-            <Zap className="w-4 h-4" />
-            <span>EXPLORE ALL GAMES</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+        {/* CTA Section */}
+        <div className="text-center mt-12">
+          <div className="bg-gradient-to-r from-zinc-900/90 to-zinc-800/90 border border-zinc-700/50 p-8 backdrop-blur-sm">
+            <h3 className="text-2xl font-black text-white mb-4">Ready to Experience Our Games?</h3>
+            <p className="text-zinc-400 mb-6 max-w-2xl mx-auto">
+              Join thousands of players worldwide and discover what makes JBLinx Studio games special. 
+              From casual mobile experiences to hardcore PC gaming, we have something for everyone.
+            </p>
+            <div className="flex justify-center space-x-4">
+              <Link 
+                to="/game-development" 
+                className="inline-flex items-center bg-gradient-to-r from-orange-500 to-purple-500 hover:from-orange-600 hover:to-purple-600 text-white px-8 py-4 font-black transition-all duration-300 space-x-2 shadow-lg hover:scale-105"
+              >
+                <Zap className="w-5 h-5" />
+                <span>EXPLORE ALL GAMES</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <Link 
+                to="/contact" 
+                className="inline-flex items-center bg-zinc-700 hover:bg-zinc-600 text-white px-8 py-4 font-bold transition-colors space-x-2"
+              >
+                <MessageSquare className="w-5 h-5" />
+                <span>GET SUPPORT</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
