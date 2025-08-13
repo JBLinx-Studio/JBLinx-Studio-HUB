@@ -188,7 +188,7 @@ const WebAppsSection = () => {
                     <div className="text-zinc-400 text-xs">Global Uptime</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-cyan-400 font-black text-lg">< 150ms</div>
+                    <div className="text-cyan-400 font-black text-lg">&lt; 150ms</div>
                     <div className="text-zinc-400 text-xs">Avg Response</div>
                   </div>
                 </div>

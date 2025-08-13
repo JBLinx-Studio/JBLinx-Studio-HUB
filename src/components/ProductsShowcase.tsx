@@ -1,254 +1,301 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, ShoppingCart, Package, Download, Star, Users, TrendingUp, Filter } from 'lucide-react';
+import { ArrowRight, Code, Book, Smartphone, Zap, Filter, Grid3X3, List, Eye, Star, Download, Users, Package, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ProductCard from './products/ProductCard';
 import ProductFilters from './products/ProductFilters';
 
 const ProductsShowcase = () => {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [layoutType, setLayoutType] = useState<'grid' | 'list' | 'featured'>('grid');
   const [sortBy, setSortBy] = useState('popular');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [searchTerm, setSearchTerm] = useState('');
 
   const products = [
     {
-      name: "React SaaS Starter Kit Pro",
-      category: "Premium Web Templates",
+      name: "CodeCraft Pro Template",
+      category: "Web Templates",
       type: "template",
       downloads: "15.2k",
       rating: "4.9",
-      price: "$79.99",
-      tech: "React + TypeScript",
-      description: "Complete SaaS template with authentication, billing, dashboard, and admin panel. Production-ready with modern design.",
-      features: ["JWT Authentication", "Stripe Integration", "Admin Dashboard", "Responsive Design", "TypeScript Support", "API Documentation"],
-      color: "from-blue-500 to-cyan-500",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop",
-      tags: ["React", "SaaS", "TypeScript", "Stripe"],
-      version: "v3.2.1",
-      lastUpdated: "2024-01-15"
+      price: "$79",
+      tech: "React",
+      description: "Professional React dashboard template with 50+ components and dark/light themes for modern web applications.",
+      features: ["50+ Components", "Dark/Light Theme", "Responsive Design", "TypeScript Support"],
+      color: "emerald",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
+      tags: ["Dashboard", "Admin", "React"],
+      lastUpdated: "2024-01-10",
+      version: "v2.1.4"
     },
     {
-      name: "FastAPI Enterprise Backend",
-      category: "Backend Templates", 
-      type: "template",
-      downloads: "11.8k",
-      rating: "4.8",
-      price: "$59.99",
-      tech: "Python + FastAPI",
-      description: "Production-ready FastAPI backend with MySQL, Redis, Docker, and comprehensive API documentation.",
-      features: ["FastAPI Framework", "MySQL + SQLAlchemy", "Redis Caching", "Docker Compose", "JWT Authentication", "API Testing"],
-      color: "from-green-500 to-emerald-500",
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
-      tags: ["Python", "FastAPI", "Docker", "MySQL"],
-      version: "v2.1.0",
-      lastUpdated: "2024-01-12"
-    },
-    {
-      name: "Flutter E-Commerce Complete",
-      category: "Mobile App Templates",
-      type: "template", 
-      downloads: "9.3k",
-      rating: "4.9",
-      price: "$69.99",
-      tech: "Flutter + Dart",
-      description: "Full-featured e-commerce mobile app with payment integration, inventory management, and admin panel.",
-      features: ["Payment Gateway", "Push Notifications", "Inventory Management", "User Authentication", "Order Tracking", "Admin Panel"],
-      color: "from-purple-500 to-pink-500",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop",
-      tags: ["Flutter", "E-commerce", "Mobile", "Payment"],
-      version: "v1.8.5",
-      lastUpdated: "2024-01-10"
-    },
-    {
-      name: "Modern Web Development Handbook",
-      category: "Programming Guides",
-      type: "ebook",
-      downloads: "22.1k",
-      rating: "5.0", 
-      price: "$39.99",
-      tech: "600+ Pages",
-      description: "Comprehensive guide covering React, Node.js, databases, deployment, and modern development practices.",
-      features: ["20 Detailed Chapters", "100+ Code Examples", "Video Tutorials", "Project Templates", "Lifetime Updates", "Community Access"],
-      color: "from-orange-500 to-red-500",
-      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=200&fit=crop",
-      tags: ["Programming", "Web Dev", "React", "Node.js"],
-      version: "v4.0",
-      lastUpdated: "2024-01-08"
-    },
-    {
-      name: "TaskFlow Pro Mobile",
-      category: "Productivity Apps",
+      name: "Mobile UI Kit Pro",
+      category: "Mobile Development",
       type: "mobile",
-      downloads: "45.3k",
-      rating: "4.7",
-      price: "$9.99",
-      tech: "iOS + Android",
-      description: "Premium task management app with team collaboration, project tracking, and advanced analytics.",
-      features: ["Team Collaboration", "Project Analytics", "Offline Sync", "Smart Notifications", "Time Tracking", "Custom Workflows"],
-      color: "from-blue-500 to-purple-500",
-      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=200&fit=crop",
-      tags: ["Mobile", "Productivity", "Teams", "Analytics"],
-      version: "v2.3.1",
-      lastUpdated: "2024-01-14"
+      downloads: "8.7k",
+      rating: "4.8",
+      price: "$59",
+      tech: "Flutter",
+      description: "Complete Flutter UI kit with 100+ screens and components for building beautiful mobile applications.",
+      features: ["100+ Screens", "Custom Widgets", "Animation Library", "Cross-platform"],
+      color: "blue",
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop",
+      tags: ["Flutter", "Mobile", "UI Kit"],
+      lastUpdated: "2024-01-08",
+      version: "v1.8.2"
     },
     {
-      name: "API Documentation Generator Pro",
+      name: "DevOps Mastery Guide",
+      category: "E-books",
+      type: "ebook",
+      downloads: "12.1k",
+      rating: "4.9",
+      price: "$29",
+      tech: "PDF",
+      description: "Comprehensive 300-page guide covering DevOps practices, CI/CD, and cloud deployment strategies.",
+      features: ["300+ Pages", "Practical Examples", "Case Studies", "Bonus Resources"],
+      color: "purple",
+      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop",
+      tags: ["DevOps", "Cloud", "Tutorial"],
+      lastUpdated: "2024-01-05",
+      version: "v3.0"
+    },
+    {
+      name: "API Testing Toolkit",
       category: "Developer Tools",
       type: "tool",
-      downloads: "18.7k",
+      downloads: "6.3k",
+      rating: "4.7",
+      price: "$49",
+      tech: "Python",
+      description: "Advanced API testing suite with automated test generation and comprehensive reporting features.",
+      features: ["Auto Test Gen", "REST/GraphQL", "CI/CD Integration", "Detailed Reports"],
+      color: "orange",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
+      tags: ["API", "Testing", "Automation"],
+      lastUpdated: "2024-01-12",
+      version: "v1.5.1"
+    },
+    {
+      name: "E-commerce Template Suite",
+      category: "Web Templates",
+      type: "template", 
+      downloads: "9.8k",
+      rating: "4.8",
+      price: "$99",
+      tech: "Vue.js",
+      description: "Complete e-commerce solution with payment integration, inventory management, and modern design.",
+      features: ["Payment Gateway", "Inventory System", "Admin Panel", "Mobile Ready"],
+      color: "green",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
+      tags: ["E-commerce", "Vue", "Full-stack"],
+      lastUpdated: "2024-01-09",
+      version: "v2.3.0"
+    },
+    {
+      name: "Cloud Architecture Guide",
+      category: "E-books",
+      type: "ebook",
+      downloads: "7.4k",
       rating: "4.9",
-      price: "$49.99",
-      tech: "Node.js CLI",
-      description: "Auto-generate beautiful, interactive API documentation with testing capabilities and multiple export formats.",
-      features: ["Auto Documentation", "Interactive Testing", "Multiple Themes", "Export Options", "Live Updates", "Team Collaboration"],
-      color: "from-yellow-500 to-orange-500",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop",
-      tags: ["Developer", "API", "Documentation", "CLI"],
-      version: "v1.5.2",
-      lastUpdated: "2024-01-13"
+      price: "$39",
+      tech: "PDF",
+      description: "Expert-level guide to designing scalable cloud architectures with AWS, Azure, and GCP examples.",
+      features: ["Multi-cloud Focus", "Architecture Patterns", "Best Practices", "Implementation Guide"],
+      color: "cyan",
+      image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop",
+      tags: ["Cloud", "Architecture", "AWS"],
+      lastUpdated: "2024-01-07",
+      version: "v2.1"
     }
   ];
 
-  const filteredProducts = React.useMemo(() => {
-    let filtered = products.filter(product => {
-      if (activeCategory === 'All') return true;
-      if (activeCategory === 'Templates') return product.type === 'template';
-      if (activeCategory === 'eBooks') return product.type === 'ebook';
-      if (activeCategory === 'Mobile Apps') return product.type === 'mobile';
-      if (activeCategory === 'Tools') return product.type === 'tool';
-      return true;
-    });
+  const categories = [
+    { id: 'all', name: 'All Products', count: products.length, icon: Package },
+    { id: 'templates', name: 'Web Templates', count: products.filter(p => p.category === 'Web Templates').length, icon: Code },
+    { id: 'mobile', name: 'Mobile Dev', count: products.filter(p => p.category === 'Mobile Development').length, icon: Smartphone },
+    { id: 'ebooks', name: 'E-books', count: products.filter(p => p.category === 'E-books').length, icon: Book },
+    { id: 'tools', name: 'Dev Tools', count: products.filter(p => p.category === 'Developer Tools').length, icon: Zap }
+  ];
 
-    if (searchTerm) {
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.tech.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
+  const filteredProducts = selectedCategory === 'all' 
+    ? products 
+    : products.filter(product => {
+        switch(selectedCategory) {
+          case 'templates': return product.category === 'Web Templates';
+          case 'mobile': return product.category === 'Mobile Development';
+          case 'ebooks': return product.category === 'E-books';
+          case 'tools': return product.category === 'Developer Tools';
+          default: return true;
+        }
+      });
 
-    // Sort products
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'rating':
-          return parseFloat(b.rating) - parseFloat(a.rating);
-        case 'downloads':
-          return parseFloat(b.downloads.replace('k', '')) - parseFloat(a.downloads.replace('k', ''));
-        case 'price-low':
-          return parseFloat(a.price.replace('$', '')) - parseFloat(b.price.replace('$', ''));
-        case 'price-high':
-          return parseFloat(b.price.replace('$', '')) - parseFloat(a.price.replace('$', ''));
-        case 'newest':
-          return new Date(b.lastUpdated || '').getTime() - new Date(a.lastUpdated || '').getTime();
-        default: // popular
-          return parseFloat(b.downloads.replace('k', '')) - parseFloat(a.downloads.replace('k', ''));
-      }
-    });
-
-    return filtered;
-  }, [activeCategory, searchTerm, sortBy]);
+  const totalStats = {
+    products: products.length,
+    downloads: products.reduce((sum, p) => sum + parseFloat(p.downloads.replace('k', '')) * 1000, 0),
+    avgRating: (products.reduce((sum, p) => sum + parseFloat(p.rating), 0) / products.length).toFixed(1),
+    categories: categories.length - 1
+  };
 
   return (
-    <section className="py-12 bg-gradient-to-b from-zinc-900 to-zinc-950 border-t border-zinc-800">
+    <section className="py-16 bg-zinc-950 border-t border-zinc-800">
       <div className="container mx-auto px-4">
         {/* Enhanced Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center bg-zinc-800/90 border border-cyan-500/40 px-4 py-2 mb-4 backdrop-blur-sm">
-            <ShoppingCart className="w-4 h-4 mr-2 text-cyan-400" />
-            <span className="text-cyan-400 font-black text-sm font-mono tracking-wider">PRIORITY #2: DEVELOPERS</span>
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
+            <Package className="w-4 h-4 mr-2 text-purple-400" />
+            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">PRIORITY #2: DEVELOPER PRODUCTS</span>
           </div>
           
           <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
-            PREMIUM <span className="text-cyan-400">DEVELOPMENT</span> MARKETPLACE
+            PREMIUM <span className="text-purple-400">DEVELOPER PRODUCTS</span> + <span className="text-cyan-400">DIGITAL ASSETS</span>
           </h2>
           
-          <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-4"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-purple-400 to-cyan-500 mx-auto mb-4"></div>
           
-          <p className="text-base text-zinc-400 max-w-2xl mx-auto mb-6">
-            Professional templates, comprehensive guides, mobile applications, and powerful developer tools for modern development teams
+          <p className="text-base text-zinc-400 max-w-2xl mx-auto">
+            Professional templates, mobile UI kits, developer tools, and comprehensive guides for modern development workflows
           </p>
-
-          {/* Enhanced Stats */}
-          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
-            {[
-              { icon: Package, value: "50+", label: "Products", color: "text-cyan-400" },
-              { icon: Download, value: "200k+", label: "Downloads", color: "text-green-400" },
-              { icon: Star, value: "4.9★", label: "Avg Rating", color: "text-yellow-400" },
-              { icon: Users, value: "25k+", label: "Developers", color: "text-purple-400" }
-            ].map((stat, index) => {
-              const IconComponent = stat.icon;
-              return (
-                <div key={index} className="bg-zinc-800/70 border border-zinc-700 p-4 text-center backdrop-blur-sm hover:border-zinc-600 transition-colors">
-                  <IconComponent className={`w-6 h-6 ${stat.color} mx-auto mb-2`} />
-                  <div className={`text-lg font-black ${stat.color} font-mono`}>{stat.value}</div>
-                  <div className="text-zinc-500 text-sm font-medium">{stat.label}</div>
-                </div>
-              );
-            })}
-          </div>
         </div>
 
-        {/* Enhanced Filters */}
-        <ProductFilters
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-        />
-
-        {/* Products Grid/List */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="text-white font-bold">
-              Showing {filteredProducts.length} products
-              {searchTerm && <span className="text-cyan-400 ml-2">for "{searchTerm}"</span>}
+        {/* Dashboard Layout */}
+        <div className="grid lg:grid-cols-12 gap-6 mb-8">
+          {/* Left Sidebar: Categories & Stats */}
+          <div className="lg:col-span-3 space-y-4">
+            {/* Categories Panel */}
+            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
+              <div className="flex items-center space-x-3 mb-4">
+                <Filter className="w-5 h-5 text-purple-400" />
+                <h3 className="text-purple-400 font-black text-lg font-mono">CATEGORIES</h3>
+              </div>
+              
+              <div className="space-y-2">
+                {categories.map((category) => {
+                  const IconComponent = category.icon;
+                  return (
+                    <button
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={`w-full text-left p-3 border transition-all duration-300 ${
+                        selectedCategory === category.id
+                          ? 'border-purple-400/50 bg-purple-400/10 text-purple-300'
+                          : 'border-zinc-600 bg-zinc-800/50 text-zinc-300 hover:border-zinc-500 hover:bg-zinc-700/50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <IconComponent className={`w-4 h-4 ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-400'}`} />
+                          <span className="font-bold text-sm">{category.name}</span>
+                        </div>
+                        <span className={`text-xs font-black ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-500'}`}>
+                          {category.count}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <div className="text-zinc-400 text-sm">
-              Sorted by: <span className="text-cyan-400 font-bold">{sortBy.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+
+            {/* Stats Panel */}
+            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
+              <div className="flex items-center space-x-3 mb-4">
+                <Star className="w-5 h-5 text-yellow-400" />
+                <h3 className="text-yellow-400 font-black text-base font-mono">PORTFOLIO STATS</h3>
+              </div>
+              
+              <div className="space-y-3">
+                {[
+                  { label: 'TOTAL PRODUCTS', value: totalStats.products, color: 'text-purple-400' },
+                  { label: 'TOTAL DOWNLOADS', value: `${Math.round(totalStats.downloads / 1000)}k+`, color: 'text-green-400' },
+                  { label: 'AVERAGE RATING', value: `${totalStats.avgRating}★`, color: 'text-yellow-400' },
+                  { label: 'CATEGORIES', value: totalStats.categories, color: 'text-cyan-400' }
+                ].map((stat, index) => (
+                  <div key={index} className="flex justify-between items-center py-2 border-b border-zinc-700 last:border-b-0">
+                    <span className="text-zinc-400 text-sm font-bold">{stat.label}</span>
+                    <span className={`${stat.color} text-sm font-black`}>{stat.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className={`${
-            viewMode === 'grid' 
-              ? 'grid lg:grid-cols-3 gap-6' 
-              : 'space-y-4'
-          }`}>
-            {filteredProducts.map((product, index) => (
-              <ProductCard
-                key={product.name}
-                product={product}
-                index={index}
-                layoutType={viewMode}
-              />
-            ))}
+          {/* Main Content */}
+          <div className="lg:col-span-9">
+            {/* Controls Bar */}
+            <div className="bg-zinc-800/95 border border-zinc-700 p-4 mb-6">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <Eye className="w-4 h-4 text-cyan-400" />
+                    <span className="text-cyan-400 font-black text-sm font-mono">LAYOUT</span>
+                  </div>
+                  <div className="flex border border-zinc-600">
+                    {[
+                      { type: 'grid', icon: Grid3X3, label: 'Grid' },
+                      { type: 'list', icon: List, label: 'List' }
+                    ].map((layout) => {
+                      const IconComponent = layout.icon;
+                      return (
+                        <button
+                          key={layout.type}
+                          onClick={() => setLayoutType(layout.type as 'grid' | 'list')}
+                          className={`px-3 py-2 transition-all duration-300 ${
+                            layoutType === layout.type
+                              ? 'bg-cyan-400 text-black'
+                              : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'
+                          }`}
+                        >
+                          <IconComponent className="w-4 h-4" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                
+                <div className="text-zinc-400 text-sm">
+                  Showing <span className="text-white font-bold">{filteredProducts.length}</span> products
+                </div>
+              </div>
+            </div>
+
+            {/* Products Grid/List */}
+            <div className={`${
+              layoutType === 'grid' 
+                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6' 
+                : 'space-y-4'
+            }`}>
+              {filteredProducts.map((product, index) => (
+                <ProductCard
+                  key={product.name}
+                  product={product}
+                  index={index}
+                  layoutType={layoutType}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Enhanced CTA */}
         <div className="bg-gradient-to-r from-zinc-800 to-zinc-700 border border-zinc-600 p-8 text-center">
           <h3 className="text-2xl font-black text-white mb-3 font-mono">
-            <span className="text-cyan-400">EVERYTHING</span> FOR MODERN DEVELOPERS
+            <span className="text-purple-400">PROFESSIONAL</span> DEVELOPER ARSENAL
           </h3>
           <p className="text-base text-zinc-400 mb-6 max-w-2xl mx-auto">
-            Complete development toolkit with premium templates, comprehensive guides, mobile applications, and powerful tools. Everything you need to build professional applications faster.
+            Hand-crafted templates, tools, and resources designed by developers for developers. Premium quality with lifetime updates.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
-              to="/web-applications" 
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 font-black transition-all duration-300 flex items-center justify-center space-x-2 text-base shadow-xl"
+              to="/shop" 
+              className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-8 py-4 font-black transition-all duration-300 flex items-center justify-center space-x-2 text-base shadow-xl"
             >
-              <Package className="w-5 h-5" />
+              <ShoppingCart className="w-5 h-5" />
               <span>BROWSE ALL PRODUCTS</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <button className="border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black px-8 py-4 font-black transition-all duration-300 text-base">
-              VIEW PRICING PLANS
+            <button className="border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-black px-8 py-4 font-black transition-all duration-300 text-base">
+              REQUEST CUSTOM WORK
             </button>
           </div>
         </div>
