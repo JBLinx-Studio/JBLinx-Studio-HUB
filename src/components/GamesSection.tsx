@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   Gamepad2, 
@@ -56,8 +57,8 @@ const GamesSection = () => {
         recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 2060"
       },
       dlc: [
-        { name: "Elite Soldier Pack", price: 19.99, status: "AVAILABLE" },
-        { name: "Cyberpunk Arsenal", price: 29.99, status: "PRE-ORDER" }
+        { name: "Elite Soldier Pack", price: "19.99", releaseDate: "2024-09-01", status: "AVAILABLE", image: "https://source.unsplash.com/random/200x150/?cyberpunk,soldier", description: "Advanced soldier equipment and exclusive cybernetic upgrades for tactical superiority." },
+        { name: "Cyberpunk Arsenal", price: "29.99", releaseDate: "2024-10-15", status: "PRE-ORDER", image: "https://source.unsplash.com/random/200x150/?cyberpunk,weapons", description: "Futuristic weapons pack with plasma rifles, neural disruptors, and quantum explosives." }
       ],
       stats: {
         peakPlayers: 15000,
@@ -100,8 +101,8 @@ const GamesSection = () => {
         recommended: "Intel Core i5, 8GB RAM, NVIDIA GTX 750"
       },
       dlc: [
-        { name: "Royal Edition", price: 24.99, status: "AVAILABLE" },
-        { name: "Kingdoms Expansion", price: 34.99, status: "PRE-ORDER" }
+        { name: "Royal Edition", price: "24.99", releaseDate: "2024-09-15", status: "AVAILABLE", image: "https://source.unsplash.com/random/200x150/?medieval,crown", description: "Royal court expansion with noble bloodlines and exclusive castle designs." },
+        { name: "Kingdoms Expansion", price: "34.99", releaseDate: "2024-12-01", status: "PRE-ORDER", image: "https://source.unsplash.com/random/200x150/?medieval,kingdom", description: "Massive world expansion adding 5 new kingdoms and diplomatic systems." }
       ],
       stats: {
         peakPlayers: 25000,
@@ -143,8 +144,8 @@ const GamesSection = () => {
         recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 2070"
       },
       dlc: [
-        { name: "Survivor Pack", price: 14.99, status: "AVAILABLE" },
-        { name: "Undead Expansion", price: 19.99, status: "COMING_SOON" }
+        { name: "Survivor Pack", price: "14.99", releaseDate: "2024-08-20", status: "AVAILABLE", image: "https://source.unsplash.com/random/200x150/?zombie,survivor", description: "Essential survival gear and advanced crafting recipes for the apocalypse." },
+        { name: "Undead Expansion", price: "19.99", releaseDate: "2025-01-10", status: "COMING_SOON", image: "https://source.unsplash.com/random/200x150/?zombie,horde", description: "New zombie types, underground bunkers, and co-op campaign missions." }
       ],
       stats: {
         peakPlayers: 8000,
@@ -231,45 +232,40 @@ const GamesSection = () => {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-24 overflow-hidden">
-      {/* Enhanced paradoxical background effects - unique purple/blue theme */}
-      <div className="absolute inset-0 pointer-events-none opacity-60">
-        {/* Primary ambient lighting with paradoxical movement */}
-        <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-gradient-to-r from-purple-500/12 to-blue-500/8 blur-3xl rounded-full animate-pulse transform -rotate-45"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-r from-blue-500/12 to-purple-500/8 blur-3xl rounded-full animate-pulse transform rotate-45" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-r from-violet-400/8 to-cyan-400/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '4s'}}></div>
+      {/* Gaming-themed unique background effects */}
+      <div className="absolute inset-0 pointer-events-none opacity-40">
+        {/* Primary gaming ambient lighting with circuit-like patterns */}
+        <div className="absolute top-1/4 left-1/4 w-[900px] h-[900px] bg-gradient-conic from-purple-500/10 via-cyan-500/8 to-pink-500/6 blur-3xl rounded-full animate-spin" style={{animationDuration: '20s'}}></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[700px] h-[700px] bg-gradient-conic from-blue-500/12 via-violet-500/8 to-purple-500/6 blur-3xl rounded-full animate-spin" style={{animationDelay: '10s', animationDuration: '25s', animationDirection: 'reverse'}}></div>
         
-        {/* Paradoxical secondary layers */}
-        <div className="absolute top-1/6 right-1/3 w-[400px] h-[400px] bg-gradient-to-l from-purple-300/10 to-blue-300/6 blur-2xl rounded-full animate-pulse transform rotate-12" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-1/6 left-1/3 w-[500px] h-[500px] bg-gradient-to-r from-cyan-400/8 to-violet-400/6 blur-2xl rounded-full animate-pulse transform -rotate-12" style={{animationDelay: '3s'}}></div>
-        
-        {/* Enhanced paradoxical grid overlay */}
-        <div className="absolute inset-0 opacity-[0.12]">
+        {/* Gaming matrix-style grid overlay */}
+        <div className="absolute inset-0 opacity-[0.08]">
           <div className="w-full h-full" style={{
             backgroundImage: `
-              linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px),
-              linear-gradient(45deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px),
-              linear-gradient(-45deg, rgba(168, 85, 247, 0.2) 1px, transparent 1px)
+              radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.4) 2px, transparent 2px),
+              radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+              linear-gradient(45deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
+              linear-gradient(-45deg, rgba(236, 72, 153, 0.1) 1px, transparent 1px)
             `,
-            backgroundSize: '100px 100px, 100px 100px, 50px 50px, 50px 50px'
+            backgroundSize: '80px 80px, 60px 60px, 40px 40px, 40px 40px'
           }}></div>
         </div>
 
-        {/* Floating geometric paradoxical shapes */}
-        <div className="absolute top-1/3 left-1/6 w-8 h-8 bg-purple-400/40 transform rotate-45 animate-pulse border border-purple-400/30 shadow-lg shadow-purple-400/20"></div>
-        <div className="absolute top-1/5 right-1/4 w-6 h-6 bg-blue-400/40 rounded-full animate-pulse border border-blue-400/30 shadow-lg shadow-blue-400/20" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/3 left-1/3 w-10 h-10 bg-violet-400/35 animate-pulse border border-violet-400/25 shadow-lg shadow-violet-400/20 transform rotate-12" style={{animationDelay: '4s'}}></div>
-        <div className="absolute bottom-1/5 right-1/6 w-12 h-12 bg-cyan-400/30 transform rotate-30 animate-pulse border border-cyan-400/20 shadow-lg shadow-cyan-400/20" style={{animationDelay: '6s'}}></div>
+        {/* Floating gaming elements - pixelated and gaming-themed */}
+        <div className="absolute top-1/3 left-1/6 w-6 h-6 bg-purple-400/60 animate-bounce border-2 border-purple-400/80 shadow-lg shadow-purple-400/40" style={{clipPath: 'polygon(0% 0%, 100% 50%, 0% 100%)', animationDelay: '0s'}}></div>
+        <div className="absolute top-1/5 right-1/4 w-8 h-8 bg-cyan-400/50 animate-bounce border border-cyan-400/70 shadow-lg shadow-cyan-400/30" style={{clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)', animationDelay: '2s'}}></div>
+        <div className="absolute bottom-1/3 left-1/3 w-10 h-10 bg-pink-400/40 animate-bounce border border-pink-400/60 shadow-lg shadow-pink-400/20" style={{clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', animationDelay: '4s'}}></div>
+        <div className="absolute bottom-1/5 right-1/6 w-12 h-4 bg-violet-400/50 animate-bounce border border-violet-400/70 shadow-lg shadow-violet-400/30" style={{animationDelay: '6s'}}></div>
 
-        {/* Enhanced paradoxical accent lines */}
-        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/40 to-transparent transform rotate-1"></div>
-        <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent transform -rotate-1"></div>
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-violet-400/40 to-transparent transform rotate-2"></div>
-        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent transform -rotate-2"></div>
+        {/* Gaming accent lines - more dynamic */}
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/60 to-transparent animate-pulse"></div>
+        <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-pink-400/60 to-transparent animate-pulse" style={{animationDelay: '4s'}}></div>
+        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-violet-400/60 to-transparent animate-pulse" style={{animationDelay: '6s'}}></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Compact Games Header - styled like Services */}
+        {/* Games Header - styled like Services */}
         <div className="text-center mb-5">
           <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
             <Gamepad2 className="w-3 h-3 mr-1 text-purple-400" />
@@ -286,7 +282,7 @@ const GamesSection = () => {
             Immersive gaming experiences across multiple platforms and genres
           </p>
 
-          {/* Game Stats - styled like Services stats */}
+          {/* Game Stats */}
           <div className="grid grid-cols-4 gap-1 max-w-xl mx-auto mb-4">
             {gameStats.map((stat, index) => {
               const IconComponent = stat.icon;
@@ -301,7 +297,7 @@ const GamesSection = () => {
           </div>
         </div>
 
-        {/* Game Selection Grid - styled like Services */}
+        {/* Game Selection Grid */}
         <div className="grid lg:grid-cols-4 gap-3 mb-5">
           {games.map((game, index) => {
             const isActive = activeGame === index;
@@ -381,7 +377,7 @@ const GamesSection = () => {
           })}
         </div>
 
-        {/* Panel Navigation - styled like Services */}
+        {/* Panel Navigation */}
         <div className="bg-zinc-800/80 border border-zinc-600/50 p-3 mb-4 backdrop-blur-sm">
           <div className="flex justify-center space-x-2">
             {[
@@ -437,7 +433,7 @@ const GamesSection = () => {
           )}
         </div>
 
-        {/* CTA - styled like Services */}
+        {/* CTA */}
         <div className="text-center">
           <Link 
             to="/game-development" 
