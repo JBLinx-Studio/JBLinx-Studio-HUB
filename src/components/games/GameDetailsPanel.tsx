@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Play, 
@@ -25,8 +24,7 @@ import {
   MessageSquare,
   Cloud,
   Cpu,
-  HardDrive,
-  Memory
+  HardDrive
 } from 'lucide-react';
 
 interface GameDetailsPanelProps {

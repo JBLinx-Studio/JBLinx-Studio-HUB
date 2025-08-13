@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Gamepad2, 
@@ -130,14 +129,14 @@ const GamesSection = () => {
       },
       devContent: [
         {
-          type: "video",
+          type: "video" as const,
           title: "Behind the Scenes: Motion Capture Technology",
           url: "https://youtube.com/watch?v=dev1",
           duration: "12:34",
           date: "2024-01-08"
         },
         {
-          type: "blog",
+          type: "blog" as const,
           title: "AI Development Deep Dive",
           url: "/blog/1",
           readTime: "8 min",
@@ -218,7 +217,7 @@ const GamesSection = () => {
       },
       devContent: [
         {
-          type: "video",
+          type: "video" as const,
           title: "Medieval Combat System Design",
           url: "https://youtube.com/watch?v=dev2",
           duration: "15:22",
@@ -244,6 +243,13 @@ const GamesSection = () => {
     const matchesGenre = selectedGenre === 'all' || game.genres.some(g => g.toLowerCase().includes(selectedGenre.toLowerCase()));
     return matchesSearch && matchesGenre;
   });
+
+  // Simple games array for DeveloperInsights component
+  const simpleGames = games.map(game => ({
+    id: game.id,
+    title: game.title,
+    category: game.category
+  }));
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-24 overflow-hidden">
@@ -498,7 +504,7 @@ const GamesSection = () => {
         <div className="bg-zinc-800/80 border border-zinc-600/50 backdrop-blur-sm mb-6">
           {selectedPanel === 'details' && <GameDetailsPanel game={currentGame} />}
           {selectedPanel === 'dlc' && <DLCUpdatesPanel dlcs={currentGame.dlc} updates={currentGame.updates} />}
-          {selectedPanel === 'insights' && <DeveloperInsights games={games} />}
+          {selectedPanel === 'insights' && <DeveloperInsights games={simpleGames} />}
           {selectedPanel === 'community' && <CommunityPanel game={currentGame} />}
         </div>
 

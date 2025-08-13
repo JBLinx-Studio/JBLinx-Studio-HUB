@@ -15,25 +15,21 @@ import {
   BookOpen,
   Lightbulb,
   Settings,
-  ExternalLink
+  ExternalLink,
+  Download
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { blogPosts } from '../../data/blogData';
 
+// Define proper types for the developer insights
+interface Game {
+  id: number;
+  title: string;
+  category: string;
+}
+
 interface DeveloperInsightsProps {
-  games: Array<{
-    id: number;
-    title: string;
-    category: string;
-    devContent?: Array<{
-      type: 'video' | 'blog';
-      title: string;
-      url: string;
-      duration?: string;
-      readTime?: string;
-      date: string;
-    }>;
-  }>;
+  games: Game[];
 }
 
 const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
@@ -56,7 +52,7 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
     {
       id: 2,
       title: "AI Development Deep Dive: Behavior Trees",
-      game: games[1],
+      game: games[1] || games[0],
       thumbnail: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=200&fit=crop",
       duration: "18:45",
       views: "32.7k",
@@ -125,7 +121,7 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
       title: "Advanced Pathfinding Algorithms",
       type: "Technical Article",
       date: "Jan 25, 2025",
-      game: games[1],
+      game: games[1] || games[0],
       readTime: "15 min"
     },
     {
