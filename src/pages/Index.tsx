@@ -4,16 +4,6 @@ import { useAdvancedPerformance } from '../hooks/useAdvancedPerformance';
 import LazyComponent from '../components/common/LazyComponent';
 import LazySection from '../components/common/LazySection';
 
-// Memoized components for better performance
-const MemoizedHero = memo(() => import('../components/Hero').then(m => ({ default: m.default })));
-const MemoizedAbout = memo(() => import('../components/About').then(m => ({ default: m.default })));
-const MemoizedServices = memo(() => import('../components/Services').then(m => ({ default: m.default })));
-const MemoizedPortfolio = memo(() => import('../components/Portfolio').then(m => ({ default: m.default })));
-const MemoizedStats = memo(() => import('../components/Stats').then(m => ({ default: m.default })));
-const MemoizedBlog = memo(() => import('../components/FeaturedBlogCycle').then(m => ({ default: m.default })));
-const MemoizedContact = memo(() => import('../components/Contact').then(m => ({ default: m.default })));
-const MemoizedFooter = memo(() => import('../components/Footer').then(m => ({ default: m.default })));
-
 const Index = () => {
   const { isLowPerformance } = useAdvancedPerformance();
 

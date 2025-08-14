@@ -13,6 +13,7 @@ import About from "./pages/About";
 import Pricing from "./pages/Pricing";
 import Support from "./pages/Support";
 import Privacy from "./pages/Privacy";
+import PerformanceMonitor from "./components/common/PerformanceMonitor";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <PerformanceMonitor />
       <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<Index />} />

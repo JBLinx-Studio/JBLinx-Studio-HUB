@@ -29,7 +29,7 @@ const LazyComponent: React.FC<LazyComponentProps> = memo(({
   const LazyLoadedComponent = hasBeenVisible ? lazy(importFunc) : null;
 
   return (
-    <div ref={targetRef} className={className}>
+    <div ref={targetRef as React.RefObject<HTMLDivElement>} className={className}>
       {LazyLoadedComponent ? (
         <Suspense fallback={fallback}>
           <LazyLoadedComponent {...props} />
