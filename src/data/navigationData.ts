@@ -19,72 +19,68 @@ interface NavigationItem {
 
 export const navigationItems: NavigationItem[] = [
   {
-    name: 'Solutions',
-    href: '#solutions',
+    name: 'Products',
+    href: '#products',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Game Development',
+        title: 'Games',
         items: [
-          { name: 'Indie Games', href: '/game-development', description: 'Creative independent gaming experiences' },
-          { name: 'Mobile Gaming', href: '/game-development', description: 'Cross-platform mobile solutions' },
-          { name: 'Web Games', href: '/game-development', description: 'Browser-based interactive experiences' },
-          { name: 'Game Engines', href: '/game-development', description: 'Unity & custom engine development' }
+          { name: 'All Games', href: '/games', description: 'Browse our complete game portfolio' },
+          { name: 'Survival Horror', href: '/games/horror', description: 'Immersive horror experiences' },
+          { name: 'RTS Strategy', href: '/games/strategy', description: 'Real-time strategic combat' },
+          { name: 'Adventure RPG', href: '/games/rpg', description: 'Epic quest adventures' }
         ]
       },
       {
-        title: 'Web Development', 
+        title: 'Web Applications', 
         items: [
-          { name: 'SaaS Platforms', href: '/web-applications', description: 'Scalable software solutions' },
-          { name: 'E-commerce Sites', href: '/web-applications', description: 'Complete online stores' },
-          { name: 'Business Apps', href: '/web-applications', description: 'Custom web applications' },
-          { name: 'Progressive Web Apps', href: '/web-applications', description: 'Native-like web experiences' }
+          { name: 'All Web Apps', href: '/apps', description: 'Browse our app collection' },
+          { name: 'TaskFlow Pro', href: '/apps/taskflow', description: 'Advanced task management' },
+          { name: 'DataViz Analytics', href: '/apps/dataviz', description: 'Business intelligence platform' },
+          { name: 'ShopLink Commerce', href: '/apps/shoplink', description: 'E-commerce solutions' }
         ]
       },
       {
-        title: 'Enterprise Solutions',
+        title: 'Developer Tools',
         items: [
-          { name: 'Custom Development', href: '/about', description: 'Tailored software solutions' },
-          { name: 'System Integration', href: '/about', description: 'Connect existing systems' },
-          { name: 'Cloud Solutions', href: '/about', description: 'Scalable cloud architecture' },
-          { name: 'Consulting', href: '/about', description: 'Strategic technology guidance' }
+          { name: 'All Tools', href: '/tools', description: 'Open source repositories' },
+          { name: 'FastAPI Template', href: '/tools/fastapi', description: 'Backend development starter' },
+          { name: 'React Components', href: '/tools/react', description: 'Reusable UI components' },
+          { name: 'Database Tools', href: '/tools/database', description: 'Migration and management' }
         ]
       }
     ]
   },
   {
-    name: 'Resources',
-    href: '#resources',
+    name: 'Learn',
+    href: '#learn',
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Learn & Grow',
+        title: 'Learning',
         items: [
-          { name: 'Technical Blog', href: '/blog', description: 'Industry insights & tutorials' },
-          { name: 'Case Studies', href: '/blog', description: 'Real project breakdowns' },
-          { name: 'Code Examples', href: '/blog', description: 'Open-source implementations' },
-          { name: 'Best Practices', href: '/blog', description: 'Development guides' }
+          { name: 'Development Blog', href: '/blog', description: 'Technical articles & tutorials' },
+          { name: 'Game Dev Guides', href: '/guides/gamedev', description: 'Unity development tutorials' },
+          { name: 'Web Dev Courses', href: '/guides/webdev', description: 'Modern web development' },
+          { name: 'API Documentation', href: '/docs', description: 'Technical documentation' }
         ]
       },
       {
-        title: 'Showcase',
+        title: 'Community',
         items: [
-          { name: 'Game Portfolio', href: '/game-development', description: 'Our latest game projects' },
-          { name: 'Web Projects', href: '/web-applications', description: 'Featured web applications' },
-          { name: 'Client Success', href: '/about', description: 'Customer testimonials' },
-          { name: 'Awards & Recognition', href: '/about', description: 'Industry achievements' }
-        ]
-      },
-      {
-        title: 'Innovation Lab',
-        items: [
-          { name: 'Open Source', href: 'https://github.com/orgs/JBLinx-Studio', description: 'Community contributions' },
-          { name: 'Research Papers', href: '/blog', description: 'Technical publications' },
-          { name: 'Experimental Projects', href: '/blog', description: 'Cutting-edge experiments' },
-          { name: 'Developer Tools', href: '/blog', description: 'Productivity tools we built' }
+          { name: 'GitHub Repos', href: 'https://github.com/orgs/JBLinx-Studio/repositories', description: 'Open source projects' },
+          { name: 'Developer Discord', href: '/discord', description: 'Join our community' },
+          { name: 'Newsletter', href: '/newsletter', description: 'Weekly dev updates' },
+          { name: 'Support Forum', href: '/support', description: 'Get help and answers' }
         ]
       }
     ]
+  },
+  {
+    name: 'Pricing',
+    href: '/pricing',
+    type: 'link' as const
   },
   {
     name: 'About',
@@ -92,8 +88,8 @@ export const navigationItems: NavigationItem[] = [
     type: 'link' as const
   },
   {
-    name: 'Pricing',
-    href: '/pricing',
+    name: 'Contact',
+    href: '#contact',
     type: 'link' as const
   }
 ];
