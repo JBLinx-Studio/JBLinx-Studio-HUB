@@ -1,340 +1,438 @@
 
-import React from 'react';
-import { ArrowRight, Download, Star, Gamepad2, Code, Users, Trophy, Zap, Play, Github, Clock, Calendar, Activity, TrendingUp, Eye, Heart, Share2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  Gamepad2, 
+  Star, 
+  Users, 
+  Trophy, 
+  Zap, 
+  ArrowRight,
+  Eye,
+  Clock,
+  Target,
+  Download,
+  Filter,
+  Play,
+  TrendingUp,
+  Calendar,
+  Globe,
+  Cpu,
+  Shield
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import GameLibraryPanel from '../components/games/GameLibraryPanel';
+import GameDetailsPanel from '../components/games/GameDetailsPanel';
+import DLCUpdatesPanel from '../components/games/DLCUpdatesPanel';
+import DeveloperInsights from '../components/games/DeveloperInsights';
 
 const GameDevelopment = () => {
+  const [activeGame, setActiveGame] = useState(0);
+  const [selectedPanel, setSelectedPanel] = useState('details');
+  const [activeCategory, setActiveCategory] = useState('all');
+
   const games = [
     {
-      title: "Survival Horror Chronicles",
-      description: "Immersive psychological horror experience with advanced AI and atmospheric storytelling that pushes the boundaries of interactive entertainment.",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
-      downloads: "5.2k",
-      rating: "4.8",
-      status: "Live",
-      tech: ["Unity", "C#", "AI"],
-      features: ["Advanced AI", "VR Ready", "Multiplayer"],
-      github: "https://github.com/JBLinx-Studio/survival-horror",
-      price: "FREE",
-      genre: "Horror",
-      platforms: ["PC", "Console", "VR"],
-      lastUpdate: "2024-01-10"
+      id: 1,
+      title: "Tactical Strike: Cyber Assault",
+      category: "fps",
+      status: "LIVE",
+      rating: 4.8,
+      playerCount: "15k+",
+      images: {
+        hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=600&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop"
+        ]
+      },
+      price: { base: 49.99, sale: null },
+      releaseDate: "2024-08-15",
+      platforms: ["PC", "PlayStation", "Xbox"],
+      genres: ["FPS", "Tactical", "Cyberpunk"],
+      tagline: "Dominate the digital battlefield",
+      description: "Engage in intense tactical battles in a neon-lit cyberpunk world. Command elite squads, strategize, and conquer the digital frontier with advanced AI enemies and dynamic environments.",
+      features: ["Real-time strategy", "Cybernetic enhancements", "Multiplayer battles", "Advanced AI", "Dynamic weather", "Skill progression"],
+      systemReqs: {
+        min: "Intel Core i5, 8GB RAM, NVIDIA GTX 970",
+        recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 2060"
+      },
+      stats: {
+        peakPlayers: 25000,
+        averageSession: "2.5 hours",
+        retention: "78%",
+        esportsReady: true
+      },
+      trailer: "https://www.youtube.com/watch?v=example",
+      reviewCount: 3420,
+      storeLinks: {
+        steam: "https://store.steampowered.com",
+        epic: "https://store.epicgames.com"
+      },
+      dlc: [
+        { name: "Elite Pack", price: "19.99", releaseDate: "2024-09-01", status: "AVAILABLE", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=150&fit=crop", description: "Advanced weapons and armor" }
+      ]
     },
     {
-      title: "Strategic Conquest RTS",
-      description: "Real-time strategy game with complex AI opponents and massive multiplayer battles featuring epic campaigns and mod support.",
-      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop",
-      downloads: "3.1k",
-      rating: "4.9",
-      status: "Live", 
-      tech: ["Unity", "Networking", "AI"],
-      features: ["32 Player Battles", "Campaign Mode", "Mod Support"],
-      github: "https://github.com/JBLinx-Studio/conquest-rts",
-      price: "$19.99",
-      genre: "Strategy",
+      id: 2,
+      title: "Empire Conquest: Medieval Warfare",
+      category: "rts",
+      status: "BETA",
+      rating: 4.6,
+      playerCount: "12k+",
+      images: {
+        hero: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop"
+        ]
+      },
+      price: { base: 0, sale: null },
+      releaseDate: "2024-11-01",
+      platforms: ["PC", "Web Browser"],
+      genres: ["RTS", "Medieval", "Strategy"],
+      tagline: "Forge your empire through the ages",
+      description: "Build massive medieval empires, command vast armies, and engage in epic siege warfare. Experience the rise and fall of kingdoms in this immersive real-time strategy experience.",
+      features: ["Massive battles", "Castle building", "Resource management", "Diplomacy system", "Historical campaigns", "Multiplayer conquest"],
+      systemReqs: {
+        min: "Intel Core i3, 4GB RAM, Integrated Graphics",
+        recommended: "Intel Core i5, 8GB RAM, NVIDIA GTX 750"
+      },
+      stats: {
+        peakPlayers: 18000,
+        averageSession: "3.2 hours",
+        retention: "82%",
+        esportsReady: true
+      },
+      trailer: "https://www.youtube.com/watch?v=example",
+      reviewCount: 2150,
+      storeLinks: {
+        steam: "https://store.steampowered.com",
+        direct: "https://yourgame.com"
+      },
+      dlc: [
+        { name: "Viking Expansion", price: "24.99", releaseDate: "2024-12-01", status: "PRE_ORDER", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=150&fit=crop", description: "Norse warriors and longships" }
+      ]
+    },
+    {
+      id: 3,
+      title: "Last Haven: Zombie Outbreak",
+      category: "survival",
+      status: "EARLY_ACCESS",
+      rating: 4.4,
+      playerCount: "8k+",
+      images: {
+        hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop"
+        ]
+      },
+      price: { base: 29.99, sale: 24.99 },
+      releaseDate: "2025-03-10",
+      platforms: ["PC", "PlayStation", "Xbox"],
+      genres: ["Survival", "Horror", "Co-op"],
+      tagline: "Survive the apocalypse together",
+      description: "Band together with friends to survive the zombie apocalypse. Build fortified bases, scavenge for resources, and fight off massive hordes in this cooperative survival horror experience.",
+      features: ["Co-op survival", "Base building", "Zombie hordes", "Crafting system", "Day/night cycle", "Vehicle mechanics"],
+      systemReqs: {
+        min: "Intel Core i5, 8GB RAM, NVIDIA GTX 960",
+        recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 2070"
+      },
+      stats: {
+        peakPlayers: 12000,
+        averageSession: "2.8 hours",
+        retention: "74%",
+        esportsReady: false
+      },
+      trailer: "https://www.youtube.com/watch?v=example",
+      reviewCount: 1890,
+      storeLinks: {
+        steam: "https://store.steampowered.com",
+        xbox: "https://www.xbox.com"
+      },
+      dlc: [
+        { name: "Survival Pack", price: "14.99", releaseDate: "2024-08-20", status: "AVAILABLE", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=200&h=150&fit=crop", description: "Advanced survival gear" }
+      ]
+    },
+    {
+      id: 4,
+      title: "Stellar Frontier: Space Odyssey",
+      category: "space",
+      status: "COMING_SOON",
+      rating: 0,
+      playerCount: "0",
+      images: {
+        hero: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&h=600&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=300&fit=crop"
+        ]
+      },
+      price: { base: 39.99, sale: null },
+      releaseDate: "2025-06-20",
       platforms: ["PC", "Mobile"],
-      lastUpdate: "2024-01-08"
-    },
-    {
-      title: "Adventure Quest RPG",
-      description: "Open-world RPG with branching storylines and complex character progression in a beautifully crafted fantasy universe.",
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&h=400&fit=crop",
-      downloads: "2.8k",
-      rating: "4.7",
-      status: "Beta",
-      tech: ["Unity", "RPG Systems", "Procedural"],
-      features: ["Open World", "Character Customization", "Crafting"],
-      github: "https://github.com/JBLinx-Studio/adventure-rpg",
-      price: "Coming Soon",
-      genre: "RPG",
-      platforms: ["PC", "Console"],
-      lastUpdate: "2024-01-12"
-    },
-    {
-      title: "Cyber Racing Fusion",
-      description: "High-speed cyberpunk racing with customizable vehicles and neon-soaked tracks through futuristic cityscapes.",
-      image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop",
-      downloads: "4.5k",
-      rating: "4.6",
-      status: "Live",
-      tech: ["Unity", "Physics", "Multiplayer"],
-      features: ["Vehicle Customization", "Online Races", "Track Editor"],
-      github: "https://github.com/JBLinx-Studio/cyber-racing",
-      price: "$14.99",
-      genre: "Racing",
-      platforms: ["PC", "Mobile", "Console"],
-      lastUpdate: "2024-01-06"
-    },
-    {
-      title: "Puzzle Mind Bender",
-      description: "Mind-bending puzzle game with innovative mechanics and stunning visual effects that challenge logical thinking.",
-      image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=600&h=400&fit=crop",
-      downloads: "6.7k",
-      rating: "4.9",
-      status: "Live",
-      tech: ["Unity", "Shaders", "Audio"],
-      features: ["100+ Levels", "Accessibility Options", "Creative Mode"],
-      github: "https://github.com/JBLinx-Studio/puzzle-bender",
-      price: "$9.99",
-      genre: "Puzzle",
-      platforms: ["PC", "Mobile", "Web"],
-      lastUpdate: "2024-01-14"
-    },
-    {
-      title: "Space Colony Builder",
-      description: "Build and manage thriving space colonies across multiple planets with resource management and exploration elements.",
-      image: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=600&h=400&fit=crop",
-      downloads: "1.9k",
-      rating: "4.8",
-      status: "Early Access",
-      tech: ["Unity", "Simulation", "Networking"],
-      features: ["Colony Management", "Multi-planet", "Research Trees"],
-      github: "https://github.com/JBLinx-Studio/space-colony",
-      price: "$24.99",
-      genre: "Simulation",
-      platforms: ["PC"],
-      lastUpdate: "2024-01-11"
+      genres: ["Space", "Strategy", "Exploration"],
+      tagline: "Explore the infinite cosmos",
+      description: "Embark on an epic journey through the stars. Colonize planets, research alien technologies, and build a galactic empire in this expansive 4X space strategy game.",
+      features: ["4X gameplay", "Space exploration", "Colony management", "Tech research", "Alien encounters", "Fleet battles"],
+      systemReqs: {
+        min: "Intel Core i5, 8GB RAM, Integrated Graphics",
+        recommended: "Intel Core i7, 16GB RAM, NVIDIA GTX 1060"
+      },
+      stats: {
+        peakPlayers: 0,
+        averageSession: "0",
+        retention: "0%",
+        esportsReady: false
+      },
+      trailer: "https://www.youtube.com/watch?v=example",
+      reviewCount: 0,
+      storeLinks: {
+        steam: "https://store.steampowered.com"
+      },
+      dlc: []
     }
   ];
 
   const gameStats = [
-    { label: "Games Published", value: "15+", icon: Gamepad2, color: "text-purple-400" },
-    { label: "Total Downloads", value: "50k+", icon: Download, color: "text-green-400" },
-    { label: "Average Rating", value: "4.8★", icon: Star, color: "text-yellow-400" },
-    { label: "Active Players", value: "12k+", icon: Users, color: "text-cyan-400" }
+    {
+      icon: Gamepad2,
+      value: "15+",
+      label: "Games",
+      color: "text-purple-400"
+    },
+    {
+      icon: Users,
+      value: "150k+",
+      label: "Players",
+      color: "text-blue-400"
+    },
+    {
+      icon: Star,
+      value: "4.9/5",
+      label: "Rating",
+      color: "text-yellow-400"
+    },
+    {
+      icon: Trophy,
+      value: "50+",
+      label: "Awards",
+      color: "text-green-400"
+    }
   ];
 
-  const developmentStats = [
-    { label: "Development Time", value: "2-8 months", icon: Clock },
-    { label: "Team Size", value: "3-6 developers", icon: Users },
-    { label: "Release Frequency", value: "Every 3 months", icon: Calendar },
-    { label: "Success Rate", value: "94% positive", icon: TrendingUp }
-  ];
+  const currentGame = games[activeGame];
+  const filteredGames = activeCategory === 'all' ? games : games.filter(game => game.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-zinc-950">
       <Header />
       
-      {/* Enhanced Hero Section - Matching Homepage Style */}
-      <section className="py-20 bg-zinc-950 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/5 blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-cyan-500/5 blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/3 blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-6 py-3 mb-6 backdrop-blur-sm">
-              <Gamepad2 className="w-5 h-5 text-purple-400 mr-3" />
-              <span className="text-purple-400 font-black text-sm font-mono tracking-widest">PRIORITY #1: PREMIUM GAMING EXPERIENCES</span>
-            </div>
-            
-            <h1 className="text-4xl lg:text-6xl font-black text-white leading-tight font-mono mb-6">
-              GAME DEVELOPMENT <span className="text-purple-400">STUDIO</span>
-            </h1>
-            
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-cyan-500 mx-auto mb-6"></div>
-            
-            <p className="text-xl text-zinc-300 leading-relaxed max-w-3xl mx-auto mb-8">
-              We develop and publish premium games across multiple genres. From horror experiences to strategic battles, 
-              each game is crafted with attention to detail and innovative gameplay mechanics.
-            </p>
-            
-            {/* Enhanced Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              {gameStats.map((stat, index) => {
-                const IconComponent = stat.icon;
-                return (
-                  <div key={index} className="bg-zinc-800/95 border border-zinc-700 p-6 text-center hover:border-purple-400/50 transition-all duration-300">
-                    <IconComponent className={`w-8 h-8 mx-auto mb-3 ${stat.color}`} />
-                    <div className="text-2xl font-black text-white font-mono mb-1">{stat.value}</div>
-                    <div className="text-zinc-400 text-sm font-bold">{stat.label}</div>
-                  </div>
-                );
-              })}
-            </div>
+      {/* Game Universe Section - Exact Copy from Homepage */}
+      <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-24 overflow-hidden">
+        {/* Gaming-themed unique background effects */}
+        <div className="absolute inset-0 pointer-events-none opacity-40">
+          {/* Primary gaming ambient lighting with circuit-like patterns */}
+          <div className="absolute top-1/4 left-1/4 w-[900px] h-[900px] bg-gradient-conic from-purple-500/10 via-cyan-500/8 to-pink-500/6 blur-3xl rounded-full animate-spin" style={{animationDuration: '20s'}}></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[700px] h-[700px] bg-gradient-conic from-blue-500/12 via-violet-500/8 to-purple-500/6 blur-3xl rounded-full animate-spin" style={{animationDelay: '10s', animationDuration: '25s', animationDirection: 'reverse'}}></div>
+          
+          {/* Gaming matrix-style grid overlay */}
+          <div className="absolute inset-0 opacity-[0.08]">
+            <div className="w-full h-full" style={{
+              backgroundImage: `
+                radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.4) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+                linear-gradient(45deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(236, 72, 153, 0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '80px 80px, 60px 60px, 40px 40px, 40px 40px'
+            }}></div>
           </div>
-        </div>
-      </section>
 
-      {/* Enhanced Games Portfolio */}
-      <section className="py-16 bg-zinc-950 border-t border-zinc-800">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
-              <Trophy className="w-4 h-4 mr-2 text-purple-400" />
-              <span className="text-purple-400 font-black text-sm font-mono tracking-widest">OUR GAME PORTFOLIO</span>
+          {/* Floating gaming elements - pixelated and gaming-themed */}
+          <div className="absolute top-1/3 left-1/6 w-6 h-6 bg-purple-400/60 animate-bounce border-2 border-purple-400/80 shadow-lg shadow-purple-400/40" style={{clipPath: 'polygon(0% 0%, 100% 50%, 0% 100%)', animationDelay: '0s'}}></div>
+          <div className="absolute top-1/5 right-1/4 w-8 h-8 bg-cyan-400/50 animate-bounce border border-cyan-400/70 shadow-lg shadow-cyan-400/30" style={{clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)', animationDelay: '2s'}}></div>
+          <div className="absolute bottom-1/3 left-1/3 w-10 h-10 bg-pink-400/40 animate-bounce border border-pink-400/60 shadow-lg shadow-pink-400/20" style={{clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', animationDelay: '4s'}}></div>
+          <div className="absolute bottom-1/5 right-1/6 w-12 h-4 bg-violet-400/50 animate-bounce border border-violet-400/70 shadow-lg shadow-violet-400/30" style={{animationDelay: '6s'}}></div>
+
+          {/* Gaming accent lines - more dynamic */}
+          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/60 to-transparent animate-pulse"></div>
+          <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-pink-400/60 to-transparent animate-pulse" style={{animationDelay: '4s'}}></div>
+          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-violet-400/60 to-transparent animate-pulse" style={{animationDelay: '6s'}}></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Games Header - styled like Services */}
+          <div className="text-center mb-5">
+            <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
+              <Gamepad2 className="w-3 h-3 mr-1 text-purple-400" />
+              <span className="text-purple-400 font-black text-xs font-mono tracking-widest">GAME DEVELOPMENT STUDIO</span>
             </div>
             
-            <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
+            <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
               PREMIUM <span className="text-purple-400">GAMING EXPERIENCES</span>
             </h2>
             
-            <div className="w-20 h-1 bg-gradient-to-r from-purple-400 to-cyan-500 mx-auto mb-6"></div>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8 mb-12">
-            {games.map((game, index) => (
-              <div key={index} className="bg-zinc-800/95 border border-zinc-700 hover:border-purple-400/50 transition-all duration-300 overflow-hidden group">
-                {/* Game Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={game.image} 
-                    alt={game.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                  
-                  <div className="absolute top-4 left-4">
-                    <span className={`px-3 py-1 text-xs font-black backdrop-blur-sm ${
-                      game.status === 'Live' ? 'bg-green-500/90 text-white' : 
-                      game.status === 'Beta' ? 'bg-yellow-500/90 text-black' : 
-                      'bg-blue-500/90 text-white'
-                    }`}>
-                      {game.status}
-                    </span>
-                  </div>
-                  
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
-                    <div className="flex gap-2">
-                      <div className="bg-zinc-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1">
-                        <Download className="w-3 h-3" />
-                        <span>{game.downloads}</span>
-                      </div>
-                      <div className="bg-zinc-900/80 text-white px-2 py-1 text-xs backdrop-blur-sm flex items-center space-x-1">
-                        <Star className="w-3 h-3 text-yellow-400" />
-                        <span>{game.rating}</span>
-                      </div>
-                    </div>
-                    <div className="text-green-400 font-black text-sm bg-zinc-900/80 px-2 py-1 backdrop-blur-sm">
-                      {game.price}
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Game Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="text-xl font-black text-white mb-1 group-hover:text-purple-300 transition-colors font-mono">
-                        {game.title}
-                      </h3>
-                      <div className="text-purple-400 text-sm font-bold">{game.genre}</div>
-                    </div>
-                  </div>
-                  
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-4">
-                    {game.description}
-                  </p>
-                  
-                  {/* Tech Stack */}
-                  <div className="mb-4">
-                    <div className="text-zinc-300 text-xs font-bold mb-2 tracking-wide">TECH STACK</div>
-                    <div className="flex flex-wrap gap-1">
-                      {game.tech.map((tech, techIndex) => (
-                        <span key={techIndex} className="bg-zinc-700 text-cyan-400 px-2 py-1 text-xs font-medium">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Platforms */}
-                  <div className="mb-4">
-                    <div className="text-zinc-300 text-xs font-bold mb-2 tracking-wide">PLATFORMS</div>
-                    <div className="flex flex-wrap gap-1">
-                      {game.platforms.map((platform, platformIndex) => (
-                        <span key={platformIndex} className="bg-zinc-700 text-purple-400 px-2 py-1 text-xs font-medium">
-                          {platform}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Features */}
-                  <div className="mb-6">
-                    <div className="text-zinc-300 text-xs font-bold mb-2 tracking-wide">KEY FEATURES</div>
-                    <div className="space-y-1">
-                      {game.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center space-x-2 text-xs text-zinc-400">
-                          <Zap className="w-3 h-3 text-purple-400" />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Actions */}
-                  <div className="flex gap-2 mb-3">
-                    <button className="flex-1 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-4 py-3 font-black transition-all duration-300 flex items-center justify-center space-x-2">
-                      <Play className="w-4 h-4" />
-                      <span>PLAY NOW</span>
-                    </button>
-                    <button className="bg-zinc-700 text-white px-4 py-3 hover:bg-zinc-600 transition-all duration-300 flex items-center justify-center">
-                      <Heart className="w-4 h-4" />
-                    </button>
-                    <a 
-                      href={game.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-zinc-700 text-white px-4 py-3 hover:bg-zinc-600 transition-all duration-300 flex items-center justify-center"
-                    >
-                      <Github className="w-4 h-4" />
-                    </a>
-                  </div>
-                  
-                  <div className="text-xs text-zinc-500 flex items-center space-x-1">
-                    <Activity className="w-3 h-3" />
-                    <span>Updated {game.lastUpdate}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Development Process Section */}
-          <div className="bg-gradient-to-r from-zinc-800 to-zinc-700 border border-zinc-600 p-8 mb-8">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-black text-white mb-3 font-mono">
-                OUR <span className="text-purple-400">DEVELOPMENT PROCESS</span>
-              </h3>
-              <p className="text-zinc-400 max-w-2xl mx-auto">
-                From concept to release, we follow a proven development pipeline that ensures quality and innovation in every game we create.
-              </p>
-            </div>
+            <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-2"></div>
             
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {developmentStats.map((stat, index) => {
+            <p className="text-sm text-slate-400 max-w-xl mx-auto mb-3">
+              Professional game development across multiple platforms and genres with cutting-edge technology
+            </p>
+
+            {/* Game Stats */}
+            <div className="grid grid-cols-4 gap-1 max-w-xl mx-auto mb-4">
+              {gameStats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="text-center">
-                    <IconComponent className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                    <div className="text-lg font-black text-white mb-1">{stat.value}</div>
-                    <div className="text-zinc-400 text-sm">{stat.label}</div>
+                  <div key={index} className="bg-zinc-800/80 border border-zinc-700 p-1.5 text-center backdrop-blur-sm">
+                    <IconComponent className={`w-3 h-3 ${stat.color} mx-auto mb-0.5`} />
+                    <div className={`text-xs font-black ${stat.color} font-mono`}>{stat.value}</div>
+                    <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
                   </div>
                 );
               })}
             </div>
           </div>
 
-          {/* Enhanced CTA */}
-          <div className="text-center">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                to="/about" 
-                className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-8 py-4 font-black transition-all duration-300 flex items-center justify-center space-x-2 text-base shadow-xl"
-              >
-                <Users className="w-5 h-5" />
-                <span>JOIN OUR COMMUNITY</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <button className="border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-black px-8 py-4 font-black transition-all duration-300 text-base">
-                REQUEST CUSTOM GAME
-              </button>
+          {/* Main Gaming Layout */}
+          <div className="grid lg:grid-cols-4 gap-4 mb-5">
+            {/* Game Library Panel */}
+            <div className="lg:col-span-1">
+              <GameLibraryPanel 
+                games={games}
+                selectedGameId={currentGame.id}
+                onSelectGame={(id) => setActiveGame(games.findIndex(g => g.id === id))}
+                activeCategory={activeCategory}
+                onCategoryChange={setActiveCategory}
+              />
             </div>
+
+            {/* Main Game Display */}
+            <div className="lg:col-span-3 space-y-4">
+              {/* Featured Game Display */}
+              <div className="bg-zinc-800/95 border border-zinc-700 backdrop-blur-sm overflow-hidden">
+                <div className="relative h-80">
+                  <img 
+                    src={currentGame.images.hero} 
+                    alt={currentGame.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <h3 className="text-3xl font-black text-white font-mono mb-2">{currentGame.title}</h3>
+                        <p className="text-purple-400 font-bold text-lg mb-3">{currentGame.tagline}</p>
+                        
+                        <div className="flex items-center space-x-4 mb-4">
+                          <div className="flex items-center space-x-2">
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                            <span className="text-white font-bold">{currentGame.rating}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Users className="w-4 h-4 text-cyan-400" />
+                            <span className="text-white font-bold">{currentGame.playerCount}</span>
+                          </div>
+                          <div className="text-green-400 font-black text-xl">
+                            {currentGame.price.base === 0 ? 'FREE' : currentGame.price.sale ? `$${currentGame.price.sale}` : `$${currentGame.price.base}`}
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {currentGame.genres.map((genre, index) => (
+                            <span key={index} className="bg-zinc-800/80 border border-zinc-600 text-cyan-400 px-2 py-1 text-xs font-bold">
+                              {genre}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        <button className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 font-black transition-colors flex items-center space-x-2">
+                          <Play className="w-4 h-4" />
+                          <span>PLAY NOW</span>
+                        </button>
+                        <button className="bg-zinc-700 hover:bg-zinc-600 text-white px-4 py-3 transition-colors">
+                          <Eye className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Panel Navigation */}
+              <div className="bg-zinc-800/80 border border-zinc-600/50 p-3 backdrop-blur-sm">
+                <div className="flex justify-center space-x-2">
+                  {[
+                    { id: 'details', label: 'GAME DETAILS', icon: Target },
+                    { id: 'dlc', label: 'DLC & UPDATES', icon: Download },
+                    { id: 'insights', label: 'DEV INSIGHTS', icon: Eye },
+                    { id: 'community', label: 'COMMUNITY', icon: Users }
+                  ].map((panel) => {
+                    const IconComponent = panel.icon;
+                    return (
+                      <button
+                        key={panel.id}
+                        onClick={() => setSelectedPanel(panel.id)}
+                        className={`flex items-center space-x-1 px-3 py-2 text-xs font-bold transition-all duration-300 ${
+                          selectedPanel === panel.id
+                            ? 'bg-purple-500 text-white'
+                            : 'bg-zinc-700/50 text-slate-400 hover:bg-zinc-600/50 hover:text-white'
+                        }`}
+                      >
+                        <IconComponent className="w-3 h-3" />
+                        <span>{panel.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Dynamic Panel Content */}
+              <div className="bg-zinc-800/80 border border-zinc-600/50 backdrop-blur-sm">
+                {selectedPanel === 'details' && <GameDetailsPanel game={currentGame} />}
+                {selectedPanel === 'dlc' && <DLCUpdatesPanel dlcs={currentGame.dlc} updates={[]} />}
+                {selectedPanel === 'insights' && <DeveloperInsights games={games} />}
+                {selectedPanel === 'community' && (
+                  <div className="p-6 text-center">
+                    <Users className="w-12 h-12 mx-auto mb-4 text-purple-400" />
+                    <h3 className="text-white font-black text-xl mb-2">JOIN THE COMMUNITY</h3>
+                    <p className="text-slate-400 mb-4">Connect with players, share strategies, and get the latest updates</p>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="bg-zinc-900/50 border border-purple-400/30 p-4 text-center">
+                        <div className="text-purple-400 font-black text-xl">150k+</div>
+                        <div className="text-slate-400 text-sm">Active Players</div>
+                      </div>
+                      <div className="bg-zinc-900/50 border border-blue-400/30 p-4 text-center">
+                        <div className="text-blue-400 font-black text-xl">50+</div>
+                        <div className="text-slate-400 text-sm">Tournaments</div>
+                      </div>
+                      <div className="bg-zinc-900/50 border border-cyan-400/30 p-4 text-center">
+                        <div className="text-cyan-400 font-black text-xl">24/7</div>
+                        <div className="text-slate-400 text-sm">Support</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center">
+            <Link 
+              to="/contact" 
+              className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-5 py-2 font-black transition-all duration-300 space-x-1 shadow-lg text-sm"
+            >
+              <Zap className="w-3 h-3" />
+              <span>REQUEST CUSTOM GAME</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
           </div>
         </div>
       </section>
