@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { createIntersectionObserver } from '../../utils/performanceOptimizer';
 
 interface LazySectionProps {
@@ -14,26 +14,31 @@ const LazySection: React.FC<LazySectionProps> = ({
   children,
   className = '',
   threshold = 0.1,
-  rootMargin = '100px',
-  fallback = <div className="h-96 bg-slate-950/50 animate-pulse" />
+  rootMargin = '150px', // Increased for better UX
+  fallback
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
+  // Memoize fallback to prevent re-renders
+  const memoizedFallback = useMemo(() => 
+    fallback || <div className="h-96 bg-slate-950/30 animate-pulse rounded-lg" />,
+    [fallback]
+  );
+
   useEffect(() => {
     const element = elementRef.current;
-    if (!element) return;
+    if (!element || hasLoaded) return;
 
     const observer = createIntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasLoaded) {
-            setIsVisible(true);
-            setHasLoaded(true);
-            observer.unobserve(element);
-          }
-        });
+        const entry = entries[0];
+        if (entry.isIntersecting && !hasLoaded) {
+          setIsVisible(true);
+          setHasLoaded(true);
+          observer.unobserve(element);
+        }
       },
       { threshold, rootMargin }
     );
@@ -47,9 +52,10 @@ const LazySection: React.FC<LazySectionProps> = ({
 
   return (
     <div ref={elementRef} className={className}>
-      {isVisible ? children : fallback}
+      {isVisible ? children : memoizedFallback}
     </div>
   );
 };
 
-export default LazySection;
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(LazySection);
