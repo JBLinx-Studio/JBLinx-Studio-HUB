@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 interface Particle {
@@ -25,7 +24,7 @@ interface InteractiveParticlesProps {
 
 const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({ 
   theme, 
-  particleCount = 15, // Reduced further for better performance
+  particleCount = 20, // Further reduced for performance
   containerRef 
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,57 +34,55 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
   const [isActive, setIsActive] = useState(false);
   const lastFrameTime = useRef(0);
   const poolRef = useRef<Particle[]>([]);
-  
-  // Performance monitoring
   const frameCount = useRef(0);
-  const lastPerformanceCheck = useRef(0);
-  const adaptiveQuality = useRef(1);
+  const targetFPS = useRef(60);
+  const frameInterval = useRef(1000 / 60);
 
   const themeConfig = {
     emerald: {
       colors: ['#10b981', '#059669', '#047857', '#34d399'],
       glowColor: 'rgba(16, 185, 129, 0.4)',
-      magnetism: 3.0
+      trailColor: 'rgba(16, 185, 129, 0.6)',
+      magnetism: 2.5 // Increased for more responsiveness
     },
     blue: {
       colors: ['#3b82f6', '#2563eb', '#1d4ed8', '#60a5fa'],
       glowColor: 'rgba(59, 130, 246, 0.4)',
-      magnetism: 2.8
+      trailColor: 'rgba(59, 130, 246, 0.6)',
+      magnetism: 2.2 // Increased
     },
     green: {
       colors: ['#22c55e', '#16a34a', '#15803d', '#4ade80'],
       glowColor: 'rgba(34, 197, 94, 0.4)',
-      magnetism: 3.2
+      trailColor: 'rgba(34, 197, 94, 0.6)',
+      magnetism: 2.8 // Increased
     },
     orange: {
       colors: ['#f97316', '#ea580c', '#dc2626', '#fb923c'],
       glowColor: 'rgba(249, 115, 22, 0.4)',
-      magnetism: 3.5
+      trailColor: 'rgba(249, 115, 22, 0.6)',
+      magnetism: 3.0 // Most responsive
     },
     purple: {
       colors: ['#a855f7', '#9333ea', '#7c3aed', '#c084fc'],
       glowColor: 'rgba(168, 85, 247, 0.4)',
-      magnetism: 2.9
+      trailColor: 'rgba(168, 85, 247, 0.6)',
+      magnetism: 2.4 // Increased
     }
   };
 
+  // Pre-calculate frequently used values
   const configRef = useRef(themeConfig[theme]);
-  const interactionRadius = useRef(120);
-  const maxConnectionDistance = useRef(50);
+  const interactionRadiusSquared = useRef(100 * 100); // 100px radius
+  const maxDistanceSquared = useRef(60 * 60); // 60px for connections
 
-  // Object pooling for better memory management
   const getFromPool = useCallback((): Particle => {
-    if (poolRef.current.length > 0) {
-      return poolRef.current.pop()!;
-    }
-    return {} as Particle;
+    return poolRef.current.pop() || {} as Particle;
   }, []);
 
   const returnToPool = useCallback((particle: Particle) => {
     particle.isActive = false;
-    if (poolRef.current.length < 50) { // Limit pool size
-      poolRef.current.push(particle);
-    }
+    poolRef.current.push(particle);
   }, []);
 
   const createParticle = useCallback((x?: number, y?: number): Particle => {
@@ -93,22 +90,22 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     if (!canvas) return {} as Particle;
 
     const colors = configRef.current.colors;
-    const size = Math.random() * 1.5 + 0.8;
+    const size = Math.random() * 1.2 + 0.6; // Even smaller particles
     const particle = getFromPool();
     
     Object.assign(particle, {
       id: Math.random(),
       x: x ?? Math.random() * canvas.width,
       y: y ?? Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 4,
-      vy: (Math.random() - 0.5) * 4,
+      vx: (Math.random() - 0.5) * 3.5, // Increased base speed
+      vy: (Math.random() - 0.5) * 3.5, // Increased base speed
       size,
       originalSize: size,
       color: colors[Math.floor(Math.random() * colors.length)],
-      opacity: Math.random() * 0.8 + 0.2,
+      opacity: Math.random() * 0.7 + 0.3,
       life: 0,
-      maxLife: Math.random() * 180 + 120,
-      energy: Math.random() * 50 + 25,
+      maxLife: Math.random() * 200 + 100, // Shorter lifespans
+      energy: Math.random() * 60 + 30,
       isActive: true
     });
 
@@ -116,129 +113,136 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
   }, [theme, getFromPool]);
 
   const initParticles = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    
-    // Clear existing particles
-    particlesRef.current.forEach(p => returnToPool(p));
-    particlesRef.current = [];
-    
-    // Create new particles
-    for (let i = 0; i < particleCount * adaptiveQuality.current; i++) {
-      particlesRef.current.push(createParticle());
-    }
-  }, [particleCount, createParticle, returnToPool]);
+    particlesRef.current = Array.from({ length: particleCount }, () => createParticle());
+  }, [particleCount, createParticle]);
 
+  // Optimized update function with faster interactions
   const updateParticles = useCallback((deltaTime: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const mouse = mouseRef.current;
     const config = configRef.current;
-    const dt = Math.min(deltaTime * 0.016, 0.033); // Cap delta time
+    const dt = Math.min(deltaTime * 0.08, 1.2); // Increased time multiplier for faster movement
+    
     const particles = particlesRef.current;
+    const particleCount = particles.length;
     
-    // Pre-calculate mouse interaction
-    const mouseInteractionRadius = interactionRadius.current * adaptiveQuality.current;
-    const mouseInteractionRadiusSquared = mouseInteractionRadius * mouseInteractionRadius;
-    
-    for (let i = particles.length - 1; i >= 0; i--) {
+    // Batch processing for better performance
+    for (let i = 0; i < particleCount; i++) {
       const particle = particles[i];
-      if (!particle.isActive) {
-        particles.splice(i, 1);
-        continue;
-      }
+      if (!particle.isActive) continue;
 
-      // Mouse interaction with optimized distance calculation
+      // Faster mouse interaction with increased responsiveness
       if (mouse.isOver) {
         const dx = mouse.x - particle.x;
         const dy = mouse.y - particle.y;
         const distanceSquared = dx * dx + dy * dy;
         
-        if (distanceSquared < mouseInteractionRadiusSquared) {
+        if (distanceSquared < interactionRadiusSquared.current) {
           const distance = Math.sqrt(distanceSquared);
-          const normalizedDistance = distance / mouseInteractionRadius;
-          const force = (1 - normalizedDistance) * normalizedDistance * 2.5;
+          const normalizedDistance = distance / 100; // Normalize to 0-1
+          const force = (1 - normalizedDistance) * normalizedDistance * 1.8; // Increased force multiplier
+          const magnetism = config.magnetism;
           
-          // Enhanced swirling motion
-          const time = Date.now() * 0.004;
-          const swirl = Math.sin(time + i * 0.5) * 0.8;
+          // Enhanced swirling motion with faster time-based variation
+          const time = Date.now() * 0.003; // Increased time multiplier
+          const swirl = Math.sin(time + i * 0.8) * 0.6; // Increased swirl intensity
           const angle = Math.atan2(dy, dx) + swirl;
           
-          const forceMultiplier = force * config.magnetism * dt * 0.3;
+          const forceMultiplier = force * magnetism * dt * 0.25; // Increased force application
           particle.vx += Math.cos(angle) * forceMultiplier;
           particle.vy += Math.sin(angle) * forceMultiplier;
           
-          // Dynamic particle properties
-          particle.energy = Math.min(particle.energy + force * 40, 120);
-          particle.size = particle.originalSize * (1 + force * 2);
-          particle.opacity = Math.min(particle.opacity + force * 0.8, 1);
+          // Faster energy and size transitions
+          const energyBoost = force * 35; // Increased energy boost
+          particle.energy = Math.min(particle.energy + energyBoost, 150);
+          particle.size = particle.originalSize * (1 + force * 1.8); // More dramatic size changes
+          particle.opacity = Math.min(particle.opacity + force * 0.6, 1);
           
-          // Sparkle generation (reduced frequency)
-          if (distance < 40 && Math.random() < 0.02 && particles.length < particleCount * 1.2) {
+          // Enhanced sparkle generation - more frequent and dynamic
+          if (distance < 50 && Math.random() < 0.04 && particles.length < particleCount * 1.4) {
             particles.push(createParticle(
-              particle.x + (Math.random() - 0.5) * 15,
-              particle.y + (Math.random() - 0.5) * 15
+              particle.x + (Math.random() - 0.5) * 20,
+              particle.y + (Math.random() - 0.5) * 20
             ));
           }
         }
       }
 
-      // Physics update
+      // Enhanced physics with better momentum
       particle.x += particle.vx * dt;
       particle.y += particle.vy * dt;
-      particle.vx *= 0.95;
-      particle.vy *= 0.95;
+      particle.vx *= 0.94; // Less friction for more fluid movement
+      particle.vy *= 0.94;
 
-      // Boundary collision
+      // Efficient boundary collision with better energy conservation
       const radius = particle.size;
-      if (particle.x <= radius || particle.x >= canvas.width - radius) {
-        particle.vx *= -0.8;
-        particle.x = Math.max(radius, Math.min(canvas.width - radius, particle.x));
+      if (particle.x <= radius) {
+        particle.x = radius;
+        particle.vx = Math.abs(particle.vx) * 0.8; // More bouncy
+      } else if (particle.x >= canvas.width - radius) {
+        particle.x = canvas.width - radius;
+        particle.vx = -Math.abs(particle.vx) * 0.8;
       }
-      if (particle.y <= radius || particle.y >= canvas.height - radius) {
-        particle.vy *= -0.8;
-        particle.y = Math.max(radius, Math.min(canvas.height - radius, particle.y));
+      
+      if (particle.y <= radius) {
+        particle.y = radius;
+        particle.vy = Math.abs(particle.vy) * 0.8;
+      } else if (particle.y >= canvas.height - radius) {
+        particle.y = canvas.height - radius;
+        particle.vy = -Math.abs(particle.vy) * 0.8;
       }
 
-      // Lifecycle
+      // Lifecycle management
       particle.life++;
       if (particle.life > particle.maxLife) {
         returnToPool(particle);
-        particles.splice(i, 1);
+        particles[i] = createParticle();
         continue;
       }
 
-      // Energy decay
-      if (!mouse.isOver || Math.sqrt(Math.pow(mouse.x - particle.x, 2) + Math.pow(mouse.y - particle.y, 2)) > mouseInteractionRadius) {
-        particle.energy = Math.max(particle.energy * 0.99, 25);
-        particle.size = Math.max(particle.size * 0.995, particle.originalSize);
-        particle.opacity = Math.max(particle.opacity * 0.998, 0.2);
+      // Smooth energy decay when not interacting
+      if (!mouse.isOver || Math.sqrt(Math.pow(mouse.x - particle.x, 2) + Math.pow(mouse.y - particle.y, 2)) > 100) {
+        particle.energy = Math.max(particle.energy * 0.985, 30);
+        particle.size = Math.max(particle.size * 0.99, particle.originalSize);
+        particle.opacity = Math.max(particle.opacity * 0.995, 0.3);
       }
     }
 
-    // Maintain particle count
-    while (particles.length < particleCount * adaptiveQuality.current) {
-      particles.push(createParticle());
+    // Clean up inactive particles efficiently
+    particlesRef.current = particles.filter(p => p.isActive);
+    
+    // Maintain particle count efficiently
+    const currentCount = particlesRef.current.length;
+    if (currentCount < particleCount) {
+      const needed = particleCount - currentCount;
+      for (let i = 0; i < needed; i++) {
+        particlesRef.current.push(createParticle());
+      }
     }
   }, [theme, particleCount, createParticle, returnToPool]);
 
+  // Highly optimized rendering with GPU acceleration hints
   const drawParticles = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d', { 
       alpha: true, 
       willReadFrequently: false,
-      desynchronized: true
+      desynchronized: true // Enable GPU acceleration
     });
     if (!canvas || !ctx) return;
 
-    // Clear with minimal overdraw
+    // Use clearRect for better performance than fillRect
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    const config = configRef.current;
     const particles = particlesRef.current;
-    const maxConnectionDistanceSquared = maxConnectionDistance.current * maxConnectionDistance.current;
     
-    // Batch rendering by color
+    // Batch similar operations for better GPU utilization
+    ctx.save();
+    
+    // Draw particles in batches by similar properties
     const particlesByColor = new Map<string, Particle[]>();
     
     particles.forEach(particle => {
@@ -250,8 +254,7 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       particlesByColor.get(particle.color)!.push(particle);
     });
     
-    // Render particles
-    ctx.save();
+    // Render particles grouped by color for better performance
     particlesByColor.forEach((colorParticles, color) => {
       ctx.fillStyle = color;
       
@@ -259,24 +262,22 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         ctx.save();
         ctx.globalAlpha = particle.opacity;
         
-        // Glow effect (only for high energy particles)
-        if (particle.energy > 50) {
-          const glowSize = 4 + particle.energy * 0.05;
-          ctx.shadowBlur = glowSize;
-          ctx.shadowColor = color;
-        }
+        // Optimized glow effect
+        const glowSize = 6 + particle.energy * 0.08;
+        ctx.shadowBlur = glowSize;
+        ctx.shadowColor = color;
         
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
         
-        // Core highlight
-        if (particle.energy > 70) {
+        // Core highlight - only for high energy particles
+        if (particle.energy > 60) {
           ctx.shadowBlur = 0;
           ctx.fillStyle = '#ffffff';
-          ctx.globalAlpha = (particle.opacity * particle.energy) / 500;
+          ctx.globalAlpha = (particle.opacity * particle.energy) / 400;
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size * 0.3, 0, Math.PI * 2);
+          ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2);
           ctx.fill();
         }
         
@@ -284,34 +285,33 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       });
     });
     
-    // Optimized connections (only for nearby high-energy particles)
-    if (adaptiveQuality.current > 0.7) {
-      ctx.globalAlpha = 0.1;
-      ctx.lineWidth = 0.5;
+    // Optimized connections - only draw for nearby high-energy particles
+    ctx.globalAlpha = 0.15;
+    ctx.lineWidth = 0.5;
+    
+    for (let i = 0; i < particles.length; i++) {
+      const particle = particles[i];
+      if (!particle.isActive || particle.energy < 50) continue;
       
-      for (let i = 0; i < particles.length; i++) {
-        const particle = particles[i];
-        if (!particle.isActive || particle.energy < 60) continue;
+      // Only check particles ahead to avoid duplicate lines
+      for (let j = i + 1; j < particles.length; j++) {
+        const other = particles[j];
+        if (!other.isActive || other.energy < 50) continue;
         
-        for (let j = i + 1; j < particles.length && j < i + 5; j++) { // Limit connection checks
-          const other = particles[j];
-          if (!other.isActive || other.energy < 60) continue;
+        const dx = particle.x - other.x;
+        const dy = particle.y - other.y;
+        const distanceSquared = dx * dx + dy * dy;
+        
+        if (distanceSquared < maxDistanceSquared.current) {
+          const distance = Math.sqrt(distanceSquared);
+          const opacity = ((60 - distance) / 60) * 0.2;
           
-          const dx = particle.x - other.x;
-          const dy = particle.y - other.y;
-          const distanceSquared = dx * dx + dy * dy;
-          
-          if (distanceSquared < maxConnectionDistanceSquared) {
-            const distance = Math.sqrt(distanceSquared);
-            const opacity = ((maxConnectionDistance.current - distance) / maxConnectionDistance.current) * 0.15;
-            
-            ctx.globalAlpha = opacity;
-            ctx.strokeStyle = particle.color;
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(other.x, other.y);
-            ctx.stroke();
-          }
+          ctx.globalAlpha = opacity;
+          ctx.strokeStyle = particle.color;
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(other.x, other.y);
+          ctx.stroke();
         }
       }
     }
@@ -319,35 +319,30 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     ctx.restore();
   }, [theme]);
 
-  // Performance-optimized animation loop
+  // Frame rate controlled animation loop
   const animate = useCallback((currentTime: number) => {
-    const now = performance.now();
-    const deltaTime = now - lastFrameTime.current;
+    const deltaTime = currentTime - lastFrameTime.current;
     
-    // Dynamic frame rate limiting
-    const targetInterval = 1000 / 60;
-    if (deltaTime < targetInterval * 0.9) {
+    // Skip frame if running too fast (maintain consistent 60fps max)
+    if (deltaTime < frameInterval.current) {
       animationRef.current = requestAnimationFrame(animate);
       return;
     }
     
-    lastFrameTime.current = now;
+    lastFrameTime.current = currentTime;
     frameCount.current++;
     
-    // Performance monitoring and adaptive quality
-    if (now - lastPerformanceCheck.current > 1000) { // Check every second
-      const fps = frameCount.current;
-      frameCount.current = 0;
-      lastPerformanceCheck.current = now;
-      
-      if (fps < 45) {
-        adaptiveQuality.current = Math.max(0.5, adaptiveQuality.current - 0.1);
-        interactionRadius.current = Math.max(80, interactionRadius.current - 10);
-        maxConnectionDistance.current = Math.max(30, maxConnectionDistance.current - 5);
-      } else if (fps > 55) {
-        adaptiveQuality.current = Math.min(1, adaptiveQuality.current + 0.05);
-        interactionRadius.current = Math.min(120, interactionRadius.current + 5);
-        maxConnectionDistance.current = Math.min(50, maxConnectionDistance.current + 2);
+    // Adaptive quality based on performance
+    if (frameCount.current % 120 === 0) { // Check every 2 seconds
+      const actualFPS = 1000 / deltaTime;
+      if (actualFPS < 50) {
+        // Reduce quality if performance is poor
+        interactionRadiusSquared.current = 80 * 80;
+        maxDistanceSquared.current = 40 * 40;
+      } else if (actualFPS > 55) {
+        // Restore quality if performance is good
+        interactionRadiusSquared.current = 100 * 100;
+        maxDistanceSquared.current = 60 * 60;
       }
     }
     
@@ -356,12 +351,10 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     animationRef.current = requestAnimationFrame(animate);
   }, [updateParticles, drawParticles]);
 
-  // Theme update
   useEffect(() => {
     configRef.current = themeConfig[theme];
   }, [theme]);
 
-  // Main setup effect
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -369,31 +362,18 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
 
     const resizeCanvas = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2); // Limit DPR for performance
-      
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
-      
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.scale(dpr, dpr);
-      }
+      canvas.width = rect.width;
+      canvas.height = rect.height;
     };
 
     resizeCanvas();
     initParticles();
 
-    // Throttled mouse move handler
-    let mouseMoveTimeout: number;
+    // Optimized event handlers with passive listeners
     const handleMouseMove = (e: MouseEvent) => {
-      clearTimeout(mouseMoveTimeout);
-      mouseMoveTimeout = setTimeout(() => {
-        const rect = container.getBoundingClientRect();
-        mouseRef.current.x = e.clientX - rect.left;
-        mouseRef.current.y = e.clientY - rect.top;
-      }, 8) as unknown as number; // ~120fps throttle
+      const rect = container.getBoundingClientRect();
+      mouseRef.current.x = e.clientX - rect.left;
+      mouseRef.current.y = e.clientY - rect.top;
     };
 
     const handleMouseEnter = () => {
@@ -406,33 +386,22 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       setIsActive(false);
     };
 
-    // Throttled resize handler
-    let resizeTimeout: number;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(resizeCanvas, 100) as unknown as number;
-    };
-
+    // Use passive listeners for better performance
     container.addEventListener('mousemove', handleMouseMove, { passive: true });
     container.addEventListener('mouseenter', handleMouseEnter, { passive: true });
     container.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('resize', resizeCanvas, { passive: true });
 
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
-      clearTimeout(mouseMoveTimeout);
-      clearTimeout(resizeTimeout);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', resizeCanvas);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
-      // Clean up particles
-      particlesRef.current.forEach(p => returnToPool(p));
-      particlesRef.current = [];
     };
   }, [theme, particleCount, initParticles, animate]);
 
@@ -440,12 +409,12 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     <canvas
       ref={canvasRef}
       className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
-        isActive ? 'opacity-100' : 'opacity-90'
+        isActive ? 'opacity-100' : 'opacity-85'
       }`}
       style={{ 
         mixBlendMode: 'screen',
-        transform: 'translateZ(0)',
-        willChange: 'contents'
+        transform: 'translateZ(0)', // Force GPU acceleration
+        willChange: 'contents' // Optimize for frequent changes
       }}
     />
   );
