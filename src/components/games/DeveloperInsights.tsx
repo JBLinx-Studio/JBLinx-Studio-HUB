@@ -51,19 +51,6 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
       comments: 68,
       excerpt: 'The psychology and technical implementation behind our dynamic horror generation system.',
       tags: ['Horror Design', 'Psychology', 'Procedural']
-    },
-    {
-      id: 4,
-      title: 'Cross-Platform Architecture for Stellar Frontier',
-      game: games[3],
-      category: 'Technical Architecture',
-      author: 'Platform Engineer',
-      date: '3 weeks ago',
-      readTime: '10 min read',
-      views: '1.5K',
-      comments: 23,
-      excerpt: 'Building a unified codebase that runs seamlessly across PC and mobile platforms.',
-      tags: ['Cross-Platform', 'Architecture', 'Mobile']
     }
   ];
 
@@ -72,21 +59,21 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
       label: 'DEV ARTICLES',
       value: '47',
       icon: FileText,
-      color: 'text-orange-400',
+      color: 'text-purple-400',
       change: '+5 this month'
     },
     {
       label: 'CODE SAMPLES',
       value: '128',
       icon: Code,
-      color: 'text-green-400',
+      color: 'text-cyan-400',
       change: '+12 new'
     },
     {
-      label: 'COMMUNITY DISCUSSIONS',
+      label: 'DISCUSSIONS',
       value: '892',
       icon: MessageSquare,
-      color: 'text-blue-400',
+      color: 'text-pink-400',
       change: '+47 active'
     }
   ];
@@ -113,14 +100,14 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
   ];
 
   return (
-    <div className="bg-slate-800/95 border border-slate-700 p-6">
+    <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-2">
-          <Code className="w-5 h-5 text-orange-400" />
-          <span className="text-orange-400 font-black text-lg font-mono">DEVELOPER INSIGHTS</span>
+          <Code className="w-5 h-5 text-purple-400" />
+          <span className="text-purple-400 font-black text-lg font-mono tracking-wider">DEVELOPER INSIGHTS</span>
         </div>
-        <Link to="/blog" className="text-orange-400 hover:text-orange-300 text-sm font-bold">
-          View All Articles →
+        <Link to="/blog" className="text-purple-400 hover:text-purple-300 text-sm font-bold font-mono">
+          VIEW ALL →
         </Link>
       </div>
 
@@ -129,58 +116,58 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
         {developmentStats.map((stat, index) => {
           const IconComponent = stat.icon;
           return (
-            <div key={index} className="bg-slate-900/50 border border-slate-600 p-4 text-center">
+            <div key={index} className="bg-zinc-900/50 border border-zinc-700/50 p-4 text-center hover:border-zinc-600 transition-colors">
               <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
-              <div className="text-lg font-black text-white">{stat.value}</div>
-              <div className="text-slate-400 text-xs mb-1">{stat.label}</div>
-              <div className="text-green-400 text-xs">{stat.change}</div>
+              <div className="text-lg font-black text-white font-mono">{stat.value}</div>
+              <div className="text-zinc-400 text-xs mb-1 font-mono">{stat.label}</div>
+              <div className="text-green-400 text-xs font-mono">{stat.change}</div>
             </div>
           );
         })}
       </div>
 
-      {/* Recent Dev Blogs */}
+      {/* Recent Dev Blogs - More Compact */}
       <div className="mb-6">
         <div className="flex items-center space-x-2 mb-4">
-          <FileText className="w-4 h-4 text-purple-400" />
-          <span className="text-purple-400 font-bold text-sm">RECENT ARTICLES</span>
+          <FileText className="w-4 h-4 text-cyan-400" />
+          <span className="text-cyan-400 font-bold text-sm font-mono">RECENT ARTICLES</span>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {devBlogs.map((blog) => (
             <Link
               key={blog.id}
               to={`/blog/${blog.id}`}
-              className="block bg-slate-900/50 border border-orange-400/30 p-4 hover:border-orange-400 transition-colors group"
+              className="block bg-zinc-900/50 border border-zinc-700/50 p-4 hover:border-purple-400/30 transition-colors group"
             >
               <div className="flex items-start justify-between mb-3">
-                <div>
+                <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-2">
-                    <span className="bg-orange-500 text-black px-2 py-1 text-xs font-bold">
+                    <span className="bg-zinc-700 border border-zinc-600 text-white px-2 py-1 text-xs font-bold font-mono">
                       {blog.category}
                     </span>
-                    <span className="text-slate-400 text-xs">{blog.game.title}</span>
+                    <span className="text-zinc-400 text-xs font-mono">{blog.game.title}</span>
                   </div>
-                  <h3 className="text-white font-bold text-sm mb-1 group-hover:text-orange-300 transition-colors">
+                  <h3 className="text-white font-bold text-sm mb-1 group-hover:text-purple-300 transition-colors">
                     {blog.title}
                   </h3>
-                  <div className="text-slate-400 text-xs mb-2">
+                  <div className="text-zinc-400 text-xs mb-2 font-mono">
                     By {blog.author} • {blog.date}
                   </div>
                 </div>
               </div>
               
-              <p className="text-slate-300 text-xs mb-3 line-clamp-2">{blog.excerpt}</p>
+              <p className="text-zinc-300 text-xs mb-3 leading-relaxed">{blog.excerpt}</p>
               
               <div className="flex items-center justify-between">
                 <div className="flex flex-wrap gap-1">
                   {blog.tags.map((tag, index) => (
-                    <span key={index} className="bg-slate-700 text-slate-300 px-2 py-1 text-xs">
+                    <span key={index} className="bg-zinc-800 border border-zinc-600 text-zinc-300 px-2 py-1 text-xs font-mono">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center space-x-4 text-xs text-slate-400">
+                <div className="flex items-center space-x-4 text-xs text-zinc-400 font-mono">
                   <div className="flex items-center space-x-1">
                     <TrendingUp className="w-3 h-3" />
                     <span>{blog.views}</span>
@@ -198,25 +185,25 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
       </div>
 
       {/* Upcoming Content */}
-      <div className="border-t border-slate-700 pt-6">
+      <div className="border-t border-zinc-700/50 pt-6">
         <div className="flex items-center space-x-2 mb-4">
-          <Calendar className="w-4 h-4 text-cyan-400" />
-          <span className="text-cyan-400 font-bold text-sm">UPCOMING CONTENT</span>
+          <Calendar className="w-4 h-4 text-pink-400" />
+          <span className="text-pink-400 font-bold text-sm font-mono">UPCOMING CONTENT</span>
         </div>
 
         <div className="space-y-3">
           {upcomingContent.map((content, index) => (
-            <div key={index} className="bg-slate-900/50 border border-cyan-400/30 p-3">
+            <div key={index} className="bg-zinc-900/50 border border-zinc-700/50 p-3 hover:border-pink-400/30 transition-colors">
               <div className="flex items-center justify-between mb-2">
                 <div>
                   <div className="text-white font-bold text-sm">{content.title}</div>
-                  <div className="text-cyan-400 text-xs">{content.game.title}</div>
+                  <div className="text-pink-400 text-xs font-mono">{content.game.title}</div>
                 </div>
-                <span className="bg-cyan-500 text-black px-2 py-1 text-xs font-bold">
+                <span className="bg-zinc-700 border border-zinc-600 text-white px-2 py-1 text-xs font-bold font-mono">
                   {content.type}
                 </span>
               </div>
-              <div className="text-slate-400 text-xs flex items-center">
+              <div className="text-zinc-400 text-xs flex items-center font-mono">
                 <Calendar className="w-3 h-3 mr-1" />
                 <span>{content.date}</span>
               </div>
@@ -224,16 +211,16 @@ const DeveloperInsights: React.FC<DeveloperInsightsProps> = ({ games }) => {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-2 mt-6">
+        <div className="grid grid-cols-2 gap-3 mt-6">
           <Link
             to="/blog"
-            className="bg-orange-500 hover:bg-orange-600 text-black px-4 py-2 font-black transition-colors text-center"
+            className="bg-zinc-700 hover:bg-zinc-600 border border-zinc-600 hover:border-purple-400/50 text-white px-4 py-2 font-black transition-all duration-300 text-center font-mono text-sm"
           >
             READ DEV BLOG
           </Link>
           <Link
             to="/contact"
-            className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 font-black transition-colors text-center"
+            className="bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 hover:border-cyan-400/50 text-white px-4 py-2 font-black transition-all duration-300 text-center font-mono text-sm"
           >
             DEVELOPER Q&A
           </Link>
