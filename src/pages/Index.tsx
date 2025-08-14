@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useRef } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import GamesSection from '../components/GamesSection';
@@ -13,7 +12,15 @@ import ParallaxBackground from '../components/effects/ParallaxBackground';
 import InteractiveParticles from '../components/effects/InteractiveParticles';
 
 const Index = () => {
-  return <div className="min-h-screen bg-slate-950 overflow-x-hidden relative">
+  // Refs for particle containers
+  const portal1Ref = useRef<HTMLDivElement>(null);
+  const portal2Ref = useRef<HTMLDivElement>(null);
+  const portal3Ref = useRef<HTMLDivElement>(null);
+  const portal4Ref = useRef<HTMLDivElement>(null);
+  const portal5Ref = useRef<HTMLDivElement>(null);
+
+  return (
+    <div className="min-h-screen bg-slate-950 overflow-x-hidden relative">
       {/* Parallax Background Layer */}
       <ParallaxBackground />
       
@@ -28,47 +35,42 @@ const Index = () => {
           
           {/* Professional Page Break 1 - Services to Games - Portal Effect */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
-            {/* Interactive Particles Layer */}
+            {/* Interactive Particles Layer with proper container */}
             <div 
-              className="absolute inset-0 pointer-events-auto" 
-              ref={(ref) => {
-                if (ref && !ref.querySelector('canvas')) {
-                  const particleContainer = document.createElement('div');
-                  particleContainer.className = 'absolute inset-0';
-                  ref.appendChild(particleContainer);
-                }
-              }}
+              ref={portal1Ref}
+              className="absolute inset-0 pointer-events-auto cursor-crosshair" 
             >
               <InteractiveParticles 
                 theme="emerald" 
                 particleCount={80}
-                containerRef={{ current: null }}
+                containerRef={portal1Ref}
               />
             </div>
 
-            {/* Deep Portal Background with Parallax */}
+            {/* Enhanced Deep Portal Background with interactive elements */}
             <div className="absolute inset-0 pointer-events-none">
-              {/* Deep hole effect with multiple layers */}
+              {/* Multi-layered depth effect */}
               <div className="absolute inset-0 bg-gradient-radial from-transparent via-zinc-900/60 to-zinc-950"></div>
-              <div className="absolute inset-0 bg-gradient-radial from-emerald-950/20 via-transparent to-transparent" style={{transform: 'translateZ(-100px)'}}></div>
+              <div className="absolute inset-0 bg-gradient-radial from-emerald-950/30 via-transparent to-transparent transform-gpu" style={{transform: 'translateZ(-100px)'}}></div>
               
-              {/* Animated depth rings */}
+              {/* Interactive depth rings with hover effects */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-[800px] h-[800px] border border-emerald-500/20 rounded-full animate-pulse"></div>
-                <div className="absolute inset-4 border border-emerald-400/15 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-                <div className="absolute inset-8 border border-emerald-300/10 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+                <div className="w-[800px] h-[800px] border border-emerald-500/30 rounded-full animate-pulse hover:border-emerald-400/50 transition-all duration-1000"></div>
+                <div className="absolute inset-4 border border-emerald-400/20 rounded-full animate-pulse hover:border-emerald-300/40 transition-all duration-1000" style={{animationDelay: '1s'}}></div>
+                <div className="absolute inset-8 border border-emerald-300/15 rounded-full animate-pulse hover:border-emerald-200/30 transition-all duration-1000" style={{animationDelay: '2s'}}></div>
               </div>
               
-              {/* Floating particles in the portal */}
-              {Array.from({length: 20}).map((_, i) => (
+              {/* Enhanced floating particles with interactive behavior */}
+              {Array.from({length: 30}).map((_, i) => (
                 <div
                   key={i}
-                  className="absolute w-1 h-1 bg-emerald-400/60 rounded-full animate-pulse"
+                  className="absolute w-1.5 h-1.5 bg-emerald-400/70 rounded-full animate-pulse hover:bg-emerald-300/90 hover:scale-150 transition-all duration-300 cursor-pointer"
                   style={{
-                    left: `${40 + Math.random() * 20}%`,
-                    top: `${40 + Math.random() * 20}%`,
+                    left: `${35 + Math.random() * 30}%`,
+                    top: `${35 + Math.random() * 30}%`,
                     animationDelay: `${Math.random() * 4}s`,
-                    transform: `translateZ(-${Math.random() * 200}px)`
+                    transform: `translateZ(-${Math.random() * 200}px)`,
+                    boxShadow: '0 0 15px rgba(16, 185, 129, 0.6)'
                   }}
                 />
               ))}
@@ -76,18 +78,22 @@ const Index = () => {
             
             <div className="container mx-auto px-4 text-center relative z-10">
               <div className="flex justify-center items-center space-x-8 mb-12">
-                <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent animate-pulse"></div>
-                <div className="px-6 py-3 bg-zinc-800/95 border border-emerald-500/30 backdrop-blur-sm rounded-sm">
-                  <div className="text-emerald-400 font-mono text-sm font-black tracking-widest">
+                <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent animate-pulse hover:via-emerald-300/80 transition-all duration-500"></div>
+                <div className="px-6 py-3 bg-zinc-800/95 border border-emerald-500/30 backdrop-blur-sm rounded-sm hover:border-emerald-400/50 hover:bg-zinc-700/95 transition-all duration-300 cursor-pointer group">
+                  <div className="text-emerald-400 font-mono text-sm font-black tracking-widest group-hover:text-emerald-300 transition-colors">
                     GAMING UNIVERSE
                   </div>
                 </div>
-                <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent animate-pulse delay-500"></div>
+                <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent animate-pulse hover:via-emerald-300/80 transition-all duration-500 delay-500"></div>
               </div>
               
               <div className="grid grid-cols-8 gap-2 max-w-md mx-auto mb-8">
                 {Array.from({length: 16}).map((_, index) => (
-                  <div key={index} className="w-2 h-2 bg-emerald-400/40 animate-pulse" style={{animationDelay: `${index * 100}ms`}}></div>
+                  <div 
+                    key={index} 
+                    className="w-2 h-2 bg-emerald-400/40 animate-pulse hover:bg-emerald-300/70 hover:scale-150 transition-all duration-300 cursor-pointer" 
+                    style={{animationDelay: `${index * 100}ms`}}
+                  ></div>
                 ))}
               </div>
             </div>
@@ -101,35 +107,39 @@ const Index = () => {
           {/* Professional Page Break 2 - Games to Products - Vortex Effect */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
             {/* Interactive Particles Layer */}
-            <div className="absolute inset-0 pointer-events-auto">
+            <div 
+              ref={portal2Ref}
+              className="absolute inset-0 pointer-events-auto cursor-move"
+            >
               <InteractiveParticles 
                 theme="blue" 
                 particleCount={75}
-                containerRef={{ current: null }}
+                containerRef={portal2Ref}
               />
             </div>
 
-            {/* Vortex Portal Background */}
+            {/* Enhanced Vortex Portal Background */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-conic from-blue-950/30 via-transparent to-cyan-950/30"></div>
+              <div className="absolute inset-0 bg-gradient-conic from-blue-950/40 via-transparent to-cyan-950/40"></div>
               <div className="absolute inset-0 bg-gradient-radial from-transparent via-zinc-900/70 to-zinc-950"></div>
               
-              {/* Rotating vortex rings */}
+              {/* Interactive rotating vortex rings */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-[700px] h-[700px] border-2 border-blue-500/25 rounded-full animate-spin" style={{animationDuration: '20s'}}></div>
-                <div className="absolute inset-6 border border-cyan-400/20 rounded-full animate-spin" style={{animationDuration: '15s', animationDirection: 'reverse'}}></div>
-                <div className="absolute inset-12 border border-blue-300/15 rounded-full animate-spin" style={{animationDuration: '10s'}}></div>
+                <div className="w-[700px] h-[700px] border-2 border-blue-500/30 rounded-full animate-spin hover:border-blue-400/50 transition-all duration-1000" style={{animationDuration: '20s'}}></div>
+                <div className="absolute inset-6 border border-cyan-400/25 rounded-full animate-spin hover:border-cyan-300/45 transition-all duration-1000" style={{animationDuration: '15s', animationDirection: 'reverse'}}></div>
+                <div className="absolute inset-12 border border-blue-300/20 rounded-full animate-spin hover:border-blue-200/40 transition-all duration-1000" style={{animationDuration: '10s'}}></div>
               </div>
               
-              {/* Spiral particles */}
-              {Array.from({length: 25}).map((_, i) => (
+              {/* Enhanced spiral particles with interactivity */}
+              {Array.from({length: 35}).map((_, i) => (
                 <div
                   key={i}
-                  className="absolute w-1.5 h-1.5 bg-blue-400/50 rounded-full animate-pulse"
+                  className="absolute w-2 h-2 bg-blue-400/60 rounded-full animate-pulse hover:bg-blue-300/90 hover:scale-200 transition-all duration-300 cursor-pointer"
                   style={{
-                    left: `${45 + Math.cos(i * 0.5) * 15}%`,
-                    top: `${45 + Math.sin(i * 0.5) * 15}%`,
-                    animationDelay: `${i * 0.2}s`
+                    left: `${40 + Math.cos(i * 0.5) * 20}%`,
+                    top: `${40 + Math.sin(i * 0.5) * 20}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    boxShadow: '0 0 12px rgba(59, 130, 246, 0.5)'
                   }}
                 />
               ))}
@@ -170,36 +180,40 @@ const Index = () => {
           {/* Professional Page Break 3 - Products to Web Apps - Matrix Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
             {/* Interactive Particles Layer */}
-            <div className="absolute inset-0 pointer-events-auto">
+            <div 
+              ref={portal3Ref}
+              className="absolute inset-0 pointer-events-auto cursor-grab active:cursor-grabbing"
+            >
               <InteractiveParticles 
                 theme="green" 
                 particleCount={90}
-                containerRef={{ current: null }}
+                containerRef={portal3Ref}
               />
             </div>
 
-            {/* Matrix-style Portal */}
+            {/* Enhanced Matrix-style Portal */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-radial from-green-950/20 via-transparent to-zinc-950"></div>
+              <div className="absolute inset-0 bg-gradient-radial from-green-950/30 via-transparent to-zinc-950"></div>
               
-              {/* Hexagonal portal frame */}
+              {/* Interactive hexagonal portal frame */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-[600px] h-[600px] border border-green-500/30 animate-pulse" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'}}>
+                <div className="w-[600px] h-[600px] border border-green-500/40 animate-pulse hover:border-green-400/60 transition-all duration-1000" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'}}>
                 </div>
-                <div className="absolute inset-8 border border-green-400/25 animate-pulse" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '1s'}}>
+                <div className="absolute inset-8 border border-green-400/30 animate-pulse hover:border-green-300/50 transition-all duration-1000" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '1s'}}>
                 </div>
               </div>
               
-              {/* Matrix rain effect */}
-              {Array.from({length: 30}).map((_, i) => (
+              {/* Enhanced matrix rain effect with interactivity */}
+              {Array.from({length: 40}).map((_, i) => (
                 <div
                   key={i}
-                  className="absolute w-0.5 h-8 bg-gradient-to-b from-green-400/60 to-transparent animate-pulse"
+                  className="absolute w-1 h-12 bg-gradient-to-b from-green-400/70 to-transparent animate-pulse hover:from-green-300/90 hover:w-2 transition-all duration-300 cursor-pointer"
                   style={{
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
                     animationDelay: `${Math.random() * 3}s`,
-                    transform: `rotate(${Math.random() * 20 - 10}deg)`
+                    transform: `rotate(${Math.random() * 20 - 10}deg)`,
+                    boxShadow: '0 0 8px rgba(34, 197, 94, 0.4)'
                   }}
                 />
               ))}
@@ -242,35 +256,39 @@ const Index = () => {
           {/* Professional Page Break 4 - Web Apps to Developer Tools - Fire Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
             {/* Interactive Particles Layer */}
-            <div className="absolute inset-0 pointer-events-auto">
+            <div 
+              ref={portal4Ref}
+              className="absolute inset-0 pointer-events-auto cursor-cell"
+            >
               <InteractiveParticles 
                 theme="orange" 
                 particleCount={85}
-                containerRef={{ current: null }}
+                containerRef={portal4Ref}
               />
             </div>
 
-            {/* Fire/Energy Portal */}
+            {/* Enhanced Fire/Energy Portal */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-radial from-orange-950/30 via-red-950/20 to-zinc-950"></div>
+              <div className="absolute inset-0 bg-gradient-radial from-orange-950/40 via-red-950/30 to-zinc-950"></div>
               
-              {/* Flame-like portal rings */}
+              {/* Interactive flame-like portal rings */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-[750px] h-[750px] border-2 border-orange-500/30 rounded-full animate-pulse" style={{borderRadius: '60% 40% 40% 60% / 60% 30% 70% 40%'}}></div>
-                <div className="absolute inset-6 border border-red-400/25 rounded-full animate-pulse" style={{borderRadius: '40% 60% 70% 30% / 40% 70% 30% 60%', animationDelay: '1s'}}></div>
-                <div className="absolute inset-12 border border-amber-400/20 rounded-full animate-pulse" style={{borderRadius: '70% 30% 30% 70% / 30% 60% 40% 70%', animationDelay: '2s'}}></div>
+                <div className="w-[750px] h-[750px] border-2 border-orange-500/40 rounded-full animate-pulse hover:border-orange-400/60 transition-all duration-1000" style={{borderRadius: '60% 40% 40% 60% / 60% 30% 70% 40%'}}></div>
+                <div className="absolute inset-6 border border-red-400/30 rounded-full animate-pulse hover:border-red-300/50 transition-all duration-1000" style={{borderRadius: '40% 60% 70% 30% / 40% 70% 30% 60%', animationDelay: '1s'}}></div>
+                <div className="absolute inset-12 border border-amber-400/25 rounded-full animate-pulse hover:border-amber-300/45 transition-all duration-1000" style={{borderRadius: '70% 30% 30% 70% / 30% 60% 40% 70%', animationDelay: '2s'}}></div>
               </div>
               
-              {/* Energy sparks */}
-              {Array.from({length: 35}).map((_, i) => (
+              {/* Enhanced energy sparks with interactivity */}
+              {Array.from({length: 45}).map((_, i) => (
                 <div
                   key={i}
-                  className={`absolute animate-pulse ${i % 3 === 0 ? 'w-2 h-2 bg-orange-400/60' : i % 3 === 1 ? 'w-1.5 h-1.5 bg-red-400/60' : 'w-1 h-1 bg-amber-400/60'}`}
+                  className={`absolute animate-pulse hover:scale-300 transition-all duration-300 cursor-pointer ${i % 3 === 0 ? 'w-2.5 h-2.5 bg-orange-400/70 hover:bg-orange-300/90' : i % 3 === 1 ? 'w-2 h-2 bg-red-400/70 hover:bg-red-300/90' : 'w-1.5 h-1.5 bg-amber-400/70 hover:bg-amber-300/90'}`}
                   style={{
-                    left: `${30 + Math.random() * 40}%`,
-                    top: `${30 + Math.random() * 40}%`,
+                    left: `${25 + Math.random() * 50}%`,
+                    top: `${25 + Math.random() * 50}%`,
                     animationDelay: `${Math.random() * 4}s`,
-                    clipPath: i % 4 === 0 ? 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' : 'circle(50%)'
+                    clipPath: i % 4 === 0 ? 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)' : 'circle(50%)',
+                    boxShadow: i % 3 === 0 ? '0 0 15px rgba(249, 115, 22, 0.6)' : i % 3 === 1 ? '0 0 12px rgba(239, 68, 68, 0.6)' : '0 0 10px rgba(245, 158, 11, 0.6)'
                   }}
                 />
               ))}
@@ -313,34 +331,38 @@ const Index = () => {
           {/* Professional Page Break 5 - Developer Tools to Contact - Cosmic Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
             {/* Interactive Particles Layer */}
-            <div className="absolute inset-0 pointer-events-auto">
+            <div 
+              ref={portal5Ref}
+              className="absolute inset-0 pointer-events-auto cursor-zoom-in"
+            >
               <InteractiveParticles 
                 theme="purple" 
                 particleCount={70}
-                containerRef={{ current: null }}
+                containerRef={portal5Ref}
               />
             </div>
 
-            {/* Cosmic Portal with Galaxy Effect */}
+            {/* Enhanced Cosmic Portal with Galaxy Effect */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-radial from-purple-950/20 via-indigo-950/15 to-zinc-950"></div>
+              <div className="absolute inset-0 bg-gradient-radial from-purple-950/30 via-indigo-950/25 to-zinc-950"></div>
               
-              {/* Galaxy spiral */}
+              {/* Interactive galaxy spiral */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-[650px] h-[650px] border border-purple-500/25 rounded-full animate-spin" style={{animationDuration: '30s', background: 'conic-gradient(from 0deg, transparent, rgba(147, 51, 234, 0.1), transparent)'}}></div>
-                <div className="absolute inset-8 border border-indigo-400/20 rounded-full animate-spin" style={{animationDuration: '20s', animationDirection: 'reverse', background: 'conic-gradient(from 180deg, transparent, rgba(99, 102, 241, 0.1), transparent)'}}></div>
+                <div className="w-[650px] h-[650px] border border-purple-500/35 rounded-full animate-spin hover:border-purple-400/55 transition-all duration-1000" style={{animationDuration: '30s', background: 'conic-gradient(from 0deg, transparent, rgba(147, 51, 234, 0.15), transparent)'}}></div>
+                <div className="absolute inset-8 border border-indigo-400/25 rounded-full animate-spin hover:border-indigo-300/45 transition-all duration-1000" style={{animationDuration: '20s', animationDirection: 'reverse', background: 'conic-gradient(from 180deg, transparent, rgba(99, 102, 241, 0.15), transparent)'}}></div>
               </div>
               
-              {/* Cosmic stars */}
-              {Array.from({length: 50}).map((_, i) => (
+              {/* Enhanced cosmic stars with interactivity */}
+              {Array.from({length: 60}).map((_, i) => (
                 <div
                   key={i}
-                  className={`absolute animate-pulse ${Math.random() > 0.7 ? 'w-1.5 h-1.5 bg-purple-300/70' : Math.random() > 0.4 ? 'w-1 h-1 bg-indigo-300/60' : 'w-0.5 h-0.5 bg-violet-300/50'}`}
+                  className={`absolute animate-pulse hover:scale-300 transition-all duration-300 cursor-pointer ${Math.random() > 0.7 ? 'w-2 h-2 bg-purple-300/80 hover:bg-purple-200/95' : Math.random() > 0.4 ? 'w-1.5 h-1.5 bg-indigo-300/70 hover:bg-indigo-200/90' : 'w-1 h-1 bg-violet-300/60 hover:bg-violet-200/85'}`}
                   style={{
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
                     animationDelay: `${Math.random() * 5}s`,
-                    clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)'
+                    clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
+                    boxShadow: Math.random() > 0.7 ? '0 0 15px rgba(196, 181, 253, 0.7)' : Math.random() > 0.4 ? '0 0 12px rgba(165, 180, 252, 0.6)' : '0 0 10px rgba(221, 214, 254, 0.5)'
                   }}
                 />
               ))}
@@ -382,7 +404,8 @@ const Index = () => {
         </main>
         <Footer />
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default Index;

@@ -13,6 +13,8 @@ interface Particle {
   life: number;
   maxLife: number;
   trail: { x: number; y: number; opacity: number }[];
+  originalSize: number;
+  energy: number;
 }
 
 interface InteractiveParticlesProps {
@@ -34,29 +36,34 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
 
   const themeConfig = {
     emerald: {
-      colors: ['#10b981', '#059669', '#047857', '#065f46'],
-      glowColor: 'rgba(16, 185, 129, 0.3)',
-      trailColor: 'rgba(16, 185, 129, 0.6)'
+      colors: ['#10b981', '#059669', '#047857', '#34d399', '#6ee7b7'],
+      glowColor: 'rgba(16, 185, 129, 0.4)',
+      trailColor: 'rgba(16, 185, 129, 0.7)',
+      magnetism: 1.2
     },
     blue: {
-      colors: ['#3b82f6', '#2563eb', '#1d4ed8', '#1e40af'],
-      glowColor: 'rgba(59, 130, 246, 0.3)',
-      trailColor: 'rgba(59, 130, 246, 0.6)'
+      colors: ['#3b82f6', '#2563eb', '#1d4ed8', '#60a5fa', '#93c5fd'],
+      glowColor: 'rgba(59, 130, 246, 0.4)',
+      trailColor: 'rgba(59, 130, 246, 0.7)',
+      magnetism: 1.0
     },
     green: {
-      colors: ['#22c55e', '#16a34a', '#15803d', '#166534'],
-      glowColor: 'rgba(34, 197, 94, 0.3)',
-      trailColor: 'rgba(34, 197, 94, 0.6)'
+      colors: ['#22c55e', '#16a34a', '#15803d', '#4ade80', '#86efac'],
+      glowColor: 'rgba(34, 197, 94, 0.4)',
+      trailColor: 'rgba(34, 197, 94, 0.7)',
+      magnetism: 1.3
     },
     orange: {
-      colors: ['#f97316', '#ea580c', '#dc2626', '#b91c1c'],
-      glowColor: 'rgba(249, 115, 22, 0.3)',
-      trailColor: 'rgba(249, 115, 22, 0.6)'
+      colors: ['#f97316', '#ea580c', '#dc2626', '#fb923c', '#fdba74'],
+      glowColor: 'rgba(249, 115, 22, 0.4)',
+      trailColor: 'rgba(249, 115, 22, 0.7)',
+      magnetism: 1.5
     },
     purple: {
-      colors: ['#a855f7', '#9333ea', '#7c3aed', '#6d28d9'],
-      glowColor: 'rgba(168, 85, 247, 0.3)',
-      trailColor: 'rgba(168, 85, 247, 0.6)'
+      colors: ['#a855f7', '#9333ea', '#7c3aed', '#c084fc', '#ddd6fe'],
+      glowColor: 'rgba(168, 85, 247, 0.4)',
+      trailColor: 'rgba(168, 85, 247, 0.7)',
+      magnetism: 0.8
     }
   };
 
@@ -65,18 +72,21 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     if (!canvas) return {} as Particle;
 
     const colors = themeConfig[theme].colors;
+    const size = Math.random() * 4 + 2;
     return {
       id: Math.random(),
       x: x ?? Math.random() * canvas.width,
       y: y ?? Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 2,
-      vy: (Math.random() - 0.5) * 2,
-      size: Math.random() * 3 + 1,
+      vx: (Math.random() - 0.5) * 3,
+      vy: (Math.random() - 0.5) * 3,
+      size,
+      originalSize: size,
       color: colors[Math.floor(Math.random() * colors.length)],
-      opacity: Math.random() * 0.8 + 0.2,
+      opacity: Math.random() * 0.9 + 0.1,
       life: 0,
-      maxLife: Math.random() * 300 + 100,
-      trail: []
+      maxLife: Math.random() * 400 + 200,
+      trail: [],
+      energy: Math.random() * 100 + 50
     };
   };
 
@@ -90,75 +100,116 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     if (!canvas || !ctx) return;
 
     const mouse = mouseRef.current;
+    const config = themeConfig[theme];
     
     particlesRef.current.forEach((particle, index) => {
-      // Update trail
-      particle.trail.unshift({ x: particle.x, y: particle.y, opacity: particle.opacity });
-      if (particle.trail.length > 10) {
+      // Update trail with enhanced effects
+      particle.trail.unshift({ 
+        x: particle.x, 
+        y: particle.y, 
+        opacity: particle.opacity * particle.energy / 100 
+      });
+      if (particle.trail.length > 15) {
         particle.trail.pop();
       }
 
-      // Mouse interaction
+      // Advanced mouse interaction with sophisticated physics
       if (mouse.isOver) {
         const dx = mouse.x - particle.x;
         const dy = mouse.y - particle.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 150) {
-          // Magnetic attraction with swirl effect
-          const force = (150 - distance) / 150;
-          const angle = Math.atan2(dy, dx) + Math.sin(Date.now() * 0.01 + index) * 0.5;
-          particle.vx += Math.cos(angle) * force * 0.5;
-          particle.vy += Math.sin(angle) * force * 0.5;
+        if (distance < 200) {
+          // Dynamic magnetic field with energy transfer
+          const force = (200 - distance) / 200;
+          const magnetism = config.magnetism;
           
-          // Increase size and opacity near mouse
-          particle.size = Math.min(particle.size * (1 + force * 0.1), 8);
-          particle.opacity = Math.min(particle.opacity * (1 + force * 0.5), 1);
+          // Create swirling motion with time-based variance
+          const time = Date.now() * 0.001;
+          const swirl = Math.sin(time + index * 0.5) * 0.3;
+          const angle = Math.atan2(dy, dx) + swirl;
           
-          // Create sparkle effect
-          if (distance < 50 && Math.random() < 0.1) {
-            particlesRef.current.push(createParticle(
-              particle.x + (Math.random() - 0.5) * 20,
-              particle.y + (Math.random() - 0.5) * 20
-            ));
+          // Apply sophisticated force calculations
+          const forceX = Math.cos(angle) * force * magnetism;
+          const forceY = Math.sin(angle) * force * magnetism;
+          
+          particle.vx += forceX * 0.8;
+          particle.vy += forceY * 0.8;
+          
+          // Energy and size increase with proximity
+          particle.energy = Math.min(particle.energy + force * 20, 200);
+          particle.size = particle.originalSize * (1 + force * 1.5);
+          particle.opacity = Math.min(particle.opacity + force * 0.5, 1);
+          
+          // Create spectacular sparkle explosions
+          if (distance < 80 && Math.random() < 0.15) {
+            for (let i = 0; i < 3; i++) {
+              particlesRef.current.push(createParticle(
+                particle.x + (Math.random() - 0.5) * 40,
+                particle.y + (Math.random() - 0.5) * 40
+              ));
+            }
+          }
+          
+          // Particle-to-particle chain reactions
+          if (distance < 50) {
+            particlesRef.current.forEach((otherParticle, otherIndex) => {
+              if (index !== otherIndex) {
+                const otherDx = particle.x - otherParticle.x;
+                const otherDy = particle.y - otherParticle.y;
+                const otherDistance = Math.sqrt(otherDx * otherDx + otherDy * otherDy);
+                
+                if (otherDistance < 60) {
+                  otherParticle.energy += 10;
+                  otherParticle.vx += otherDx * 0.01;
+                  otherParticle.vy += otherDy * 0.01;
+                }
+              }
+            });
           }
         }
       }
 
-      // Update position
+      // Enhanced physics with energy decay
       particle.x += particle.vx;
       particle.y += particle.vy;
 
-      // Apply friction
-      particle.vx *= 0.98;
-      particle.vy *= 0.98;
+      // Sophisticated friction with energy consideration
+      const friction = 0.97 - (particle.energy / 1000);
+      particle.vx *= friction;
+      particle.vy *= friction;
 
-      // Bounce off edges with energy loss
-      if (particle.x <= 0 || particle.x >= canvas.width) {
-        particle.vx *= -0.8;
-        particle.x = Math.max(0, Math.min(canvas.width, particle.x));
+      // Advanced boundary collision with energy transfer
+      if (particle.x <= particle.size || particle.x >= canvas.width - particle.size) {
+        particle.vx *= -0.7;
+        particle.x = Math.max(particle.size, Math.min(canvas.width - particle.size, particle.x));
+        particle.energy *= 0.8;
       }
-      if (particle.y <= 0 || particle.y >= canvas.height) {
-        particle.vy *= -0.8;
-        particle.y = Math.max(0, Math.min(canvas.height, particle.y));
+      if (particle.y <= particle.size || particle.y >= canvas.height - particle.size) {
+        particle.vy *= -0.7;
+        particle.y = Math.max(particle.size, Math.min(canvas.height - particle.size, particle.y));
+        particle.energy *= 0.8;
       }
 
-      // Update life
+      // Life cycle management
       particle.life++;
       if (particle.life > particle.maxLife) {
         particlesRef.current[index] = createParticle();
       }
 
-      // Gradual size and opacity decay
-      if (!mouse.isOver || Math.sqrt(Math.pow(mouse.x - particle.x, 2) + Math.pow(mouse.y - particle.y, 2)) > 150) {
-        particle.size *= 0.999;
-        particle.opacity *= 0.9995;
+      // Natural energy decay and size normalization
+      if (!mouse.isOver || Math.sqrt(Math.pow(mouse.x - particle.x, 2) + Math.pow(mouse.y - particle.y, 2)) > 200) {
+        particle.energy = Math.max(particle.energy * 0.995, 50);
+        particle.size = Math.max(particle.size * 0.99, particle.originalSize);
+        particle.opacity = Math.max(particle.opacity * 0.998, 0.1);
       }
     });
 
-    // Remove excess particles (from sparkle effects)
-    if (particlesRef.current.length > particleCount * 2) {
-      particlesRef.current = particlesRef.current.slice(0, particleCount * 2);
+    // Intelligent particle management
+    if (particlesRef.current.length > particleCount * 3) {
+      particlesRef.current = particlesRef.current
+        .sort((a, b) => b.energy - a.energy)
+        .slice(0, particleCount * 2);
     }
   };
 
@@ -168,17 +219,19 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     if (!canvas || !ctx) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const config = themeConfig[theme];
 
+    // Enhanced particle rendering
     particlesRef.current.forEach(particle => {
-      // Draw trail
+      // Sophisticated trail rendering with energy-based effects
       particle.trail.forEach((trailPoint, index) => {
-        const trailOpacity = (trailPoint.opacity * (particle.trail.length - index)) / particle.trail.length * 0.3;
-        const trailSize = particle.size * (particle.trail.length - index) / particle.trail.length * 0.5;
+        const trailOpacity = (trailPoint.opacity * (particle.trail.length - index)) / particle.trail.length * 0.4;
+        const trailSize = particle.size * (particle.trail.length - index) / particle.trail.length * 0.6;
         
         ctx.save();
         ctx.globalAlpha = trailOpacity;
-        ctx.fillStyle = themeConfig[theme].trailColor;
-        ctx.shadowBlur = 10;
+        ctx.fillStyle = config.trailColor;
+        ctx.shadowBlur = 15 + particle.energy / 10;
         ctx.shadowColor = particle.color;
         ctx.beginPath();
         ctx.arc(trailPoint.x, trailPoint.y, Math.max(trailSize, 0.5), 0, Math.PI * 2);
@@ -186,50 +239,59 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         ctx.restore();
       });
 
-      // Draw main particle with glow
+      // Multi-layered particle rendering with energy effects
       ctx.save();
       ctx.globalAlpha = particle.opacity;
       
-      // Outer glow
-      ctx.shadowBlur = 20;
+      // Outer energy glow (largest)
+      ctx.shadowBlur = 25 + particle.energy / 5;
       ctx.shadowColor = particle.color;
-      ctx.fillStyle = themeConfig[theme].glowColor;
+      ctx.fillStyle = config.glowColor;
       ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.size * 2, 0, Math.PI * 2);
+      ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
       ctx.fill();
 
-      // Inner particle
-      ctx.shadowBlur = 5;
+      // Middle glow layer
+      ctx.shadowBlur = 15 + particle.energy / 8;
+      ctx.fillStyle = particle.color + '80';
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size * 1.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Core particle with energy-based brightness
+      ctx.shadowBlur = 10;
       ctx.fillStyle = particle.color;
       ctx.beginPath();
       ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
       ctx.fill();
 
-      // Core highlight
+      // Energy core highlight
       ctx.shadowBlur = 0;
       ctx.fillStyle = '#ffffff';
-      ctx.globalAlpha = particle.opacity * 0.8;
+      ctx.globalAlpha = (particle.opacity * particle.energy) / 200;
       ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.size * 0.3, 0, Math.PI * 2);
+      ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2);
       ctx.fill();
       
       ctx.restore();
     });
 
-    // Draw connections between nearby particles
+    // Enhanced connection system with energy-based rendering
     particlesRef.current.forEach((particle, i) => {
       particlesRef.current.slice(i + 1).forEach(otherParticle => {
         const dx = particle.x - otherParticle.x;
         const dy = particle.y - otherParticle.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 100) {
-          const opacity = (100 - distance) / 100 * 0.2;
+        if (distance < 120) {
+          const opacity = ((120 - distance) / 120) * 0.3 * (particle.energy + otherParticle.energy) / 200;
+          const lineWidth = 1 + (particle.energy + otherParticle.energy) / 300;
+          
           ctx.save();
           ctx.globalAlpha = opacity;
           ctx.strokeStyle = particle.color;
-          ctx.lineWidth = 1;
-          ctx.shadowBlur = 5;
+          ctx.lineWidth = lineWidth;
+          ctx.shadowBlur = 8 + (particle.energy + otherParticle.energy) / 50;
           ctx.shadowColor = particle.color;
           ctx.beginPath();
           ctx.moveTo(particle.x, particle.y);
@@ -262,7 +324,7 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     initParticles();
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
+      const rect = container.getBoundingClientRect();
       mouseRef.current.x = e.clientX - rect.left;
       mouseRef.current.y = e.clientY - rect.top;
     };
@@ -277,6 +339,7 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       setIsActive(false);
     };
 
+    // Properly attach mouse events to the container
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
@@ -298,8 +361,8 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
-        isActive ? 'opacity-100' : 'opacity-60'
+      className={`absolute inset-0 pointer-events-none transition-all duration-500 ${
+        isActive ? 'opacity-100' : 'opacity-70'
       }`}
       style={{ mixBlendMode: 'screen' }}
     />
