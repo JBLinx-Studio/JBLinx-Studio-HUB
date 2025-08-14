@@ -2,201 +2,271 @@
 import React, { useState } from 'react';
 import { 
   Gamepad2, 
-  Play, 
-  Download, 
   Star, 
   Users, 
-  Trophy,
-  TrendingUp,
-  Zap,
+  Trophy, 
+  Zap, 
   ArrowRight,
   Eye,
   Clock,
   Target,
-  Calendar
+  Download,
+  Filter,
+  Play,
+  TrendingUp,
+  Calendar,
+  Globe,
+  Cpu,
+  Shield
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import GameDetailsPanel from '../components/games/GameDetailsPanel';
-import DLCUpdatesPanel from '../components/games/DLCUpdatesPanel';
-import DeveloperInsights from '../components/games/DeveloperInsights';
+import GameCard from '../components/games/GameCard';
 
 const GameDevelopment = () => {
-  const [activeGame, setActiveGame] = useState(0);
-  const [selectedPanel, setSelectedPanel] = useState('details');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const games = [
     {
       id: 1,
       title: "Tactical Strike: Cyber Assault",
       tagline: "Dominate the digital battlefield",
-      category: "Action/Strategy",
-      genres: ["Cyberpunk", "Tactical", "Sci-Fi"],
-      platforms: ["PC", "Mobile", "Web Browser"],
+      category: "fps",
       status: "LIVE",
-      releaseDate: "2024-08-15",
-      price: { base: 49.99, sale: null, currency: "USD" },
-      rating: 4.7,
-      playerCount: "10k+",
-      reviewCount: 2450,
+      rating: 4.8,
+      playerCount: "15k+",
+      reviewCount: 3420,
       images: {
-        hero: "https://source.unsplash.com/random/800x600/?cyberpunk",
+        hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=600&fit=crop",
         gallery: [
-          "https://source.unsplash.com/random/400x300/?cyberpunk,city",
-          "https://source.unsplash.com/random/400x300/?cyberpunk,soldier",
-          "https://source.unsplash.com/random/400x300/?cyberpunk,tech"
+          "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop"
         ]
       },
-      trailer: "https://www.youtube.com/watch?v=your_trailer_id",
-      description: "Engage in intense tactical battles in a neon-lit cyberpunk world. Command elite squads, strategize, and conquer the digital frontier.",
-      features: ["Real-time strategy", "Cybernetic enhancements", "Multiplayer battles"],
+      price: { base: 49.99, sale: 39.99, currency: "USD" },
+      releaseDate: "2024-08-15",
+      platforms: ["PC", "PlayStation", "Xbox"],
+      genres: ["FPS", "Tactical", "Cyberpunk"],
+      description: "Engage in intense tactical battles in a neon-lit cyberpunk world. Command elite squads, strategize, and conquer the digital frontier with advanced AI enemies and dynamic environments.",
+      features: ["Real-time strategy", "Cybernetic enhancements", "Multiplayer battles", "Advanced AI", "Dynamic weather", "Skill progression"],
       systemReqs: {
         min: "Intel Core i5, 8GB RAM, NVIDIA GTX 970",
         recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 2060"
       },
-      dlc: [
-        { name: "Elite Soldier Pack", price: "19.99", releaseDate: "2024-09-01", status: "AVAILABLE", image: "https://source.unsplash.com/random/200x150/?cyberpunk,soldier", description: "Advanced soldier equipment and exclusive cybernetic upgrades for tactical superiority." },
-        { name: "Cyberpunk Arsenal", price: "29.99", releaseDate: "2024-10-15", status: "PRE-ORDER", image: "https://source.unsplash.com/random/200x150/?cyberpunk,weapons", description: "Futuristic weapons pack with plasma rifles, neural disruptors, and quantum explosives." }
-      ],
       stats: {
-        peakPlayers: 15000,
-        averageSession: "2 hours",
-        retention: "65%",
+        peakPlayers: 25000,
+        averageSession: "2.5 hours",
+        retention: "78%",
         esportsReady: true
       },
+      trailer: "https://www.youtube.com/watch?v=example",
       storeLinks: {
-        steam: "https://store.steampowered.com/app/your_app_id",
-        gog: "https://www.gog.com/game/your_game_id",
-        direct: "https://yourgame.com/buy"
-      }
+        steam: "https://store.steampowered.com",
+        epic: "https://store.epicgames.com"
+      },
+      dlc: [
+        { name: "Elite Pack", price: 19.99, releaseDate: "2024-09-01", status: "AVAILABLE", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=150&fit=crop", description: "Advanced weapons and armor" }
+      ]
     },
     {
       id: 2,
-      title: "Empire Conquest: Age of Kings",
-      tagline: "Forge your empire, command your legions",
-      category: "Strategy/RPG",
-      genres: ["Medieval", "Strategy", "RPG"],
-      platforms: ["PC", "Web Browser"],
+      title: "Empire Conquest: Medieval Warfare",
+      tagline: "Forge your empire through the ages",
+      category: "rts",
       status: "BETA",
-      releaseDate: "2024-11-01",
-      price: { base: 0, sale: null, currency: "USD" },
-      rating: 4.5,
-      playerCount: "20k+",
-      reviewCount: 1800,
+      rating: 4.6,
+      playerCount: "12k+",
+      reviewCount: 2150,
       images: {
-        hero: "https://source.unsplash.com/random/800x600/?medieval",
+        hero: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop",
         gallery: [
-          "https://source.unsplash.com/random/400x300/?medieval,castle",
-          "https://source.unsplash.com/random/400x300/?medieval,knight",
-          "https://source.unsplash.com/random/400x300/?medieval,battle"
+          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop"
         ]
       },
-      trailer: "https://www.youtube.com/watch?v=your_trailer_id",
-      description: "Build your kingdom, train your armies, and conquer rival empires in this epic medieval strategy game.",
-      features: ["Real-time battles", "Hero customization", "Alliance system"],
+      price: { base: 0, sale: 0, currency: "USD" },
+      releaseDate: "2024-11-01",
+      platforms: ["PC", "Web Browser"],
+      genres: ["RTS", "Medieval", "Strategy"],
+      description: "Build massive medieval empires, command vast armies, and engage in epic siege warfare. Experience the rise and fall of kingdoms in this immersive real-time strategy experience.",
+      features: ["Massive battles", "Castle building", "Resource management", "Diplomacy system", "Historical campaigns", "Multiplayer conquest"],
       systemReqs: {
         min: "Intel Core i3, 4GB RAM, Integrated Graphics",
         recommended: "Intel Core i5, 8GB RAM, NVIDIA GTX 750"
       },
-      dlc: [
-        { name: "Royal Edition", price: "24.99", releaseDate: "2024-09-15", status: "AVAILABLE", image: "https://source.unsplash.com/random/200x150/?medieval,crown", description: "Royal court expansion with noble bloodlines and exclusive castle designs." },
-        { name: "Kingdoms Expansion", price: "34.99", releaseDate: "2024-12-01", status: "PRE-ORDER", image: "https://source.unsplash.com/random/200x150/?medieval,kingdom", description: "Massive world expansion adding 5 new kingdoms and diplomatic systems." }
-      ],
       stats: {
-        peakPlayers: 25000,
-        averageSession: "3 hours",
-        retention: "70%",
-        esportsReady: false
+        peakPlayers: 18000,
+        averageSession: "3.2 hours",
+        retention: "82%",
+        esportsReady: true
       },
+      trailer: "https://www.youtube.com/watch?v=example",
       storeLinks: {
-        steam: "https://store.steampowered.com/app/your_app_id",
-        direct: "https://yourgame.com/buy"
-      }
+        steam: "https://store.steampowered.com",
+        direct: "https://yourgame.com"
+      },
+      dlc: [
+        { name: "Viking Expansion", price: 24.99, releaseDate: "2024-12-01", status: "PRE_ORDER", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=150&fit=crop", description: "Norse warriors and longships" }
+      ]
     },
     {
       id: 3,
       title: "Last Haven: Zombie Outbreak",
-      tagline: "Survive the apocalypse, rebuild humanity",
-      category: "Survival/Horror",
-      genres: ["Zombie", "Survival", "Horror"],
-      platforms: ["PC", "PlayStation", "Xbox"],
+      tagline: "Survive the apocalypse together",
+      category: "survival",
       status: "EARLY_ACCESS",
-      releaseDate: "2025-03-10",
-      price: { base: 29.99, sale: 24.99, currency: "USD" },
-      rating: 4.2,
-      playerCount: "5k+",
-      reviewCount: 950,
+      rating: 4.4,
+      playerCount: "8k+",
+      reviewCount: 1890,
       images: {
-        hero: "https://source.unsplash.com/random/800x600/?zombie",
+        hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop",
         gallery: [
-          "https://source.unsplash.com/random/400x300/?zombie,city",
-          "https://source.unsplash.com/random/400x300/?zombie,survivor",
-          "https://source.unsplash.com/random/400x300/?zombie,apocalypse"
+          "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop",
+          "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop"
         ]
       },
-      trailer: "https://www.youtube.com/watch?v=your_trailer_id",
-      description: "Scavenge for resources, fortify your base, and fight off hordes of zombies in this post-apocalyptic survival horror game.",
-      features: ["Base building", "Zombie hordes", "Co-op multiplayer"],
+      price: { base: 29.99, sale: 24.99, currency: "USD" },
+      releaseDate: "2025-03-10",
+      platforms: ["PC", "PlayStation", "Xbox"],
+      genres: ["Survival", "Horror", "Co-op"],
+      description: "Band together with friends to survive the zombie apocalypse. Build fortified bases, scavenge for resources, and fight off massive hordes in this cooperative survival horror experience.",
+      features: ["Co-op survival", "Base building", "Zombie hordes", "Crafting system", "Day/night cycle", "Vehicle mechanics"],
       systemReqs: {
         min: "Intel Core i5, 8GB RAM, NVIDIA GTX 960",
         recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 2070"
       },
-      dlc: [
-        { name: "Survivor Pack", price: "14.99", releaseDate: "2024-08-20", status: "AVAILABLE", image: "https://source.unsplash.com/random/200x150/?zombie,survivor", description: "Essential survival gear and advanced crafting recipes for the apocalypse." },
-        { name: "Undead Expansion", price: "19.99", releaseDate: "2025-01-10", status: "COMING_SOON", image: "https://source.unsplash.com/random/200x150/?zombie,horde", description: "New zombie types, underground bunkers, and co-op campaign missions." }
-      ],
       stats: {
-        peakPlayers: 8000,
-        averageSession: "2.5 hours",
-        retention: "60%",
+        peakPlayers: 12000,
+        averageSession: "2.8 hours",
+        retention: "74%",
         esportsReady: false
       },
+      trailer: "https://www.youtube.com/watch?v=example",
       storeLinks: {
-        steam: "https://store.steampowered.com/app/your_app_id",
-        playstation: "https://store.playstation.com/your_game_id",
-        xbox: "https://www.xbox.com/your_game_id"
-      }
+        steam: "https://store.steampowered.com",
+        xbox: "https://www.xbox.com"
+      },
+      dlc: [
+        { name: "Survival Pack", price: 14.99, releaseDate: "2024-08-20", status: "AVAILABLE", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=200&h=150&fit=crop", description: "Advanced survival gear" }
+      ]
     },
     {
       id: 4,
       title: "Stellar Frontier: Space Odyssey",
-      tagline: "Explore the cosmos, build your empire",
-      category: "Sci-Fi/Strategy",
-      genres: ["Space", "Strategy", "Sci-Fi"],
-      platforms: ["PC", "Mobile"],
+      tagline: "Explore the infinite cosmos",
+      category: "space",
       status: "COMING_SOON",
-      releaseDate: "2025-06-20",
-      price: { base: 0, sale: null, currency: "USD" },
       rating: 0,
       playerCount: "0",
       reviewCount: 0,
       images: {
-        hero: "https://source.unsplash.com/random/800x600/?space",
+        hero: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&h=600&fit=crop",
         gallery: [
-          "https://source.unsplash.com/random/400x300/?space,planet",
-          "https://source.unsplash.com/random/400x300/?space,ship",
-          "https://source.unsplash.com/random/400x300/?space,colony"
+          "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=300&fit=crop"
         ]
       },
-      trailer: "https://www.youtube.com/watch?v=your_trailer_id",
-      description: "Embark on an epic journey through the stars. Colonize planets, research technologies, and command fleets in this expansive space strategy game.",
-      features: ["4X gameplay", "Space battles", "Tech research"],
+      price: { base: 39.99, sale: 0, currency: "USD" },
+      releaseDate: "2025-06-20",
+      platforms: ["PC", "Mobile"],
+      genres: ["Space", "Strategy", "Exploration"],
+      description: "Embark on an epic journey through the stars. Colonize planets, research alien technologies, and build a galactic empire in this expansive 4X space strategy game.",
+      features: ["4X gameplay", "Space exploration", "Colony management", "Tech research", "Alien encounters", "Fleet battles"],
       systemReqs: {
         min: "Intel Core i5, 8GB RAM, Integrated Graphics",
         recommended: "Intel Core i7, 16GB RAM, NVIDIA GTX 1060"
       },
-      dlc: [],
       stats: {
         peakPlayers: 0,
         averageSession: "0",
-        retention: "0",
+        retention: "0%",
         esportsReady: false
       },
+      trailer: "https://www.youtube.com/watch?v=example",
       storeLinks: {
-        steam: "https://store.steampowered.com/app/your_app_id",
-        mobile: "https://play.google.com/store/apps/details?id=your.app.id"
-      }
+        steam: "https://store.steampowered.com"
+      },
+      dlc: []
+    },
+    {
+      id: 5,
+      title: "Neon Racer: Future Streets",
+      tagline: "Speed through cyberpunk cities",
+      category: "racing",
+      status: "LIVE",
+      rating: 4.7,
+      playerCount: "22k+",
+      reviewCount: 4560,
+      images: {
+        hero: "https://images.unsplash.com/photo-1493238792000-8113da705763?w=800&h=600&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1493238792000-8113da705763?w=400&h=300&fit=crop"
+        ]
+      },
+      price: { base: 34.99, sale: 0, currency: "USD" },
+      releaseDate: "2024-06-10",
+      platforms: ["PC", "PlayStation", "Xbox"],
+      genres: ["Racing", "Cyberpunk", "Arcade"],
+      description: "Race through neon-lit streets in futuristic vehicles. Experience high-speed thrills in a cyberpunk world with dynamic weather and day/night cycles.",
+      features: ["High-speed racing", "Cyberpunk aesthetics", "Vehicle customization", "Online multiplayer", "Dynamic weather", "Neon-lit tracks"],
+      systemReqs: {
+        min: "Intel Core i5, 8GB RAM, NVIDIA GTX 1060",
+        recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 3060"
+      },
+      stats: {
+        peakPlayers: 35000,
+        averageSession: "1.8 hours",
+        retention: "85%",
+        esportsReady: true
+      },
+      trailer: "https://www.youtube.com/watch?v=example",
+      storeLinks: {
+        steam: "https://store.steampowered.com",
+        epic: "https://store.epicgames.com"
+      },
+      dlc: []
+    },
+    {
+      id: 6,
+      title: "Mystic Legends: RPG Adventure",
+      tagline: "Embark on an epic quest",
+      category: "rpg",
+      status: "LIVE",
+      rating: 4.9,
+      playerCount: "45k+",
+      reviewCount: 8920,
+      images: {
+        hero: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop"
+        ]
+      },
+      price: { base: 59.99, sale: 44.99, currency: "USD" },
+      releaseDate: "2024-03-15",
+      platforms: ["PC", "PlayStation", "Xbox", "Mobile"],
+      genres: ["RPG", "Fantasy", "Adventure"],
+      description: "Explore vast magical worlds, battle mythical creatures, and forge your destiny in this epic role-playing adventure with deep character customization.",
+      features: ["Open world exploration", "Character customization", "Magic system", "Epic quests", "Multiplayer co-op", "Crafting system"],
+      systemReqs: {
+        min: "Intel Core i5, 12GB RAM, NVIDIA GTX 1070",
+        recommended: "Intel Core i7, 16GB RAM, NVIDIA RTX 3070"
+      },
+      stats: {
+        peakPlayers: 68000,
+        averageSession: "4.2 hours",
+        retention: "91%",
+        esportsReady: false
+      },
+      trailer: "https://www.youtube.com/watch?v=example",
+      storeLinks: {
+        steam: "https://store.steampowered.com",
+        epic: "https://store.epicgames.com",
+        playstation: "https://store.playstation.com"
+      },
+      dlc: [
+        { name: "Dragon's Legacy", price: 29.99, releaseDate: "2024-07-01", status: "AVAILABLE", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=150&fit=crop", description: "New dragon realm and quests" }
+      ]
     }
   ];
 
@@ -227,13 +297,23 @@ const GameDevelopment = () => {
     }
   ];
 
-  const currentGame = games[activeGame];
+  const categories = [
+    { id: 'all', name: 'All Games', icon: Gamepad2, color: 'purple' },
+    { id: 'fps', name: 'FPS', icon: Zap, color: 'red' },
+    { id: 'rts', name: 'Strategy', icon: Shield, color: 'emerald' },
+    { id: 'survival', name: 'Survival', icon: Trophy, color: 'amber' },
+    { id: 'space', name: 'Space', icon: Globe, color: 'cyan' },
+    { id: 'racing', name: 'Racing', icon: Cpu, color: 'orange' },
+    { id: 'rpg', name: 'RPG', icon: Star, color: 'pink' }
+  ];
+
+  const filteredGames = activeCategory === 'all' ? games : games.filter(game => game.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-zinc-950">
       <Header />
       
-      {/* Exact copy of Game Universe section from home page */}
+      {/* Game Universe Section - Exact Copy from Homepage */}
       <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-24 overflow-hidden">
         {/* Gaming-themed unique background effects */}
         <div className="absolute inset-0 pointer-events-none opacity-40">
@@ -269,182 +349,74 @@ const GameDevelopment = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Games Header - styled like Services */}
-          <div className="text-center mb-5">
-            <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
-              <Gamepad2 className="w-3 h-3 mr-1 text-purple-400" />
-              <span className="text-purple-400 font-black text-xs font-mono tracking-widest">GAME UNIVERSE</span>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-6 py-2 mb-4 backdrop-blur-sm">
+              <Gamepad2 className="w-4 h-4 mr-2 text-purple-400" />
+              <span className="text-purple-400 font-black text-sm font-mono tracking-widest">GAME DEVELOPMENT STUDIO</span>
             </div>
             
-            <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
-              WHAT WE <span className="text-purple-400">PLAY</span>
+            <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight font-mono mb-6">
+              PREMIUM <span className="text-purple-400">GAMING EXPERIENCES</span>
             </h2>
             
-            <div className="w-16 h-0.5 bg-purple-400 mx-auto mb-2"></div>
+            <div className="w-24 h-1 bg-purple-400 mx-auto mb-6"></div>
             
-            <p className="text-sm text-slate-400 max-w-xl mx-auto mb-3">
-              Immersive gaming experiences across multiple platforms and genres
+            <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-12">
+              Professional game development across multiple platforms and genres with cutting-edge technology
             </p>
 
             {/* Game Stats */}
-            <div className="grid grid-cols-4 gap-1 max-w-xl mx-auto mb-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-16">
               {gameStats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="bg-zinc-800/80 border border-zinc-700 p-1.5 text-center backdrop-blur-sm">
-                    <IconComponent className={`w-3 h-3 ${stat.color} mx-auto mb-0.5`} />
-                    <div className={`text-xs font-black ${stat.color} font-mono`}>{stat.value}</div>
-                    <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
+                  <div key={index} className="bg-zinc-800/80 border border-zinc-700 p-6 text-center backdrop-blur-sm hover:border-purple-400/50 transition-colors">
+                    <IconComponent className={`w-8 h-8 ${stat.color} mx-auto mb-4`} />
+                    <div className={`text-2xl font-black ${stat.color} font-mono mb-2`}>{stat.value}</div>
+                    <div className="text-slate-400 text-sm font-medium">{stat.label}</div>
                   </div>
                 );
               })}
             </div>
           </div>
 
-          {/* Game Selection Grid */}
-          <div className="grid lg:grid-cols-4 gap-3 mb-5">
-            {games.map((game, index) => {
-              const isActive = activeGame === index;
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {categories.map((category) => {
+              const IconComponent = category.icon;
               return (
-                <div 
-                  key={index} 
-                  className={`bg-zinc-800/95 border transition-all duration-300 cursor-pointer p-3 backdrop-blur-sm ${
-                    isActive ? 'border-purple-500/50 shadow-lg' : 'border-zinc-700 hover:border-zinc-600'
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`flex items-center space-x-2 px-6 py-3 font-bold transition-all duration-300 ${
+                    activeCategory === category.id
+                      ? `bg-${category.color}-500 text-white shadow-lg`
+                      : 'bg-zinc-800/80 text-slate-400 hover:bg-zinc-700/80 hover:text-white'
                   }`}
-                  onMouseEnter={() => setActiveGame(index)}
                 >
-                  {/* Game Header */}
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center`}>
-                        <Gamepad2 className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <h3 className={`text-sm font-black font-mono ${isActive ? 'text-purple-400' : 'text-white'}`}>
-                          {game.title}
-                        </h3>
-                        <p className="text-xs text-slate-400">{game.category}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="text-right">
-                      <div className="flex items-center space-x-1">
-                        <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                        <span className="text-white font-bold text-xs">{game.rating}</span>
-                      </div>
-                      <div className={`text-xs font-bold ${isActive ? 'text-purple-400' : 'text-slate-400'}`}>
-                        {game.playerCount}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Game Content */}
-                  <div className="space-y-2">
-                    <p className="text-slate-300 text-xs leading-relaxed line-clamp-2">{game.description}</p>
-                    
-                    {/* Genres */}
-                    <div className="flex flex-wrap gap-1">
-                      {game.genres.slice(0, 3).map((genre, genreIndex) => (
-                        <span 
-                          key={genreIndex} 
-                          className={`px-2 py-0.5 text-xs font-bold border transition-all duration-300 ${
-                            isActive 
-                              ? 'border-purple-500/40 bg-purple-500/10 text-purple-400' 
-                              : 'border-zinc-600 bg-zinc-700/50 text-slate-300'
-                          }`}
-                        >
-                          {genre}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    {/* Stats & CTA */}
-                    <div className="flex items-center justify-between pt-2">
-                      <div className="flex items-center space-x-2 text-xs">
-                        <Users className="w-3 h-3 text-slate-400" />
-                        <span className="text-slate-300 font-medium">{game.stats.peakPlayers}k</span>
-                      </div>
-                      
-                      <Link 
-                        to={`/game/${game.id}`} 
-                        className={`flex items-center space-x-1 text-xs font-bold transition-all duration-300 hover:scale-105 ${
-                          isActive ? 'text-purple-400' : 'text-slate-400 hover:text-purple-400'
-                        }`}
-                      >
-                        <span>PLAY</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                  <IconComponent className="w-4 h-4" />
+                  <span>{category.name}</span>
+                </button>
               );
             })}
           </div>
 
-          {/* Panel Navigation */}
-          <div className="bg-zinc-800/80 border border-zinc-600/50 p-3 mb-4 backdrop-blur-sm">
-            <div className="flex justify-center space-x-2">
-              {[
-                { id: 'details', label: 'GAME DETAILS', icon: Target },
-                { id: 'dlc', label: 'DLC & UPDATES', icon: Download },
-                { id: 'insights', label: 'DEV INSIGHTS', icon: Eye },
-                { id: 'community', label: 'COMMUNITY', icon: Users }
-              ].map((panel) => {
-                const IconComponent = panel.icon;
-                return (
-                  <button
-                    key={panel.id}
-                    onClick={() => setSelectedPanel(panel.id)}
-                    className={`flex items-center space-x-1 px-3 py-2 text-xs font-bold transition-all duration-300 ${
-                      selectedPanel === panel.id
-                        ? 'bg-purple-500 text-white'
-                        : 'bg-zinc-700/50 text-slate-400 hover:bg-zinc-600/50 hover:text-white'
-                    }`}
-                  >
-                    <IconComponent className="w-3 h-3" />
-                    <span>{panel.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Dynamic Panel Content */}
-          <div className="bg-zinc-800/80 border border-zinc-600/50 backdrop-blur-sm mb-4">
-            {selectedPanel === 'details' && <GameDetailsPanel game={currentGame} />}
-            {selectedPanel === 'dlc' && <DLCUpdatesPanel dlcs={currentGame.dlc} updates={[]} />}
-            {selectedPanel === 'insights' && <DeveloperInsights games={games} />}
-            {selectedPanel === 'community' && (
-              <div className="p-6 text-center">
-                <Users className="w-12 h-12 mx-auto mb-4 text-purple-400" />
-                <h3 className="text-white font-black text-xl mb-2">JOIN THE COMMUNITY</h3>
-                <p className="text-slate-400 mb-4">Connect with players, share strategies, and get the latest updates</p>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-zinc-900/50 border border-purple-400/30 p-4 text-center">
-                    <div className="text-purple-400 font-black text-xl">150k+</div>
-                    <div className="text-slate-400 text-sm">Active Players</div>
-                  </div>
-                  <div className="bg-zinc-900/50 border border-blue-400/30 p-4 text-center">
-                    <div className="text-blue-400 font-black text-xl">50+</div>
-                    <div className="text-slate-400 text-sm">Tournaments</div>
-                  </div>
-                  <div className="bg-zinc-900/50 border border-cyan-400/30 p-4 text-center">
-                    <div className="text-cyan-400 font-black text-xl">24/7</div>
-                    <div className="text-slate-400 text-sm">Support</div>
-                  </div>
-                </div>
-              </div>
-            )}
+          {/* Games Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {filteredGames.map((game) => (
+              <GameCard key={game.id} game={game} />
+            ))}
           </div>
 
           {/* CTA */}
           <div className="text-center">
             <Link 
               to="/contact" 
-              className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-5 py-2 font-black transition-all duration-300 space-x-1 shadow-lg text-sm"
+              className="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-8 py-4 font-black transition-all duration-300 space-x-2 shadow-lg text-lg"
             >
-              <Zap className="w-3 h-3" />
+              <Zap className="w-5 h-5" />
               <span>REQUEST CUSTOM GAME</span>
-              <ArrowRight className="w-3 h-3" />
+              <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>
