@@ -1,15 +1,17 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowRight, Trophy, Play, Gamepad2, Users, Download, Star, TrendingUp } from 'lucide-react';
+import { Trophy, Search, Users, Star, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import GameLibrarySidebar from './games/GameLibrarySidebar';
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './ui/resizable';
+import GameLibraryPanel from './games/GameLibraryPanel';
 import GameDetailsPanel from './games/GameDetailsPanel';
 import GameUpdatesPanel from './games/GameUpdatesPanel';
 import CommunityPanel from './games/CommunityPanel';
-import DeveloperInsights from './games/DeveloperInsights';
-import VerticalPanelContainer from './ui/VerticalPanelContainer';
+import HorizontalDragContainer from './ui/HorizontalDragContainer';
 
 const GamesSection = () => {
   const [selectedGameId, setSelectedGameId] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const games = [
     {
@@ -29,26 +31,20 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/tactical-strike-trailer",
-      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay. Master multiple game modes across diverse battlegrounds with realistic physics and cutting-edge graphics.",
-      features: ["Anti-Cheat Protection", "Competitive Ranking", "Custom Loadouts", "Voice Chat", "Spectator Mode", "Replay System"],
-      systemReqs: { min: "GTX 1060, 8GB RAM, DirectX 11", recommended: "RTX 3060, 16GB RAM, DirectX 12" },
+      description: "Experience intense 5v5 tactical combat with advanced weapon systems, destructible environments, and strategic team gameplay. Master multiple game modes across diverse battlegrounds.",
+      features: ["Anti-Cheat Protection", "Competitive Ranking", "Custom Loadouts", "Voice Chat", "Spectator Mode"],
+      systemReqs: { min: "GTX 1060, 8GB RAM", recommended: "RTX 3060, 16GB RAM" },
       dlc: [
         { name: "Urban Warfare Pack", price: 14.99, status: "available" },
         { name: "Elite Operator Skins", price: 9.99, status: "available" }
       ],
       stats: {
         peakPlayers: 45000,
-        averageSession: "45min",
+        averageSession: "45 min",
         retention: "87%",
         esportsReady: true
       },
@@ -75,26 +71,20 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1438565434616-3ef039228b15?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/empire-conquest-trailer",
-      description: "Command massive armies across land, sea, and air in this next-generation real-time strategy experience. Build civilizations from the ground up with complex resource management, diplomatic systems, and epic battles featuring thousands of units.",
-      features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode", "Mod Support"],
-      systemReqs: { min: "GTX 1660, 12GB RAM, DirectX 11", recommended: "RTX 4060, 32GB RAM, DirectX 12" },
+      description: "Command massive armies across land, sea, and air. Build civilizations from the ground up with complex resource management and diplomatic systems in this next-gen RTS experience.",
+      features: ["Epic 100v100 Battles", "Civilization Builder", "Advanced AI", "Map Editor", "Campaign Mode"],
+      systemReqs: { min: "GTX 1660, 12GB RAM", recommended: "RTX 4060, 32GB RAM" },
       dlc: [
         { name: "Ancient Dynasties", price: 19.99, status: "preorder" },
         { name: "Naval Warfare", price: 12.99, status: "available" }
       ],
       stats: {
         peakPlayers: 12000,
-        averageSession: "2.5hrs",
+        averageSession: "2.5 hours",
         retention: "92%",
         esportsReady: false
       },
@@ -121,25 +111,19 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1485833077593-4278bba3f11f?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1438565434616-3ef039228b15?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/last-haven-trailer",
-      description: "Survive in a haunting post-apocalyptic world where humanity's last remnants fight for survival. Craft weapons, build shelters, and maintain your sanity while facing both the undead hordes and other desperate survivors in this intense co-op experience.",
-      features: ["4-Player Co-op", "Base Building", "Psychological Horror", "Day/Night Cycle", "Dynamic Weather", "Crafting System"],
-      systemReqs: { min: "GTX 1050 Ti, 8GB RAM, DirectX 11", recommended: "RTX 3070, 16GB RAM, DirectX 12" },
+      description: "Survive in a haunting post-apocalyptic world. Craft weapons, build shelters, and maintain your sanity while facing both the undead and other desperate survivors.",
+      features: ["4-Player Co-op", "Base Building", "Psychological Horror", "Day/Night Cycle", "Dynamic Weather"],
+      systemReqs: { min: "GTX 1050 Ti, 8GB RAM", recommended: "RTX 3070, 16GB RAM" },
       dlc: [
         { name: "Winter Wasteland", price: 15.99, status: "upcoming" }
       ],
       stats: {
         peakPlayers: 25000,
-        averageSession: "3.2hrs",
+        averageSession: "3.2 hours",
         retention: "78%",
         esportsReady: false
       },
@@ -166,25 +150,19 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/stellar-frontier-trailer",
-      description: "Command your own starship and explore procedurally generated galaxies filled with mysteries, alien civilizations, and cosmic phenomena. Trade with exotic species, engage in epic space battles, and build your interstellar empire.",
-      features: ["Infinite Universe", "Ship Customization", "Alien Diplomacy", "Fleet Combat", "Cross-Platform", "Procedural Generation"],
-      systemReqs: { min: "GTX 960, 6GB RAM, DirectX 11", recommended: "RTX 2060, 12GB RAM, DirectX 12" },
+      description: "Command your own starship and explore procedurally generated galaxies. Trade with alien civilizations, engage in epic space battles, and build your cosmic empire.",
+      features: ["Infinite Universe", "Ship Customization", "Alien Diplomacy", "Fleet Combat", "Cross-Platform"],
+      systemReqs: { min: "GTX 960, 6GB RAM", recommended: "RTX 2060, 12GB RAM" },
       dlc: [
         { name: "Alien Races Pack", price: 11.99, status: "upcoming" }
       ],
       stats: {
         peakPlayers: 8500,
-        averageSession: "4.1hrs",
+        averageSession: "4.1 hours",
         retention: "85%",
         esportsReady: false
       },
@@ -211,18 +189,12 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/pocket-heroes-trailer",
-      description: "Collect legendary heroes and embark on epic quests in this award-winning mobile RPG. Strategic turn-based combat meets stunning mobile graphics with deep character customization and engaging storylines.",
-      features: ["200+ Heroes", "PvP Arena", "Guild System", "Daily Events", "Offline Play", "Cross-Save"],
+      description: "Collect legendary heroes and embark on epic quests. Strategic turn-based combat meets stunning mobile graphics in this award-winning mobile RPG.",
+      features: ["200+ Heroes", "PvP Arena", "Guild System", "Daily Events", "Offline Play"],
       systemReqs: { min: "iOS 12+ / Android 8+", recommended: "iOS 15+ / Android 11+" },
       dlc: [
         { name: "Legendary Pack", price: 7.99, status: "available" },
@@ -230,7 +202,7 @@ const GamesSection = () => {
       ],
       stats: {
         peakPlayers: 125000,
-        averageSession: "25min",
+        averageSession: "25 min",
         retention: "68%",
         esportsReady: false
       },
@@ -257,25 +229,19 @@ const GamesSection = () => {
         hero: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=450&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=400&fit=crop"
+          "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop"
         ]
       },
       trailer: "https://example.com/web-warriors-trailer",
-      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles from any device with cutting-edge WebGL technology.",
-      features: ["Instant Play", "Cross-Device", "Real-time PvP", "Clan Wars", "Tournament Mode", "WebGL Graphics"],
+      description: "Fast-paced browser strategy game with no downloads required. Command armies, build bases, and dominate in real-time multiplayer battles from any device.",
+      features: ["Instant Play", "Cross-Device", "Real-time PvP", "Clan Wars", "Tournament Mode"],
       systemReqs: { min: "Modern Web Browser", recommended: "Chrome/Firefox Latest" },
       dlc: [
         { name: "Premium Commander", price: 9.99, status: "available" }
       ],
       stats: {
         peakPlayers: 35000,
-        averageSession: "35min",
+        averageSession: "35 min",
         retention: "71%",
         esportsReady: true
       },
@@ -286,108 +252,185 @@ const GamesSection = () => {
     }
   ];
 
+  const filteredGames = useMemo(() => {
+    let filtered = games;
+    
+    if (activeCategory !== 'all') {
+      filtered = filtered.filter(game => game.category === activeCategory);
+    }
+    
+    if (searchQuery) {
+      filtered = filtered.filter(game => 
+        game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        game.genres.some(genre => genre.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }
+    
+    return filtered;
+  }, [activeCategory, searchQuery]);
+
   const selectedGame = games.find(game => game.id === selectedGameId) || games[0];
 
+  const gamePanels = [
+    // Main Game Overview Panel
+    <div key="overview" className="w-full flex-shrink-0 h-full">
+      <ResizablePanelGroup direction="horizontal" className="h-full">
+        <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
+          <GameLibraryPanel 
+            games={filteredGames}
+            selectedGameId={selectedGameId}
+            onSelectGame={setSelectedGameId}
+            activeCategory={activeCategory}
+            onCategoryChange={setActiveCategory}
+          />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={75}>
+          <GameDetailsPanel game={selectedGame} />
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>,
+
+    // Community & Updates Panel
+    <div key="community" className="w-full flex-shrink-0 h-full">
+      <ResizablePanelGroup direction="vertical" className="h-full">
+        <ResizablePanel defaultSize={60}>
+          <CommunityPanel game={selectedGame} />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={40}>
+          <GameUpdatesPanel game={selectedGame} />
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>,
+
+    // Extended Stats & Analytics Panel
+    <div key="analytics" className="w-full flex-shrink-0 h-full bg-slate-900/95 p-8">
+      <div className="h-full overflow-y-auto">
+        <h3 className="text-2xl font-black text-white mb-6 font-mono">GAME ANALYTICS</h3>
+        <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className="bg-slate-800 border border-slate-700 p-6">
+            <h4 className="text-purple-400 font-bold mb-4">PLAYER METRICS</h4>
+            <div className="space-y-4">
+              <div className="flex justify-between">
+                <span className="text-slate-300">Peak Players</span>
+                <span className="text-white font-bold">{selectedGame.stats.peakPlayers.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-300">Avg Session</span>
+                <span className="text-white font-bold">{selectedGame.stats.averageSession}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-300">Retention</span>
+                <span className="text-green-400 font-bold">{selectedGame.stats.retention}</span>
+              </div>
+            </div>
+          </div>
+          <div className="bg-slate-800 border border-slate-700 p-6">
+            <h4 className="text-cyan-400 font-bold mb-4">PLATFORM DATA</h4>
+            <div className="space-y-4">
+              {selectedGame.platforms.map((platform, index) => (
+                <div key={index} className="flex justify-between">
+                  <span className="text-slate-300">{platform}</span>
+                  <span className="text-white font-bold">{Math.floor(Math.random() * 40 + 10)}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="bg-slate-800 border border-slate-700 p-6">
+          <h4 className="text-yellow-400 font-bold mb-4">REVENUE INSIGHTS</h4>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-black text-white">${(selectedGame.price.base * 1000).toLocaleString()}</div>
+              <div className="text-slate-400 text-sm">Monthly Revenue</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-black text-white">{selectedGame.reviewCount}</div>
+              <div className="text-slate-400 text-sm">Total Reviews</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-black text-white">{selectedGame.rating}/5</div>
+              <div className="text-slate-400 text-sm">Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ];
+
   return (
-    <section className="py-12 bg-slate-950 relative min-h-[1200px]">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-950 to-slate-900/50"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent"></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
+    <section className="py-16 min-h-[1400px] bg-slate-950 border-t border-slate-800">
+      <div className="container mx-auto px-4">
         {/* Compact Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center bg-slate-800/90 border border-purple-500/30 px-4 py-2 mb-4">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center bg-slate-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
             <Trophy className="w-4 h-4 mr-2 text-purple-400" />
-            <span className="text-purple-300 font-bold text-sm tracking-wider uppercase">Gaming Portfolio</span>
+            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">JBLINX GAMING STUDIO</span>
           </div>
           
-          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight mb-4 font-mono tracking-tight">
-            PROFESSIONAL <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">GAME</span> LIBRARY
+          <h2 className="text-3xl font-black text-white leading-tight font-mono mb-4">
+            PREMIUM <span className="text-purple-400">GAME</span> LIBRARY
           </h2>
           
-          <div className="w-16 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-4"></div>
+          <div className="w-20 h-0.5 bg-purple-400 mx-auto mb-4"></div>
           
-          <p className="text-slate-300 max-w-xl mx-auto text-sm leading-relaxed">
-            Interactive gaming experiences across multiple platforms and genres
+          <p className="text-slate-400 max-w-2xl mx-auto text-base leading-relaxed">
+            Professional games across all platforms and genres with cutting-edge graphics and immersive gameplay
           </p>
         </div>
 
-        {/* Compact Stats Grid */}
-        <div className="grid grid-cols-4 gap-3 mb-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {[
-            { icon: Users, label: 'PLAYERS', value: '112K+', color: 'text-green-400' },
-            { icon: Star, label: 'RATING', value: '4.7★', color: 'text-yellow-400' },
-            { icon: Download, label: 'DOWNLOADS', value: '45K+', color: 'text-blue-400' },
-            { icon: Trophy, label: 'GAMES', value: '6', color: 'text-purple-400' }
+            { icon: Users, label: 'ACTIVE PLAYERS', value: '112K+', color: 'text-green-400' },
+            { icon: Star, label: 'AVERAGE RATING', value: '4.7★', color: 'text-yellow-400' },
+            { icon: Download, label: 'TOTAL DOWNLOADS', value: '45K+', color: 'text-blue-400' },
+            { icon: Trophy, label: 'LIVE GAMES', value: '6', color: 'text-purple-400' }
           ].map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/40 border border-slate-700/50 p-3 text-center hover:border-purple-400/50 transition-colors">
-                <div className="w-8 h-8 bg-slate-700/50 flex items-center justify-center mx-auto mb-2">
-                  <IconComponent className={`w-4 h-4 ${stat.color}`} />
-                </div>
-                <div className={`text-sm font-black ${stat.color} font-mono`}>{stat.value}</div>
-                <div className="text-slate-400 text-xs font-medium">{stat.label}</div>
+              <div key={index} className="bg-slate-800/95 border border-slate-700 p-6 text-center hover:border-purple-400/50 transition-colors backdrop-blur-sm">
+                <IconComponent className={`w-8 h-8 mx-auto mb-3 ${stat.color}`} />
+                <div className="text-2xl font-black text-white font-mono mb-2">{stat.value}</div>
+                <div className="text-slate-400 text-sm font-bold">{stat.label}</div>
               </div>
             );
           })}
         </div>
 
-        {/* Main Content Grid - Separate Panels */}
-        <div className="grid grid-cols-12 gap-4 mb-8">
-          {/* Game Library Sidebar */}
-          <div className="col-span-12 lg:col-span-4">
-            <div className="bg-slate-800/40 border border-slate-700/50 h-[600px] overflow-hidden">
-              <GameLibrarySidebar 
-                games={games} 
-                selectedGameId={selectedGameId}
-                onSelectGame={setSelectedGameId}
-              />
-            </div>
-          </div>
-
-          {/* Main Game Details Panel */}
-          <div className="col-span-12 lg:col-span-5">
-            <div className="bg-slate-800/40 border border-slate-700/50 h-[600px] overflow-hidden">
-              <GameDetailsPanel game={selectedGame} />
-            </div>
-          </div>
-
-          {/* Right Side Panels - Stackable */}
-          <div className="col-span-12 lg:col-span-3 space-y-4">
-            {/* Updates Panel */}
-            <div className="bg-slate-800/40 border border-slate-700/50 h-[190px]">
-              <VerticalPanelContainer panelHeight={190} showNavigation={true} className="h-full">
-                <GameUpdatesPanel game={selectedGame} />
-              </VerticalPanelContainer>
-            </div>
-
-            {/* Community Panel */}
-            <div className="bg-slate-800/40 border border-slate-700/50 h-[200px]">
-              <VerticalPanelContainer panelHeight={200} showNavigation={true} className="h-full">
-                <CommunityPanel game={selectedGame} />
-              </VerticalPanelContainer>
-            </div>
-
-            {/* Developer Insights Panel */}
-            <div className="bg-slate-800/40 border border-slate-700/50 h-[200px]">
-              <VerticalPanelContainer panelHeight={200} showNavigation={true} className="h-full">
-                <DeveloperInsights game={selectedGame} />
-              </VerticalPanelContainer>
-            </div>
+        {/* Search Bar */}
+        <div className="mb-12">
+          <div className="relative max-w-2xl mx-auto">
+            <Search className="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search games, genres, platforms..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-slate-800/90 border-2 border-slate-700 text-white pl-14 pr-6 py-4 text-base focus:border-purple-400 focus:outline-none backdrop-blur-sm transition-colors"
+            />
           </div>
         </div>
 
-        {/* Compact CTA */}
+        {/* Enhanced Horizontal Drag Container - Much Taller */}
+        <div className="h-[1000px] bg-slate-900/50 border-2 border-slate-700 backdrop-blur-sm shadow-2xl shadow-purple-500/10 mb-12">
+          <HorizontalDragContainer 
+            className="h-full"
+            showNavigation={true}
+          >
+            {gamePanels}
+          </HorizontalDragContainer>
+        </div>
+
+        {/* Enhanced CTA */}
         <div className="text-center">
           <Link 
             to="/game-development" 
-            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 font-bold transition-all duration-300 space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-black px-8 py-4 text-base font-black transition-all duration-300 space-x-3 shadow-lg hover:shadow-purple-500/25 hover:scale-105"
           >
-            <Play className="w-4 h-4" />
-            <span className="tracking-wide">EXPLORE ALL GAMES</span>
-            <ArrowRight className="w-4 h-4" />
+            <Trophy className="w-6 h-6" />
+            <span>EXPLORE ALL GAMES</span>
           </Link>
         </div>
       </div>
