@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 interface Particle {
@@ -44,31 +43,31 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       colors: ['#10b981', '#059669', '#047857', '#34d399'],
       glowColor: 'rgba(16, 185, 129, 0.4)',
       trailColor: 'rgba(16, 185, 129, 0.6)',
-      magnetism: 1.2
+      magnetism: 2.5 // Increased for more responsiveness
     },
     blue: {
       colors: ['#3b82f6', '#2563eb', '#1d4ed8', '#60a5fa'],
       glowColor: 'rgba(59, 130, 246, 0.4)',
       trailColor: 'rgba(59, 130, 246, 0.6)',
-      magnetism: 1.0
+      magnetism: 2.2 // Increased
     },
     green: {
       colors: ['#22c55e', '#16a34a', '#15803d', '#4ade80'],
       glowColor: 'rgba(34, 197, 94, 0.4)',
       trailColor: 'rgba(34, 197, 94, 0.6)',
-      magnetism: 1.3
+      magnetism: 2.8 // Increased
     },
     orange: {
       colors: ['#f97316', '#ea580c', '#dc2626', '#fb923c'],
       glowColor: 'rgba(249, 115, 22, 0.4)',
       trailColor: 'rgba(249, 115, 22, 0.6)',
-      magnetism: 1.4
+      magnetism: 3.0 // Most responsive
     },
     purple: {
       colors: ['#a855f7', '#9333ea', '#7c3aed', '#c084fc'],
       glowColor: 'rgba(168, 85, 247, 0.4)',
       trailColor: 'rgba(168, 85, 247, 0.6)',
-      magnetism: 1.1
+      magnetism: 2.4 // Increased
     }
   };
 
@@ -98,8 +97,8 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       id: Math.random(),
       x: x ?? Math.random() * canvas.width,
       y: y ?? Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 1.5,
-      vy: (Math.random() - 0.5) * 1.5,
+      vx: (Math.random() - 0.5) * 3.5, // Increased base speed
+      vy: (Math.random() - 0.5) * 3.5, // Increased base speed
       size,
       originalSize: size,
       color: colors[Math.floor(Math.random() * colors.length)],
@@ -117,14 +116,14 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     particlesRef.current = Array.from({ length: particleCount }, () => createParticle());
   }, [particleCount, createParticle]);
 
-  // Optimized update function with spatial partitioning concept
+  // Optimized update function with faster interactions
   const updateParticles = useCallback((deltaTime: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const mouse = mouseRef.current;
     const config = configRef.current;
-    const dt = Math.min(deltaTime * 0.06, 1); // Normalized delta time
+    const dt = Math.min(deltaTime * 0.08, 1.2); // Increased time multiplier for faster movement
     
     const particles = particlesRef.current;
     const particleCount = particles.length;
@@ -134,7 +133,7 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       const particle = particles[i];
       if (!particle.isActive) continue;
 
-      // Optimized mouse interaction - only calculate when mouse is over
+      // Faster mouse interaction with increased responsiveness
       if (mouse.isOver) {
         const dx = mouse.x - particle.x;
         const dy = mouse.y - particle.y;
@@ -143,56 +142,56 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         if (distanceSquared < interactionRadiusSquared.current) {
           const distance = Math.sqrt(distanceSquared);
           const normalizedDistance = distance / 100; // Normalize to 0-1
-          const force = (1 - normalizedDistance) * normalizedDistance; // Smooth falloff
+          const force = (1 - normalizedDistance) * normalizedDistance * 1.8; // Increased force multiplier
           const magnetism = config.magnetism;
           
-          // Enhanced swirling motion with time-based variation
-          const time = Date.now() * 0.001;
-          const swirl = Math.sin(time + i * 0.5) * 0.3;
+          // Enhanced swirling motion with faster time-based variation
+          const time = Date.now() * 0.003; // Increased time multiplier
+          const swirl = Math.sin(time + i * 0.8) * 0.6; // Increased swirl intensity
           const angle = Math.atan2(dy, dx) + swirl;
           
-          const forceMultiplier = force * magnetism * dt * 0.15;
+          const forceMultiplier = force * magnetism * dt * 0.25; // Increased force application
           particle.vx += Math.cos(angle) * forceMultiplier;
           particle.vy += Math.sin(angle) * forceMultiplier;
           
-          // Smooth energy and size transitions
-          const energyBoost = force * 20;
-          particle.energy = Math.min(particle.energy + energyBoost, 120);
-          particle.size = particle.originalSize * (1 + force * 1.2);
-          particle.opacity = Math.min(particle.opacity + force * 0.4, 1);
+          // Faster energy and size transitions
+          const energyBoost = force * 35; // Increased energy boost
+          particle.energy = Math.min(particle.energy + energyBoost, 150);
+          particle.size = particle.originalSize * (1 + force * 1.8); // More dramatic size changes
+          particle.opacity = Math.min(particle.opacity + force * 0.6, 1);
           
-          // Reduced sparkle generation - less frequent but more impactful
-          if (distance < 40 && Math.random() < 0.02 && particles.length < particleCount * 1.3) {
+          // Enhanced sparkle generation - more frequent and dynamic
+          if (distance < 50 && Math.random() < 0.04 && particles.length < particleCount * 1.4) {
             particles.push(createParticle(
-              particle.x + (Math.random() - 0.5) * 15,
-              particle.y + (Math.random() - 0.5) * 15
+              particle.x + (Math.random() - 0.5) * 20,
+              particle.y + (Math.random() - 0.5) * 20
             ));
           }
         }
       }
 
-      // Optimized physics with improved friction
+      // Enhanced physics with better momentum
       particle.x += particle.vx * dt;
       particle.y += particle.vy * dt;
-      particle.vx *= 0.96; // Better friction
-      particle.vy *= 0.96;
+      particle.vx *= 0.94; // Less friction for more fluid movement
+      particle.vy *= 0.94;
 
-      // Efficient boundary collision with energy conservation
+      // Efficient boundary collision with better energy conservation
       const radius = particle.size;
       if (particle.x <= radius) {
         particle.x = radius;
-        particle.vx = Math.abs(particle.vx) * 0.7;
+        particle.vx = Math.abs(particle.vx) * 0.8; // More bouncy
       } else if (particle.x >= canvas.width - radius) {
         particle.x = canvas.width - radius;
-        particle.vx = -Math.abs(particle.vx) * 0.7;
+        particle.vx = -Math.abs(particle.vx) * 0.8;
       }
       
       if (particle.y <= radius) {
         particle.y = radius;
-        particle.vy = Math.abs(particle.vy) * 0.7;
+        particle.vy = Math.abs(particle.vy) * 0.8;
       } else if (particle.y >= canvas.height - radius) {
         particle.y = canvas.height - radius;
-        particle.vy = -Math.abs(particle.vy) * 0.7;
+        particle.vy = -Math.abs(particle.vy) * 0.8;
       }
 
       // Lifecycle management
@@ -409,7 +408,7 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${
+      className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
         isActive ? 'opacity-100' : 'opacity-85'
       }`}
       style={{ 

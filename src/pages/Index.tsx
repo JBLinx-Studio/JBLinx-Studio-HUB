@@ -1,15 +1,18 @@
 import React, { useRef } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import GamesSection from '../components/GamesSection';
-import ProductsShowcase from '../components/ProductsShowcase';
-import WebAppsSection from '../components/WebAppsSection';
-import DeveloperTools from '../components/DeveloperTools';
-import Services from '../components/Services';
-import Contact from '../components/Contact';
-import Footer from '../components/Footer';
 import ParallaxBackground from '../components/effects/ParallaxBackground';
 import InteractiveParticles from '../components/effects/InteractiveParticles';
+import LazySection from '../components/common/LazySection';
+
+// Lazy load heavy components
+const GamesSection = React.lazy(() => import('../components/GamesSection'));
+const ProductsShowcase = React.lazy(() => import('../components/ProductsShowcase'));
+const WebAppsSection = React.lazy(() => import('../components/WebAppsSection'));
+const DeveloperTools = React.lazy(() => import('../components/DeveloperTools'));
+const Services = React.lazy(() => import('../components/Services'));
+const Contact = React.lazy(() => import('../components/Contact'));
+const Footer = React.lazy(() => import('../components/Footer'));
 
 const Index = () => {
   // Refs for particle containers
@@ -31,7 +34,11 @@ const Index = () => {
           <Hero />
           
           {/* Enhanced Services Overview */}
-          <Services />
+          <React.Suspense fallback={<div className="h-96 bg-slate-950/50 animate-pulse" />}>
+            <LazySection>
+              <Services />
+            </LazySection>
+          </React.Suspense>
           
           {/* Professional Page Break 1 - Services to Games - Portal Effect */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
@@ -42,7 +49,7 @@ const Index = () => {
             >
               <InteractiveParticles 
                 theme="emerald" 
-                particleCount={80}
+                particleCount={25}
                 containerRef={portal1Ref}
               />
             </div>
@@ -100,9 +107,11 @@ const Index = () => {
           </div>
           
           {/* PRIORITY 1: GAMERS */}
-          <div className="animate-fade-in">
-            <GamesSection />
-          </div>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
+            <LazySection className="animate-fade-in">
+              <GamesSection />
+            </LazySection>
+          </React.Suspense>
           
           {/* Professional Page Break 2 - Games to Products - Vortex Effect */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
@@ -173,9 +182,11 @@ const Index = () => {
           </div>
           
           {/* PRIORITY 2: GENERAL PRODUCTS */}
-          <div className="animate-fade-in">
-            <ProductsShowcase />
-          </div>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
+            <LazySection className="animate-fade-in">
+              <ProductsShowcase />
+            </LazySection>
+          </React.Suspense>
           
           {/* Professional Page Break 3 - Products to Web Apps - Matrix Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
@@ -249,9 +260,11 @@ const Index = () => {
           </div>
           
           {/* PRIORITY 3: APP USERS */}
-          <div className="animate-fade-in">
-            <WebAppsSection />
-          </div>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
+            <LazySection className="animate-fade-in">
+              <WebAppsSection />
+            </LazySection>
+          </React.Suspense>
           
           {/* Professional Page Break 4 - Web Apps to Developer Tools - Fire Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
@@ -324,9 +337,11 @@ const Index = () => {
           </div>
           
           {/* PRIORITY 4: DEVELOPERS */}
-          <div className="animate-fade-in">
-            <DeveloperTools />
-          </div>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
+            <LazySection className="animate-fade-in">
+              <DeveloperTools />
+            </LazySection>
+          </React.Suspense>
           
           {/* Professional Page Break 5 - Developer Tools to Contact - Cosmic Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
@@ -398,11 +413,15 @@ const Index = () => {
           </div>
           
           {/* Contact Section */}
-          <div className="animate-fade-in">
-            <Contact />
-          </div>
+          <React.Suspense fallback={<div className="h-[400px] bg-slate-950/50 animate-pulse" />}>
+            <LazySection className="animate-fade-in">
+              <Contact />
+            </LazySection>
+          </React.Suspense>
         </main>
-        <Footer />
+        <React.Suspense fallback={<div className="h-32 bg-slate-950/50 animate-pulse" />}>
+          <Footer />
+        </React.Suspense>
       </div>
     </div>
   );
