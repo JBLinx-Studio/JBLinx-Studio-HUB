@@ -1,11 +1,11 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import ParallaxBackground from '../components/effects/ParallaxBackground';
 import InteractiveParticles from '../components/effects/InteractiveParticles';
 import LazySection from '../components/common/LazySection';
 
-// Lazy load heavy components with better chunking
+// Lazy load heavy components
 const GamesSection = React.lazy(() => import('../components/GamesSection'));
 const ProductsShowcase = React.lazy(() => import('../components/ProductsShowcase'));
 const WebAppsSection = React.lazy(() => import('../components/WebAppsSection'));
@@ -14,84 +14,13 @@ const Services = React.lazy(() => import('../components/Services'));
 const Contact = React.lazy(() => import('../components/Contact'));
 const Footer = React.lazy(() => import('../components/Footer'));
 
-// Optimized fallback component
-const OptimizedFallback = React.memo(({ height = "h-96" }: { height?: string }) => (
-  <div className={`${height} bg-slate-950/50 animate-pulse rounded-lg`} />
-));
-
 const Index = () => {
-  // Memoized refs to prevent re-creation
-  const portalRefs = useMemo(() => ({
-    portal1: useRef<HTMLDivElement>(null),
-    portal2: useRef<HTMLDivElement>(null),
-    portal3: useRef<HTMLDivElement>(null),
-    portal4: useRef<HTMLDivElement>(null),
-    portal5: useRef<HTMLDivElement>(null),
-  }), []);
-
-  // Memoized portal configurations
-  const portalConfigs = useMemo(() => [
-    {
-      theme: 'emerald' as const,
-      particleCount: 25,
-      ref: portalRefs.portal1,
-      title: 'GAMING UNIVERSE',
-      cursor: 'cursor-crosshair'
-    },
-    {
-      theme: 'blue' as const,
-      particleCount: 75,
-      ref: portalRefs.portal2,
-      title: 'PRODUCT SHOWCASE',
-      cursor: 'cursor-move'
-    },
-    {
-      theme: 'green' as const,
-      particleCount: 90,
-      ref: portalRefs.portal3,
-      title: 'WEB APPLICATIONS',
-      cursor: 'cursor-grab active:cursor-grabbing'
-    },
-    {
-      theme: 'orange' as const,
-      particleCount: 85,
-      ref: portalRefs.portal4,
-      title: 'DEVELOPER MATRIX',
-      cursor: 'cursor-cell'
-    },
-    {
-      theme: 'purple' as const,
-      particleCount: 70,
-      ref: portalRefs.portal5,
-      title: 'CONTACT TERMINAL',
-      cursor: 'cursor-zoom-in'
-    }
-  ], [portalRefs]);
-
-  // Memoized portal break component to reduce duplication
-  const PortalBreak = React.memo(({ 
-    config, 
-    index, 
-    children 
-  }: { 
-    config: typeof portalConfigs[0]; 
-    index: number; 
-    children: React.ReactNode; 
-  }) => (
-    <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
-      <div 
-        ref={config.ref}
-        className={`absolute inset-0 pointer-events-auto ${config.cursor}`}
-      >
-        <InteractiveParticles 
-          theme={config.theme} 
-          particleCount={config.particleCount}
-          containerRef={config.ref}
-        />
-      </div>
-      {children}
-    </div>
-  ));
+  // Refs for particle containers
+  const portal1Ref = useRef<HTMLDivElement>(null);
+  const portal2Ref = useRef<HTMLDivElement>(null);
+  const portal3Ref = useRef<HTMLDivElement>(null);
+  const portal4Ref = useRef<HTMLDivElement>(null);
+  const portal5Ref = useRef<HTMLDivElement>(null);
 
   return (
     <div className="min-h-screen bg-slate-950 overflow-x-hidden relative">
@@ -105,14 +34,26 @@ const Index = () => {
           <Hero />
           
           {/* Enhanced Services Overview */}
-          <React.Suspense fallback={<OptimizedFallback />}>
+          <React.Suspense fallback={<div className="h-96 bg-slate-950/50 animate-pulse" />}>
             <LazySection>
               <Services />
             </LazySection>
           </React.Suspense>
           
-          {/* Portal Break 1 - Emerald Gaming */}
-          <PortalBreak config={portalConfigs[0]} index={0}>
+          {/* Professional Page Break 1 - Services to Games - Portal Effect */}
+          <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer with proper container */}
+            <div 
+              ref={portal1Ref}
+              className="absolute inset-0 pointer-events-auto cursor-crosshair" 
+            >
+              <InteractiveParticles 
+                theme="emerald" 
+                particleCount={25}
+                containerRef={portal1Ref}
+              />
+            </div>
+
             {/* Enhanced Deep Portal Background with interactive elements */}
             <div className="absolute inset-0 pointer-events-none">
               {/* Multi-layered depth effect */}
@@ -147,7 +88,7 @@ const Index = () => {
                 <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent animate-pulse hover:via-emerald-300/80 transition-all duration-500"></div>
                 <div className="px-6 py-3 bg-zinc-800/95 border border-emerald-500/30 backdrop-blur-sm rounded-sm hover:border-emerald-400/50 hover:bg-zinc-700/95 transition-all duration-300 cursor-pointer group">
                   <div className="text-emerald-400 font-mono text-sm font-black tracking-widest group-hover:text-emerald-300 transition-colors">
-                    {portalConfigs[0].title}
+                    GAMING UNIVERSE
                   </div>
                 </div>
                 <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent animate-pulse hover:via-emerald-300/80 transition-all duration-500 delay-500"></div>
@@ -163,17 +104,29 @@ const Index = () => {
                 ))}
               </div>
             </div>
-          </PortalBreak>
+          </div>
           
           {/* PRIORITY 1: GAMERS */}
-          <React.Suspense fallback={<OptimizedFallback height="h-[600px]" />}>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
             <LazySection className="animate-fade-in">
               <GamesSection />
             </LazySection>
           </React.Suspense>
           
-          {/* Portal Break 2 - Blue Products */}
-          <PortalBreak config={portalConfigs[1]} index={1}>
+          {/* Professional Page Break 2 - Games to Products - Vortex Effect */}
+          <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div 
+              ref={portal2Ref}
+              className="absolute inset-0 pointer-events-auto cursor-move"
+            >
+              <InteractiveParticles 
+                theme="blue" 
+                particleCount={75}
+                containerRef={portal2Ref}
+              />
+            </div>
+
             {/* Enhanced Vortex Portal Background */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-conic from-blue-950/40 via-transparent to-cyan-950/40"></div>
@@ -210,7 +163,7 @@ const Index = () => {
                 
                 <div className="px-8 py-4 bg-zinc-800/95 border border-blue-500/30 backdrop-blur-sm rounded-sm">
                   <div className="text-blue-400 font-mono text-sm font-black tracking-widest">
-                    {portalConfigs[1].title}
+                    PRODUCT SHOWCASE
                   </div>
                 </div>
                 
@@ -226,17 +179,29 @@ const Index = () => {
                 ))}
               </div>
             </div>
-          </PortalBreak>
+          </div>
           
           {/* PRIORITY 2: GENERAL PRODUCTS */}
-          <React.Suspense fallback={<OptimizedFallback height="h-[600px]" />}>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
             <LazySection className="animate-fade-in">
               <ProductsShowcase />
             </LazySection>
           </React.Suspense>
           
-          {/* Portal Break 3 - Green Web Apps */}
-          <PortalBreak config={portalConfigs[2]} index={2}>
+          {/* Professional Page Break 3 - Products to Web Apps - Matrix Portal */}
+          <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div 
+              ref={portal3Ref}
+              className="absolute inset-0 pointer-events-auto cursor-grab active:cursor-grabbing"
+            >
+              <InteractiveParticles 
+                theme="green" 
+                particleCount={90}
+                containerRef={portal3Ref}
+              />
+            </div>
+
             {/* Enhanced Matrix-style Portal */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-radial from-green-950/30 via-transparent to-zinc-950"></div>
@@ -276,7 +241,7 @@ const Index = () => {
                 
                 <div className="px-8 py-4 bg-zinc-800/95 border border-green-500/30 backdrop-blur-sm rounded-sm">
                   <div className="text-green-400 font-mono text-sm font-black tracking-widest">
-                    {portalConfigs[2].title}
+                    WEB APPLICATIONS
                   </div>
                 </div>
                 
@@ -292,17 +257,29 @@ const Index = () => {
                 ))}
               </div>
             </div>
-          </PortalBreak>
+          </div>
           
           {/* PRIORITY 3: APP USERS */}
-          <React.Suspense fallback={<OptimizedFallback height="h-[600px]" />}>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
             <LazySection className="animate-fade-in">
               <WebAppsSection />
             </LazySection>
           </React.Suspense>
           
-          {/* Portal Break 4 - Orange Developer Tools */}
-          <PortalBreak config={portalConfigs[3]} index={3}>
+          {/* Professional Page Break 4 - Web Apps to Developer Tools - Fire Portal */}
+          <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div 
+              ref={portal4Ref}
+              className="absolute inset-0 pointer-events-auto cursor-cell"
+            >
+              <InteractiveParticles 
+                theme="orange" 
+                particleCount={85}
+                containerRef={portal4Ref}
+              />
+            </div>
+
             {/* Enhanced Fire/Energy Portal */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-radial from-orange-950/40 via-red-950/30 to-zinc-950"></div>
@@ -341,7 +318,7 @@ const Index = () => {
                 
                 <div className="px-8 py-4 bg-zinc-800/95 border border-orange-500/30 backdrop-blur-sm rounded-sm">
                   <div className="text-orange-400 font-mono text-sm font-black tracking-widest">
-                    {portalConfigs[3].title}
+                    DEVELOPER MATRIX
                   </div>
                 </div>
                 
@@ -357,17 +334,29 @@ const Index = () => {
                 ))}
               </div>
             </div>
-          </PortalBreak>
+          </div>
           
           {/* PRIORITY 4: DEVELOPERS */}
-          <React.Suspense fallback={<OptimizedFallback height="h-[600px]" />}>
+          <React.Suspense fallback={<div className="h-[600px] bg-slate-950/50 animate-pulse" />}>
             <LazySection className="animate-fade-in">
               <DeveloperTools />
             </LazySection>
           </React.Suspense>
           
-          {/* Portal Break 5 - Purple Contact */}
-          <PortalBreak config={portalConfigs[4]} index={4}>
+          {/* Professional Page Break 5 - Developer Tools to Contact - Cosmic Portal */}
+          <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div 
+              ref={portal5Ref}
+              className="absolute inset-0 pointer-events-auto cursor-zoom-in"
+            >
+              <InteractiveParticles 
+                theme="purple" 
+                particleCount={70}
+                containerRef={portal5Ref}
+              />
+            </div>
+
             {/* Enhanced Cosmic Portal with Galaxy Effect */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-radial from-purple-950/30 via-indigo-950/25 to-zinc-950"></div>
@@ -405,7 +394,7 @@ const Index = () => {
                 
                 <div className="px-10 py-5 bg-zinc-800/95 border border-purple-500/30 backdrop-blur-sm rounded-sm">
                   <div className="text-purple-400 font-mono text-sm font-black tracking-widest">
-                    {portalConfigs[4].title}
+                    CONTACT TERMINAL
                   </div>
                 </div>
                 
@@ -421,16 +410,16 @@ const Index = () => {
                 ))}
               </div>
             </div>
-          </PortalBreak>
+          </div>
           
           {/* Contact Section */}
-          <React.Suspense fallback={<OptimizedFallback height="h-[400px]" />}>
+          <React.Suspense fallback={<div className="h-[400px] bg-slate-950/50 animate-pulse" />}>
             <LazySection className="animate-fade-in">
               <Contact />
             </LazySection>
           </React.Suspense>
         </main>
-        <React.Suspense fallback={<OptimizedFallback height="h-32" />}>
+        <React.Suspense fallback={<div className="h-32 bg-slate-950/50 animate-pulse" />}>
           <Footer />
         </React.Suspense>
       </div>
