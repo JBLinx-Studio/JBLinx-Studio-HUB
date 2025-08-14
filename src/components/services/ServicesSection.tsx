@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, Gamepad2, Code, Database, Smartphone, Zap, Star, Users, Trophy, Activity, Hexagon } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -82,7 +83,7 @@ const ServicesSection = () => {
     }, {
       icon: Star,
       value: "4.9/5",
-      label: "Average Rating",
+      label: "Average Rating", 
       color: "text-purple-400"
     }, {
       icon: Users,
@@ -98,7 +99,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-24 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 py-16 overflow-hidden">
       {/* Enhanced paradoxical background effects */}
       <div className="absolute inset-0 pointer-events-none opacity-60">
         {/* Primary ambient lighting with paradoxical movement */}
