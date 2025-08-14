@@ -15,20 +15,20 @@ interface ServiceFiltersProps {
 
 const ServiceFilters: React.FC<ServiceFiltersProps> = ({ options, activeFilter, onFilterChange }) => {
   return (
-    <div className="flex flex-wrap justify-center gap-6 mb-20">
+    <div className="flex flex-wrap justify-center gap-4 mb-16">
       {options.map((option) => (
         <button
           key={option.id}
           onClick={() => onFilterChange(option.id)}
-          className={`px-8 py-4 rounded-full font-bold transition-all duration-300 border-2 font-mono tracking-wider ${
+          className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 border-2 ${
             activeFilter === option.id
-              ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-zinc-950 border-transparent shadow-2xl scale-105'
-              : 'bg-zinc-800/50 text-cream-dark border-zinc-700 hover:border-orange-400/50 hover:text-cream hover:bg-zinc-700/50 backdrop-blur-sm'
+              ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white border-transparent shadow-lg'
+              : 'bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:text-blue-600'
           }`}
         >
           {option.label}
-          <span className={`ml-3 text-sm font-mono ${
-            activeFilter === option.id ? 'text-zinc-800' : 'text-zinc-500'
+          <span className={`ml-2 text-sm ${
+            activeFilter === option.id ? 'text-blue-100' : 'text-gray-500'
           }`}>
             ({option.count})
           </span>

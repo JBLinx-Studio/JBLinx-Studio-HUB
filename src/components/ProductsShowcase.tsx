@@ -1,301 +1,434 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Code, Book, Smartphone, Zap, Filter, Grid3X3, List, Eye, Star, Download, Users, Package, ShoppingCart } from 'lucide-react';
+import { ArrowRight, Code, Book, Zap, Download, Star, Users, TrendingUp, Smartphone, Database, Monitor, Globe, ShoppingCart, Package, Layers, FileCode, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import ProductCard from './products/ProductCard';
-import ProductFilters from './products/ProductFilters';
 
 const ProductsShowcase = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [layoutType, setLayoutType] = useState<'grid' | 'list' | 'featured'>('grid');
-  const [sortBy, setSortBy] = useState('popular');
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const productCategories = ['All', 'Templates', 'eBooks', 'Mobile Apps', 'Tools'];
 
   const products = [
     {
-      name: "CodeCraft Pro Template",
+      name: "React SaaS Starter Kit",
       category: "Web Templates",
       type: "template",
-      downloads: "15.2k",
+      downloads: "12.5k",
       rating: "4.9",
-      price: "$79",
-      tech: "React",
-      description: "Professional React dashboard template with 50+ components and dark/light themes for modern web applications.",
-      features: ["50+ Components", "Dark/Light Theme", "Responsive Design", "TypeScript Support"],
-      color: "emerald",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
-      tags: ["Dashboard", "Admin", "React"],
-      lastUpdated: "2024-01-10",
-      version: "v2.1.4"
+      price: "$49.99",
+      tech: "React + TypeScript",
+      description: "Complete SaaS template with auth, billing, dashboard",
+      features: ["JWT Auth", "Stripe Integration", "Admin Dashboard", "Responsive Design"],
+      icon: Code,
+      color: "from-blue-500 to-cyan-500",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=200&fit=crop"
     },
     {
-      name: "Mobile UI Kit Pro",
-      category: "Mobile Development",
-      type: "mobile",
-      downloads: "8.7k",
+      name: "FastAPI Production Kit",
+      category: "Backend Templates", 
+      type: "template",
+      downloads: "8.3k",
       rating: "4.8",
-      price: "$59",
-      tech: "Flutter",
-      description: "Complete Flutter UI kit with 100+ screens and components for building beautiful mobile applications.",
-      features: ["100+ Screens", "Custom Widgets", "Animation Library", "Cross-platform"],
-      color: "blue",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop",
-      tags: ["Flutter", "Mobile", "UI Kit"],
-      lastUpdated: "2024-01-08",
-      version: "v1.8.2"
+      price: "$39.99",
+      tech: "Python + FastAPI",
+      description: "Production-ready FastAPI with MySQL, Redis, Docker",
+      features: ["JWT Auth", "Database ORM", "API Docs", "Docker Ready"],
+      icon: Database,
+      color: "from-green-500 to-emerald-500",
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop"
     },
     {
-      name: "DevOps Mastery Guide",
-      category: "E-books",
-      type: "ebook",
-      downloads: "12.1k",
+      name: "Flutter Cross-Platform Kit",
+      category: "Mobile Templates",
+      type: "template", 
+      downloads: "6.7k",
       rating: "4.9",
-      price: "$29",
-      tech: "PDF",
-      description: "Comprehensive 300-page guide covering DevOps practices, CI/CD, and cloud deployment strategies.",
-      features: ["300+ Pages", "Practical Examples", "Case Studies", "Bonus Resources"],
-      color: "purple",
-      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop",
-      tags: ["DevOps", "Cloud", "Tutorial"],
-      lastUpdated: "2024-01-05",
-      version: "v3.0"
+      price: "$44.99",
+      tech: "Flutter + Dart",
+      description: "Complete mobile template with Firebase integration",
+      features: ["Firebase Auth", "Push Notifications", "Offline Support", "Material Design"],
+      icon: Smartphone,
+      color: "from-purple-500 to-pink-500",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop"
     },
     {
-      name: "API Testing Toolkit",
+      name: "Full Stack Development Bible",
+      category: "Programming eBooks",
+      type: "ebook",
+      downloads: "15.2k",
+      rating: "5.0", 
+      price: "$29.99",
+      tech: "500+ Pages",
+      description: "Ultimate guide covering React, Node.js, databases",
+      features: ["16 Chapters", "Code Examples", "Video Supplements", "Project Templates"],
+      icon: Book,
+      color: "from-orange-500 to-red-500",
+      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=200&fit=crop"
+    },
+    {
+      name: "TaskFlow Pro Mobile",
+      category: "Productivity Apps",
+      type: "mobile",
+      downloads: "25.1k",
+      rating: "4.8",
+      price: "$4.99",
+      tech: "iOS + Android",
+      description: "Premium task management with team collaboration",
+      features: ["Real-time Collaboration", "Team Workspaces", "Offline Mode", "Smart Notifications"],
+      icon: Smartphone,
+      color: "from-blue-500 to-purple-500",
+      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=200&fit=crop"
+    },
+    {
+      name: "API Documentation Generator",
       category: "Developer Tools",
       type: "tool",
-      downloads: "6.3k",
-      rating: "4.7",
-      price: "$49",
-      tech: "Python",
-      description: "Advanced API testing suite with automated test generation and comprehensive reporting features.",
-      features: ["Auto Test Gen", "REST/GraphQL", "CI/CD Integration", "Detailed Reports"],
-      color: "orange",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
-      tags: ["API", "Testing", "Automation"],
-      lastUpdated: "2024-01-12",
-      version: "v1.5.1"
-    },
-    {
-      name: "E-commerce Template Suite",
-      category: "Web Templates",
-      type: "template", 
-      downloads: "9.8k",
-      rating: "4.8",
-      price: "$99",
-      tech: "Vue.js",
-      description: "Complete e-commerce solution with payment integration, inventory management, and modern design.",
-      features: ["Payment Gateway", "Inventory System", "Admin Panel", "Mobile Ready"],
-      color: "green",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
-      tags: ["E-commerce", "Vue", "Full-stack"],
-      lastUpdated: "2024-01-09",
-      version: "v2.3.0"
-    },
-    {
-      name: "Cloud Architecture Guide",
-      category: "E-books",
-      type: "ebook",
-      downloads: "7.4k",
+      downloads: "9.4k",
       rating: "4.9",
-      price: "$39",
-      tech: "PDF",
-      description: "Expert-level guide to designing scalable cloud architectures with AWS, Azure, and GCP examples.",
-      features: ["Multi-cloud Focus", "Architecture Patterns", "Best Practices", "Implementation Guide"],
-      color: "cyan",
-      image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop",
-      tags: ["Cloud", "Architecture", "AWS"],
-      lastUpdated: "2024-01-07",
-      version: "v2.1"
+      price: "$24.99",
+      tech: "Node.js CLI",
+      description: "Auto-generate beautiful, interactive API documentation",
+      features: ["Auto-Generation", "Export Formats", "Custom Themes", "One-Click Deploy"],
+      icon: Zap,
+      color: "from-yellow-500 to-orange-500",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=200&fit=crop"
     }
   ];
 
-  const categories = [
-    { id: 'all', name: 'All Products', count: products.length, icon: Package },
-    { id: 'templates', name: 'Web Templates', count: products.filter(p => p.category === 'Web Templates').length, icon: Code },
-    { id: 'mobile', name: 'Mobile Dev', count: products.filter(p => p.category === 'Mobile Development').length, icon: Smartphone },
-    { id: 'ebooks', name: 'E-books', count: products.filter(p => p.category === 'E-books').length, icon: Book },
-    { id: 'tools', name: 'Dev Tools', count: products.filter(p => p.category === 'Developer Tools').length, icon: Zap }
-  ];
+  const filteredProducts = activeCategory === 'All' 
+    ? products
+    : activeCategory === 'Templates'
+    ? products.filter(p => p.type === 'template')
+    : activeCategory === 'eBooks' 
+    ? products.filter(p => p.type === 'ebook')
+    : activeCategory === 'Mobile Apps'
+    ? products.filter(p => p.type === 'mobile')
+    : activeCategory === 'Tools'
+    ? products.filter(p => p.type === 'tool')
+    : products;
 
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(product => {
-        switch(selectedCategory) {
-          case 'templates': return product.category === 'Web Templates';
-          case 'mobile': return product.category === 'Mobile Development';
-          case 'ebooks': return product.category === 'E-books';
-          case 'tools': return product.category === 'Developer Tools';
-          default: return true;
-        }
-      });
-
-  const totalStats = {
-    products: products.length,
-    downloads: products.reduce((sum, p) => sum + parseFloat(p.downloads.replace('k', '')) * 1000, 0),
-    avgRating: (products.reduce((sum, p) => sum + parseFloat(p.rating), 0) / products.length).toFixed(1),
-    categories: categories.length - 1
-  };
-
-  return (
-    <section className="py-16 bg-zinc-950 border-t border-zinc-800">
-      <div className="container mx-auto px-4">
-        {/* Enhanced Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
-            <Package className="w-4 h-4 mr-2 text-purple-400" />
-            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">PRIORITY #2: DEVELOPER PRODUCTS</span>
-          </div>
-          
-          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
-            PREMIUM <span className="text-purple-400">DEVELOPER PRODUCTS</span> + <span className="text-cyan-400">DIGITAL ASSETS</span>
-          </h2>
-          
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-400 to-cyan-500 mx-auto mb-4"></div>
-          
-          <p className="text-base text-zinc-400 max-w-2xl mx-auto">
-            Professional templates, mobile UI kits, developer tools, and comprehensive guides for modern development workflows
-          </p>
-        </div>
-
-        {/* Dashboard Layout */}
-        <div className="grid lg:grid-cols-12 gap-6 mb-8">
-          {/* Left Sidebar: Categories & Stats */}
-          <div className="lg:col-span-3 space-y-4">
-            {/* Categories Panel */}
-            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
-              <div className="flex items-center space-x-3 mb-4">
-                <Filter className="w-5 h-5 text-purple-400" />
-                <h3 className="text-purple-400 font-black text-lg font-mono">CATEGORIES</h3>
-              </div>
-              
-              <div className="space-y-2">
-                {categories.map((category) => {
-                  const IconComponent = category.icon;
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => setSelectedCategory(category.id)}
-                      className={`w-full text-left p-3 border transition-all duration-300 ${
-                        selectedCategory === category.id
-                          ? 'border-purple-400/50 bg-purple-400/10 text-purple-300'
-                          : 'border-zinc-600 bg-zinc-800/50 text-zinc-300 hover:border-zinc-500 hover:bg-zinc-700/50'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <IconComponent className={`w-4 h-4 ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-400'}`} />
-                          <span className="font-bold text-sm">{category.name}</span>
+  // Unique presentation for each category
+  const renderCategoryContent = () => {
+    if (activeCategory === 'Templates') {
+      // Code-focused layout for templates
+      return (
+        <div className="space-y-4">
+          {filteredProducts.map((product, index) => {
+            const IconComponent = product.icon;
+            return (
+              <div key={index} className="bg-slate-800/90 border border-slate-700 hover:border-cyan-400/60 transition-all duration-300 p-4">
+                <div className="flex items-start space-x-4">
+                  <div className="w-20 h-20 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
+                    <IconComponent className="w-10 h-10 text-cyan-400" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-white font-black text-base font-mono">{product.name}</h3>
+                      <div className="text-green-400 font-black text-lg">{product.price}</div>
+                    </div>
+                    <div className="text-cyan-400 text-sm font-bold mb-2">{product.category}</div>
+                    <p className="text-slate-300 text-sm mb-3">{product.description}</p>
+                    <div className="grid grid-cols-2 gap-2 mb-3">
+                      {product.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center space-x-1 text-xs text-slate-400">
+                          <Code className="w-3 h-3 text-cyan-400 flex-shrink-0" />
+                          <span>{feature}</span>
                         </div>
-                        <span className={`text-xs font-black ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-500'}`}>
-                          {category.count}
-                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-1 text-xs text-slate-400">
+                          <Download className="w-3 h-3" />
+                          <span>{product.downloads}</span>
+                        </div>
+                        <div className="flex items-center space-x-1 text-xs text-slate-400">
+                          <Star className="w-3 h-3 text-yellow-400" />
+                          <span>{product.rating}</span>
+                        </div>
+                        <div className="text-cyan-400 text-xs font-bold">{product.tech}</div>
                       </div>
-                    </button>
-                  );
-                })}
+                      <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 font-black text-xs transition-all duration-300">
+                        GET TEMPLATE
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    if (activeCategory === 'eBooks') {
+      // Book-focused layout
+      return (
+        <div className="grid lg:grid-cols-2 gap-6">
+          {filteredProducts.map((product, index) => (
+            <div key={index} className="bg-gradient-to-br from-slate-800/90 to-slate-700/50 border border-slate-600 hover:border-orange-400/60 transition-all duration-300 p-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-16 h-20 bg-gradient-to-b from-orange-500/30 to-red-500/30 flex items-center justify-center">
+                  <Book className="w-8 h-8 text-orange-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-white font-black text-lg font-mono mb-2">{product.name}</h3>
+                  <div className="text-orange-400 text-sm font-bold mb-2">{product.category}</div>
+                  <p className="text-slate-300 text-sm mb-4">{product.description}</p>
+                  <div className="grid grid-cols-2 gap-1 mb-4">
+                    {product.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-center space-x-1 text-xs text-slate-400">
+                        <BookOpen className="w-3 h-3 text-orange-400 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-1 text-xs text-slate-400">
+                        <Download className="w-3 h-3" />
+                        <span>{product.downloads}</span>
+                      </div>
+                      <div className="flex items-center space-x-1 text-xs text-slate-400">
+                        <Star className="w-3 h-3 text-yellow-400" />
+                        <span>{product.rating}</span>
+                      </div>
+                      <div className="text-orange-400 text-xs font-bold">{product.tech}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-green-400 font-black text-lg mb-1">{product.price}</div>
+                      <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 font-black text-xs transition-all duration-300">
+                        BUY EBOOK
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
+      );
+    }
 
-            {/* Stats Panel */}
-            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
-              <div className="flex items-center space-x-3 mb-4">
-                <Star className="w-5 h-5 text-yellow-400" />
-                <h3 className="text-yellow-400 font-black text-base font-mono">PORTFOLIO STATS</h3>
+    if (activeCategory === 'Mobile Apps') {
+      // Mobile-focused layout
+      return (
+        <div className="grid lg:grid-cols-3 gap-4">
+          {filteredProducts.map((product, index) => (
+            <div key={index} className="bg-slate-800/90 border border-slate-700 hover:border-purple-400/60 transition-all duration-300 overflow-hidden">
+              <div className="relative h-40 bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+                <Smartphone className="w-16 h-16 text-purple-400" />
+                <div className="absolute top-2 right-2">
+                  <div className="bg-purple-500 text-white px-2 py-1 text-xs font-black">MOBILE</div>
+                </div>
+                <div className="absolute bottom-2 left-2">
+                  <div className="text-purple-400 text-xs font-bold">{product.tech}</div>
+                </div>
               </div>
-              
-              <div className="space-y-3">
-                {[
-                  { label: 'TOTAL PRODUCTS', value: totalStats.products, color: 'text-purple-400' },
-                  { label: 'TOTAL DOWNLOADS', value: `${Math.round(totalStats.downloads / 1000)}k+`, color: 'text-green-400' },
-                  { label: 'AVERAGE RATING', value: `${totalStats.avgRating}★`, color: 'text-yellow-400' },
-                  { label: 'CATEGORIES', value: totalStats.categories, color: 'text-cyan-400' }
-                ].map((stat, index) => (
-                  <div key={index} className="flex justify-between items-center py-2 border-b border-zinc-700 last:border-b-0">
-                    <span className="text-zinc-400 text-sm font-bold">{stat.label}</span>
-                    <span className={`${stat.color} text-sm font-black`}>{stat.value}</span>
+              <div className="p-4">
+                <h3 className="text-white font-black text-sm font-mono mb-1">{product.name}</h3>
+                <div className="text-purple-400 text-xs font-bold mb-2">{product.category}</div>
+                <p className="text-slate-400 text-xs mb-3">{product.description}</p>
+                <div className="space-y-1 mb-3">
+                  {product.features.slice(0, 3).map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center space-x-1 text-xs text-slate-400">
+                      <Smartphone className="w-3 h-3 text-purple-400 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1 text-xs text-slate-400">
+                      <Download className="w-3 h-3" />
+                      <span>{product.downloads}</span>
+                    </div>
+                    <div className="flex items-center space-x-1 text-xs text-slate-400">
+                      <Star className="w-3 h-3 text-yellow-400" />
+                      <span>{product.rating}</span>
+                    </div>
+                  </div>
+                  <div className="text-green-400 font-black text-sm">{product.price}</div>
+                </div>
+                <button className="w-full bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 font-black text-xs transition-all duration-300">
+                  DOWNLOAD APP
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    if (activeCategory === 'Tools') {
+      // Tools-focused layout
+      return (
+        <div className="grid lg:grid-cols-2 gap-4">
+          {filteredProducts.map((product, index) => (
+            <div key={index} className="bg-slate-800/90 border border-slate-700 hover:border-yellow-400/60 transition-all duration-300 p-4">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500/30 to-orange-500/30 flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-yellow-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-white font-black text-base font-mono">{product.name}</h3>
+                  <div className="text-yellow-400 text-sm font-bold">{product.category}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-green-400 font-black text-lg">{product.price}</div>
+                  <div className="text-yellow-400 text-xs font-bold">{product.tech}</div>
+                </div>
+              </div>
+              <p className="text-slate-300 text-sm mb-4">{product.description}</p>
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                {product.features.map((feature, featureIndex) => (
+                  <div key={featureIndex} className="flex items-center space-x-1 text-xs text-slate-400">
+                    <Zap className="w-3 h-3 text-yellow-400 flex-shrink-0" />
+                    <span>{feature}</span>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-9">
-            {/* Controls Bar */}
-            <div className="bg-zinc-800/95 border border-zinc-700 p-4 mb-6">
-              <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <Eye className="w-4 h-4 text-cyan-400" />
-                    <span className="text-cyan-400 font-black text-sm font-mono">LAYOUT</span>
+                  <div className="flex items-center space-x-1 text-xs text-slate-400">
+                    <Download className="w-3 h-3" />
+                    <span>{product.downloads}</span>
                   </div>
-                  <div className="flex border border-zinc-600">
-                    {[
-                      { type: 'grid', icon: Grid3X3, label: 'Grid' },
-                      { type: 'list', icon: List, label: 'List' }
-                    ].map((layout) => {
-                      const IconComponent = layout.icon;
-                      return (
-                        <button
-                          key={layout.type}
-                          onClick={() => setLayoutType(layout.type as 'grid' | 'list')}
-                          className={`px-3 py-2 transition-all duration-300 ${
-                            layoutType === layout.type
-                              ? 'bg-cyan-400 text-black'
-                              : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'
-                          }`}
-                        >
-                          <IconComponent className="w-4 h-4" />
-                        </button>
-                      );
-                    })}
+                  <div className="flex items-center space-x-1 text-xs text-slate-400">
+                    <Star className="w-3 h-3 text-yellow-400" />
+                    <span>{product.rating}</span>
                   </div>
                 </div>
-                
-                <div className="text-zinc-400 text-sm">
-                  Showing <span className="text-white font-bold">{filteredProducts.length}</span> products
-                </div>
+                <button className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 font-black text-xs transition-all duration-300">
+                  GET TOOL
+                </button>
               </div>
             </div>
+          ))}
+        </div>
+      );
+    }
 
-            {/* Products Grid/List */}
-            <div className={`${
-              layoutType === 'grid' 
-                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6' 
-                : 'space-y-4'
-            }`}>
-              {filteredProducts.map((product, index) => (
-                <ProductCard
-                  key={product.name}
-                  product={product}
-                  index={index}
-                  layoutType={layoutType}
-                />
-              ))}
+    // Default grid for 'All'
+    return (
+      <div className="grid lg:grid-cols-3 gap-4">
+        {filteredProducts.map((product, index) => {
+          const IconComponent = product.icon;
+          return (
+            <div key={index} className="bg-slate-800/90 border border-slate-700 hover:border-cyan-400/60 transition-all duration-300 overflow-hidden">
+              <div className="relative h-32 overflow-hidden">
+                <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                <div className="absolute top-2 left-2">
+                  <div className="bg-slate-900/90 text-white px-2 py-1 text-xs font-black flex items-center space-x-1">
+                    <IconComponent className="w-3 h-3" />
+                    <span>{product.type.toUpperCase()}</span>
+                  </div>
+                </div>
+                <div className="absolute bottom-2 left-2 right-2">
+                  <h3 className="text-white font-black text-sm font-mono mb-1">{product.name}</h3>
+                  <div className="flex justify-between items-center">
+                    <div className="text-cyan-400 text-xs font-bold">{product.category}</div>
+                    <div className="text-green-400 font-black text-sm">{product.price}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-3">
+                <p className="text-slate-400 text-xs mb-2">{product.description}</p>
+                <button className="w-full bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-2 font-black text-xs transition-all duration-300 flex items-center justify-center space-x-1">
+                  <ShoppingCart className="w-3 h-3" />
+                  <span>BUY NOW</span>
+                </button>
+              </div>
             </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  return (
+    <section className="py-8 bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800">
+      <div className="container mx-auto px-4">
+        {/* Ultra Compact Header */}
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center bg-slate-800/90 border border-cyan-500/40 px-4 py-1.5 mb-3 backdrop-blur-sm">
+            <ShoppingCart className="w-3 h-3 mr-1.5 text-cyan-400" />
+            <span className="text-cyan-400 font-black text-xs font-mono tracking-wider">PRIORITY #2: DEVELOPERS</span>
+          </div>
+          
+          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-2">
+            PREMIUM <span className="text-cyan-400">DEVELOPMENT</span> PRODUCTS
+          </h2>
+          
+          <div className="w-12 h-0.5 bg-cyan-400 mx-auto mb-3"></div>
+          
+          <p className="text-sm text-slate-400 max-w-xl mx-auto mb-4">
+            Professional templates, programming guides, mobile apps, and developer tools
+          </p>
+
+          {/* Ultra Compact Category Filter */}
+          <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+            {productCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-3 py-1.5 text-xs font-black transition-all duration-300 ${
+                  activeCategory === category
+                    ? 'bg-cyan-500 text-white shadow-lg' 
+                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700 border border-slate-600'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Ultra Compact Stats */}
+          <div className="grid grid-cols-4 gap-2 max-w-xl mx-auto mb-6">
+            {[
+              { icon: Package, value: "50+", label: "Products", color: "text-cyan-400" },
+              { icon: Download, value: "200k+", label: "Downloads", color: "text-green-400" },
+              { icon: Star, value: "4.9★", label: "Rating", color: "text-yellow-400" },
+              { icon: Users, value: "15k+", label: "Users", color: "text-purple-400" }
+            ].map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={index} className="bg-slate-800/70 border border-slate-700 p-2 text-center backdrop-blur-sm">
+                  <IconComponent className={`w-4 h-4 ${stat.color} mx-auto mb-0.5`} />
+                  <div className={`text-sm font-black ${stat.color} font-mono`}>{stat.value}</div>
+                  <div className="text-slate-500 text-xs font-medium">{stat.label}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Enhanced CTA */}
-        <div className="bg-gradient-to-r from-zinc-800 to-zinc-700 border border-zinc-600 p-8 text-center">
-          <h3 className="text-2xl font-black text-white mb-3 font-mono">
-            <span className="text-purple-400">PROFESSIONAL</span> DEVELOPER ARSENAL
+        {/* Dynamic Category Content */}
+        <div className="mb-6">
+          {renderCategoryContent()}
+        </div>
+
+        {/* Ultra Compact CTA */}
+        <div className="bg-gradient-to-r from-slate-800 to-slate-700 border border-slate-600 p-5 text-center">
+          <h3 className="text-xl font-black text-white mb-2 font-mono">
+            <span className="text-cyan-400">EVERYTHING</span> FOR DEVELOPERS
           </h3>
-          <p className="text-base text-zinc-400 mb-6 max-w-2xl mx-auto">
-            Hand-crafted templates, tools, and resources designed by developers for developers. Premium quality with lifetime updates.
+          <p className="text-sm text-slate-400 mb-3">
+            Complete toolkit for developers and creators - templates, guides, apps, and tools.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-2 justify-center">
             <Link 
-              to="/shop" 
-              className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-8 py-4 font-black transition-all duration-300 flex items-center justify-center space-x-2 text-base shadow-xl"
+              to="/web-applications" 
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-5 py-2.5 font-black transition-all duration-300 flex items-center justify-center space-x-1.5 text-sm"
             >
-              <ShoppingCart className="w-5 h-5" />
-              <span>BROWSE ALL PRODUCTS</span>
-              <ArrowRight className="w-5 h-5" />
+              <Globe className="w-3.5 h-3.5" />
+              <span>BROWSE ALL</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
-            <button className="border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-black px-8 py-4 font-black transition-all duration-300 text-base">
-              REQUEST CUSTOM WORK
+            <button className="border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white px-5 py-2.5 font-black transition-all duration-300 text-sm">
+              VIEW PRICING
             </button>
           </div>
         </div>
