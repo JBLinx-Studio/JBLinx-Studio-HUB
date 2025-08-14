@@ -10,6 +10,7 @@ import Services from '../components/Services';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import ParallaxBackground from '../components/effects/ParallaxBackground';
+import InteractiveParticles from '../components/effects/InteractiveParticles';
 
 const Index = () => {
   return <div className="min-h-screen bg-slate-950 overflow-x-hidden relative">
@@ -27,6 +28,24 @@ const Index = () => {
           
           {/* Professional Page Break 1 - Services to Games - Portal Effect */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div 
+              className="absolute inset-0 pointer-events-auto" 
+              ref={(ref) => {
+                if (ref && !ref.querySelector('canvas')) {
+                  const particleContainer = document.createElement('div');
+                  particleContainer.className = 'absolute inset-0';
+                  ref.appendChild(particleContainer);
+                }
+              }}
+            >
+              <InteractiveParticles 
+                theme="emerald" 
+                particleCount={80}
+                containerRef={{ current: null }}
+              />
+            </div>
+
             {/* Deep Portal Background with Parallax */}
             <div className="absolute inset-0 pointer-events-none">
               {/* Deep hole effect with multiple layers */}
@@ -81,6 +100,15 @@ const Index = () => {
           
           {/* Professional Page Break 2 - Games to Products - Vortex Effect */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div className="absolute inset-0 pointer-events-auto">
+              <InteractiveParticles 
+                theme="blue" 
+                particleCount={75}
+                containerRef={{ current: null }}
+              />
+            </div>
+
             {/* Vortex Portal Background */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-conic from-blue-950/30 via-transparent to-cyan-950/30"></div>
@@ -141,6 +169,15 @@ const Index = () => {
           
           {/* Professional Page Break 3 - Products to Web Apps - Matrix Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div className="absolute inset-0 pointer-events-auto">
+              <InteractiveParticles 
+                theme="green" 
+                particleCount={90}
+                containerRef={{ current: null }}
+              />
+            </div>
+
             {/* Matrix-style Portal */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-radial from-green-950/20 via-transparent to-zinc-950"></div>
@@ -204,6 +241,15 @@ const Index = () => {
           
           {/* Professional Page Break 4 - Web Apps to Developer Tools - Fire Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div className="absolute inset-0 pointer-events-auto">
+              <InteractiveParticles 
+                theme="orange" 
+                particleCount={85}
+                containerRef={{ current: null }}
+              />
+            </div>
+
             {/* Fire/Energy Portal */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-radial from-orange-950/30 via-red-950/20 to-zinc-950"></div>
@@ -266,6 +312,15 @@ const Index = () => {
           
           {/* Professional Page Break 5 - Developer Tools to Contact - Cosmic Portal */}
           <div className="py-32 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden border-y border-zinc-800/50">
+            {/* Interactive Particles Layer */}
+            <div className="absolute inset-0 pointer-events-auto">
+              <InteractiveParticles 
+                theme="purple" 
+                particleCount={70}
+                containerRef={{ current: null }}
+              />
+            </div>
+
             {/* Cosmic Portal with Galaxy Effect */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute inset-0 bg-gradient-radial from-purple-950/20 via-indigo-950/15 to-zinc-950"></div>
