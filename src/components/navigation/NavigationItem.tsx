@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import MegaDropdown from './MegaDropdown';
 
 interface DropdownItem {
@@ -26,12 +27,12 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
 
   if (type === 'link') {
     return (
-      <a href={href} className="relative group px-4 py-2">
+      <Link to={href} className="relative group px-4 py-2">
         <span className="text-zinc-300 hover:text-orange-400 font-semibold text-sm font-mono tracking-wide transition-all duration-300">
           {name}
         </span>
         <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-orange-500 to-amber-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-      </a>
+      </Link>
     );
   }
 
@@ -54,7 +55,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({ name, href, type, categ
       </button>
       
       <div
-        className="absolute top-full left-1/2 transform -translate-x-1/2"
+        className="absolute top-full left-1/2 transform -translate-x-1/2 w-screen max-w-5xl"
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
