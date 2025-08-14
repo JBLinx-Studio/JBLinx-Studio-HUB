@@ -26,28 +26,28 @@ export const navigationItems: NavigationItem[] = [
       {
         title: 'Game Development',
         items: [
-          { name: 'Indie Games', href: '/game-development', description: 'Creative independent gaming experiences' },
-          { name: 'Mobile Gaming', href: '/game-development', description: 'Cross-platform mobile solutions' },
-          { name: 'Web Games', href: '/game-development', description: 'Browser-based interactive experiences' },
-          { name: 'Game Engines', href: '/game-development', description: 'Unity & custom engine development' }
+          { name: 'Indie Games', href: '/games/indie', description: 'Creative independent gaming experiences' },
+          { name: 'Mobile Games', href: '/games/mobile', description: 'Cross-platform mobile gaming solutions' },
+          { name: 'Web Games', href: '/games/web', description: 'Browser-based interactive experiences' },
+          { name: 'Game Engines', href: '/games/engines', description: 'Custom engine development & Unity expertise' }
         ]
       },
       {
-        title: 'Web Development', 
+        title: 'Web Applications', 
         items: [
-          { name: 'SaaS Platforms', href: '/web-applications', description: 'Scalable software solutions' },
-          { name: 'E-commerce Sites', href: '/web-applications', description: 'Complete online stores' },
-          { name: 'Business Apps', href: '/web-applications', description: 'Custom web applications' },
-          { name: 'Progressive Web Apps', href: '/web-applications', description: 'Native-like web experiences' }
+          { name: 'SaaS Platforms', href: '/apps/saas', description: 'Scalable software-as-a-service solutions' },
+          { name: 'Enterprise Apps', href: '/apps/enterprise', description: 'Business process automation tools' },
+          { name: 'E-commerce', href: '/apps/ecommerce', description: 'Complete online retail platforms' },
+          { name: 'Progressive Web Apps', href: '/apps/pwa', description: 'Native-like web experiences' }
         ]
       },
       {
-        title: 'Enterprise Solutions',
+        title: 'Development Services',
         items: [
-          { name: 'Custom Development', href: '/about', description: 'Tailored software solutions' },
-          { name: 'System Integration', href: '/about', description: 'Connect existing systems' },
-          { name: 'Cloud Solutions', href: '/about', description: 'Scalable cloud architecture' },
-          { name: 'Consulting', href: '/about', description: 'Strategic technology guidance' }
+          { name: 'Custom Development', href: '/services/custom', description: 'Tailored software solutions' },
+          { name: 'API Integration', href: '/services/api', description: 'Third-party service connections' },
+          { name: 'Cloud Architecture', href: '/services/cloud', description: 'Scalable infrastructure design' },
+          { name: 'Technical Consulting', href: '/services/consulting', description: 'Strategic technology guidance' }
         ]
       }
     ]
@@ -58,36 +58,27 @@ export const navigationItems: NavigationItem[] = [
     type: 'dropdown' as const,
     categories: [
       {
-        title: 'Learn & Grow',
+        title: 'Learning Hub',
         items: [
           { name: 'Technical Blog', href: '/blog', description: 'Industry insights & tutorials' },
-          { name: 'Case Studies', href: '/blog', description: 'Real project breakdowns' },
-          { name: 'Code Examples', href: '/blog', description: 'Open-source implementations' },
-          { name: 'Best Practices', href: '/blog', description: 'Development guides' }
+          { name: 'Case Studies', href: '/case-studies', description: 'Real-world project breakdowns' },
+          { name: 'Code Examples', href: '/examples', description: 'Open-source implementations' },
+          { name: 'Best Practices', href: '/guides', description: 'Development methodology guides' }
         ]
       },
       {
-        title: 'Showcase',
+        title: 'Community',
         items: [
-          { name: 'Game Portfolio', href: '/game-development', description: 'Our latest game projects' },
-          { name: 'Web Projects', href: '/web-applications', description: 'Featured web applications' },
-          { name: 'Client Success', href: '/about', description: 'Customer testimonials' },
-          { name: 'Awards & Recognition', href: '/about', description: 'Industry achievements' }
-        ]
-      },
-      {
-        title: 'Innovation Lab',
-        items: [
-          { name: 'Open Source', href: 'https://github.com/orgs/JBLinx-Studio', description: 'Community contributions' },
-          { name: 'Research Papers', href: '/blog', description: 'Technical publications' },
-          { name: 'Experimental Projects', href: '/blog', description: 'Cutting-edge experiments' },
-          { name: 'Developer Tools', href: '/blog', description: 'Productivity tools we built' }
+          { name: 'Developer Portal', href: 'https://github.com/orgs/JBLinx-Studio/repositories', description: 'Open source contributions' },
+          { name: 'Discord Community', href: '/discord', description: 'Connect with fellow developers' },
+          { name: 'Newsletter', href: '/newsletter', description: 'Weekly tech updates & insights' },
+          { name: 'Events & Workshops', href: '/events', description: 'Live coding sessions & meetups' }
         ]
       }
     ]
   },
   {
-    name: 'About',
+    name: 'Company',
     href: '/about',
     type: 'link' as const
   },
