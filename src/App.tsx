@@ -13,8 +13,16 @@ import About from "./pages/About";
 import Pricing from "./pages/Pricing";
 import Support from "./pages/Support";
 import Privacy from "./pages/Privacy";
+import PerformanceDisplay from "./components/dev/PerformanceDisplay";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
+});
 
 // Get the base path for GitHub Pages deployment
 const basename = import.meta.env.PROD ? '/JBLinx-Studio-HUB' : '';
@@ -24,6 +32,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <PerformanceDisplay />
       <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<Index />} />
