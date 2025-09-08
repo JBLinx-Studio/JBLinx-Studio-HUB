@@ -24,7 +24,7 @@ interface InteractiveParticlesProps {
 
 const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({ 
   theme, 
-  particleCount = 20, // Further reduced for performance
+  particleCount = 15, // Reduced further for better performance
   containerRef 
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,46 +35,44 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
   const lastFrameTime = useRef(0);
   const poolRef = useRef<Particle[]>([]);
   const frameCount = useRef(0);
-  const targetFPS = useRef(60);
   const frameInterval = useRef(1000 / 60);
 
   const themeConfig = {
     emerald: {
       colors: ['#10b981', '#059669', '#047857', '#34d399'],
-      glowColor: 'rgba(16, 185, 129, 0.4)',
-      trailColor: 'rgba(16, 185, 129, 0.6)',
-      magnetism: 2.5 // Increased for more responsiveness
+      glowColor: 'rgba(16, 185, 129, 0.5)',
+      trailColor: 'rgba(16, 185, 129, 0.7)',
+      magnetism: 1.8 // Increased magnetism
     },
     blue: {
       colors: ['#3b82f6', '#2563eb', '#1d4ed8', '#60a5fa'],
-      glowColor: 'rgba(59, 130, 246, 0.4)',
-      trailColor: 'rgba(59, 130, 246, 0.6)',
-      magnetism: 2.2 // Increased
+      glowColor: 'rgba(59, 130, 246, 0.5)',
+      trailColor: 'rgba(59, 130, 246, 0.7)',
+      magnetism: 1.6
     },
     green: {
       colors: ['#22c55e', '#16a34a', '#15803d', '#4ade80'],
-      glowColor: 'rgba(34, 197, 94, 0.4)',
-      trailColor: 'rgba(34, 197, 94, 0.6)',
-      magnetism: 2.8 // Increased
+      glowColor: 'rgba(34, 197, 94, 0.5)',
+      trailColor: 'rgba(34, 197, 94, 0.7)',
+      magnetism: 1.9
     },
     orange: {
       colors: ['#f97316', '#ea580c', '#dc2626', '#fb923c'],
-      glowColor: 'rgba(249, 115, 22, 0.4)',
-      trailColor: 'rgba(249, 115, 22, 0.6)',
-      magnetism: 3.0 // Most responsive
+      glowColor: 'rgba(249, 115, 22, 0.5)',
+      trailColor: 'rgba(249, 115, 22, 0.7)',
+      magnetism: 2.0
     },
     purple: {
       colors: ['#a855f7', '#9333ea', '#7c3aed', '#c084fc'],
-      glowColor: 'rgba(168, 85, 247, 0.4)',
-      trailColor: 'rgba(168, 85, 247, 0.6)',
-      magnetism: 2.4 // Increased
+      glowColor: 'rgba(168, 85, 247, 0.5)',
+      trailColor: 'rgba(168, 85, 247, 0.7)',
+      magnetism: 1.7
     }
   };
 
-  // Pre-calculate frequently used values
   const configRef = useRef(themeConfig[theme]);
-  const interactionRadiusSquared = useRef(100 * 100); // 100px radius
-  const maxDistanceSquared = useRef(60 * 60); // 60px for connections
+  const interactionRadiusSquared = useRef(120 * 120); // Increased interaction radius
+  const maxDistanceSquared = useRef(80 * 80);
 
   const getFromPool = useCallback((): Particle => {
     return poolRef.current.pop() || {} as Particle;
@@ -90,22 +88,22 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     if (!canvas) return {} as Particle;
 
     const colors = configRef.current.colors;
-    const size = Math.random() * 1.2 + 0.6; // Even smaller particles
+    const size = Math.random() * 1.5 + 0.8; // Slightly larger for better visibility
     const particle = getFromPool();
     
     Object.assign(particle, {
       id: Math.random(),
       x: x ?? Math.random() * canvas.width,
       y: y ?? Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 3.5, // Increased base speed
-      vy: (Math.random() - 0.5) * 3.5, // Increased base speed
+      vx: (Math.random() - 0.5) * 3, // Increased base speed
+      vy: (Math.random() - 0.5) * 3,
       size,
       originalSize: size,
       color: colors[Math.floor(Math.random() * colors.length)],
-      opacity: Math.random() * 0.7 + 0.3,
+      opacity: Math.random() * 0.8 + 0.4,
       life: 0,
-      maxLife: Math.random() * 200 + 100, // Shorter lifespans
-      energy: Math.random() * 60 + 30,
+      maxLife: Math.random() * 300 + 150,
+      energy: Math.random() * 80 + 40,
       isActive: true
     });
 
@@ -116,7 +114,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     particlesRef.current = Array.from({ length: particleCount }, () => createParticle());
   }, [particleCount, createParticle]);
 
-  // Optimized update function with faster interactions
   const updateParticles = useCallback((deltaTime: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -128,12 +125,10 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     const particles = particlesRef.current;
     const particleCount = particles.length;
     
-    // Batch processing for better performance
     for (let i = 0; i < particleCount; i++) {
       const particle = particles[i];
       if (!particle.isActive) continue;
 
-      // Faster mouse interaction with increased responsiveness
       if (mouse.isOver) {
         const dx = mouse.x - particle.x;
         const dy = mouse.y - particle.y;
@@ -141,27 +136,27 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         
         if (distanceSquared < interactionRadiusSquared.current) {
           const distance = Math.sqrt(distanceSquared);
-          const normalizedDistance = distance / 100; // Normalize to 0-1
-          const force = (1 - normalizedDistance) * normalizedDistance * 1.8; // Increased force multiplier
+          const normalizedDistance = distance / 120;
+          const force = (1 - normalizedDistance) * normalizedDistance;
           const magnetism = config.magnetism;
           
-          // Enhanced swirling motion with faster time-based variation
+          // Enhanced swirling with faster, more dynamic motion
           const time = Date.now() * 0.003; // Increased time multiplier
           const swirl = Math.sin(time + i * 0.8) * 0.6; // Increased swirl intensity
           const angle = Math.atan2(dy, dx) + swirl;
           
-          const forceMultiplier = force * magnetism * dt * 0.25; // Increased force application
+          const forceMultiplier = force * magnetism * dt * 0.25; // Increased force
           particle.vx += Math.cos(angle) * forceMultiplier;
           particle.vy += Math.sin(angle) * forceMultiplier;
           
-          // Faster energy and size transitions
-          const energyBoost = force * 35; // Increased energy boost
+          // More responsive energy and size changes
+          const energyBoost = force * 35;
           particle.energy = Math.min(particle.energy + energyBoost, 150);
-          particle.size = particle.originalSize * (1 + force * 1.8); // More dramatic size changes
-          particle.opacity = Math.min(particle.opacity + force * 0.6, 1);
+          particle.size = particle.originalSize * (1 + force * 1.8);
+          particle.opacity = Math.min(particle.opacity + force * 0.5, 1);
           
-          // Enhanced sparkle generation - more frequent and dynamic
-          if (distance < 50 && Math.random() < 0.04 && particles.length < particleCount * 1.4) {
+          // More frequent sparkle generation for playfulness
+          if (distance < 50 && Math.random() < 0.04 && particles.length < particleCount * 1.5) {
             particles.push(createParticle(
               particle.x + (Math.random() - 0.5) * 20,
               particle.y + (Math.random() - 0.5) * 20
@@ -170,13 +165,12 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         }
       }
 
-      // Enhanced physics with better momentum
+      // Faster physics with less friction for more playful movement
       particle.x += particle.vx * dt;
       particle.y += particle.vy * dt;
-      particle.vx *= 0.94; // Less friction for more fluid movement
+      particle.vx *= 0.94; // Reduced friction for faster movement
       particle.vy *= 0.94;
 
-      // Efficient boundary collision with better energy conservation
       const radius = particle.size;
       if (particle.x <= radius) {
         particle.x = radius;
@@ -194,7 +188,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         particle.vy = -Math.abs(particle.vy) * 0.8;
       }
 
-      // Lifecycle management
       particle.life++;
       if (particle.life > particle.maxLife) {
         returnToPool(particle);
@@ -202,7 +195,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         continue;
       }
 
-      // Smooth energy decay when not interacting
       if (!mouse.isOver || Math.sqrt(Math.pow(mouse.x - particle.x, 2) + Math.pow(mouse.y - particle.y, 2)) > 100) {
         particle.energy = Math.max(particle.energy * 0.985, 30);
         particle.size = Math.max(particle.size * 0.99, particle.originalSize);
@@ -210,10 +202,8 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       }
     }
 
-    // Clean up inactive particles efficiently
     particlesRef.current = particles.filter(p => p.isActive);
     
-    // Maintain particle count efficiently
     const currentCount = particlesRef.current.length;
     if (currentCount < particleCount) {
       const needed = particleCount - currentCount;
@@ -223,7 +213,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     }
   }, [theme, particleCount, createParticle, returnToPool]);
 
-  // Highly optimized rendering with GPU acceleration hints
   const drawParticles = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d', { 
@@ -233,16 +222,13 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     });
     if (!canvas || !ctx) return;
 
-    // Use clearRect for better performance than fillRect
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     const config = configRef.current;
     const particles = particlesRef.current;
     
-    // Batch similar operations for better GPU utilization
     ctx.save();
     
-    // Draw particles in batches by similar properties
     const particlesByColor = new Map<string, Particle[]>();
     
     particles.forEach(particle => {
@@ -254,7 +240,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       particlesByColor.get(particle.color)!.push(particle);
     });
     
-    // Render particles grouped by color for better performance
     particlesByColor.forEach((colorParticles, color) => {
       ctx.fillStyle = color;
       
@@ -262,7 +247,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         ctx.save();
         ctx.globalAlpha = particle.opacity;
         
-        // Optimized glow effect
         const glowSize = 6 + particle.energy * 0.08;
         ctx.shadowBlur = glowSize;
         ctx.shadowColor = color;
@@ -271,7 +255,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
         
-        // Core highlight - only for high energy particles
         if (particle.energy > 60) {
           ctx.shadowBlur = 0;
           ctx.fillStyle = '#ffffff';
@@ -285,7 +268,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       });
     });
     
-    // Optimized connections - only draw for nearby high-energy particles
     ctx.globalAlpha = 0.15;
     ctx.lineWidth = 0.5;
     
@@ -293,7 +275,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       const particle = particles[i];
       if (!particle.isActive || particle.energy < 50) continue;
       
-      // Only check particles ahead to avoid duplicate lines
       for (let j = i + 1; j < particles.length; j++) {
         const other = particles[j];
         if (!other.isActive || other.energy < 50) continue;
@@ -319,11 +300,9 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     ctx.restore();
   }, [theme]);
 
-  // Frame rate controlled animation loop
   const animate = useCallback((currentTime: number) => {
     const deltaTime = currentTime - lastFrameTime.current;
     
-    // Skip frame if running too fast (maintain consistent 60fps max)
     if (deltaTime < frameInterval.current) {
       animationRef.current = requestAnimationFrame(animate);
       return;
@@ -332,17 +311,14 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     lastFrameTime.current = currentTime;
     frameCount.current++;
     
-    // Adaptive quality based on performance
-    if (frameCount.current % 120 === 0) { // Check every 2 seconds
+    if (frameCount.current % 120 === 0) {
       const actualFPS = 1000 / deltaTime;
       if (actualFPS < 50) {
-        // Reduce quality if performance is poor
         interactionRadiusSquared.current = 80 * 80;
         maxDistanceSquared.current = 40 * 40;
       } else if (actualFPS > 55) {
-        // Restore quality if performance is good
-        interactionRadiusSquared.current = 100 * 100;
-        maxDistanceSquared.current = 60 * 60;
+        interactionRadiusSquared.current = 120 * 120;
+        maxDistanceSquared.current = 80 * 80;
       }
     }
     
@@ -369,7 +345,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     resizeCanvas();
     initParticles();
 
-    // Optimized event handlers with passive listeners
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
       mouseRef.current.x = e.clientX - rect.left;
@@ -386,7 +361,6 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       setIsActive(false);
     };
 
-    // Use passive listeners for better performance
     container.addEventListener('mousemove', handleMouseMove, { passive: true });
     container.addEventListener('mouseenter', handleMouseEnter, { passive: true });
     container.addEventListener('mouseleave', handleMouseLeave, { passive: true });
@@ -409,12 +383,12 @@ const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
     <canvas
       ref={canvasRef}
       className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
-        isActive ? 'opacity-100' : 'opacity-85'
+        isActive ? 'opacity-100' : 'opacity-90'
       }`}
       style={{ 
         mixBlendMode: 'screen',
-        transform: 'translateZ(0)', // Force GPU acceleration
-        willChange: 'contents' // Optimize for frequent changes
+        transform: 'translateZ(0)',
+        willChange: 'contents'
       }}
     />
   );
