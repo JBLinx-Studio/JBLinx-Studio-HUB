@@ -7,24 +7,24 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --background: 240 5% 6%;
+    --foreground: 36 100% 97%;
+    --card: 240 4% 8%;
+    --card-foreground: 36 100% 97%;
+    --popover: 240 4% 8%;
+    --popover-foreground: 36 100% 97%;
     --primary: 25 100% 58%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --primary-foreground: 240 5% 6%;
+    --secondary: 240 4% 12%;
+    --secondary-foreground: 36 100% 97%;
+    --muted: 240 4% 12%;
+    --muted-foreground: 240 5% 65%;
     --accent: 43 96% 56%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --accent-foreground: 240 5% 6%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 36 100% 97%;
+    --border: 240 4% 15%;
+    --input: 240 4% 15%;
     --ring: 25 100% 58%;
     --chart-1: 25 100% 58%;
     --chart-2: 43 96% 56%;
@@ -32,37 +32,15 @@
     --chart-4: 197 71% 73%;
     --chart-5: 271 81% 56%;
     
-    /* Custom theme colors - Light theme */
+    /* Custom theme colors */
     --cream: 36 100% 97%;
     --cream-dark: 36 50% 85%;
-    --zinc-950: 222.2 84% 4.9%;
-    --zinc-900: 220 8.9% 46.1%;
-    --zinc-800: 215 27.9% 16.9%;
+    --zinc-950: 240 5% 6%;
+    --zinc-900: 240 4% 9%;
+    --zinc-800: 240 4% 12%;
     --orange-glow: 25 100% 58%;
     --amber-glow: 43 96% 56%;
     --emerald-glow: 158 64% 52%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 0 0% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 25 100% 58%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 43 96% 56%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 25 100% 58%;
   }
 }
 
@@ -81,14 +59,14 @@
   }
 }
 
-/* Enhanced gaming-specific styles with improved visibility */
+/* Enhanced gaming-specific styles with new color palette */
 .game-card-hover {
-  @apply transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl bg-white border border-gray-200;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  @apply transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl;
+  box-shadow: 0 25px 50px -12px hsl(var(--orange-glow) / 0.25);
 }
 
 .game-card-hover:hover {
-  box-shadow: 0 25px 50px -12px hsl(var(--orange-glow) / 0.25);
+  box-shadow: 0 25px 50px -12px hsl(var(--orange-glow) / 0.4);
 }
 
 .trailer-overlay {
@@ -101,20 +79,21 @@
 }
 
 .game-feature-tag {
-  background: hsl(var(--secondary));
-  color: hsl(var(--foreground));
-  @apply px-3 py-1.5 text-xs font-bold transition-all duration-300 hover:scale-105 border;
+  background: hsl(var(--zinc-800));
+  color: hsl(var(--cream));
+  @apply px-3 py-1.5 text-xs font-bold transition-all duration-300 hover:scale-105;
+  border: 1px solid hsl(var(--orange-glow) / 0.3);
 }
 
 .game-feature-tag:hover {
   background: hsl(var(--orange-glow));
-  color: hsl(var(--primary-foreground));
+  color: hsl(var(--zinc-950));
 }
 
 .review-card {
-  background: hsl(var(--card));
+  background: hsl(var(--zinc-900) / 0.8);
   border: 1px solid hsl(var(--border));
-  @apply p-4 transition-all duration-300;
+  @apply p-4 transition-all duration-300 backdrop-blur-sm;
 }
 
 .review-card:hover {
@@ -123,9 +102,9 @@
 }
 
 .dlc-card {
-  background: hsl(var(--card));
+  background: hsl(var(--zinc-900) / 0.8);
   border: 1px solid hsl(var(--orange-glow) / 0.3);
-  @apply p-4 transition-all duration-300;
+  @apply p-4 transition-all duration-300 backdrop-blur-sm;
 }
 
 .dlc-card:hover {
@@ -134,9 +113,9 @@
 }
 
 .update-card {
-  background: hsl(var(--card));
+  background: hsl(var(--zinc-900) / 0.8);
   border: 1px solid hsl(var(--emerald-glow) / 0.3);
-  @apply p-4 transition-all duration-300;
+  @apply p-4 transition-all duration-300 backdrop-blur-sm;
 }
 
 .update-card:hover {
@@ -150,7 +129,7 @@
 }
 
 .game-scroll::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: hsl(var(--zinc-900));
 }
 
 .game-scroll::-webkit-scrollbar-thumb {
@@ -165,7 +144,7 @@
 /* Enhanced button effects */
 .btn-primary {
   background: linear-gradient(135deg, hsl(var(--orange-glow)), hsl(var(--amber-glow)));
-  color: hsl(var(--primary-foreground));
+  color: hsl(var(--zinc-950));
   @apply font-bold px-6 py-3 transition-all duration-300 shadow-lg;
   border: 1px solid hsl(var(--orange-glow) / 0.5);
 }
@@ -176,54 +155,59 @@
 }
 
 .btn-secondary {
-  background: hsl(var(--secondary));
-  color: hsl(var(--foreground));
-  @apply font-bold px-6 py-3 transition-all duration-300 border;
+  background: hsl(var(--zinc-800));
+  color: hsl(var(--cream));
+  @apply font-bold px-6 py-3 transition-all duration-300;
+  border: 1px solid hsl(var(--border));
 }
 
 .btn-secondary:hover {
-  background: hsl(var(--muted));
+  background: hsl(var(--zinc-700));
   border-color: hsl(var(--orange-glow) / 0.5);
+  color: hsl(var(--cream));
 }
 
 .btn-ghost {
   background: transparent;
-  color: hsl(var(--muted-foreground));
-  @apply font-medium px-4 py-2 transition-all duration-300 border-transparent border;
+  color: hsl(var(--cream-dark));
+  @apply font-medium px-4 py-2 transition-all duration-300;
+  border: 1px solid transparent;
 }
 
 .btn-ghost:hover {
-  background: hsl(var(--muted));
+  background: hsl(var(--zinc-800) / 0.5);
   border-color: hsl(var(--orange-glow) / 0.3);
-  color: hsl(var(--foreground));
+  color: hsl(var(--cream));
 }
 
 /* Panel styles */
 .panel-dark {
-  background: hsl(var(--card));
+  background: hsl(var(--zinc-900) / 0.95);
   border: 1px solid hsl(var(--border));
+  backdrop-filter: blur(16px);
 }
 
 .panel-darker {
-  background: hsl(var(--muted));
+  background: hsl(var(--zinc-950) / 0.95);
   border: 1px solid hsl(var(--border));
+  backdrop-filter: blur(16px);
 }
 
 .panel-glow {
-  box-shadow: 0 0 20px hsl(var(--orange-glow) / 0.1);
+  box-shadow: 0 0 50px hsl(var(--orange-glow) / 0.1);
 }
 
 .panel-glow:hover {
-  box-shadow: 0 0 30px hsl(var(--orange-glow) / 0.2);
+  box-shadow: 0 0 80px hsl(var(--orange-glow) / 0.2);
 }
 
 /* Text colors */
 .text-cream {
-  color: hsl(var(--foreground));
+  color: hsl(var(--cream));
 }
 
 .text-cream-dark {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--cream-dark));
 }
 
 .text-glow-orange {
@@ -240,16 +224,16 @@
 
 /* Gradient backgrounds */
 .bg-gradient-dark {
-  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 50%, hsl(var(--background)) 100%);
+  background: linear-gradient(135deg, hsl(var(--zinc-950)) 0%, hsl(var(--zinc-900)) 50%, hsl(var(--zinc-950)) 100%);
 }
 
 .bg-gradient-glow {
   background: linear-gradient(135deg, 
-    hsl(var(--background)) 0%, 
-    hsl(var(--muted)) 30%, 
+    hsl(var(--zinc-950)) 0%, 
+    hsl(var(--zinc-900)) 30%, 
     hsl(var(--orange-glow) / 0.05) 50%, 
-    hsl(var(--muted)) 70%, 
-    hsl(var(--background)) 100%);
+    hsl(var(--zinc-900)) 70%, 
+    hsl(var(--zinc-950)) 100%);
 }
 
 /* Line clamp utilities */
@@ -274,23 +258,23 @@
   overflow: hidden;
 }
 
-/* Status indicators with proper contrast */
+/* Status indicators with new colors */
 .status-released {
   background: hsl(var(--emerald-glow));
-  color: white;
+  color: hsl(var(--zinc-950));
 }
 
 .status-beta {
   background: hsl(var(--amber-glow));
-  color: white;
+  color: hsl(var(--zinc-950));
 }
 
 .status-coming-soon {
   background: hsl(var(--orange-glow));
-  color: white;
+  color: hsl(var(--zinc-950));
 }
 
 .status-early-access {
   background: linear-gradient(135deg, hsl(var(--orange-glow)), hsl(var(--amber-glow)));
-  color: white;
+  color: hsl(var(--zinc-950));
 }
