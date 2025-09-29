@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import ParallaxBackground from '../components/effects/ParallaxBackground';
-import OptimizedParticles from '../components/effects/OptimizedParticles';
+import InteractiveParticles from '../components/effects/InteractiveParticles';
 import LazySection from '../components/common/LazySection';
 
 // Lazy load heavy components
@@ -47,13 +47,10 @@ const Index = () => {
               ref={portal1Ref}
               className="absolute inset-0 pointer-events-auto cursor-crosshair" 
             >
-              <OptimizedParticles 
+              <InteractiveParticles 
                 theme="emerald" 
                 particleCount={25}
                 containerRef={portal1Ref}
-                quality="adaptive"
-                enableTrails={true}
-                enableConnections={true}
               />
             </div>
 
@@ -123,13 +120,10 @@ const Index = () => {
               ref={portal2Ref}
               className="absolute inset-0 pointer-events-auto cursor-move"
             >
-              <OptimizedParticles 
+              <InteractiveParticles 
                 theme="blue" 
                 particleCount={75}
                 containerRef={portal2Ref}
-                quality="adaptive"
-                enableTrails={true}
-                enableConnections={true}
               />
             </div>
 
@@ -201,13 +195,10 @@ const Index = () => {
               ref={portal3Ref}
               className="absolute inset-0 pointer-events-auto cursor-grab active:cursor-grabbing"
             >
-              <OptimizedParticles 
+              <InteractiveParticles 
                 theme="green" 
                 particleCount={90}
                 containerRef={portal3Ref}
-                quality="adaptive"
-                enableTrails={true}
-                enableConnections={true}
               />
             </div>
 
@@ -282,13 +273,10 @@ const Index = () => {
               ref={portal4Ref}
               className="absolute inset-0 pointer-events-auto cursor-cell"
             >
-              <OptimizedParticles 
+              <InteractiveParticles 
                 theme="orange" 
                 particleCount={85}
                 containerRef={portal4Ref}
-                quality="adaptive"
-                enableTrails={true}
-                enableConnections={true}
               />
             </div>
 
@@ -362,13 +350,10 @@ const Index = () => {
               ref={portal5Ref}
               className="absolute inset-0 pointer-events-auto cursor-zoom-in"
             >
-              <OptimizedParticles 
+              <InteractiveParticles 
                 theme="purple" 
                 particleCount={70}
                 containerRef={portal5Ref}
-                quality="adaptive"
-                enableTrails={true}
-                enableConnections={true}
               />
             </div>
 

@@ -13,7 +13,7 @@ import About from "./pages/About";
 import Pricing from "./pages/Pricing";
 import Support from "./pages/Support";
 import Privacy from "./pages/Privacy";
-import AdvancedPerformanceMonitor from "./components/dev/AdvancedPerformanceMonitor";
+import PerformanceDisplay from "./components/dev/PerformanceDisplay";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,7 +32,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <AdvancedPerformanceMonitor />
+      <PerformanceDisplay />
       <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<Index />} />
