@@ -1,14 +1,14 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Code, Book, Smartphone, Zap, Filter, Grid3X3, List, Eye, Star, Download, Users, Package, ShoppingCart } from 'lucide-react';
+import { ArrowRight, Code, Book, Smartphone, Zap, Filter, Grid3X3, List, Eye, Star, Package, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ProductCard from './products/ProductCard';
-import ProductFilters from './products/ProductFilters';
+import SectionWrapper from './ui/SectionWrapper';
+import CTABanner from './ui/CTABanner';
 
 const ProductsShowcase = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [layoutType, setLayoutType] = useState<'grid' | 'list' | 'featured'>('grid');
-  const [sortBy, setSortBy] = useState('popular');
+  const [layoutType, setLayoutType] = useState<'grid' | 'list'>('grid');
 
   const products = [
     {
@@ -137,170 +137,139 @@ const ProductsShowcase = () => {
   };
 
   return (
-    <section className="py-16 bg-zinc-950 border-t border-zinc-800">
-      <div className="container mx-auto px-4">
-        {/* Enhanced Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center bg-zinc-800/95 border border-purple-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
-            <Package className="w-4 h-4 mr-2 text-purple-400" />
-            <span className="text-purple-400 font-black text-sm font-mono tracking-widest">PRIORITY #2: DEVELOPER PRODUCTS</span>
-          </div>
-          
-          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
-            PREMIUM <span className="text-purple-400">DEVELOPER PRODUCTS</span> + <span className="text-cyan-400">DIGITAL ASSETS</span>
-          </h2>
-          
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-400 to-cyan-500 mx-auto mb-4"></div>
-          
-          <p className="text-base text-zinc-400 max-w-2xl mx-auto">
-            Professional templates, mobile UI kits, developer tools, and comprehensive guides for modern development workflows
-          </p>
-        </div>
-
-        {/* Dashboard Layout */}
-        <div className="grid lg:grid-cols-12 gap-6 mb-8">
-          {/* Left Sidebar: Categories & Stats */}
-          <div className="lg:col-span-3 space-y-4">
-            {/* Categories Panel */}
-            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
-              <div className="flex items-center space-x-3 mb-4">
-                <Filter className="w-5 h-5 text-purple-400" />
-                <h3 className="text-purple-400 font-black text-lg font-mono">CATEGORIES</h3>
-              </div>
-              
-              <div className="space-y-2">
-                {categories.map((category) => {
-                  const IconComponent = category.icon;
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => setSelectedCategory(category.id)}
-                      className={`w-full text-left p-3 border transition-all duration-300 ${
-                        selectedCategory === category.id
-                          ? 'border-purple-400/50 bg-purple-400/10 text-purple-300'
-                          : 'border-zinc-600 bg-zinc-800/50 text-zinc-300 hover:border-zinc-500 hover:bg-zinc-700/50'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <IconComponent className={`w-4 h-4 ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-400'}`} />
-                          <span className="font-bold text-sm">{category.name}</span>
-                        </div>
-                        <span className={`text-xs font-black ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-500'}`}>
-                          {category.count}
-                        </span>
+    <SectionWrapper
+      badge={{ icon: Package, label: "DEVELOPER PRODUCTS", color: "purple" }}
+      title={{ main: "PREMIUM", accent: "DIGITAL ASSETS", accentColor: "purple" }}
+      subtitle="Professional templates, mobile UI kits, developer tools, and comprehensive guides for modern development workflows"
+    >
+      {/* Dashboard Layout */}
+      <div className="grid lg:grid-cols-12 gap-5 mb-8">
+        {/* Left Sidebar: Categories & Stats */}
+        <div className="lg:col-span-3 space-y-4">
+          {/* Categories Panel */}
+          <div className="bg-zinc-800/90 border border-zinc-700 p-4">
+            <div className="flex items-center space-x-3 mb-4">
+              <Filter className="w-5 h-5 text-purple-400" />
+              <h3 className="text-purple-400 font-black text-base font-mono">CATEGORIES</h3>
+            </div>
+            
+            <div className="space-y-2">
+              {categories.map((category) => {
+                const IconComponent = category.icon;
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`w-full text-left p-3 border transition-all duration-300 ${
+                      selectedCategory === category.id
+                        ? 'border-purple-400/50 bg-purple-400/10 text-purple-300'
+                        : 'border-zinc-600 bg-zinc-800/50 text-zinc-300 hover:border-zinc-500 hover:bg-zinc-700/50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <IconComponent className={`w-4 h-4 ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-400'}`} />
+                        <span className="font-bold text-sm">{category.name}</span>
                       </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Stats Panel */}
-            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
-              <div className="flex items-center space-x-3 mb-4">
-                <Star className="w-5 h-5 text-yellow-400" />
-                <h3 className="text-yellow-400 font-black text-base font-mono">PORTFOLIO STATS</h3>
-              </div>
-              
-              <div className="space-y-3">
-                {[
-                  { label: 'TOTAL PRODUCTS', value: totalStats.products, color: 'text-purple-400' },
-                  { label: 'TOTAL DOWNLOADS', value: `${Math.round(totalStats.downloads / 1000)}k+`, color: 'text-green-400' },
-                  { label: 'AVERAGE RATING', value: `${totalStats.avgRating}★`, color: 'text-yellow-400' },
-                  { label: 'CATEGORIES', value: totalStats.categories, color: 'text-cyan-400' }
-                ].map((stat, index) => (
-                  <div key={index} className="flex justify-between items-center py-2 border-b border-zinc-700 last:border-b-0">
-                    <span className="text-zinc-400 text-sm font-bold">{stat.label}</span>
-                    <span className={`${stat.color} text-sm font-black`}>{stat.value}</span>
-                  </div>
-                ))}
-              </div>
+                      <span className={`text-xs font-black ${selectedCategory === category.id ? 'text-purple-400' : 'text-zinc-500'}`}>
+                        {category.count}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Main Content */}
-          <div className="lg:col-span-9">
-            {/* Controls Bar */}
-            <div className="bg-zinc-800/95 border border-zinc-700 p-4 mb-6">
-              <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <Eye className="w-4 h-4 text-cyan-400" />
-                    <span className="text-cyan-400 font-black text-sm font-mono">LAYOUT</span>
-                  </div>
-                  <div className="flex border border-zinc-600">
-                    {[
-                      { type: 'grid', icon: Grid3X3, label: 'Grid' },
-                      { type: 'list', icon: List, label: 'List' }
-                    ].map((layout) => {
-                      const IconComponent = layout.icon;
-                      return (
-                        <button
-                          key={layout.type}
-                          onClick={() => setLayoutType(layout.type as 'grid' | 'list')}
-                          className={`px-3 py-2 transition-all duration-300 ${
-                            layoutType === layout.type
-                              ? 'bg-cyan-400 text-black'
-                              : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'
-                          }`}
-                        >
-                          <IconComponent className="w-4 h-4" />
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-                
-                <div className="text-zinc-400 text-sm">
-                  Showing <span className="text-white font-bold">{filteredProducts.length}</span> products
-                </div>
-              </div>
+          {/* Stats Panel */}
+          <div className="bg-zinc-800/90 border border-zinc-700 p-4">
+            <div className="flex items-center space-x-3 mb-4">
+              <Star className="w-5 h-5 text-yellow-400" />
+              <h3 className="text-yellow-400 font-black text-sm font-mono">PORTFOLIO STATS</h3>
             </div>
-
-            {/* Products Grid/List */}
-            <div className={`${
-              layoutType === 'grid' 
-                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6' 
-                : 'space-y-4'
-            }`}>
-              {filteredProducts.map((product, index) => (
-                <ProductCard
-                  key={product.name}
-                  product={product}
-                  index={index}
-                  layoutType={layoutType}
-                />
+            
+            <div className="space-y-3">
+              {[
+                { label: 'TOTAL PRODUCTS', value: totalStats.products, color: 'text-purple-400' },
+                { label: 'TOTAL DOWNLOADS', value: `${Math.round(totalStats.downloads / 1000)}k+`, color: 'text-green-400' },
+                { label: 'AVERAGE RATING', value: `${totalStats.avgRating}★`, color: 'text-yellow-400' },
+                { label: 'CATEGORIES', value: totalStats.categories, color: 'text-cyan-400' }
+              ].map((stat, index) => (
+                <div key={index} className="flex justify-between items-center py-2 border-b border-zinc-700 last:border-b-0">
+                  <span className="text-zinc-400 text-xs font-bold">{stat.label}</span>
+                  <span className={`${stat.color} text-sm font-black`}>{stat.value}</span>
+                </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Enhanced CTA */}
-        <div className="bg-gradient-to-r from-zinc-800 to-zinc-700 border border-zinc-600 p-8 text-center">
-          <h3 className="text-2xl font-black text-white mb-3 font-mono">
-            <span className="text-purple-400">PROFESSIONAL</span> DEVELOPER ARSENAL
-          </h3>
-          <p className="text-base text-zinc-400 mb-6 max-w-2xl mx-auto">
-            Hand-crafted templates, tools, and resources designed by developers for developers. Premium quality with lifetime updates.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              to="/shop" 
-              className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white px-8 py-4 font-black transition-all duration-300 flex items-center justify-center space-x-2 text-base shadow-xl"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              <span>BROWSE ALL PRODUCTS</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <button className="border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-black px-8 py-4 font-black transition-all duration-300 text-base">
-              REQUEST CUSTOM WORK
-            </button>
+        {/* Main Content */}
+        <div className="lg:col-span-9">
+          {/* Controls Bar */}
+          <div className="bg-zinc-800/90 border border-zinc-700 p-4 mb-5">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <Eye className="w-4 h-4 text-cyan-400" />
+                  <span className="text-cyan-400 font-black text-sm font-mono">LAYOUT</span>
+                </div>
+                <div className="flex border border-zinc-600">
+                  {[
+                    { type: 'grid', icon: Grid3X3 },
+                    { type: 'list', icon: List }
+                  ].map((layout) => {
+                    const IconComponent = layout.icon;
+                    return (
+                      <button
+                        key={layout.type}
+                        onClick={() => setLayoutType(layout.type as 'grid' | 'list')}
+                        className={`px-3 py-2 transition-all duration-300 ${
+                          layoutType === layout.type
+                            ? 'bg-cyan-400 text-black'
+                            : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'
+                        }`}
+                      >
+                        <IconComponent className="w-4 h-4" />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div className="text-zinc-400 text-sm">
+                Showing <span className="text-white font-bold">{filteredProducts.length}</span> products
+              </div>
+            </div>
+          </div>
+
+          {/* Products Grid/List */}
+          <div className={`${
+            layoutType === 'grid' 
+              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4' 
+              : 'space-y-4'
+          }`}>
+            {filteredProducts.map((product, index) => (
+              <ProductCard
+                key={product.name}
+                product={product}
+                index={index}
+                layoutType={layoutType}
+              />
+            ))}
           </div>
         </div>
       </div>
-    </section>
+
+      {/* CTA */}
+      <CTABanner
+        title={{ prefix: "PROFESSIONAL", accent: "DEVELOPER ARSENAL" }}
+        description="Hand-crafted templates, tools, and resources designed by developers for developers. Premium quality with lifetime updates."
+        primaryAction={{ label: "BROWSE ALL PRODUCTS", href: "/shop", icon: ShoppingCart }}
+        secondaryAction={{ label: "REQUEST CUSTOM WORK" }}
+        accentColor="purple"
+      />
+    </SectionWrapper>
   );
 };
 
