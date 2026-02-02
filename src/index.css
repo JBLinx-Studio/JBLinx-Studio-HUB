@@ -119,6 +119,11 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
@@ -126,6 +131,40 @@
 
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Consistent Typography Scale */
+  .text-section-title {
+    @apply text-3xl lg:text-4xl font-black leading-tight font-mono;
+  }
+
+  .text-section-subtitle {
+    @apply text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed;
+  }
+
+  .text-card-title {
+    @apply text-sm font-black font-mono;
+  }
+
+  .text-card-body {
+    @apply text-sm text-zinc-300 leading-relaxed;
+  }
+
+  .text-label {
+    @apply text-xs font-bold font-mono tracking-wider;
+  }
+
+  /* Consistent Section Spacing */
+  .section-padding {
+    @apply py-20;
+  }
+
+  .section-gap {
+    @apply mb-12;
+  }
+
+  .card-gap {
+    @apply gap-4;
   }
 }
 
