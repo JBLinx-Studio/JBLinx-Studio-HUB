@@ -12,32 +12,20 @@ import ParallaxBackground from '../components/effects/ParallaxBackground';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-zinc-950 overflow-x-hidden relative">
+    <div className="min-h-screen bg-background overflow-x-hidden relative">
       {/* Parallax Background Layer */}
       <ParallaxBackground />
       
-      {/* Main Content - positioned above parallax background */}
+      {/* Main Content */}
       <div className="relative z-10">
         <Header />
         <main className="relative">
           <Hero />
-          
-          {/* Services Overview */}
           <Services />
-          
-          {/* Games Section */}
           <GamesSection />
-          
-          {/* Products Showcase */}
           <ProductsShowcase />
-          
-          {/* Web Applications */}
           <WebAppsSection />
-          
-          {/* Developer Tools */}
           <DeveloperTools />
-          
-          {/* Contact */}
           <Contact />
         </main>
         <Footer />
