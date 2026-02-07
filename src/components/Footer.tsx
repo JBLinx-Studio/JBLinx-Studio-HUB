@@ -65,7 +65,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-zinc-950 text-white border-t border-zinc-800">
+    <footer className="bg-black text-white border-t border-slate-800">
       {/* Main Footer - Compact */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -78,17 +78,17 @@ const Footer = () => {
             
             <div className="w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 mb-4"></div>
             
-            <p className="text-zinc-400 mb-4 leading-relaxed font-mono text-sm">
+            <p className="text-slate-300 mb-4 leading-relaxed font-mono text-sm">
               Leading technology solutions provider specializing in innovative digital experiences.
             </p>
             
             {/* Contact Info - Compact */}
             <div className="space-y-2 mb-4">
-              <div className="flex items-center text-zinc-400 font-mono text-sm hover:text-emerald-400 transition-colors group">
+              <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
                 <Phone size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
                 <span className="link-hover">+1 (555) 123-4567</span>
               </div>
-              <div className="flex items-center text-zinc-400 font-mono text-sm hover:text-emerald-400 transition-colors group">
+              <div className="flex items-center text-slate-300 font-mono text-sm hover:text-emerald-400 transition-colors group">
                 <Mail size={14} className="mr-2 text-emerald-400 group-hover:scale-110 transition-transform" />
                 <a href="mailto:hello@jblinxstudio.com" className="link-hover">
                   hello@jblinxstudio.com
@@ -98,16 +98,16 @@ const Footer = () => {
 
             {/* Social Links - Compact */}
             <div className="flex space-x-2">
-              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-zinc-800/60 border border-zinc-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-zinc-700/80 transition-all group hover:scale-110">
+              <a href="https://github.com/JBLinx-Studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
                 <Github size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="https://linkedin.com/company/jblinx-studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-zinc-800/60 border border-zinc-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-zinc-700/80 transition-all group hover:scale-110">
+              <a href="https://linkedin.com/company/jblinx-studio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
                 <Linkedin size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="https://twitter.com/jblinxstudio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-zinc-800/60 border border-zinc-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-zinc-700/80 transition-all group hover:scale-110">
+              <a href="https://twitter.com/jblinxstudio" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
                 <Twitter size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
-              <a href="mailto:hello@jblinxstudio.com" className="w-8 h-8 bg-zinc-800/60 border border-zinc-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-zinc-700/80 transition-all group hover:scale-110">
+              <a href="mailto:hello@jblinxstudio.com" className="w-8 h-8 bg-slate-900/60 border border-slate-700/50 flex items-center justify-center hover:border-emerald-400 hover:bg-slate-800/80 transition-all group hover:scale-110">
                 <Mail size={16} className="group-hover:scale-110 transition-transform text-emerald-400" />
               </a>
             </div>
@@ -124,7 +124,7 @@ const Footer = () => {
                 <li key={index}>
                   <Link 
                     to={service.href}
-                    className="text-zinc-400 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform link-hover"
+                    className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform link-hover"
                   >
                     {service.name}
                   </Link>
@@ -144,7 +144,7 @@ const Footer = () => {
                 <li key={index}>
                   <Link 
                     to={link.href}
-                    className="text-zinc-400 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform link-hover"
+                    className="text-slate-300 hover:text-emerald-400 transition-colors font-mono text-xs hover:translate-x-1 inline-block transition-transform link-hover"
                   >
                     {link.name}
                   </Link>
@@ -165,7 +165,7 @@ const Footer = () => {
                 const IconComponent = achievement.icon;
                 return (
                   <div key={index} className="text-center group cursor-pointer">
-                    <div className="w-8 h-8 bg-zinc-700 border border-zinc-500/50 flex items-center justify-center mx-auto mb-1 group-hover:scale-110 group-hover:border-emerald-400/50 transition-all duration-300">
+                    <div className="w-8 h-8 bg-slate-700 border border-slate-500/50 flex items-center justify-center mx-auto mb-1 group-hover:scale-110 group-hover:border-emerald-400/50 transition-all duration-300">
                       <IconComponent className={`w-3 h-3 ${achievement.color} group-hover:text-emerald-400 transition-colors duration-300`} />
                     </div>
                     
@@ -173,7 +173,7 @@ const Footer = () => {
                       {achievement.value}
                     </div>
                     
-                    <div className="text-zinc-400 font-medium text-xs">
+                    <div className="text-slate-400 font-medium text-xs">
                       {achievement.label}
                     </div>
                   </div>
@@ -183,14 +183,14 @@ const Footer = () => {
 
             {/* Newsletter - Compact */}
             <div>
-              <p className="text-zinc-400 mb-2 font-mono text-xs">
+              <p className="text-slate-300 mb-2 font-mono text-xs">
                 Stay updated with our latest projects
               </p>
-              <div className="flex border border-zinc-600/50 hover:border-emerald-400/50 transition-colors">
+              <div className="flex border border-slate-600/50 hover:border-emerald-400/50 transition-colors">
                 <input 
                   type="email" 
                   placeholder="Enter email"
-                  className="flex-1 px-2 py-1 bg-zinc-900/60 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 text-white font-mono text-xs placeholder:text-zinc-500"
+                  className="flex-1 px-2 py-1 bg-slate-900/60 focus:outline-none focus:ring-1 focus:ring-emerald-500/20 text-white font-mono text-xs placeholder:text-slate-500"
                 />
                 <button className="bg-emerald-600 hover:bg-emerald-700 px-2 py-1 transition-all duration-300 group hover:scale-105">
                   <Mail size={12} className="text-black group-hover:scale-110 transition-transform" />
@@ -202,13 +202,13 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar - Compact */}
-      <div className="border-t border-zinc-800/50">
+      <div className="border-t border-slate-800/50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-zinc-400 text-xs mb-2 md:mb-0 font-mono">
+            <div className="text-slate-400 text-xs mb-2 md:mb-0 font-mono">
               © 2024 JBLinx Studio. All rights reserved.
             </div>
-            <div className="flex items-center text-zinc-400 text-xs font-mono">
+            <div className="flex items-center text-slate-400 text-xs font-mono">
               Made with <Heart className="mx-2 text-emerald-400 animate-pulse" size={12} /> by JBLinx Studio
             </div>
           </div>
