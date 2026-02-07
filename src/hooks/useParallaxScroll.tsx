@@ -7,7 +7,7 @@ interface ParallaxScrollOptions {
 }
 
 export const useParallaxScroll = ({
-  enableMouseDrag = false,
+  enableMouseDrag = true,
   friction = 0.94,
   momentum = 1.35
 }: ParallaxScrollOptions = {}) => {
