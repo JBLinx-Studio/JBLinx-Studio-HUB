@@ -26,7 +26,7 @@ const Index = () => {
           {/* Premium Visual Break Section with Animated Elements */}
           <div className="py-32 bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 border-y border-slate-700/50 relative overflow-hidden backdrop-blur-sm">
             {/* Animated Background Elements */}
-            <div className="absolute inset-0 bg-zinc-800">
+            <div className="absolute inset-0">
               <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/5 blur-3xl animate-pulse"></div>
               <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/5 blur-3xl animate-pulse delay-1000"></div>
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/3 blur-3xl animate-pulse delay-500"></div>
@@ -140,7 +140,7 @@ const Index = () => {
             </div>
             
             {/* Multi-layer Background Effects */}
-            <div className="absolute inset-0 bg-zinc-800">
+            <div className="absolute inset-0">
               <div className="absolute top-1/4 left-1/6 w-72 h-72 bg-purple-500/4 blur-3xl animate-pulse"></div>
               <div className="absolute top-1/2 right-1/6 w-80 h-80 bg-blue-500/4 blur-3xl animate-pulse delay-700"></div>
               <div className="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-cyan-500/3 blur-3xl animate-pulse delay-300"></div>
@@ -225,7 +225,7 @@ const Index = () => {
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/2 blur-3xl animate-pulse delay-500"></div>
             </div>
             
-            <div className="container mx-auto px-4 text-center relative z-10 bg-zinc-700">
+            <div className="container mx-auto px-4 text-center relative z-10">
               {/* Enhanced Visual Header */}
               <div className="w-48 h-1 bg-gradient-to-r from-transparent via-slate-500/60 to-transparent mx-auto mb-20 animate-pulse"></div>
               
