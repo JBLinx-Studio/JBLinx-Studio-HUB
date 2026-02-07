@@ -3,7 +3,7 @@ import { useParallaxScroll } from '@/hooks/useParallaxScroll';
 
 const ParallaxBackground: React.FC = () => {
   const { getParallaxStyle } = useParallaxScroll({
-    enableMouseDrag: true,
+    enableMouseDrag: false,
     friction: 0.96,
     momentum: 1.25
   });
