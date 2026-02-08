@@ -8,25 +8,25 @@
 
 @layer base {
   :root {
-    /* Core Theme - Rich dark with high contrast */
-    --background: 220 15% 8%;
-    --foreground: 0 0% 96%;
-    --card: 220 13% 12%;
-    --card-foreground: 0 0% 96%;
-    --popover: 220 13% 14%;
-    --popover-foreground: 0 0% 96%;
+    /* Core Theme Colors - Professional Dark */
+    --background: 240 6% 10%;
+    --foreground: 0 0% 98%;
+    --card: 240 5% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 5% 15%;
+    --popover-foreground: 0 0% 98%;
     --primary: 158 64% 52%;
-    --primary-foreground: 220 15% 8%;
-    --secondary: 220 10% 16%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 220 8% 24%;
-    --muted-foreground: 220 8% 58%;
+    --primary-foreground: 240 6% 10%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 4% 26%;
+    --muted-foreground: 0 0% 64%;
     --accent: 27 95% 60%;
-    --accent-foreground: 220 15% 8%;
+    --accent-foreground: 240 6% 10%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 10% 18%;
-    --input: 220 10% 18%;
+    --border: 240 4% 20%;
+    --input: 240 4% 20%;
     --ring: 158 64% 52%;
     
     /* Chart Colors */
@@ -47,13 +47,13 @@
     --green: 142 72% 50%;
 
     /* Sidebar */
-    --sidebar: 220 13% 12%;
-    --sidebar-foreground: 0 0% 96%;
+    --sidebar: 240 5% 12%;
+    --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 158 64% 52%;
-    --sidebar-primary-foreground: 220 15% 8%;
+    --sidebar-primary-foreground: 240 6% 10%;
     --sidebar-accent: 27 95% 60%;
-    --sidebar-accent-foreground: 220 15% 8%;
-    --sidebar-border: 220 10% 18%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 240 4% 20%;
     --sidebar-ring: 158 64% 52%;
 
     /* Typography */
@@ -64,6 +64,11 @@
     --radius: 0.5rem;
     --section-padding: 5rem;
     --card-padding: 1.5rem;
+    --gap-xs: 0.5rem;
+    --gap-sm: 0.75rem;
+    --gap-md: 1rem;
+    --gap-lg: 1.5rem;
+    --gap-xl: 2rem;
   }
 }
 
@@ -83,60 +88,68 @@
   }
 
   /* ============================================
-     TYPOGRAPHY SYSTEM
+     UNIFIED TYPOGRAPHY SYSTEM
      ============================================ */
   
+  /* Page Title - H1 */
   .text-page-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight;
+    @apply text-4xl md:text-5xl font-black leading-tight tracking-tight;
     font-family: var(--font-mono);
   }
 
+  /* Section Title - H2 */
   .text-section-title {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-tight;
+    @apply text-2xl md:text-3xl font-bold leading-tight tracking-tight;
     font-family: var(--font-mono);
   }
 
+  /* Card Title - H3 */
   .text-card-title {
-    @apply text-sm font-bold leading-snug;
+    @apply text-base font-bold leading-snug;
     font-family: var(--font-mono);
   }
 
+  /* Panel Title - H4 */
   .text-panel-title {
-    @apply text-xs font-bold uppercase tracking-widest;
+    @apply text-sm font-bold uppercase tracking-wider;
     font-family: var(--font-mono);
   }
 
+  /* Body Text */
   .text-body {
     @apply text-sm leading-relaxed text-muted-foreground;
   }
 
+  /* Small Text */
   .text-small {
     @apply text-xs leading-relaxed text-muted-foreground;
   }
 
+  /* Label Text */
   .text-label {
-    @apply text-xs font-bold uppercase tracking-widest;
+    @apply text-xs font-bold uppercase tracking-wider;
     font-family: var(--font-mono);
   }
 
+  /* Mono Text */
   .text-mono {
     font-family: var(--font-mono);
   }
 
   /* ============================================
-     SPACING SYSTEM
+     UNIFIED SPACING SYSTEM
      ============================================ */
   
   .section-padding {
-    @apply py-20 md:py-28;
+    @apply py-16 md:py-20;
   }
 
   .section-gap {
-    @apply mb-16;
+    @apply mb-12;
   }
 
   .card-padding {
-    @apply p-5 md:p-6;
+    @apply p-5;
   }
 
   .panel-padding {
@@ -144,40 +157,36 @@
   }
 
   /* ============================================
-     PANEL & CARD SYSTEM
+     UNIFIED PANEL STYLES
      ============================================ */
   
   .panel {
-    @apply bg-card/90 border border-border/60 backdrop-blur-md rounded-lg;
+    @apply bg-card border border-border backdrop-blur-sm;
   }
 
   .panel-hover {
-    @apply panel hover:border-primary/50 hover:bg-card transition-all duration-300 hover:shadow-lg hover:shadow-primary/5;
+    @apply panel hover:border-primary/40 hover:bg-card/80 transition-all duration-300;
   }
 
   .panel-active {
-    @apply panel border-primary/60 shadow-lg shadow-primary/10;
+    @apply panel border-primary/50 shadow-lg shadow-primary/10;
   }
 
   .panel-interactive {
     @apply panel-hover cursor-pointer;
   }
 
-  .panel-elevated {
-    @apply bg-card border border-border/50 backdrop-blur-xl rounded-lg shadow-xl shadow-black/20;
-  }
-
   /* ============================================
-     BADGE SYSTEM
+     UNIFIED BADGE STYLES
      ============================================ */
   
   .badge-base {
-    @apply inline-flex items-center px-4 py-1.5 text-xs font-bold uppercase tracking-widest border rounded-sm;
+    @apply inline-flex items-center px-3 py-1.5 text-xs font-bold uppercase tracking-wider border;
     font-family: var(--font-mono);
   }
 
   .badge-primary {
-    @apply badge-base bg-primary/15 border-primary/50 text-primary;
+    @apply badge-base bg-primary/10 border-primary/40 text-primary;
   }
 
   .badge-secondary {
@@ -185,46 +194,47 @@
   }
 
   .badge-accent {
-    @apply badge-base bg-accent/15 border-accent/50 text-accent;
+    @apply badge-base bg-accent/10 border-accent/40 text-accent;
   }
 
+  /* Color Variants */
   .badge-emerald {
-    @apply badge-base bg-emerald-500/15 border-emerald-500/50 text-emerald-400;
+    @apply badge-base bg-emerald-500/10 border-emerald-500/40 text-emerald-400;
   }
   .badge-purple {
-    @apply badge-base bg-purple-500/15 border-purple-500/50 text-purple-400;
+    @apply badge-base bg-purple-500/10 border-purple-500/40 text-purple-400;
   }
   .badge-blue {
-    @apply badge-base bg-blue-500/15 border-blue-500/50 text-blue-400;
+    @apply badge-base bg-blue-500/10 border-blue-500/40 text-blue-400;
   }
   .badge-orange {
-    @apply badge-base bg-orange-500/15 border-orange-500/50 text-orange-400;
+    @apply badge-base bg-orange-500/10 border-orange-500/40 text-orange-400;
   }
   .badge-green {
-    @apply badge-base bg-green-500/15 border-green-500/50 text-green-400;
+    @apply badge-base bg-green-500/10 border-green-500/40 text-green-400;
   }
   .badge-cyan {
-    @apply badge-base bg-cyan-500/15 border-cyan-500/50 text-cyan-400;
+    @apply badge-base bg-cyan-500/10 border-cyan-500/40 text-cyan-400;
   }
   .badge-yellow {
-    @apply badge-base bg-yellow-500/15 border-yellow-500/50 text-yellow-400;
+    @apply badge-base bg-yellow-500/10 border-yellow-500/40 text-yellow-400;
   }
 
   /* ============================================
-     BUTTON SYSTEM
+     UNIFIED BUTTON STYLES
      ============================================ */
   
   .btn-base {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold rounded-md transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold transition-all duration-300;
     font-family: var(--font-mono);
   }
 
   .btn-primary {
-    @apply btn-base bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5;
+    @apply btn-base bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25 hover:shadow-primary/40;
   }
 
   .btn-secondary {
-    @apply btn-base bg-secondary text-secondary-foreground border border-border hover:bg-secondary/80 hover:border-primary/50 hover:-translate-y-0.5;
+    @apply btn-base bg-secondary text-secondary-foreground border border-border hover:bg-secondary/80 hover:border-primary/40;
   }
 
   .btn-ghost {
@@ -232,41 +242,41 @@
   }
 
   .btn-accent {
-    @apply btn-base bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg shadow-accent/30 hover:-translate-y-0.5;
+    @apply btn-base bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg shadow-accent/25;
   }
 
   /* ============================================
-     STAT CARDS
+     UNIFIED STAT CARD STYLES
      ============================================ */
   
   .stat-card {
-    @apply panel panel-padding text-center rounded-lg;
+    @apply panel panel-padding text-center;
   }
 
   .stat-value {
-    @apply text-xl font-black;
+    @apply text-lg font-black;
     font-family: var(--font-mono);
   }
 
   .stat-label {
-    @apply text-xs text-muted-foreground font-medium uppercase tracking-widest mt-1;
+    @apply text-xs text-muted-foreground font-medium uppercase tracking-wider mt-1;
   }
 
   /* ============================================
-     TAG / CHIP SYSTEM
+     UNIFIED TAG/CHIP STYLES
      ============================================ */
   
   .tag {
-    @apply px-2.5 py-1 text-xs font-bold border rounded-sm transition-all duration-300;
+    @apply px-2.5 py-1 text-xs font-bold border transition-all duration-300;
     font-family: var(--font-mono);
   }
 
   .tag-default {
-    @apply tag bg-secondary border-border text-muted-foreground hover:border-primary/50 hover:text-primary;
+    @apply tag bg-secondary border-border text-muted-foreground hover:border-primary/40 hover:text-primary;
   }
 
   .tag-active {
-    @apply tag bg-primary/15 border-primary/50 text-primary;
+    @apply tag bg-primary/10 border-primary/40 text-primary;
   }
 
   /* ============================================
@@ -288,43 +298,43 @@
   .border-purple { border-color: hsl(var(--purple) / 0.4); }
 
   /* ============================================
-     SECTION BACKGROUNDS
+     BACKGROUND UTILITIES
      ============================================ */
   
   .bg-gradient-section {
-    @apply bg-gradient-to-b from-background via-card/30 to-background;
+    @apply bg-gradient-to-br from-background via-card to-background;
   }
 
   .bg-gradient-radial {
     background: radial-gradient(ellipse at center, hsl(var(--card)) 0%, hsl(var(--background)) 70%);
   }
 
-  .section-divider-line {
-    @apply w-full h-px bg-gradient-to-r from-transparent via-border to-transparent;
-  }
-
   /* ============================================
-     SECTION HEADER
+     SECTION HEADER STYLES
      ============================================ */
   
   .section-header {
-    @apply text-center mb-14;
+    @apply text-center mb-10;
   }
 
   .section-badge {
     @apply inline-flex items-center gap-2 badge-base mb-4;
   }
 
+  .section-title-wrapper {
+    @apply mb-3;
+  }
+
   .section-divider {
-    @apply w-20 h-1 mx-auto mb-5 rounded-full;
+    @apply w-16 h-1 mx-auto mb-4;
   }
 
   .section-subtitle {
-    @apply text-body max-w-2xl mx-auto text-base;
+    @apply text-body max-w-2xl mx-auto;
   }
 
   /* ============================================
-     LINE CLAMP
+     LINE CLAMP UTILITIES
      ============================================ */
   
   .line-clamp-1 {
@@ -349,7 +359,7 @@
   }
 
   /* ============================================
-     SCROLLBAR
+     SCROLLBAR STYLES
      ============================================ */
   
   .custom-scrollbar::-webkit-scrollbar {
@@ -374,19 +384,19 @@
      ============================================ */
   
   .status-live {
-    @apply bg-emerald-500 text-emerald-950 rounded-sm;
+    @apply bg-emerald-500 text-emerald-950;
   }
 
   .status-beta {
-    @apply bg-amber-500 text-amber-950 rounded-sm;
+    @apply bg-amber-500 text-amber-950;
   }
 
   .status-coming-soon {
-    @apply bg-blue-500 text-blue-950 rounded-sm;
+    @apply bg-blue-500 text-blue-950;
   }
 
   .status-early-access {
-    @apply bg-purple-500 text-purple-950 rounded-sm;
+    @apply bg-purple-500 text-purple-950;
   }
 
   /* ============================================
@@ -394,52 +404,44 @@
      ============================================ */
   
   .input-base {
-    @apply w-full px-4 py-3 bg-secondary/80 border border-border rounded-md text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm;
+    @apply w-full px-4 py-2.5 bg-secondary border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all text-sm;
     font-family: var(--font-mono);
   }
 
   /* ============================================
-     AMBIENT EFFECTS
+     AMBIENT BACKGROUND EFFECTS
      ============================================ */
   
   .ambient-glow {
-    @apply absolute inset-0 pointer-events-none opacity-30;
+    @apply absolute inset-0 pointer-events-none opacity-40;
   }
 
   .ambient-glow::before {
     content: '';
     position: absolute;
-    top: 15%;
-    left: 15%;
-    width: 45%;
-    height: 45%;
-    background: radial-gradient(circle, hsl(var(--primary) / 0.12) 0%, transparent 70%);
-    filter: blur(100px);
-    animation: ambientPulse 10s infinite;
+    top: 20%;
+    left: 20%;
+    width: 40%;
+    height: 40%;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.15) 0%, transparent 70%);
+    filter: blur(80px);
+    animation: pulse 8s infinite;
   }
 
   .ambient-glow::after {
     content: '';
     position: absolute;
-    bottom: 15%;
-    right: 15%;
-    width: 40%;
-    height: 40%;
-    background: radial-gradient(circle, hsl(var(--accent) / 0.08) 0%, transparent 70%);
-    filter: blur(100px);
-    animation: ambientPulse 10s infinite 5s;
+    bottom: 20%;
+    right: 20%;
+    width: 35%;
+    height: 35%;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.1) 0%, transparent 70%);
+    filter: blur(80px);
+    animation: pulse 8s infinite 4s;
   }
 
-  @keyframes ambientPulse {
-    0%, 100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.08); }
-  }
-
-  /* ============================================
-     GLASS EFFECT
-     ============================================ */
-  
-  .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg;
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
   }
 }
