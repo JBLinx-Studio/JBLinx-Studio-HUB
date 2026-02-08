@@ -1,170 +1,192 @@
-
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, Github, Hexagon, Rocket, Users, Star, Award, Trophy, ExternalLink, Zap, Code, Heart, Building2, Gamepad2, Activity } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, Github, Rocket, Users, Star, Award, Trophy, ExternalLink, Zap, Code, Heart, Building2, Gamepad2, Globe, Cloud, Brain, Monitor, Activity, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import ProfessionalTerminal from '../terminal/ProfessionalTerminal';
+import AnimatedSection from '../ui/AnimatedSection';
 
 const HeroSection = () => {
-  const [liveStats, setLiveStats] = useState({
-    activeUsers: 2847,
-    githubStars: 1623,
-    totalProjects: 47,
-    satisfaction: 98.7
-  });
-
-  // Live stats animation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveStats(prev => ({
-        activeUsers: prev.activeUsers + Math.floor(Math.random() * 3),
-        githubStars: prev.githubStars + (Math.random() > 0.7 ? 1 : 0),
-        totalProjects: prev.totalProjects,
-        satisfaction: Math.min(99.9, prev.satisfaction + (Math.random() - 0.5) * 0.03)
-      }));
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
   const products = [
-    { name: 'CodeFusion', icon: Code, color: 'text-emerald-400' },
-    { name: 'VitalitySync', icon: Heart, color: 'text-red-400' },
-    { name: 'MindMate', icon: Gamepad2, color: 'text-purple-400' },
-    { name: 'NestCore', icon: Building2, color: 'text-orange-400' }
+    { name: 'CodeFusion', icon: Code, color: 'text-emerald-400', border: 'border-emerald-500/40', bg: 'bg-emerald-500/10', category: 'DEV TOOLS' },
+    { name: 'VitalitySync', icon: Heart, color: 'text-red-400', border: 'border-red-500/40', bg: 'bg-red-500/10', category: 'HEALTH TECH' },
+    { name: 'MindMate', icon: Brain, color: 'text-purple-400', border: 'border-purple-500/40', bg: 'bg-purple-500/10', category: 'AI ASSISTANT' },
+    { name: 'NestCore', icon: Building2, color: 'text-orange-400', border: 'border-orange-500/40', bg: 'bg-orange-500/10', category: 'ENTERPRISE' },
+    { name: 'CloudSync', icon: Cloud, color: 'text-blue-400', border: 'border-blue-500/40', bg: 'bg-blue-500/10', category: 'CLOUD SERVICES' }
+  ];
+
+  const stats = [
+    { icon: Trophy, value: "10", label: "PRODUCTS", color: "text-emerald-400" },
+    { icon: Users, value: "2,847", label: "USERS", color: "text-cyan-400" },
+    { icon: Star, value: "1,623", label: "STARS", color: "text-yellow-400" },
+    { icon: Award, value: "98.7%", label: "SATISFACTION", color: "text-purple-400" }
   ];
 
   return (
-    <section className="py-6 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
-      <div className="container mx-auto px-4">
-        {/* Compact Studio Header */}
-        <div className="text-center mb-5">
-          <div className="inline-flex items-center bg-slate-800/95 border border-emerald-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
-            <Trophy className="w-3 h-3 mr-1 text-emerald-400" />
-            <span className="text-emerald-400 font-black text-xs font-mono tracking-widest">JBLINX STUDIO HQ</span>
+    <section className="relative min-h-screen section-padding overflow-hidden">
+      <div className="ambient-glow" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Hero Header */}
+        <AnimatedSection className="text-center mb-12" delay={0.1}>
+          <div className="badge-emerald mb-6">
+            <Gamepad2 className="w-4 h-4" />
+            <span>STUDIO HUB</span>
           </div>
           
-          <h1 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
-            PROFESSIONAL <span className="text-emerald-400">SOLUTIONS</span> + <span className="text-cyan-400">REAL INNOVATION</span>
+          <h1 className="text-page-title text-foreground mb-5">
+            PROFESSIONAL{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+              TECHNOLOGY
+            </span>{' '}
+            SOLUTIONS
           </h1>
           
-          <div className="w-16 h-0.5 bg-emerald-400 mx-auto mb-2"></div>
+          <div className="section-divider bg-gradient-to-r from-emerald-400 to-cyan-400" />
           
-          <p className="text-sm text-slate-400 max-w-xl mx-auto mb-3">
-            Elite development ecosystem creating flagship products across web, mobile, gaming, and enterprise solutions
+          <p className="text-body text-base max-w-2xl mx-auto">
+            Products across web, mobile, gaming, and enterprise solutions
           </p>
+        </AnimatedSection>
 
-          {/* Product Showcase - Compact */}
-          <div className="flex flex-wrap justify-center gap-1 mb-3">
+        {/* Product Ecosystem */}
+        <AnimatedSection className="mb-10" delay={0.2}>
+          <div className="text-label text-muted-foreground text-center mb-4">FLAGSHIP ECOSYSTEM</div>
+          <div className="flex flex-wrap justify-center gap-3">
             {products.map((product, index) => {
               const IconComponent = product.icon;
               return (
-                <div key={index} className="flex items-center space-x-1 group bg-slate-800/80 px-2 py-1 border border-slate-700">
-                  <IconComponent className={`w-3 h-3 ${product.color} group-hover:scale-125 transition-transform duration-300`} />
-                  <span className={`${product.color} text-xs font-bold group-hover:text-white transition-colors duration-300`}>
-                    {product.name}
-                  </span>
-                  {index < products.length - 1 && <span className="text-slate-600 mx-1">•</span>}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Live Stats - Gaming Style */}
-          <div className="grid grid-cols-4 gap-1 max-w-xl mx-auto mb-4">
-            {[
-              { icon: Trophy, value: "5", label: "FLAGSHIP", color: "emerald" },
-              { icon: Users, value: liveStats.activeUsers.toLocaleString(), label: "ACTIVE", color: "cyan", live: true },
-              { icon: Star, value: liveStats.githubStars.toLocaleString(), label: "STARS", color: "yellow", live: true },
-              { icon: Award, value: `${liveStats.satisfaction.toFixed(1)}%`, label: "RATING", color: "purple" }
-            ].map((stat, index) => {
-              const IconComponent = stat.icon;
-              const colorClasses = {
-                emerald: "border-emerald-400/40 bg-emerald-500/10 text-emerald-400",
-                cyan: "border-cyan-400/40 bg-cyan-500/10 text-cyan-400",
-                yellow: "border-yellow-400/40 bg-yellow-500/10 text-yellow-400",
-                purple: "border-purple-400/40 bg-purple-500/10 text-purple-400"
-              };
-              
-              return (
-                <div key={index} className={`${colorClasses[stat.color]} border-2 backdrop-blur-sm p-1.5 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl group cursor-pointer`}>
-                  <IconComponent className={`w-3 h-3 mx-auto mb-0.5 group-hover:scale-125 transition-transform duration-300`} />
-                  <div className="text-xs font-black flex items-center justify-center space-x-1 font-mono">
-                    <span>{stat.value}</span>
-                    {stat.live && <div className="w-1 h-1 bg-current rounded-full animate-pulse"></div>}
+                <motion.div 
+                  key={index} 
+                  className={`panel card-padding flex items-center gap-3 ${product.border} hover:shadow-lg transition-all cursor-default`}
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className={`w-10 h-10 ${product.bg} ${product.border} border rounded-md flex items-center justify-center`}>
+                    <IconComponent className={`w-5 h-5 ${product.color}`} />
                   </div>
-                  <div className="text-xs font-bold mt-0.5 opacity-80">{stat.label}</div>
-                </div>
+                  <div className="text-left">
+                    <div className={`text-card-title ${product.color}`}>{product.name}</div>
+                    <div className="text-small">{product.category}</div>
+                  </div>
+                </motion.div>
               );
             })}
           </div>
-        </div>
+        </AnimatedSection>
+
+        {/* Stats Grid */}
+        <AnimatedSection className="mb-12" delay={0.3}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            {stats.map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <motion.div 
+                  key={index} 
+                  className="stat-card"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <IconComponent className={`w-6 h-6 mx-auto mb-2 ${stat.color}`} />
+                  <div className={`stat-value ${stat.color}`}>{stat.value}</div>
+                  <div className="stat-label">{stat.label}</div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </AnimatedSection>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-3 mb-5">
-          {/* Left Panel - Terminal */}
-          <div className="bg-slate-800/95 border border-slate-700 p-3">
-            <ProfessionalTerminal />
-          </div>
-
-          {/* Right Panel - Action Center */}
-          <div className="bg-slate-800/95 border border-slate-700 p-4 space-y-3">
-            <div className="flex items-center space-x-2 mb-3">
-              <Activity className="w-4 h-4 text-emerald-400" />
-              <span className="text-emerald-400 font-black text-sm font-mono">MISSION CONTROL</span>
-            </div>
-
-            <div className="space-y-2">
-              <div className="bg-slate-700/50 p-2 border-l-2 border-emerald-400">
-                <div className="text-white font-bold text-sm font-mono mb-1">SYSTEM STATUS</div>
-                <div className="text-emerald-400 text-xs">All systems operational • 99.9% uptime</div>
+        <div className="grid lg:grid-cols-2 gap-6 mb-12">
+          <AnimatedSection delay={0.4} direction="left">
+            <div className="panel-elevated card-padding h-full">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-8 h-8 bg-emerald-500/15 border border-emerald-500/40 rounded-md flex items-center justify-center">
+                  <Monitor className="w-4 h-4 text-emerald-400" />
+                </div>
+                <span className="text-panel-title text-emerald-400">DEVELOPMENT CONSOLE</span>
+                <div className="flex-1 h-px bg-gradient-to-r from-emerald-400/50 to-transparent" />
               </div>
-
-              <div className="bg-slate-700/50 p-2 border-l-2 border-cyan-400">
-                <div className="text-white font-bold text-sm font-mono mb-1">ACTIVE PROJECTS</div>
-                <div className="text-cyan-400 text-xs">47 flagship products • 150k+ users served</div>
-              </div>
-
-              <div className="bg-slate-700/50 p-2 border-l-2 border-purple-400">
-                <div className="text-white font-bold text-sm font-mono mb-1">DEVELOPMENT CYCLE</div>
-                <div className="text-purple-400 text-xs">Continuous deployment • Weekly releases</div>
+              <ProfessionalTerminal />
+              <div className="mt-3 text-small">
+                Real-time development environment
               </div>
             </div>
+          </AnimatedSection>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-2 pt-2">
-              <Link 
-                to="/blog" 
-                className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-black px-4 py-2 font-black text-sm transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                <Rocket className="w-4 h-4" />
-                <span>EXPLORE ECOSYSTEM</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              
-              <a 
-                href="https://github.com/orgs/JBLinx-Studio/repositories"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border border-emerald-400/60 text-emerald-400 hover:border-emerald-300 hover:text-emerald-300 hover:bg-emerald-400/10 px-4 py-2 font-black text-sm transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                <Github className="w-4 h-4" />
-                <span>VIEW SOURCE</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
+          <AnimatedSection delay={0.5} direction="right">
+            <div className="panel-elevated card-padding h-full">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-8 h-8 bg-emerald-500/15 border border-emerald-500/40 rounded-md flex items-center justify-center">
+                  <Activity className="w-4 h-4 text-emerald-400" />
+                </div>
+                <span className="text-panel-title text-emerald-400">MISSION CONTROL</span>
+                <div className="flex-1 h-px bg-gradient-to-r from-emerald-400/50 to-transparent" />
+              </div>
+
+              <div className="space-y-3">
+                {[
+                  { icon: Globe, title: "GLOBAL OPS", detail: "All systems operational • 99.9% uptime", color: "emerald", live: true },
+                  { icon: Layers, title: "PORTFOLIO", detail: "Multi-platform • 150k+ users • Enterprise grade", color: "cyan", badge: "47 PRODUCTS" },
+                  { icon: Rocket, title: "INNOVATION", detail: "Agile development • Weekly releases", color: "purple", badge: "CONTINUOUS" }
+                ].map((item, index) => {
+                  const IconComponent = item.icon;
+                  const colorClass = `text-${item.color}-400`;
+                  return (
+                    <motion.div 
+                      key={index}
+                      className="panel panel-padding hover:border-primary/40 transition-all"
+                      whileHover={{ x: 4 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center gap-2">
+                          <IconComponent className={`w-4 h-4 ${colorClass}`} />
+                          <span className="text-card-title text-foreground">{item.title}</span>
+                        </div>
+                        {item.live ? (
+                          <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50" />
+                        ) : (
+                          <div className={`text-label ${colorClass}`}>{item.badge}</div>
+                        )}
+                      </div>
+                      <div className={`text-small ${colorClass}`}>{item.detail}</div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-3 pt-5 border-t border-border mt-5">
+                <Link to="/blog" className="btn-primary">
+                  <Rocket className="w-4 h-4" />
+                  <span>EXPLORE ECOSYSTEM</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                
+                <a href="https://github.com/orgs/JBLinx-Studio/repositories" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                  <Github className="w-4 h-4" />
+                  <span>VIEW SOURCE</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center">
-          <Link 
-            to="/blog" 
-            className="inline-flex items-center bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-black px-5 py-2 font-black transition-all duration-300 space-x-1 shadow-lg text-sm"
-          >
-            <Zap className="w-3 h-3" />
-            <span>DISCOVER ALL PRODUCTS & SERVICES</span>
-            <ArrowRight className="w-3 h-3" />
+        <AnimatedSection className="text-center" delay={0.6}>
+          <div className="text-label text-muted-foreground mb-3">READY FOR EXCELLENCE?</div>
+          <p className="text-body text-base max-w-2xl mx-auto mb-5">
+            Join thousands who trust JBLinx Studio for critical technology needs.
+            <span className="text-emerald-400 font-bold"> Professional-grade solutions</span> that drive results.
+          </p>
+          
+          <Link to="/blog" className="btn-primary">
+            <Zap className="w-4 h-4" />
+            <span>DISCOVER PORTFOLIO</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   );

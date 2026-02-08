@@ -1,210 +1,221 @@
-
 import React, { useState } from 'react';
-import { ArrowRight, Download, Star, Monitor, BarChart3, Users, Zap, Settings, Database, Globe, Cpu, Terminal, Shield } from 'lucide-react';
+import { ArrowRight, Monitor, Settings, Terminal, Globe, Star, Users, Activity, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import AnimatedSection from './ui/AnimatedSection';
 
 const WebAppsSection = () => {
   const [selectedApp, setSelectedApp] = useState(0);
 
   const webApps = [
-    {
-      title: "TaskFlow Pro Suite",
-      category: "SaaS Platform",
-      downloads: "15.2k",
-      rating: "4.9",
-      tier: "PREMIUM",
-      description: "Complete project management platform with team collaboration",
-      tech: ["React", "Node.js", "PostgreSQL", "Redis"],
-      features: ["Real-time Sync", "Advanced Analytics", "API Integration", "Mobile App"],
-      pricing: "$29/month",
-      users: "500+ companies",
-      uptime: "99.9%"
-    },
-    {
-      title: "CommerceHub Platform",
-      category: "E-commerce Solution", 
-      downloads: "12.8k",
-      rating: "4.8",
-      tier: "ENTERPRISE",
-      description: "Full-featured e-commerce platform with inventory management",
-      tech: ["Next.js", "Stripe", "MongoDB", "AWS"],
-      features: ["Multi-vendor", "Payment Gateway", "Inventory Sync", "SEO Optimized"],
-      pricing: "$99/month",
-      users: "200+ stores",
-      uptime: "99.8%"
-    },
-    {
-      title: "DataViz Analytics Pro",
-      category: "Business Intelligence",
-      downloads: "9.5k",
-      rating: "4.9",
-      tier: "PROFESSIONAL",
-      description: "Advanced data visualization with custom dashboards",
-      tech: ["Vue.js", "Python", "D3.js", "TensorFlow"],
-      features: ["Custom Dashboards", "AI Insights", "Data Export", "Team Sharing"],
-      pricing: "$149/month",
-      users: "300+ analysts",
-      uptime: "99.7%"
-    }
+    { title: "TaskFlow Enterprise Suite", category: "SaaS Platform", tier: "ENTERPRISE", description: "Complete project management platform with advanced team collaboration, resource planning, and comprehensive analytics.", tech: ["React", "Node.js", "PostgreSQL", "Redis", "AWS"], features: ["Advanced Analytics", "Resource Management", "Team Collaboration", "API Integration"], pricing: "$199/mo", users: "1,500+ companies", uptime: "99.97%", rating: 4.9 },
+    { title: "CommerceHub Pro Platform", category: "E-commerce Solution", tier: "PROFESSIONAL", description: "Full-featured e-commerce platform with multi-vendor support, inventory management, and payment processing.", tech: ["Next.js", "Stripe", "MongoDB", "Redis", "Vercel"], features: ["Multi-vendor Marketplace", "Inventory Sync", "Payment Gateway", "SEO Suite"], pricing: "$149/mo", users: "800+ stores", uptime: "99.94%", rating: 4.8 },
+    { title: "DataViz Analytics Pro", category: "Business Intelligence", tier: "PREMIUM", description: "Advanced data visualization platform with AI-powered insights and custom dashboard creation.", tech: ["Vue.js", "Python", "D3.js", "TensorFlow", "ClickHouse"], features: ["AI Insights", "Custom Dashboards", "Real-time Processing", "Advanced Visualizations"], pricing: "$299/mo", users: "500+ analysts", uptime: "99.99%", rating: 4.9 },
+    { title: "CloudOps Management Hub", category: "DevOps Platform", tier: "ENTERPRISE", description: "Comprehensive DevOps platform for infrastructure management, deployment automation, and monitoring.", tech: ["React", "Python", "Kubernetes", "Terraform", "Prometheus"], features: ["Multi-cloud Management", "CI/CD Automation", "Infrastructure as Code", "Real-time Monitoring"], pricing: "$399/mo", users: "300+ DevOps teams", uptime: "99.95%", rating: 4.7 }
   ];
 
+  const systemStatus = [
+    { label: "API GATEWAY", status: "OPERATIONAL", color: "text-green-400" },
+    { label: "DATABASES", status: "OPTIMIZED", color: "text-cyan-400" },
+    { label: "LOAD BALANCERS", status: "STABLE", color: "text-green-400" },
+    { label: "SECURITY", status: "SECURED", color: "text-green-400" },
+    { label: "MONITORING", status: "ACTIVE", color: "text-blue-400" }
+  ];
+
+  const currentApp = webApps[selectedApp];
+
+  const getTierColor = (tier: string) => {
+    switch(tier) {
+      case 'ENTERPRISE': return 'bg-purple-500 text-white';
+      case 'PROFESSIONAL': return 'bg-blue-500 text-white';
+      case 'PREMIUM': return 'bg-amber-500 text-white';
+      default: return 'bg-secondary text-muted-foreground';
+    }
+  };
+
   return (
-    <section className="py-20 bg-slate-950 border-t border-slate-800">
-      <div className="container mx-auto px-4">
-        {/* Header - Matching Hero Style */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-slate-800/95 border border-blue-500/50 px-3 py-1 mb-2 backdrop-blur-sm">
-            <Monitor className="w-3 h-3 mr-1 text-blue-400" />
-            <span className="text-blue-400 font-black text-xs font-mono tracking-widest">PRIORITY #3: APP USERS</span>
+    <section className="relative section-padding overflow-hidden">
+      <div className="section-divider-line" />
+      <div className="ambient-glow" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <AnimatedSection>
+          <div className="section-header">
+            <div className="badge-blue">
+              <Monitor className="w-4 h-4" />
+              <span>WEB APPLICATIONS</span>
+            </div>
+            
+            <h2 className="text-section-title text-foreground mb-3">
+              PREMIUM SAAS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">PLATFORMS</span>
+            </h2>
+            
+            <div className="section-divider bg-blue-400" />
+            
+            <p className="section-subtitle">
+              Enterprise-grade SaaS platforms, e-commerce solutions, and analytics tools built for scale
+            </p>
           </div>
-          
-          <h2 className="text-2xl lg:text-3xl font-black text-white leading-tight font-mono mb-1">
-            PREMIUM <span className="text-blue-400">SAAS PLATFORMS</span> + <span className="text-cyan-400">WEB SOLUTIONS</span>
-          </h2>
-          
-          <div className="w-16 h-0.5 bg-blue-400 mx-auto mb-2"></div>
-          
-          <p className="text-sm text-slate-400 max-w-xl mx-auto">
-            Professional SaaS platforms, e-commerce solutions, analytics tools, and enterprise applications
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.2}>
+          <div className="grid lg:grid-cols-12 gap-6 mb-12">
+            {/* Left Sidebar */}
+            <div className="lg:col-span-4 space-y-5">
+              <div className="panel card-padding">
+                <div className="flex items-center gap-2 mb-4">
+                  <Settings className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-panel-title text-blue-400">APPLICATION DASHBOARD</h3>
+                </div>
+                
+                <div className="space-y-2">
+                  {webApps.map((app, index) => (
+                    <motion.button
+                      key={index}
+                      onClick={() => setSelectedApp(index)}
+                      className={`w-full text-left panel-padding border rounded-md transition-all ${
+                        selectedApp === index
+                          ? 'border-blue-500/50 bg-blue-500/15'
+                          : 'border-border bg-secondary hover:border-border/80 hover:bg-secondary/80'
+                      }`}
+                      whileHover={{ x: 3 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <h4 className={`text-card-title line-clamp-1 ${selectedApp === index ? 'text-blue-400' : 'text-foreground'}`}>
+                          {app.title}
+                        </h4>
+                        <span className={`px-2 py-0.5 text-xs font-bold rounded-sm ${getTierColor(app.tier)}`}>
+                          {app.tier}
+                        </span>
+                      </div>
+                      <p className="text-small">{app.category}</p>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="panel card-padding">
+                <div className="flex items-center gap-2 mb-4">
+                  <Terminal className="w-5 h-5 text-green-400" />
+                  <h3 className="text-panel-title text-green-400">SYSTEM STATUS</h3>
+                </div>
+                
+                <div className="space-y-2">
+                  {systemStatus.map((item, index) => (
+                    <div key={index} className="flex justify-between items-center py-2 border-b border-border last:border-b-0">
+                      <span className="text-label text-muted-foreground">{item.label}</span>
+                      <span className={`text-label ${item.color} flex items-center gap-1.5`}>
+                        <div className={`w-2 h-2 rounded-full ${item.color.replace('text-', 'bg-')} shadow-lg`} />
+                        <span>{item.status}</span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-4 pt-4 border-t border-border grid grid-cols-2 gap-3">
+                  <div className="stat-card">
+                    <div className="stat-value text-green-400">99.96%</div>
+                    <div className="stat-label">Global Uptime</div>
+                  </div>
+                  <div className="stat-card">
+                    <div className="stat-value text-cyan-400">&lt;150ms</div>
+                    <div className="stat-label">Avg Response</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="lg:col-span-8">
+              <div className="panel-elevated card-padding h-full">
+                <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2 flex-wrap">
+                      <h3 className="text-section-title text-foreground">{currentApp.title}</h3>
+                      <span className={`px-2 py-1 text-xs font-bold rounded-sm ${getTierColor(currentApp.tier)}`}>
+                        {currentApp.tier}
+                      </span>
+                    </div>
+                    <p className="text-small">{currentApp.category}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-section-title text-blue-400">{currentApp.pricing}</div>
+                    <div className="text-small">per month</div>
+                  </div>
+                </div>
+
+                <p className="text-body text-base mb-6">{currentApp.description}</p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  {[
+                    { icon: Star, value: currentApp.rating, label: "Rating", color: "text-yellow-400" },
+                    { icon: Users, value: currentApp.users, label: "Users", color: "text-blue-400", small: true },
+                    { icon: Activity, value: currentApp.uptime, label: "Uptime", color: "text-green-400" },
+                    { icon: Monitor, value: currentApp.tech.length, label: "Technologies", color: "text-purple-400" }
+                  ].map((stat, index) => {
+                    const IconComponent = stat.icon;
+                    return (
+                      <div key={index} className="stat-card">
+                        <IconComponent className={`w-5 h-5 mx-auto mb-2 ${stat.color}`} />
+                        <div className={`${stat.small ? 'text-sm' : 'stat-value'} font-bold ${stat.color}`}>{stat.value}</div>
+                        <div className="stat-label">{stat.label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="text-panel-title text-muted-foreground mb-3">TECHNOLOGY STACK</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {currentApp.tech.map((tech, index) => (
+                      <span key={index} className="tag tag-default">{tech}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="text-panel-title text-muted-foreground mb-3">KEY FEATURES</h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    {currentApp.features.map((feature, index) => (
+                      <div key={index} className="panel panel-padding flex items-center gap-2 hover:border-blue-500/30 transition-all">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full" />
+                        <span className="text-body text-foreground/80">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <button className="btn-primary bg-blue-500 hover:bg-blue-600 shadow-blue-500/30">
+                    <Globe className="w-4 h-4" />
+                    <span>LAUNCH DEMO</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </button>
+                  <button className="btn-secondary">
+                    REQUEST PRICING
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection className="text-center" delay={0.3}>
+          <p className="text-body text-base max-w-xl mx-auto mb-5">
+            Production-tested SaaS platforms and web applications built for enterprise scale.
           </p>
-        </div>
-
-        {/* Unique Layout: Dashboard-Style with Sidebar Navigation */}
-        <div className="flex gap-3 mb-8">
-          {/* Left Sidebar: App Navigation */}
-          <div className="w-64 bg-slate-800/95 border border-slate-700 p-4">
-            <div className="flex items-center space-x-2 mb-4">
-              <Settings className="w-4 h-4 text-blue-400" />
-              <span className="text-blue-400 font-black text-sm font-mono">APP DASHBOARD</span>
-            </div>
-
-            {/* App List */}
-            <div className="space-y-2 mb-6">
-              {webApps.map((app, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedApp(index)}
-                  className={`w-full text-left p-3 border transition-all duration-300 ${
-                    selectedApp === index 
-                      ? 'border-blue-400 bg-blue-500/20' 
-                      : 'border-slate-600 bg-slate-900/50 hover:border-blue-400/50'
-                  }`}
-                >
-                  <div className="text-white font-bold text-sm">{app.title}</div>
-                  <div className="text-blue-400 text-xs mt-1">{app.category}</div>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className={`px-2 py-1 text-xs font-bold ${
-                      app.tier === 'PREMIUM' ? 'bg-purple-500 text-black' :
-                      app.tier === 'ENTERPRISE' ? 'bg-orange-500 text-black' : 'bg-green-500 text-black'
-                    }`}>
-                      {app.tier}
-                    </span>
-                    <div className="text-green-400 font-black text-xs">{app.pricing}</div>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* System Status */}
-            <div className="bg-slate-900/80 border border-slate-600 p-3">
-              <div className="flex items-center space-x-2 mb-3">
-                <Terminal className="w-4 h-4 text-green-400" />
-                <span className="text-green-400 font-black text-sm font-mono">SYSTEM STATUS</span>
-              </div>
-              <div className="space-y-2">
-                {[
-                  { label: "SERVERS", status: "ONLINE", color: "text-green-400" },
-                  { label: "API", status: "STABLE", color: "text-green-400" },
-                  { label: "DATABASE", status: "OPTIMIZED", color: "text-cyan-400" },
-                  { label: "SECURITY", status: "SECURE", color: "text-green-400" }
-                ].map((item, index) => (
-                  <div key={index} className="flex justify-between items-center">
-                    <span className="text-slate-400 text-xs font-bold">{item.label}</span>
-                    <span className={`${item.color} text-xs font-black`}>{item.status}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Main Content: Selected App Details */}
-          <div className="flex-1 bg-slate-800/95 border border-slate-700 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-white font-black text-xl font-mono">{webApps[selectedApp].title}</h3>
-                <div className="text-blue-400 font-bold text-sm">{webApps[selectedApp].category}</div>
-              </div>
-              <div className="text-green-400 font-black text-2xl">{webApps[selectedApp].pricing}</div>
-            </div>
-
-            <p className="text-slate-300 text-sm mb-6">{webApps[selectedApp].description}</p>
-
-            {/* App Metrics Grid */}
-            <div className="grid grid-cols-4 gap-3 mb-6">
-              {[
-                { icon: Users, value: webApps[selectedApp].users, label: "ACTIVE USERS", color: "text-blue-400" },
-                { icon: Star, value: webApps[selectedApp].rating, label: "RATING", color: "text-yellow-400" },
-                { icon: Download, value: webApps[selectedApp].downloads, label: "DOWNLOADS", color: "text-green-400" },
-                { icon: Shield, value: webApps[selectedApp].uptime, label: "UPTIME", color: "text-purple-400" }
-              ].map((metric, index) => {
-                const IconComponent = metric.icon;
-                return (
-                  <div key={index} className="bg-slate-900/80 border border-slate-600 p-3 text-center">
-                    <IconComponent className={`w-4 h-4 mx-auto mb-2 ${metric.color}`} />
-                    <div className="text-white font-black text-sm">{metric.value}</div>
-                    <div className="text-slate-400 text-xs font-bold">{metric.label}</div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Tech Stack */}
-            <div className="mb-6">
-              <div className="flex items-center space-x-2 mb-3">
-                <Cpu className="w-4 h-4 text-cyan-400" />
-                <span className="text-cyan-400 font-black text-sm font-mono">TECH STACK</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {webApps[selectedApp].tech.map((tech, index) => (
-                  <span key={index} className="bg-slate-700 text-cyan-400 px-3 py-1 text-xs font-bold border border-cyan-400/30">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Features */}
-            <div className="mb-6">
-              <div className="flex items-center space-x-2 mb-3">
-                <Zap className="w-4 h-4 text-purple-400" />
-                <span className="text-purple-400 font-black text-sm font-mono">KEY FEATURES</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                {webApps[selectedApp].features.map((feature, index) => (
-                  <div key={index} className="bg-slate-900/50 border border-slate-600 p-2">
-                    <div className="text-white font-bold text-sm">{feature}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <button className="w-full bg-blue-500 hover:bg-blue-600 text-black px-4 py-3 font-black transition-colors">
-              LAUNCH APPLICATION
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link to="/web-applications" className="btn-primary bg-blue-500 hover:bg-blue-600 shadow-blue-500/30">
+              <Globe className="w-4 h-4" />
+              <span>EXPLORE ALL PLATFORMS</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <button className="btn-secondary">
+              REQUEST ENTERPRISE DEMO
             </button>
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <Link 
-            to="/web-applications" 
-            className="inline-flex items-center bg-gradient-to-r from-blue-500 to-cyan-500 text-black px-5 py-2 font-black transition-all duration-300 space-x-1 shadow-lg text-sm"
-          >
-            <Globe className="w-3 h-3" />
-            <span>VIEW ALL WEB APPLICATIONS</span>
-            <ArrowRight className="w-3 h-3" />
-          </Link>
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   );

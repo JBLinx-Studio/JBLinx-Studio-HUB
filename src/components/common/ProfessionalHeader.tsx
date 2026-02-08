@@ -30,31 +30,31 @@ const ProfessionalHeader: React.FC<ProfessionalHeaderProps> = ({
     <div className={cn(alignmentClasses[alignment], className)}>
       {badge && (
         <div className={cn(
-          'inline-flex items-center bg-emerald-500/10 border border-emerald-500/30 rounded-full px-6 py-3 mb-6',
+          'inline-flex items-center bg-zinc-800/30 border border-orange-500/40 rounded-full px-8 py-4 mb-8 backdrop-blur-sm',
           alignment === 'center' ? 'mx-auto' : ''
         )}>
-          <Hexagon className="w-5 h-5 text-emerald-400 mr-2" />
-          <span className="text-white/90 font-medium">{badge}</span>
+          <Hexagon className="w-5 h-5 text-glow-orange mr-3" />
+          <span className="text-cream font-medium font-mono tracking-wider">{badge}</span>
         </div>
       )}
       
-      <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+      <h2 className="text-5xl lg:text-6xl font-black text-cream mb-6 leading-tight">
         {title.includes(' ') ? (
           <>
             {title.split(' ').slice(0, -1).join(' ')}{' '}
-            <span className="text-emerald-400">{title.split(' ').slice(-1)}</span>
+            <span className="text-glow-orange">{title.split(' ').slice(-1)}</span>
           </>
         ) : (
-          <span className="text-emerald-400">{title}</span>
+          <span className="text-glow-orange">{title}</span>
         )}
       </h2>
       
       {subtitle && (
-        <h3 className="text-xl text-slate-300 mb-6">{subtitle}</h3>
+        <h3 className="text-2xl text-cream-dark mb-8 font-light">{subtitle}</h3>
       )}
       
       {description && (
-        <p className="text-lg text-gray-300 max-w-3xl leading-relaxed">
+        <p className="text-lg text-cream-dark max-w-4xl leading-relaxed font-light">
           {description}
         </p>
       )}
