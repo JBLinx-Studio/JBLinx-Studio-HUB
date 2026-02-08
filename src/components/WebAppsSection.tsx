@@ -1,6 +1,9 @@
+
 import React, { useState } from 'react';
-import { ArrowRight, Monitor, Settings, Terminal, Globe, Star, Users, Activity, ExternalLink } from 'lucide-react';
+import { ArrowRight, Monitor, Settings, Terminal, Globe, Database, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import WebAppCard from './webapps/WebAppCard';
+import WebAppDetails from './webapps/WebAppDetails';
 
 const WebAppsSection = () => {
   const [selectedApp, setSelectedApp] = useState(0);
@@ -9,50 +12,98 @@ const WebAppsSection = () => {
     {
       title: "TaskFlow Enterprise Suite",
       category: "SaaS Platform",
+      downloads: "25.2k",
+      rating: "4.9",
       tier: "ENTERPRISE",
-      description: "Complete project management platform with advanced team collaboration, resource planning, and comprehensive analytics.",
-      tech: ["React", "Node.js", "PostgreSQL", "Redis", "AWS"],
-      features: ["Advanced Analytics", "Resource Management", "Team Collaboration", "API Integration"],
-      pricing: "$199/mo",
+      description: "Complete project management platform with advanced team collaboration, resource planning, and comprehensive analytics for enterprise teams.",
+      tech: ["React", "Node.js", "PostgreSQL", "Redis", "AWS", "Docker"],
+      features: [
+        "Advanced Project Analytics", 
+        "Resource Management", 
+        "Team Collaboration Hub", 
+        "API Integration Suite",
+        "Custom Workflow Builder",
+        "Real-time Notifications",
+        "Advanced Reporting",
+        "Multi-tenant Architecture"
+      ],
+      pricing: "$199",
       users: "1,500+ companies",
       uptime: "99.97%",
-      rating: 4.9
+      version: "v4.2.1",
+      lastUpdate: "2024-01-15"
     },
     {
       title: "CommerceHub Pro Platform",
       category: "E-commerce Solution", 
+      downloads: "18.8k",
+      rating: "4.8",
       tier: "PROFESSIONAL",
-      description: "Full-featured e-commerce platform with multi-vendor support, inventory management, and payment processing.",
-      tech: ["Next.js", "Stripe", "MongoDB", "Redis", "Vercel"],
-      features: ["Multi-vendor Marketplace", "Inventory Sync", "Payment Gateway", "SEO Suite"],
-      pricing: "$149/mo",
+      description: "Full-featured e-commerce platform with multi-vendor support, advanced inventory management, and integrated payment processing.",
+      tech: ["Next.js", "Stripe", "MongoDB", "Redis", "Vercel", "Cloudinary"],
+      features: [
+        "Multi-vendor Marketplace", 
+        "Advanced Inventory Sync", 
+        "Payment Gateway Integration", 
+        "SEO Optimization Suite",
+        "Mobile-responsive Design",
+        "Analytics Dashboard",
+        "Order Management",
+        "Customer Support Tools"
+      ],
+      pricing: "$149",
       users: "800+ stores",
       uptime: "99.94%",
-      rating: 4.8
+      version: "v3.1.8",
+      lastUpdate: "2024-01-12"
     },
     {
       title: "DataViz Analytics Pro",
       category: "Business Intelligence",
+      downloads: "12.5k",
+      rating: "4.9",
       tier: "PREMIUM",
-      description: "Advanced data visualization platform with AI-powered insights and custom dashboard creation.",
-      tech: ["Vue.js", "Python", "D3.js", "TensorFlow", "ClickHouse"],
-      features: ["AI Insights", "Custom Dashboards", "Real-time Processing", "Advanced Visualizations"],
-      pricing: "$299/mo",
+      description: "Advanced data visualization platform with AI-powered insights, custom dashboard creation, and enterprise-grade analytics capabilities.",
+      tech: ["Vue.js", "Python", "D3.js", "TensorFlow", "ClickHouse", "Apache Kafka"],
+      features: [
+        "AI-powered Insights", 
+        "Custom Dashboard Builder", 
+        "Real-time Data Processing", 
+        "Advanced Visualizations",
+        "Team Collaboration",
+        "Data Export Suite",
+        "Predictive Analytics",
+        "Integration APIs"
+      ],
+      pricing: "$299",
       users: "500+ analysts",
       uptime: "99.99%",
-      rating: 4.9
+      version: "v2.5.3",
+      lastUpdate: "2024-01-14"
     },
     {
       title: "CloudOps Management Hub",
       category: "DevOps Platform",
+      downloads: "15.1k",
+      rating: "4.7",
       tier: "ENTERPRISE",
-      description: "Comprehensive DevOps platform for infrastructure management, deployment automation, and monitoring.",
-      tech: ["React", "Python", "Kubernetes", "Terraform", "Prometheus"],
-      features: ["Multi-cloud Management", "CI/CD Automation", "Infrastructure as Code", "Real-time Monitoring"],
-      pricing: "$399/mo",
+      description: "Comprehensive DevOps platform for infrastructure management, deployment automation, and monitoring across multi-cloud environments.",
+      tech: ["React", "Python", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
+      features: [
+        "Multi-cloud Management", 
+        "CI/CD Pipeline Automation", 
+        "Infrastructure as Code", 
+        "Real-time Monitoring",
+        "Security Compliance",
+        "Cost Optimization",
+        "Disaster Recovery",
+        "Performance Analytics"
+      ],
+      pricing: "$399",
       users: "300+ DevOps teams",
       uptime: "99.95%",
-      rating: 4.7
+      version: "v1.9.2",
+      lastUpdate: "2024-01-13"
     }
   ];
 
@@ -61,92 +112,68 @@ const WebAppsSection = () => {
     { label: "DATABASES", status: "OPTIMIZED", color: "text-cyan-400" },
     { label: "LOAD BALANCERS", status: "STABLE", color: "text-green-400" },
     { label: "SECURITY", status: "SECURED", color: "text-green-400" },
-    { label: "MONITORING", status: "ACTIVE", color: "text-blue-400" }
+    { label: "MONITORING", status: "ACTIVE", color: "text-blue-400" },
+    { label: "BACKUPS", status: "CURRENT", color: "text-purple-400" }
   ];
 
-  const currentApp = webApps[selectedApp];
-
-  const getTierColor = (tier: string) => {
-    switch(tier) {
-      case 'ENTERPRISE': return 'bg-purple-500 text-purple-950';
-      case 'PROFESSIONAL': return 'bg-blue-500 text-blue-950';
-      case 'PREMIUM': return 'bg-amber-500 text-amber-950';
-      default: return 'bg-secondary text-muted-foreground';
-    }
-  };
-
   return (
-    <section className="relative bg-gradient-section section-padding overflow-hidden">
-      <div className="ambient-glow" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
-        <div className="section-header">
-          <div className="badge-blue">
-            <Monitor className="w-4 h-4" />
-            <span>WEB APPLICATIONS</span>
+    <section className="py-16 bg-zinc-950 border-t border-zinc-800">
+      <div className="container mx-auto px-4">
+        {/* Enhanced Header */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center bg-zinc-800/95 border border-blue-500/50 px-4 py-2 mb-4 backdrop-blur-sm">
+            <Monitor className="w-4 h-4 mr-2 text-blue-400" />
+            <span className="text-blue-400 font-black text-sm font-mono tracking-widest">PRIORITY #3: ENTERPRISE USERS</span>
           </div>
           
-          <h2 className="text-section-title text-foreground mb-3">
-            PREMIUM SAAS <span className="text-blue-400">PLATFORMS</span>
+          <h2 className="text-3xl lg:text-4xl font-black text-white leading-tight font-mono mb-3">
+            PREMIUM <span className="text-blue-400">SAAS PLATFORMS</span> + <span className="text-cyan-400">WEB SOLUTIONS</span>
           </h2>
           
-          <div className="section-divider bg-blue-400" />
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-500 mx-auto mb-4"></div>
           
-          <p className="section-subtitle">
-            Enterprise-grade SaaS platforms, e-commerce solutions, and analytics tools built for scale
+          <p className="text-base text-zinc-400 max-w-2xl mx-auto">
+            Enterprise-grade SaaS platforms, e-commerce solutions, analytics tools, and business applications built for scale and performance
           </p>
         </div>
 
-        {/* Dashboard Layout */}
-        <div className="grid lg:grid-cols-12 gap-6 mb-10">
-          {/* Left Sidebar */}
-          <div className="lg:col-span-4 space-y-5">
-            {/* App Selection Panel */}
-            <div className="panel card-padding">
-              <div className="flex items-center gap-2 mb-4">
+        {/* Dashboard-Style Layout */}
+        <div className="grid lg:grid-cols-12 gap-6 mb-8">
+          {/* Left Sidebar: App Navigation */}
+          <div className="lg:col-span-4 space-y-4">
+            {/* Control Panel Header */}
+            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
+              <div className="flex items-center space-x-3 mb-4">
                 <Settings className="w-5 h-5 text-blue-400" />
-                <h3 className="text-panel-title text-blue-400">APPLICATION DASHBOARD</h3>
+                <h3 className="text-blue-400 font-black text-lg font-mono">APPLICATION DASHBOARD</h3>
               </div>
               
+              {/* App Selection */}
               <div className="space-y-2">
                 {webApps.map((app, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedApp(index)}
-                    className={`w-full text-left panel-padding border transition-all ${
-                      selectedApp === index
-                        ? 'border-blue-500/40 bg-blue-500/10'
-                        : 'border-border bg-secondary hover:border-border/80 hover:bg-secondary/80'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <h4 className={`text-card-title line-clamp-1 ${selectedApp === index ? 'text-blue-400' : 'text-foreground'}`}>
-                        {app.title}
-                      </h4>
-                      <span className={`px-2 py-0.5 text-xs font-bold ${getTierColor(app.tier)}`}>
-                        {app.tier}
-                      </span>
-                    </div>
-                    <p className="text-small">{app.category}</p>
-                  </button>
+                  <WebAppCard
+                    key={app.title}
+                    app={app}
+                    isSelected={selectedApp === index}
+                    onSelect={() => setSelectedApp(index)}
+                  />
                 ))}
               </div>
             </div>
 
             {/* System Status Panel */}
-            <div className="panel card-padding">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="bg-zinc-800/95 border border-zinc-700 p-4">
+              <div className="flex items-center space-x-3 mb-4">
                 <Terminal className="w-5 h-5 text-green-400" />
-                <h3 className="text-panel-title text-green-400">SYSTEM STATUS</h3>
+                <h3 className="text-green-400 font-black text-base font-mono">SYSTEM STATUS</h3>
               </div>
               
               <div className="space-y-2">
                 {systemStatus.map((item, index) => (
-                  <div key={index} className="flex justify-between items-center py-2 border-b border-border last:border-b-0">
-                    <span className="text-label text-muted-foreground">{item.label}</span>
-                    <span className={`text-label ${item.color} flex items-center gap-1`}>
-                      <div className={`w-2 h-2 rounded-full ${item.color.replace('text-', 'bg-')}`} />
+                  <div key={index} className="flex justify-between items-center py-2 border-b border-zinc-700 last:border-b-0">
+                    <span className="text-zinc-400 text-sm font-bold">{item.label}</span>
+                    <span className={`${item.color} text-sm font-black flex items-center space-x-1`}>
+                      <div className={`w-2 h-2 rounded-full ${item.color.replace('text-', 'bg-')}`}></div>
                       <span>{item.status}</span>
                     </span>
                   </div>
@@ -154,14 +181,16 @@ const WebAppsSection = () => {
               </div>
               
               {/* Global Stats */}
-              <div className="mt-4 pt-4 border-t border-border grid grid-cols-2 gap-3">
-                <div className="stat-card">
-                  <div className="stat-value text-green-400">99.96%</div>
-                  <div className="stat-label">Global Uptime</div>
-                </div>
-                <div className="stat-card">
-                  <div className="stat-value text-cyan-400">&lt;150ms</div>
-                  <div className="stat-label">Avg Response</div>
+              <div className="mt-4 pt-4 border-t border-zinc-700">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="text-center">
+                    <div className="text-green-400 font-black text-lg">99.96%</div>
+                    <div className="text-zinc-400 text-xs">Global Uptime</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-cyan-400 font-black text-lg">&lt; 150ms</div>
+                    <div className="text-zinc-400 text-xs">Avg Response</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -169,104 +198,29 @@ const WebAppsSection = () => {
 
           {/* Main Content: Selected App Details */}
           <div className="lg:col-span-8">
-            <div className="panel card-padding h-full">
-              {/* App Header */}
-              <div className="flex items-start justify-between mb-6">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-section-title text-foreground">{currentApp.title}</h3>
-                    <span className={`px-2 py-1 text-xs font-bold ${getTierColor(currentApp.tier)}`}>
-                      {currentApp.tier}
-                    </span>
-                  </div>
-                  <p className="text-small">{currentApp.category}</p>
-                </div>
-                <div className="text-right">
-                  <div className="text-section-title text-blue-400">{currentApp.pricing}</div>
-                  <div className="text-small">per month</div>
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="text-body mb-6">{currentApp.description}</p>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="stat-card">
-                  <Star className="w-5 h-5 mx-auto mb-2 text-yellow-400" />
-                  <div className="stat-value text-yellow-400">{currentApp.rating}</div>
-                  <div className="stat-label">Rating</div>
-                </div>
-                <div className="stat-card">
-                  <Users className="w-5 h-5 mx-auto mb-2 text-blue-400" />
-                  <div className="stat-value text-blue-400 text-sm">{currentApp.users}</div>
-                  <div className="stat-label">Users</div>
-                </div>
-                <div className="stat-card">
-                  <Activity className="w-5 h-5 mx-auto mb-2 text-green-400" />
-                  <div className="stat-value text-green-400">{currentApp.uptime}</div>
-                  <div className="stat-label">Uptime</div>
-                </div>
-                <div className="stat-card">
-                  <Monitor className="w-5 h-5 mx-auto mb-2 text-purple-400" />
-                  <div className="stat-value text-purple-400">{currentApp.tech.length}</div>
-                  <div className="stat-label">Technologies</div>
-                </div>
-              </div>
-
-              {/* Tech Stack */}
-              <div className="mb-6">
-                <h4 className="text-panel-title text-muted-foreground mb-3">TECHNOLOGY STACK</h4>
-                <div className="flex flex-wrap gap-2">
-                  {currentApp.tech.map((tech, index) => (
-                    <span key={index} className="tag tag-default">{tech}</span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Features */}
-              <div className="mb-6">
-                <h4 className="text-panel-title text-muted-foreground mb-3">KEY FEATURES</h4>
-                <div className="grid grid-cols-2 gap-2">
-                  {currentApp.features.map((feature, index) => (
-                    <div key={index} className="panel-hover panel-padding flex items-center gap-2">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full" />
-                      <span className="text-body">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-3">
-                <button className="btn-primary bg-blue-500 hover:bg-blue-600 shadow-blue-500/25">
-                  <Globe className="w-4 h-4" />
-                  <span>LAUNCH DEMO</span>
-                  <ExternalLink className="w-4 h-4" />
-                </button>
-                <button className="btn-secondary">
-                  REQUEST PRICING
-                </button>
-              </div>
-            </div>
+            <WebAppDetails app={webApps[selectedApp]} />
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <h3 className="text-card-title text-foreground mb-2">
-            ENTERPRISE-READY <span className="text-blue-400">SOLUTIONS</span>
+        {/* Enhanced CTA */}
+        <div className="bg-gradient-to-r from-zinc-800 to-zinc-700 border border-zinc-600 p-8 text-center">
+          <h3 className="text-2xl font-black text-white mb-3 font-mono">
+            <span className="text-blue-400">ENTERPRISE-READY</span> SOLUTIONS
           </h3>
-          <p className="text-body max-w-xl mx-auto mb-4">
-            Production-tested SaaS platforms and web applications built for enterprise scale.
+          <p className="text-base text-zinc-400 mb-6 max-w-2xl mx-auto">
+            Production-tested SaaS platforms and web applications built for enterprise scale. Comprehensive documentation, 24/7 support, and guaranteed uptime.
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link to="/web-applications" className="btn-primary bg-blue-500 hover:bg-blue-600 shadow-blue-500/25">
-              <Globe className="w-4 h-4" />
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              to="/web-applications" 
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 font-black transition-all duration-300 flex items-center justify-center space-x-2 text-base shadow-xl"
+            >
+              <Globe className="w-5 h-5" />
               <span>EXPLORE ALL PLATFORMS</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-5 h-5" />
             </Link>
-            <button className="btn-secondary">
+            <button className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-black px-8 py-4 font-black transition-all duration-300 text-base">
               REQUEST ENTERPRISE DEMO
             </button>
           </div>
