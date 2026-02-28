@@ -42,41 +42,21 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-zinc-950/95 via-zinc-900/90 to-zinc-950/95 backdrop-blur-xl py-16 overflow-hidden">
-      {/* Enhanced paradoxical background effects - matching Services */}
-      <div className="absolute inset-0 pointer-events-none opacity-60">
-        {/* Primary ambient lighting with paradoxical movement */}
-        <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-gradient-to-r from-orange-500/12 to-amber-500/8 blur-3xl rounded-full animate-pulse transform -rotate-45"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-r from-emerald-500/12 to-teal-500/8 blur-3xl rounded-full animate-pulse transform rotate-45" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-r from-amber-400/8 to-orange-400/6 blur-3xl rounded-full animate-pulse" style={{animationDelay: '4s'}}></div>
+      {/* Optimized background effects - reduced animations */}
+      <div className="absolute inset-0 pointer-events-none opacity-40">
+        <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-gradient-to-r from-orange-500/12 to-amber-500/8 blur-3xl rounded-full"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-r from-emerald-500/12 to-teal-500/8 blur-3xl rounded-full"></div>
         
-        {/* Paradoxical secondary layers */}
-        <div className="absolute top-1/6 right-1/3 w-[400px] h-[400px] bg-gradient-to-l from-orange-300/10 to-emerald-300/6 blur-2xl rounded-full animate-pulse transform rotate-12" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-1/6 left-1/3 w-[500px] h-[500px] bg-gradient-to-r from-teal-400/8 to-amber-400/6 blur-2xl rounded-full animate-pulse transform -rotate-12" style={{animationDelay: '3s'}}></div>
-        
-        {/* Enhanced paradoxical grid overlay */}
-        <div className="absolute inset-0 opacity-[0.12]">
+        {/* Simplified grid overlay */}
+        <div className="absolute inset-0 opacity-[0.08]">
           <div className="w-full h-full" style={{
             backgroundImage: `
-              linear-gradient(rgba(251, 146, 60, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(251, 146, 60, 0.3) 1px, transparent 1px),
-              linear-gradient(45deg, rgba(16, 185, 129, 0.2) 1px, transparent 1px),
-              linear-gradient(-45deg, rgba(245, 158, 11, 0.2) 1px, transparent 1px)
+              linear-gradient(rgba(251, 146, 60, 0.2) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(251, 146, 60, 0.2) 1px, transparent 1px)
             `,
-            backgroundSize: '100px 100px, 100px 100px, 50px 50px, 50px 50px'
+            backgroundSize: '100px 100px'
           }}></div>
         </div>
-
-        {/* Floating geometric paradoxical shapes */}
-        <div className="absolute top-1/3 left-1/6 w-8 h-8 bg-orange-400/40 transform rotate-45 animate-pulse border border-orange-400/30 shadow-lg shadow-orange-400/20"></div>
-        <div className="absolute top-1/5 right-1/4 w-6 h-6 bg-emerald-400/40 rounded-full animate-pulse border border-emerald-400/30 shadow-lg shadow-emerald-400/20" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/3 left-1/3 w-10 h-10 bg-amber-400/35 animate-pulse border border-amber-400/25 shadow-lg shadow-amber-400/20 transform rotate-12" style={{animationDelay: '4s'}}></div>
-        <div className="absolute bottom-1/5 right-1/6 w-12 h-12 bg-teal-400/30 transform rotate-30 animate-pulse border border-teal-400/20 shadow-lg shadow-teal-400/20" style={{animationDelay: '6s'}}></div>
-
-        {/* Enhanced paradoxical accent lines */}
-        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-400/40 to-transparent transform rotate-1"></div>
-        <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent transform -rotate-1"></div>
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-amber-400/40 to-transparent transform rotate-2"></div>
-        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-teal-400/40 to-transparent transform -rotate-2"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
