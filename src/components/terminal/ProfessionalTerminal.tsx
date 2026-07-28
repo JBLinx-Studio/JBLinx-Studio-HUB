@@ -21,7 +21,7 @@ const ProfessionalTerminal: React.FC = () => {
     output: ['/jblinx/products/', '├── development/', '│   ├── codefusion-studio/   # Web IDE', '│   └── codecraftai-pro/    # AI Assistant', '├── health-tech/', '│   └── vitalitysync/       # Wellness App', '├── gaming/', '│   └── mindmate/           # Strategy Hub', '├── proptech/', '│   └── nestcore/           # Real Estate', '└── resources/', '    └── documentation/', '', '5 flagship products ready for deployment']
   }];
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const runCommand = async () => {
       if (currentCommandIndex >= commands.length) {
         // Reset after showing all commands
